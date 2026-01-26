@@ -14,6 +14,7 @@ import {
   Loader2,
   Edit,
   Mic,
+  Sparkles,
 } from "lucide-react";
 import { fileAPI, FileData } from "@/lib/api";
 import Toast from "@/components/Toast";
@@ -340,6 +341,13 @@ export default function Home() {
         window.location.href = "/speech-to-pdf";
       },
     },
+    {
+      icon: Sparkles,
+      title: "Image to SVG",
+      action: () => {
+        window.location.href = "/svg";
+      },
+    },
   ];
 
   return (
@@ -363,6 +371,9 @@ export default function Home() {
             </a>
             <a href="#" className="text-gray-600 hover:text-gray-800">
               Features
+            </a>
+            <a href="/svg" className="text-gray-600 hover:text-gray-800">
+              Image to SVG
             </a>
             <a href="#" className="text-gray-600 hover:text-gray-800">
               Pricing
