@@ -348,6 +348,14 @@ export default function Home() {
         window.location.href = "/svg";
       },
     },
+
+    {
+      icon: FileText,
+      title: "Image OCR",
+      action: () => {
+        window.location.href = "/ocr";
+      },
+    },
   ];
 
   return (

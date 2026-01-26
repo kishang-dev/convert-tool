@@ -44,4 +44,24 @@ export const svgApi = {
   },
 };
 
+export const ocrApi = {
+  uploadImage: async (file: File) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const response = await api.post("/upload-and-ocr", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  },
+
+  getOcrData: async (imageId: string) => {
+    const response = await api.get(`/ocr-data/${imageId}`);
+    return response.data;
+  },
+};
+
 export default api;
