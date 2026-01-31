@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/uuid": "^11.0.0",
     "axios": "^1.13.2",
     "clsx": "^2.1.1",
     "lucide-react": "^0.562.0",
@@ -16,6 +17,7 @@
     "react-dom": "19.2.3",
     "react-quill-new": "^3.7.0",
     "tailwind-merge": "^3.4.0",
+    "uuid": "^13.0.0",
     "zustand": "^5.0.10"
   },
   "devDependencies": {

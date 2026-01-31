@@ -10,6 +10,59 @@ const api = axios.create({
   },
 });
 
+// Interceptor to add Auth Token and Guest ID
+api.interceptors.request.use((config) => {
+  // Get store state (reading directly from localStorage for persistence if Zustand not yet hydrated, 
+  // but Zustand persist writes to localStorage 'auth-storage')
+
+  const storageStr = localStorage.getItem('auth-storage');
+  let token = null;
+  let guestId = null;
+
+  if (storageStr) {
+    const storage = JSON.parse(storageStr);
+    if (storage.state) {
+      if (storage.state.user && storage.state.user.token) {
+        token = storage.state.user.token;
+      }
+      if (storage.state.guestId) {
+        guestId = storage.state.guestId;
+      }
+    }
+  }
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  if (guestId) {
+    config.headers['X-Guest-ID'] = guestId;
+  }
+
+  return config;
+});
+
+// Response interceptor to handle global errors
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 403) {
+      // If the error requires login (free trial expired)
+      if (error.response.data && error.response.data.requiresLogin) {
+        // Ideally, we should redirect or show a modal. 
+        // Since we are in a service, we can't easily use hooks.
+        // We can dispatch a custom event or let the component handle it.
+        // For now, let's allow the component to handle the specific error message, 
+        // but we could also force a redirect if we wanted to be aggressive.
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login?error=Free trial expired. Please login.';
+        }
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const svgApi = {
   uploadImage: async (file: File) => {
     const formData = new FormData();

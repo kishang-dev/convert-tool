@@ -10,6 +10,40 @@ const api = axios.create({
   },
 });
 
+// Interceptor to add Auth Token and Guest ID
+api.interceptors.request.use((config) => {
+  if (typeof window !== 'undefined') {
+    const storageStr = localStorage.getItem('auth-storage');
+    let token = null;
+    let guestId = null;
+
+    if (storageStr) {
+      try {
+        const storage = JSON.parse(storageStr);
+        if (storage.state) {
+          if (storage.state.user && storage.state.user.token) {
+            token = storage.state.user.token;
+          }
+          if (storage.state.guestId) {
+            guestId = storage.state.guestId;
+          }
+        }
+      } catch (e) {
+        console.error("Failed to parse auth storage", e);
+      }
+    }
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    if (guestId) {
+      config.headers['X-Guest-ID'] = guestId;
+    }
+  }
+  return config;
+});
+
 export interface FileData {
   _id: string;
   filename: string;

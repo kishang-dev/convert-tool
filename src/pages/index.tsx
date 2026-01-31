@@ -20,6 +20,7 @@ import { fileAPI, FileData } from "@/lib/api";
 import Toast from "@/components/Toast";
 import FeatureCard from "@/components/FeatureCard";
 import FileList from "@/components/FileList";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   const [files, setFiles] = useState<FileData[]>([]);
@@ -363,38 +364,7 @@ export default function Home() {
       {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
       {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="bg-blue-500 rounded-lg p-2">
-              <FileText className="text-white" size={24} />
-            </div>
-            <span className="text-2xl font-bold text-gray-800">
-              QuickPDF Tools
-            </span>
-          </div>
-          <nav className="hidden md:flex items-center gap-8">
-            <a href="#" className="text-gray-600 hover:text-gray-800">
-              Home
-            </a>
-            <a href="#" className="text-gray-600 hover:text-gray-800">
-              Features
-            </a>
-            <a href="/svg" className="text-gray-600 hover:text-gray-800">
-              Image to SVG
-            </a>
-            <a href="#" className="text-gray-600 hover:text-gray-800">
-              Pricing
-            </a>
-            <a href="#" className="text-gray-600 hover:text-gray-800">
-              Login
-            </a>
-            <button className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors">
-              Upgrade to Pro
-            </button>
-          </nav>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 py-12">
