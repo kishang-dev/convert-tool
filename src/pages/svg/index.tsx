@@ -1,37 +1,48 @@
 import Head from "next/head";
-
 import { Sparkles, Zap, Shield, MousePointer2 } from "lucide-react";
 import { useSvgStore } from "@/store/useSvgStore";
 import { FileUpload } from "@/components/FileUpload";
 import { SvgPreview } from "@/components/SvgPreview";
+import Navbar from "@/components/Navbar";
+import Card from "@/components/Card";
 
 export default function Home() {
   const { svgUrl, uploading, error } = useSvgStore();
 
   return (
-    <div className="min-h-screen bg-[#fcfcfd] text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen">
       <Head>
-        <title>Vectorize | Instant Image to SVG Converter</title>
+        <title>Image to SVG Converter | QuickPDF Tools</title>
         <meta
           name="description"
-          content="Convert your PNG, JPG and WEBP images to high-quality SVG vectors instantly."
+          content="Convert your PNG, JPG and WEBP images to high-quality SVG vectors instantly with AI-powered technology."
         />
       </Head>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+      <Navbar />
+
+      {/* Background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-pink-900/20 -z-10">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+      </div>
+
+      {/* Floating Elements */}
+      <div className="fixed top-20 left-10 w-72 h-72 bg-purple-500/30 rounded-full blur-3xl animate-float -z-10"></div>
+      <div className="fixed bottom-20 right-10 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1s' }}></div>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
         {/* Header Section */}
-        <div className="text-center space-y-4 mb-16 animate-in fade-in slide-in-from-top-10 duration-1000">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 bg-blue-50 border border-blue-100 rounded-full text-blue-600 text-sm font-medium">
-            <Sparkles className="w-4 h-4" />
-            <span>AI-Powered Vectorization</span>
+        <div className="text-center space-y-6 mb-16 animate-fadeIn">
+          <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-4">
+            <Sparkles className="text-purple-400" size={16} />
+            <span className="text-sm text-gray-300">AI-Powered Vectorization</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900">
-            Vectorize <span className="text-blue-600">Instantly.</span>
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">
+            <span className="gradient-text">Vectorize</span> Instantly
           </h1>
-          <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto">
-            The simplest way to transform your raster images into clean,
-            scalable SVG vectors. Perfect for designers, developers, and
-            creators.
+          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+            Transform your raster images into clean, scalable SVG vectors.
+            Perfect for designers, developers, and creators.
           </p>
         </div>
 
@@ -42,37 +53,51 @@ export default function Home() {
               <FileUpload />
 
               {/* Features Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12 border-t border-slate-100">
-                <div className="flex flex-col items-center text-center p-6 space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-600">
-                    <Zap className="w-6 h-6" />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 border-t border-gray-800">
+                <Card
+                  variant="elevated"
+                  className="p-6 text-center animate-fadeIn"
+                  style={{ animationDelay: '0.1s' }}
+                >
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mx-auto mb-4">
+                    <Zap className="text-white" size={28} />
                   </div>
-                  <h3 className="font-bold text-lg">Lightning Fast</h3>
-                  <p className="text-slate-500 text-sm">
+                  <h3 className="font-bold text-lg text-white mb-2">Lightning Fast</h3>
+                  <p className="text-gray-400 text-sm">
                     Convert complex images to SVGs in under 2 seconds with our
                     optimized engine.
                   </p>
-                </div>
-                <div className="flex flex-col items-center text-center p-6 space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                    <Shield className="w-6 h-6" />
+                </Card>
+
+                <Card
+                  variant="elevated"
+                  className="p-6 text-center animate-fadeIn"
+                  style={{ animationDelay: '0.2s' }}
+                >
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center mx-auto mb-4">
+                    <Shield className="text-white" size={28} />
                   </div>
-                  <h3 className="font-bold text-lg">Privacy First</h3>
-                  <p className="text-slate-500 text-sm">
+                  <h3 className="font-bold text-lg text-white mb-2">Privacy First</h3>
+                  <p className="text-gray-400 text-sm">
                     Images are processed securely and deleted immediately after
                     conversion.
                   </p>
-                </div>
-                <div className="flex flex-col items-center text-center p-6 space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-                    <MousePointer2 className="w-6 h-6" />
+                </Card>
+
+                <Card
+                  variant="elevated"
+                  className="p-6 text-center animate-fadeIn"
+                  style={{ animationDelay: '0.3s' }}
+                >
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center mx-auto mb-4">
+                    <MousePointer2 className="text-white" size={28} />
                   </div>
-                  <h3 className="font-bold text-lg">Layer Support</h3>
-                  <p className="text-slate-500 text-sm">
+                  <h3 className="font-bold text-lg text-white mb-2">Layer Support</h3>
+                  <p className="text-gray-400 text-sm">
                     Automatically detects shapes and creates clean, editable SVG
                     layers.
                   </p>
-                </div>
+                </Card>
               </div>
             </div>
           ) : (
@@ -82,25 +107,20 @@ export default function Home() {
 
         {/* Error Notification */}
         {error && (
-          <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-red-50 border border-red-100 px-6 py-4 rounded-2xl shadow-xl flex items-center space-x-3 text-red-700 animate-in slide-in-from-bottom-4">
+          <div className="fixed bottom-8 left-1/2 -translate-x-1/2 glass-strong border-l-4 border-red-500 px-6 py-4 rounded-xl shadow-xl flex items-center gap-3 animate-slideInRight z-50">
             <span className="w-2 h-2 rounded-full bg-red-500" />
-            <span className="font-medium">{error}</span>
+            <span className="font-medium text-red-400">{error}</span>
           </div>
         )}
       </main>
 
-      {/* Decorative Background Elements */}
-      <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-100/30 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-100/20 blur-[120px] rounded-full" />
-      </div>
-
-      <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100 text-center">
-        <p className="text-slate-400 text-sm font-medium">
-          &copy; {new Date().getFullYear()} Vectorize App. Built with Next.js
-          and Lucid Icons.
+      <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-800 text-center">
+        <p className="text-gray-500 text-sm font-medium">
+          &copy; {new Date().getFullYear()} QuickPDF Tools. Built with Next.js
+          and Lucide Icons.
         </p>
       </footer>
     </div>
   );
 }
+

@@ -3,89 +3,193 @@ import { useRouter } from 'next/router';
 import { useAuthStore } from '@/store/authStore';
 import api from '@/services/api';
 import Link from 'next/link';
+import Navbar from '@/components/Navbar';
+import Card from '@/components/Card';
+import Button from '@/components/Button';
+import { Mail, Lock, User, UserPlus, Sparkles } from 'lucide-react';
 
 export default function RegisterPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
     const login = useAuthStore((state) => state.login);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
 
         try {
             const res = await api.post('/auth/register', { name, email, password });
             if (res.data.success) {
                 login(res.data);
-                router.push('/');
+                router.push('/tools');
             }
         } catch (err: any) {
             setError(err.response?.data?.error || 'Registration failed');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8">
-                <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Create your account
-                    </h2>
-                </div>
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    <div className="rounded-md shadow-sm -space-y-px">
-                        <div>
-                            <input
-                                type="text"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Full Name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
+        <div className="min-h-screen">
+            <Navbar />
+
+            {/* Background */}
+            <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-pink-900/20 -z-10">
+                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+            </div>
+
+            {/* Floating Elements */}
+            <div className="fixed top-20 right-10 w-72 h-72 bg-pink-500/30 rounded-full blur-3xl animate-float -z-10"></div>
+            <div className="fixed bottom-20 left-10 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1.5s' }}></div>
+
+            {/* Main Content */}
+            <div className="flex items-center justify-center min-h-screen py-24 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-md w-full animate-fadeIn">
+                    {/* Header */}
+                    <div className="text-center mb-8">
+                        <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-4">
+                            <Sparkles className="text-purple-400" size={16} />
+                            <span className="text-sm text-gray-300">Join Us Today</span>
                         </div>
-                        <div>
-                            <input
-                                type="email"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Email address"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <input
-                                type="password"
-                                required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
+                        <h2 className="text-4xl font-bold mb-2">
+                            <span className="gradient-text">Create Account</span>
+                        </h2>
+                        <p className="text-gray-400">Start using our powerful PDF tools for free</p>
                     </div>
 
-                    {error && <p className="text-red-500 text-sm">{error}</p>}
+                    {/* Register Form */}
+                    <Card variant="elevated" className="p-8">
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            {/* Name Input */}
+                            <div>
+                                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                                    Full Name
+                                </label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <User className="text-gray-500" size={20} />
+                                    </div>
+                                    <input
+                                        id="name"
+                                        type="text"
+                                        required
+                                        className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500 transition-smooth"
+                                        placeholder="John Doe"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                </div>
+                            </div>
 
-                    <div>
-                        <button
-                            type="submit"
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Sign up
-                        </button>
-                    </div>
-                    <div className="text-sm text-center">
-                        <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
-                            Already have an account? Sign in
+                            {/* Email Input */}
+                            <div>
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                                    Email Address
+                                </label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <Mail className="text-gray-500" size={20} />
+                                    </div>
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        required
+                                        className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500 transition-smooth"
+                                        placeholder="you@example.com"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Password Input */}
+                            <div>
+                                <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+                                    Password
+                                </label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <Lock className="text-gray-500" size={20} />
+                                    </div>
+                                    <input
+                                        id="password"
+                                        type="password"
+                                        required
+                                        className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500 transition-smooth"
+                                        placeholder="••••••••"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                </div>
+                                <p className="mt-2 text-xs text-gray-500">
+                                    Must be at least 8 characters long
+                                </p>
+                            </div>
+
+                            {/* Error Message */}
+                            {error && (
+                                <div className="glass-strong border-l-4 border-red-500 p-4 rounded-lg">
+                                    <p className="text-red-400 text-sm">{error}</p>
+                                </div>
+                            )}
+
+                            {/* Submit Button */}
+                            <Button
+                                type="submit"
+                                className="w-full"
+                                size="lg"
+                                loading={loading}
+                            >
+                                <UserPlus size={20} />
+                                {loading ? 'Creating account...' : 'Create Account'}
+                            </Button>
+
+                            {/* Terms */}
+                            <p className="text-xs text-gray-500 text-center">
+                                By creating an account, you agree to our{' '}
+                                <a href="#" className="text-purple-400 hover:text-purple-300 transition-smooth">
+                                    Terms of Service
+                                </a>{' '}
+                                and{' '}
+                                <a href="#" className="text-purple-400 hover:text-purple-300 transition-smooth">
+                                    Privacy Policy
+                                </a>
+                            </p>
+
+                            {/* Divider */}
+                            <div className="relative">
+                                <div className="absolute inset-0 flex items-center">
+                                    <div className="w-full border-t border-gray-700"></div>
+                                </div>
+                                <div className="relative flex justify-center text-sm">
+                                    <span className="px-2 glass text-gray-400">Already have an account?</span>
+                                </div>
+                            </div>
+
+                            {/* Login Link */}
+                            <Link href="/login">
+                                <Button variant="secondary" className="w-full" size="lg">
+                                    Sign In
+                                </Button>
+                            </Link>
+                        </form>
+                    </Card>
+
+                    {/* Back to Home */}
+                    <div className="text-center mt-6">
+                        <Link href="/" className="text-gray-400 hover:text-purple-400 transition-smooth text-sm">
+                            ← Back to Home
                         </Link>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );
 }
+

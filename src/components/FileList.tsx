@@ -3,6 +3,7 @@
 import React from "react";
 import { FileText, X, Download } from "lucide-react";
 import { FileData } from "@/lib/api";
+import Card from "./Card";
 
 interface FileListProps {
   files: FileData[];
@@ -20,21 +21,23 @@ const FileList: React.FC<FileListProps> = ({ files, onRemove, onDownload }) => {
   if (files.length === 0) return null;
 
   return (
-    <div className="bg-white rounded-lg p-6 mb-8 shadow-sm">
-      <h3 className="text-lg font-semibold mb-4">
+    <Card variant="elevated" className="p-6 mb-8">
+      <h3 className="text-lg font-semibold mb-4 text-white">
         Uploaded Files ({files.length})
       </h3>
-      <div className="space-y-2">
+      <div className="space-y-3">
         {files.map((file) => (
           <div
             key={file._id}
-            className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+            className="flex items-center justify-between p-4 glass rounded-lg hover:bg-white/10 transition-smooth"
           >
             <div className="flex items-center gap-3 flex-1">
-              <FileText className="text-red-500 flex-shrink-0" size={20} />
+              <div className="bg-gradient-to-br from-purple-600 to-blue-600 p-2 rounded-lg">
+                <FileText className="text-white flex-shrink-0" size={20} />
+              </div>
               <div className="min-w-0 flex-1">
-                <p className="font-medium truncate">{file.originalName}</p>
-                <p className="text-sm text-gray-500">
+                <p className="font-medium truncate text-white">{file.originalName}</p>
+                <p className="text-sm text-gray-400">
                   {formatSize(file.size)} •{" "}
                   {new Date(file.createdAt).toLocaleDateString()}
                 </p>
@@ -44,7 +47,7 @@ const FileList: React.FC<FileListProps> = ({ files, onRemove, onDownload }) => {
               {onDownload && (
                 <button
                   onClick={() => onDownload(file)}
-                  className="text-blue-500 hover:bg-blue-50 p-2 rounded transition-colors"
+                  className="text-blue-400 hover:bg-blue-500/20 p-2 rounded-lg transition-smooth"
                   title="Download"
                 >
                   <Download size={20} />
@@ -52,7 +55,7 @@ const FileList: React.FC<FileListProps> = ({ files, onRemove, onDownload }) => {
               )}
               <button
                 onClick={() => onRemove(file._id)}
-                className="text-red-500 hover:bg-red-50 p-2 rounded transition-colors"
+                className="text-red-400 hover:bg-red-500/20 p-2 rounded-lg transition-smooth"
                 title="Remove"
               >
                 <X size={20} />
@@ -61,8 +64,9 @@ const FileList: React.FC<FileListProps> = ({ files, onRemove, onDownload }) => {
           </div>
         ))}
       </div>
-    </div>
+    </Card>
   );
 };
 
 export default FileList;
+
