@@ -15,6 +15,9 @@ import {
     Mic,
     Sparkles,
     Minimize2,
+    Presentation,
+    FileCode,
+    FileType,
 } from "lucide-react";
 import { fileAPI, FileData } from "@/lib/api";
 import Toast from "@/components/Toast";
@@ -331,6 +334,42 @@ export default function Tools() {
                 window.location.href = "/ocr";
             },
             gradient: "from-sky-500 to-blue-500"
+        },
+        {
+            icon: Presentation,
+            title: "PDF to PowerPoint",
+            action: () => window.location.href = "/pdf-to-pptx",
+            gradient: "from-orange-500 to-red-500"
+        },
+        {
+            icon: FileSpreadsheet,
+            title: "Excel to PDF",
+            action: () => window.location.href = "/excel-to-pdf",
+            gradient: "from-green-500 to-emerald-600"
+        },
+        {
+            icon: Presentation,
+            title: "PowerPoint to PDF",
+            action: () => window.location.href = "/ppt-to-pdf",
+            gradient: "from-orange-600 to-red-600"
+        },
+        {
+            icon: FileCode,
+            title: "HTML to PDF",
+            action: () => window.location.href = "/html-to-pdf",
+            gradient: "from-blue-500 to-indigo-600"
+        },
+        {
+            icon: FileType,
+            title: "PDF to Text",
+            action: () => window.location.href = "/pdf-to-text",
+            gradient: "from-gray-500 to-slate-500"
+        },
+        {
+            icon: FileCode,
+            title: "PDF to HTML",
+            action: () => window.location.href = "/pdf-to-html",
+            gradient: "from-indigo-500 to-violet-500"
         },
     ];
 

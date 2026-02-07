@@ -255,6 +255,78 @@ export const fileAPI = {
     const response = await api.post(`/files/${fileId}/add-page`);
     return response.data;
   },
+  // PDF to PPTX
+  pdfToPptx: async (
+    fileId: string,
+  ): Promise<{
+    success: boolean;
+    message: string;
+    file: FileData;
+  }> => {
+    const response = await api.post("/pdf-to-pptx", { fileId });
+    return response.data;
+  },
+
+  // Excel to PDF
+  excelToPdf: async (
+    fileId: string,
+  ): Promise<{
+    success: boolean;
+    message: string;
+    file: FileData;
+  }> => {
+    const response = await api.post("/excel-to-pdf", { fileId });
+    return response.data;
+  },
+
+  // PowerPoint to PDF
+  pptToPdf: async (
+    fileId: string,
+  ): Promise<{
+    success: boolean;
+    message: string;
+    file: FileData;
+  }> => {
+    const response = await api.post("/ppt-to-pdf", { fileId });
+    return response.data;
+  },
+
+  // HTML to PDF
+  htmlToPdf: async (
+    fileId: string,
+  ): Promise<{
+    success: boolean;
+    message: string;
+    file: FileData;
+  }> => {
+    const response = await api.post("/html-to-pdf", { fileId });
+    return response.data;
+  },
+
+  // PDF to Text
+  pdfToText: async (
+    fileId: string,
+  ): Promise<{
+    success: boolean;
+    message: string;
+    file: FileData;
+    textPreview?: string;
+  }> => {
+    const response = await api.post("/pdf-to-text", { fileId });
+    return response.data;
+  },
+
+  // PDF to HTML
+  pdfToHtml: async (
+    fileId: string,
+  ): Promise<{
+    success: boolean;
+    message: string;
+    file: FileData;
+  }> => {
+    const response = await api.post("/pdf-to-html", { fileId });
+    return response.data;
+  },
 };
 
 export default api;
