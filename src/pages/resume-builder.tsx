@@ -79,10 +79,21 @@ const TEMPLATES = [
     { id: 'fission', name: 'Atomic Fission' },
     { id: 'glitch', name: 'Cyber Glitch' },
     { id: 'echo', name: 'Visual Echo' },
-    { id: 'void', name: 'Void Deep Black' },
-    { id: 'stellar', name: 'Stellar Universe' },
+    { id: 'void', name: 'Deep Void' },
+    { id: 'stellar', name: 'Stellar Galaxy' },
     { id: 'pixel', name: 'Retro Pixel' },
-    { id: 'apex', name: 'Apex Elite' }
+    { id: 'apex', name: 'Apex Elite' },
+    // Simple & Minimalist Templates (New)
+    { id: 'simple_sidebar', name: 'Elegant Sidebar' },
+    { id: 'modern_elegant', name: 'Modern Elegant' },
+    { id: 'airy_minimal', name: 'Airy Minimal' },
+    { id: 'traditional_clean', name: 'Traditional Clean' },
+    { id: 'compact_modern', name: 'Compact Modern' },
+    { id: 'executive_minimal', name: 'Executive Minimal' },
+    { id: 'technical_lite', name: 'Technical Lite' },
+    { id: 'basic_academic', name: 'Academic Scholar' },
+    { id: 'airy_professional', name: 'Airy Professional' },
+    { id: 'minimal_classic', name: 'Minimal Classic' },
 ];
 
 export default function ResumeBuilder() {
@@ -900,8 +911,8 @@ export default function ResumeBuilder() {
                                                     window.scrollTo({ top: 0, behavior: 'smooth' });
                                                 }}
                                                 className={`group cursor-pointer relative rounded-[20px] overflow-hidden border-2 transition-all duration-500 ${resumeData.template === t.id
-                                                        ? 'border-blue-500 ring-4 ring-blue-500/20 scale-105 shadow-2xl z-10'
-                                                        : 'border-white/5 hover:border-white/20 hover:scale-[1.03]'
+                                                    ? 'border-blue-500 ring-4 ring-blue-500/20 scale-105 shadow-2xl z-10'
+                                                    : 'border-white/5 hover:border-white/20 hover:scale-[1.03]'
                                                     }`}
                                             >
                                                 {/* Thumbnail Rendering */}
