@@ -114,18 +114,31 @@ export default function ResumeBuilder() {
                         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
                         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono&family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
                         <style>
-                            body { font-family: 'Inter', sans-serif; -webkit-print-color-adjust: exact; }
-                            .resume-page { box-shadow: none !important; margin: 0 !important; width: 100% !important; }
+                            @page { size: A4; margin: 0; }
+                            body { margin: 0; padding: 0; -webkit-print-color-adjust: exact; }
+                            .resume-page { box-shadow: none !important; margin: 0 !important; width: 100% !important; min-height: 297mm; }
+                            .font-inter { font-family: 'Inter', sans-serif !important; }
+                            .font-lora { font-family: 'Lora', serif !important; }
+                            .font-outfit { font-family: 'Outfit', sans-serif !important; }
                         </style>
                     </head>
                     <body>${html}</body>
                 </html>
             `);
+
             if (res.success) {
                 const downloadUrl = res.downloadUrl.startsWith('http')
                     ? res.downloadUrl
                     : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'}${res.downloadUrl}`;
-                window.open(downloadUrl, '_blank');
+
+                // More reliable download trigger
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                link.download = `resume-${resumeData.personalInfo.fullName.replace(/\s+/g, '-')}.pdf`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
                 showToast('Export successful!');
             }
         } catch (err) {
