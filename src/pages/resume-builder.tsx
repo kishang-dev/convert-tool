@@ -109,20 +109,47 @@ export default function ResumeBuilder() {
             // For now, let's simulate the export
             const html = resumeRef.current.innerHTML;
             const res = await resumeAPI.exportResume(resumeData._id || 'temp', `
+                <!DOCTYPE html>
                 <html>
                     <head>
-                        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-                        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono&family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+                        <meta charset="utf-8">
+                        <script src="https://cdn.tailwindcss.com"></script>
+                        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
                         <style>
-                            @page { size: A4; margin: 0; }
-                            body { margin: 0; padding: 0; -webkit-print-color-adjust: exact; }
-                            .resume-page { box-shadow: none !important; margin: 0 !important; width: 100% !important; min-height: 297mm; }
-                            .font-inter { font-family: 'Inter', sans-serif !important; }
-                            .font-lora { font-family: 'Lora', serif !important; }
-                            .font-outfit { font-family: 'Outfit', sans-serif !important; }
+                            @page { 
+                                size: A4; 
+                                margin: 0; 
+                            }
+                            body { 
+                                margin: 0; 
+                                padding: 0; 
+                                -webkit-print-color-adjust: exact;
+                                print-color-adjust: exact;
+                            }
+                            .resume-page { 
+                                box-shadow: none !important; 
+                                margin: 0 !important; 
+                                width: 210mm !important; 
+                                min-height: 297mm !important;
+                                page-break-after: always;
+                            }
+                            * { -webkit-print-color-adjust: exact !important; }
                         </style>
+                        <script>
+                            tailwind.config = {
+                                theme: {
+                                    extend: {
+                                        fontFamily: {
+                                            inter: ['Inter', 'sans-serif'],
+                                            lora: ['Lora', 'serif'],
+                                            outfit: ['Outfit', 'sans-serif'],
+                                        }
+                                    }
+                                }
+                            }
+                        </script>
                     </head>
-                    <body>${html}</body>
+                    <body class="bg-white">${html}</body>
                 </html>
             `);
 
