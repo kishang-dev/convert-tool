@@ -245,6 +245,64 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 </div>
                             </section>
                         )}
+
+                        {data.projects && data.projects.length > 0 && (
+                            <section className="col-span-2">
+                                <h2 className="font-black uppercase tracking-[0.4em] mb-10 border-b-2 border-slate-100 pb-2" style={{ fontSize: `${s.fontSize.headings}px`, fontFamily: s.sectionFonts.headings }}>Notable Projects</h2>
+                                <div className="space-y-8">
+                                    {data.projects.map((proj, i) => (
+                                        <div key={i}>
+                                            <div className="flex justify-between items-baseline mb-2">
+                                                <h3 className="font-bold text-slate-800">{proj.name}</h3>
+                                                {proj.link && <span className="text-[10px] tabular-nums font-bold" style={{ color: primaryColor }}>{proj.link}</span>}
+                                            </div>
+                                            <p className="text-xs text-slate-500 leading-relaxed text-justify">{proj.description}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.certifications && data.certifications.length > 0 && (
+                            <section>
+                                <h2 className="font-black uppercase tracking-[0.4em] mb-6 opacity-30" style={{ fontSize: `${s.fontSize.headings}px`, fontFamily: s.sectionFonts.headings }}>Certifications</h2>
+                                <div className="space-y-4">
+                                    {data.certifications.map((cert, i) => (
+                                        <div key={i}>
+                                            <h4 className="text-sm font-bold text-slate-800">{cert.name}</h4>
+                                            <p className="text-xs italic text-slate-500">{cert.issuer} • {cert.date}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.awards && data.awards.length > 0 && (
+                            <section>
+                                <h2 className="font-black uppercase tracking-[0.4em] mb-6 opacity-30" style={{ fontSize: `${s.fontSize.headings}px`, fontFamily: s.sectionFonts.headings }}>Awards</h2>
+                                <div className="space-y-4">
+                                    {data.awards.map((award, i) => (
+                                        <div key={i}>
+                                            <h4 className="text-sm font-bold text-slate-800">{award.title}</h4>
+                                            <p className="text-xs italic text-slate-500">{award.issuer} • {award.date}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.interests && data.interests.length > 0 && (
+                            <section>
+                                <h2 className="font-black uppercase tracking-[0.4em] mb-6 opacity-30" style={{ fontSize: `${s.fontSize.headings}px`, fontFamily: s.sectionFonts.headings }}>Interests</h2>
+                                <div className="flex flex-wrap gap-2">
+                                    {data.interests.map((interest, i) => (
+                                        <span key={i} className="text-xs text-slate-500 font-medium border border-slate-200 px-2 py-1 rounded">
+                                            {interest}
+                                        </span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                     </div>
                 </div>
             </div>
@@ -312,6 +370,17 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             </div>
                         </section>
                     )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] mb-6 text-slate-500 border-b border-white/10 pb-2">Interests</h2>
+                            <div className="space-y-2">
+                                {data.interests.map((interest, i) => (
+                                    <div key={i} className="text-xs font-bold text-slate-600 border-b border-slate-200 pb-1">{interest}</div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </aside>
 
                 <main className="flex-1 p-16 bg-white flex flex-col gap-12 overflow-hidden">
@@ -362,6 +431,34 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                             <span className="font-medium text-slate-400">{edu.degree}</span>
                                             <span className="font-bold tabular-nums text-slate-200 uppercase tracking-widest">{edu.startDate} — {edu.endDate}</span>
                                         </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <h2 className="font-black uppercase tracking-[0.4em] text-slate-200 mb-8 flex items-center gap-6" style={{ fontSize: `${s.fontSize.headings}px`, fontFamily: s.sectionFonts.headings }}>Certifications <span className="flex-1 h-px bg-slate-100"></span></h2>
+                            <div className="space-y-6">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-bold text-slate-800">{cert.name}</h3>
+                                        <p className="text-xs text-slate-500 italic mb-1">{cert.issuer} • {cert.date}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="font-black uppercase tracking-[0.4em] text-slate-200 mb-8 flex items-center gap-6" style={{ fontSize: `${s.fontSize.headings}px`, fontFamily: s.sectionFonts.headings }}>Awards <span className="flex-1 h-px bg-slate-100"></span></h2>
+                            <div className="space-y-6">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-bold text-slate-800">{award.title}</h3>
+                                        <p className="text-xs text-slate-500 italic mb-1">{award.issuer} • {award.date}</p>
                                     </div>
                                 ))}
                             </div>
@@ -479,6 +576,47 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 </div>
                             </section>
                         )}
+
+                        {data.certifications && data.certifications.length > 0 && (
+                            <section>
+                                <h2 className="font-black uppercase tracking-[0.5em] text-slate-300 mb-8" style={{ fontSize: `${s.fontSize.headings}px`, fontFamily: s.sectionFonts.headings }}>Certifications</h2>
+                                <div className="space-y-8">
+                                    {data.certifications.map((cert, i) => (
+                                        <div key={i}>
+                                            <div className="text-xs font-black text-slate-900 uppercase mb-2">{cert.name}</div>
+                                            <p className="text-[10px] text-slate-400 italic">{cert.issuer} • {cert.date}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.awards && data.awards.length > 0 && (
+                            <section>
+                                <h2 className="font-black uppercase tracking-[0.5em] text-slate-300 mb-8" style={{ fontSize: `${s.fontSize.headings}px`, fontFamily: s.sectionFonts.headings }}>Awards</h2>
+                                <div className="space-y-8">
+                                    {data.awards.map((award, i) => (
+                                        <div key={i}>
+                                            <div className="text-xs font-black text-slate-900 uppercase mb-2">{award.title}</div>
+                                            <p className="text-[10px] text-slate-400 italic">{award.issuer} • {award.date}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.interests && data.interests.length > 0 && (
+                            <section>
+                                <h2 className="font-black uppercase tracking-[0.5em] text-slate-300 mb-8" style={{ fontSize: `${s.fontSize.headings}px`, fontFamily: s.sectionFonts.headings }}>Interests</h2>
+                                <div className="flex flex-wrap gap-2">
+                                    {data.interests.map((interest, i) => (
+                                        <span key={i} className="text-[10px] font-black text-slate-600 uppercase tracking-widest border border-slate-200 px-2 py-1 rounded">
+                                            {interest}
+                                        </span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                     </div>
                 </div>
             </div>
@@ -533,6 +671,47 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                             <div key={i} className="flex justify-between">
                                                 <span>{l.language}</span>
                                                 <span className="opacity-40">{l.proficiency}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                            )}
+
+                            {data.certifications && data.certifications.length > 0 && (
+                                <section>
+                                    <h2 className="font-black uppercase tracking-[0.6em] mb-8 opacity-30" style={{ fontSize: `${s.fontSize.headings}px`, fontFamily: s.sectionFonts.headings }}>Certifications</h2>
+                                    <div className="space-y-6">
+                                        {data.certifications.map((cert, i) => (
+                                            <div key={i} className="text-[10px] font-bold text-slate-400">
+                                                <p className="uppercase">{cert.name}</p>
+                                                <p className="mt-1 opacity-50 italic">{cert.issuer}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                            )}
+
+                            {data.awards && data.awards.length > 0 && (
+                                <section>
+                                    <h2 className="font-black uppercase tracking-[0.6em] mb-8 opacity-30" style={{ fontSize: `${s.fontSize.headings}px`, fontFamily: s.sectionFonts.headings }}>Awards</h2>
+                                    <div className="space-y-6">
+                                        {data.awards.map((award, i) => (
+                                            <div key={i} className="text-[10px] font-bold text-slate-400">
+                                                <p className="uppercase">{award.title}</p>
+                                                <p className="mt-1 opacity-50 italic">{award.issuer}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                            )}
+
+                            {data.interests && data.interests.length > 0 && (
+                                <section>
+                                    <h2 className="font-black uppercase tracking-[0.6em] mb-8 opacity-30" style={{ fontSize: `${s.fontSize.headings}px`, fontFamily: s.sectionFonts.headings }}>Interests</h2>
+                                    <div className="flex flex-wrap gap-x-4 gap-y-2">
+                                        {data.interests.map((interest, i) => (
+                                            <div key={i} className="text-[10px] font-black uppercase tracking-widest text-slate-400 opacity-60">
+                                                {interest}
                                             </div>
                                         ))}
                                     </div>
@@ -650,6 +829,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
+
+                {data.certifications && data.certifications.length > 0 && (
+                    <section>
+                        <SectionHeader title="Certifications" color={primaryColor} />
+                        <div className="space-y-4">
+                            {data.certifications.map((cert, i) => (
+                                <div key={i} className="bg-slate-50 p-4 rounded-xl">
+                                    <h3 className="text-sm font-black uppercase">{cert.name}</h3>
+                                    <p className="text-xs text-gray-400 italic">{cert.issuer} • {cert.date}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.awards && data.awards.length > 0 && (
+                    <section>
+                        <SectionHeader title="Awards" color={primaryColor} />
+                        <div className="space-y-4">
+                            {data.awards.map((award, i) => (
+                                <div key={i} className="bg-slate-50 p-4 rounded-xl">
+                                    <h3 className="text-sm font-black uppercase">{award.title}</h3>
+                                    <p className="text-xs text-gray-400 italic">{award.issuer} • {award.date}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.interests && data.interests.length > 0 && (
+                    <section>
+                        <SectionHeader title="Interests" color={primaryColor} />
+                        <div className="flex flex-wrap gap-2">
+                            {data.interests.map((interest, i) => (
+                                <span key={i} className="px-3 py-1 bg-slate-50 rounded-lg text-[10px] font-bold text-gray-500 uppercase tracking-widest">{interest}</span>
+                            ))}
+                        </div>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -737,6 +955,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         </div>
                     </section>
                 )}
+
+                {data.certifications && data.certifications.length > 0 && (
+                    <section>
+                        <h2 className="text-sm bg-[#00ff9d]/5 px-2 py-1 mb-4 border-l-4 border-[#00ff9d]">~/certifications.key</h2>
+                        <div className="space-y-4">
+                            {data.certifications.map((cert, i) => (
+                                <div key={i} className="mb-2">
+                                    <p className="text-[11px] font-bold text-white mb-1"><span className="text-[#00ff9d] opacity-50">$</span> {cert.name}</p>
+                                    <p className="text-[10px] opacity-40 pl-4">{cert.issuer} | {cert.date}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.awards && data.awards.length > 0 && (
+                    <section>
+                        <h2 className="text-sm bg-[#00ff9d]/5 px-2 py-1 mb-4 border-l-4 border-[#00ff9d]">~/trophy.bin</h2>
+                        <div className="space-y-4">
+                            {data.awards.map((award, i) => (
+                                <div key={i} className="mb-2">
+                                    <p className="text-[11px] font-bold text-white mb-1"><span className="text-[#00ff9d] opacity-50">*</span> {award.title}</p>
+                                    <p className="text--[10px] opacity-40 pl-4">{award.issuer} | {award.date}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.interests && data.interests.length > 0 && (
+                    <section>
+                        <h2 className="text-sm bg-[#00ff9d]/5 px-2 py-1 mb-4 border-l-4 border-[#00ff9d]">~/interests.txt</h2>
+                        <div className="flex flex-wrap gap-2 text-[10px] opacity-70">
+                            {data.interests.map((interest, i) => (
+                                <span key={i} className="border border-[#00ff9d]/30 px-2 py-1 rounded-sm">"{interest}"</span>
+                            ))}
+                        </div>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -802,6 +1059,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                         <h3 className="text-lg font-black uppercase mb-2">{proj.name}</h3>
                                         <p className="text-sm text-gray-500 font-medium">{proj.description}</p>
                                     </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <h2 className="text-xl font-black uppercase mb-8 border-b-4 border-black inline-block">Certifications</h2>
+                            <div className="space-y-6">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i} className="border-l-4 border-gray-200 pl-4">
+                                        <p className="text-sm font-black uppercase">{cert.name}</p>
+                                        <p className="text-xs font-bold text-gray-400 mt-1">{cert.issuer} • {cert.date}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="text-xl font-black uppercase mb-8 border-b-4 border-black inline-block">Awards</h2>
+                            <div className="space-y-6">
+                                {data.awards.map((award, i) => (
+                                    <div key={i} className="border-l-4 border-gray-200 pl-4">
+                                        <p className="text-sm font-black uppercase">{award.title}</p>
+                                        <p className="text-xs font-bold text-gray-400 mt-1">{award.issuer} • {award.date}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-xl font-black uppercase mb-8 border-b-4 border-black inline-block">Interests</h2>
+                            <div className="flex flex-wrap gap-4">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="text-xs font-black uppercase tracking-widest bg-gray-100 px-3 py-1">{interest}</span>
                                 ))}
                             </div>
                         </section>
@@ -891,6 +1187,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             </div>
                         </section>
                     )}
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section className="bg-white p-8 rounded-[40px] shadow-sm">
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-200 mb-6">Certifications</h2>
+                            <div className="space-y-6">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <p className="text-sm font-bold text-slate-800">{cert.name}</p>
+                                        <p className="text-[10px] text-slate-400 tracking-widest uppercase mt-1">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section className="bg-white p-8 rounded-[40px] shadow-sm">
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-200 mb-6">Awards</h2>
+                            <div className="space-y-6">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <p className="text-sm font-bold text-slate-800">{award.title}</p>
+                                        <p className="text-[10px] text-slate-400 tracking-widest uppercase mt-1">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section className="bg-white p-8 rounded-[40px] shadow-sm">
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-200 mb-6">Interests</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="px-4 py-2 bg-slate-50 rounded-2xl text-xs font-bold text-slate-500">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </div>
         </div>
@@ -965,6 +1300,59 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             </div>
                         </section>
                     )}
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <h2 className="text-sm font-black uppercase tracking-[0.5em] text-slate-600 mb-10 border-b border-slate-800 pb-4">Certifications</h2>
+                            <div className="space-y-8">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-bold">{cert.name}</h3>
+                                        <p className="text-xs text-slate-500 mt-2">{cert.issuer} • {cert.date}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="text-sm font-black uppercase tracking-[0.5em] text-slate-600 mb-10 border-b border-slate-800 pb-4">Awards</h2>
+                            <div className="space-y-8">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-bold">{award.title}</h3>
+                                        <p className="text-xs text-slate-500 mt-2">{award.issuer} • {award.date}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.languages && data.languages.length > 0 && (
+                        <section>
+                            <h2 className="text-sm font-black uppercase tracking-[0.5em] text-slate-600 mb-10 border-b border-slate-800 pb-4">Languages</h2>
+                            <div className="grid grid-cols-2 gap-4">
+                                {data.languages.map((l, i) => (
+                                    <div key={i} className="flex flex-col">
+                                        <span className="text-xs font-bold uppercase">{l.language}</span>
+                                        <span className="text-[10px] text-slate-500">{l.proficiency}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-sm font-black uppercase tracking-[0.5em] text-slate-600 mb-10 border-b border-slate-800 pb-4">Interests</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="px-3 py-1 border border-slate-800 text-[10px] font-bold uppercase tracking-widest text-slate-500">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </div>
         </div>
@@ -1010,6 +1398,43 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             <p className="text-[10px] text-slate-400">{edu.degree}</p>
                         </div>
                     ))}
+                </div>
+
+                <div className="col-span-4 row-span-2 bg-slate-100 p-10 flex flex-col gap-8 overflow-hidden">
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <h2 className="text-xs font-black uppercase tracking-widest opacity-30 mb-2 italic">Certifications</h2>
+                            {data.certifications.map((cert, i) => (
+                                <div key={i} className="mb-2">
+                                    <p className="text-xs font-bold text-slate-600">{cert.name}</p>
+                                    <p className="text-[10px] text-slate-400">{cert.issuer}</p>
+                                </div>
+                            ))}
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="text-xs font-black uppercase tracking-widest opacity-30 mb-2 italic">Awards</h2>
+                            {data.awards.map((award, i) => (
+                                <div key={i} className="mb-2">
+                                    <p className="text-xs font-bold text-slate-600">{award.title}</p>
+                                    <p className="text-[10px] text-slate-400">{award.issuer}</p>
+                                </div>
+                            ))}
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-xs font-black uppercase tracking-widest opacity-30 mb-2 italic">Interests</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="px-2 py-1 bg-white text-[9px] font-bold uppercase tracking-wider">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
                 {data.projects && data.projects.length > 0 && (
                     <div className="col-span-12 row-span-1 border-t border-slate-100 p-8 grid grid-cols-3 gap-8">
@@ -1082,6 +1507,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                             <h3 className="text-sm font-black uppercase mb-1">{proj.name}</h3>
                                             <p className="text-xs font-medium">{proj.description}</p>
                                         </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.certifications && data.certifications.length > 0 && (
+                            <section>
+                                <h2 className="text-2xl font-black uppercase mb-10 bg-black text-white px-4 py-2 inline-block">Certifications</h2>
+                                <div className="space-y-8">
+                                    {data.certifications.map((cert, i) => (
+                                        <div key={i} className="border-l-8 border-black pl-4">
+                                            <p className="text-sm font-black uppercase mb-1">{cert.name}</p>
+                                            <p className="text-xs font-medium">{cert.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.awards && data.awards.length > 0 && (
+                            <section>
+                                <h2 className="text-2xl font-black uppercase mb-10 bg-black text-white px-4 py-2 inline-block">Awards</h2>
+                                <div className="space-y-8">
+                                    {data.awards.map((award, i) => (
+                                        <div key={i} className="border-l-8 border-black pl-4">
+                                            <p className="text-sm font-black uppercase mb-1">{award.title}</p>
+                                            <p className="text-xs font-medium">{award.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.interests && data.interests.length > 0 && (
+                            <section>
+                                <h2 className="text-2xl font-black uppercase mb-10 bg-black text-white px-4 py-2 inline-block">Interests</h2>
+                                <div className="flex flex-wrap gap-4">
+                                    {data.interests.map((interest, i) => (
+                                        <span key={i} className="text-sm font-black uppercase border-2 border-black px-2 py-1 bg-white hover:bg-black hover:text-white transition-colors">{interest}</span>
                                     ))}
                                 </div>
                             </section>
@@ -1232,6 +1696,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 </div>
                             </section>
                         )}
+
+                        {data.certifications && data.certifications.length > 0 && (
+                            <section className="bg-white p-10 rounded-[40px] border border-slate-100">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 mb-6">Certifications</h2>
+                                <div className="space-y-6">
+                                    {data.certifications.map((cert, i) => (
+                                        <div key={i}>
+                                            <p className="text-sm font-black text-slate-800 uppercase tracking-tighter">{cert.name}</p>
+                                            <p className="text-[10px] text-slate-400 mt-1">{cert.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.awards && data.awards.length > 0 && (
+                            <section className="p-10">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 mb-8 border-b pb-4">Awards</h2>
+                                <div className="space-y-6">
+                                    {data.awards.map((award, i) => (
+                                        <div key={i}>
+                                            <p className="text-sm font-black text-slate-800 uppercase tracking-tighter">{award.title}</p>
+                                            <p className="text-[10px] text-slate-400 mt-1">{award.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.interests && data.interests.length > 0 && (
+                            <section className="bg-slate-900 text-white p-10 rounded-[40px] shadow-xl">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.4em] opacity-30 mb-6">Interests</h2>
+                                <div className="flex flex-wrap gap-4">
+                                    {data.interests.map((interest, i) => (
+                                        <span key={i} className="text-xs font-bold tracking-widest">{interest}</span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                     </div>
                 </div>
             </div>
@@ -1294,7 +1797,54 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                     </div>
                 </section>
             )}
-        </div>
+
+            < div className="mt-16 border-t pt-16 grid grid-cols-3 gap-16" >
+                {
+                    data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-300 mb-8 underline decoration-4 underline-offset-8" style={{ textDecorationColor: primaryColor }}>Certifications</h2>
+                            <div className="space-y-6">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-bold text-slate-800 uppercase tracking-tight">{cert.name}</h3>
+                                        <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )
+                }
+
+                {
+                    data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-300 mb-8 underline decoration-4 underline-offset-8" style={{ textDecorationColor: primaryColor }}>Awards</h2>
+                            <div className="space-y-6">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-bold text-slate-800 uppercase tracking-tight">{award.title}</h3>
+                                        <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )
+                }
+
+                {
+                    data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-300 mb-8 underline decoration-4 underline-offset-8" style={{ textDecorationColor: primaryColor }}>Interests</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="px-3 py-1 bg-slate-50 text-[10px] font-bold text-slate-500 rounded uppercase tracking-widest">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )
+                }
+            </div >
+        </div >
     ),
     formal: ({ data, primaryColor }) => (
         <div className="bg-white w-[794px] mx-auto shadow-2xl p-20 resume-page font-serif text-slate-900 border-[20px] border-slate-50">
@@ -1360,7 +1910,53 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                     </div>
                 </section>
             )}
-        </div>
+
+            < div className="grid grid-cols-2 gap-20 mt-16 border-t pt-16" >
+                {
+                    data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <h2 className="text-xs font-bold uppercase tracking-[0.3em] mb-8 text-slate-400 font-sans">Certifications</h2>
+                            <div className="space-y-8">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <h3 className="font-bold text-base uppercase tracking-tight">{cert.name}</h3>
+                                        <p className="text-sm italic text-slate-500 mt-1">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )
+                }
+                {
+                    data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="text-xs font-bold uppercase tracking-[0.3em] mb-8 text-slate-400 font-sans">Awards</h2>
+                            <div className="space-y-8">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <h3 className="font-bold text-base uppercase tracking-tight">{award.title}</h3>
+                                        <p className="text-sm italic text-slate-500 mt-1">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )
+                }
+            </div >
+
+            {
+                data.interests && data.interests.length > 0 && (
+                    <section className="mt-16 border-t pt-16 text-center">
+                        <h2 className="text-xs font-bold uppercase tracking-[0.3em] mb-8 text-slate-400 font-sans">Interests & Hobbies</h2>
+                        <div className="flex flex-wrap justify-center gap-6">
+                            {data.interests.map((interest, i) => (
+                                <span key={i} className="text-sm italic text-slate-600">{interest}</span>
+                            ))}
+                        </div>
+                    </section>
+                )
+            }
+        </div >
     ),
     compact: ({ data, primaryColor }) => (
         <div className="bg-white w-[794px] mx-auto shadow-2xl p-8 resume-page font-inter text-[11px] leading-tight text-slate-700">
@@ -1415,6 +2011,41 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                     <p className="text-[10px] opacity-60 mt-0.5">{proj.description}</p>
                                 </div>
                             ))}
+                        </section>
+                    )}
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <h2 className="font-black uppercase tracking-widest border-b mb-3 pb-1" style={{ color: primaryColor }}>Certifications</h2>
+                            {data.certifications.map((cert, i) => (
+                                <div key={i} className="mb-3">
+                                    <p className="font-bold uppercase text-[10px]">{cert.name}</p>
+                                    <p className="text-[10px] opacity-60 mt-0.5">{cert.issuer}</p>
+                                </div>
+                            ))}
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="font-black uppercase tracking-widest border-b mb-3 pb-1" style={{ color: primaryColor }}>Awards</h2>
+                            {data.awards.map((award, i) => (
+                                <div key={i} className="mb-3">
+                                    <p className="font-bold uppercase text-[10px]">{award.title}</p>
+                                    <p className="text-[10px] opacity-60 mt-0.5">{award.issuer}</p>
+                                </div>
+                            ))}
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="font-black uppercase tracking-widest border-b mb-3 pb-1" style={{ color: primaryColor }}>Interests</h2>
+                            <div className="flex flex-wrap gap-1">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="bg-slate-50 px-1.5 py-0.5 rounded border">{interest}</span>
+                                ))}
+                            </div>
                         </section>
                     )}
                 </div>
@@ -1486,7 +2117,53 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                     </div>
                 </section>
             )}
-        </div>
+
+            < div className="mt-20 grid grid-cols-2 gap-16" >
+                {
+                    data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <h2 className="text-sm font-black uppercase tracking-[0.4em] text-white mb-8 border-b border-white/10 pb-4">Credentials</h2>
+                            <div className="space-y-6">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-xs font-bold text-white uppercase">{cert.name}</h3>
+                                        <p className="text-[10px] opacity-40 mt-1">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )
+                }
+                {
+                    data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="text-sm font-black uppercase tracking-[0.4em] text-white mb-8 border-b border-white/10 pb-4">Achievements</h2>
+                            <div className="space-y-6">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-xs font-bold text-white uppercase">{award.title}</h3>
+                                        <p className="text-[10px] opacity-40 mt-1">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )
+                }
+            </div >
+
+            {
+                data.interests && data.interests.length > 0 && (
+                    <section className="mt-20">
+                        <h2 className="text-sm font-black uppercase tracking-[0.4em] text-white mb-8 border-b border-white/10 pb-4">Personal Interests</h2>
+                        <div className="flex flex-wrap gap-4">
+                            {data.interests.map((interest, i) => (
+                                <span key={i} className="px-3 py-1 bg-white/5 rounded-full border border-white/10 text-[10px] font-bold uppercase tracking-widest">{interest}</span>
+                            ))}
+                        </div>
+                    </section>
+                )
+            }
+        </div >
     ),
     minimalSidebar: ({ data, primaryColor }) => (
         <div className="bg-[#f8fafc] w-[794px] mx-auto shadow-2xl flex resume-page font-inter">
@@ -1552,6 +2229,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             </div>
                         </section>
                     )}
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <SectionHeader title="Certifications" color={primaryColor} variant="line" />
+                            <div className="space-y-6">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <p className="text-sm font-bold text-slate-800">{cert.name}</p>
+                                        <p className="text-xs font-medium text-slate-400 mt-1">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <SectionHeader title="Awards" color={primaryColor} variant="line" />
+                            <div className="space-y-6">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <p className="text-sm font-bold text-slate-800">{award.title}</p>
+                                        <p className="text-xs font-medium text-slate-400 mt-1">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <SectionHeader title="Interests" color={primaryColor} variant="line" />
+                            <div className="flex flex-wrap gap-2">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="px-3 py-1 bg-white text-xs font-bold uppercase tracking-widest text-slate-600 border border-slate-100 rounded">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </div>
         </div>
@@ -1605,6 +2321,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             </div>
                         </section>
                     )}
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 mb-6">Certifications</h2>
+                            <div className="space-y-6">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <p className="text-xs font-bold text-slate-800 uppercase leading-snug">{cert.name}</p>
+                                        <p className="text-[10px] font-medium text-slate-400 mt-1 italic">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 mb-6">Awards</h2>
+                            <div className="space-y-6">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <p className="text-xs font-bold text-slate-800 uppercase leading-snug">{award.title}</p>
+                                        <p className="text-[10px] font-medium text-slate-400 mt-1 italic">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 mb-6">Interests</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="px-2 py-1 bg-white text-[9px] font-bold text-slate-500 rounded uppercase tracking-widest border border-slate-100">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
                 <div className="col-span-8 space-y-12">
                     <section>
@@ -1645,17 +2400,44 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
-                <section>
-                    <h2 className="text-[10px] font-black uppercase tracking-[0.3em] mb-6 opacity-40 border-b border-white/20 pb-2">Awards</h2>
-                    <div className="space-y-4">
-                        {data.certifications?.map((c, i) => (
-                            <div key={i} className="text-[10px]">
-                                <p className="font-bold">{c.name}</p>
-                                <p className="opacity-60">{c.issuer}</p>
-                            </div>
-                        ))}
-                    </div>
-                </section>
+                {data.certifications && data.certifications.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.3em] mb-6 opacity-40 border-b border-white/20 pb-2">Certifications</h2>
+                        <div className="space-y-4">
+                            {data.certifications.map((cert, i) => (
+                                <div key={i} className="text-[10px]">
+                                    <p className="font-bold">{cert.name}</p>
+                                    <p className="opacity-60">{cert.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.awards && data.awards.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.3em] mb-6 opacity-40 border-b border-white/20 pb-2">Awards</h2>
+                        <div className="space-y-4">
+                            {data.awards.map((award, i) => (
+                                <div key={i} className="text-[10px]">
+                                    <p className="font-bold">{award.title}</p>
+                                    <p className="opacity-60">{award.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.interests && data.interests.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.3em] mb-6 opacity-40 border-b border-white/20 pb-2">Interests</h2>
+                        <div className="flex flex-wrap gap-2">
+                            {data.interests.map((interest, i) => (
+                                <span key={i} className="text-[10px] bg-white/10 px-2 py-1 rounded">{interest}</span>
+                            ))}
+                        </div>
+                    </section>
+                )}
             </div>
             <div className="w-2/3 p-16 space-y-12">
                 <section>
@@ -1665,7 +2447,7 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             <div key={i}>
                                 <div className="flex justify-between items-baseline mb-1">
                                     <h3 className="text-lg font-bold text-slate-800">{exp.company}</h3>
-                                    <span className="text-xs font-bold text-slate-400">{exp.startDate} - {exp.endDate}</span>
+                                    <span className="text-xs font-bold text-slate-400">{exp.startDate} - {exp.endDate || 'Present'}</span>
                                 </div>
                                 <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: primaryColor }}>{exp.position}</p>
                                 <p className="text-sm text-slate-500 leading-relaxed">{exp.description}</p>
@@ -1673,17 +2455,47 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
-                <section>
-                    <SectionHeader title="Projects" color={primaryColor} variant="line" />
-                    <div className="grid grid-cols-2 gap-6">
-                        {data.projects.map((p, i) => (
-                            <div key={i} className="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                                <h4 className="font-bold text-slate-800 text-sm mb-1">{p.name}</h4>
-                                <p className="text-[10px] text-slate-500 line-clamp-2">{p.description}</p>
-                            </div>
-                        ))}
-                    </div>
-                </section>
+                {data.education && data.education.length > 0 && (
+                    <section>
+                        <SectionHeader title="Education" color={primaryColor} variant="line" />
+                        <div className="space-y-6">
+                            {data.education.map((edu, i) => (
+                                <div key={i}>
+                                    <div className="flex justify-between items-baseline mb-1">
+                                        <h3 className="text-base font-bold text-slate-800">{edu.school}</h3>
+                                        <span className="text-xs font-bold text-slate-400">{edu.startDate} - {edu.endDate}</span>
+                                    </div>
+                                    <p className="text-xs font-bold opacity-60 uppercase tracking-widest">{edu.degree} in {edu.fieldOfStudy}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+                {data.projects && data.projects.length > 0 && (
+                    <section>
+                        <SectionHeader title="Projects" color={primaryColor} variant="line" />
+                        <div className="grid grid-cols-2 gap-6">
+                            {data.projects.map((p, i) => (
+                                <div key={i} className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                                    <h4 className="font-bold text-slate-800 text-sm mb-1">{p.name}</h4>
+                                    <p className="text-[10px] text-slate-500 line-clamp-2">{p.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+                {data.languages && data.languages.length > 0 && (
+                    <section>
+                        <SectionHeader title="Languages" color={primaryColor} variant="line" />
+                        <div className="flex flex-wrap gap-4">
+                            {data.languages.map((l, i) => (
+                                <div key={i} className="text-sm text-slate-600 font-medium">
+                                    {l.language} <span className="text-xs text-slate-400">({l.proficiency})</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -1702,18 +2514,53 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
             </header>
             <div className="grid grid-cols-12 gap-20">
                 <div className="col-span-12">
+                    <section className="mb-24">
+                        <h2 className="text-sm font-black uppercase tracking-[0.5em] mb-12" style={{ color: primaryColor }}>Profile</h2>
+                        <p className="text-lg opacity-60 leading-relaxed max-w-4xl italic font-light">"{data.personalInfo.summary}"</p>
+                    </section>
+
                     <div className="columns-2 gap-20">
                         <section className="break-inside-avoid">
                             <h2 className="text-sm font-black uppercase tracking-[0.5em] mb-12" style={{ color: primaryColor }}>Experience</h2>
                             {data.experience.map((exp, i) => (
                                 <div key={i} className="mb-12 border-l-2 pl-8" style={{ borderColor: primaryColor }}>
                                     <h3 className="text-2xl font-bold mb-1">{exp.company}</h3>
-                                    <p className="text-xs font-bold uppercase tracking-widest opacity-30 mb-4">{exp.position} / {exp.startDate}-{exp.endDate}</p>
+                                    <p className="text-xs font-bold uppercase tracking-widest opacity-30 mb-4">{exp.position} / {exp.startDate}-{exp.endDate || 'Present'}</p>
                                     <p className="text-sm opacity-60 leading-relaxed mb-6">{exp.description}</p>
                                 </div>
                             ))}
                         </section>
-                        <section className="break-inside-avoid">
+                        {data.education && data.education.length > 0 && (
+                            <section className="break-inside-avoid mb-12">
+                                <h2 className="text-sm font-black uppercase tracking-[0.5em] mb-12" style={{ color: primaryColor }}>Academic</h2>
+                                {data.education.map((edu, i) => (
+                                    <div key={i} className="mb-8 border-l-2 pl-8" style={{ borderColor: primaryColor }}>
+                                        <h3 className="text-xl font-bold mb-1">{edu.school}</h3>
+                                        <p className="text-xs font-bold uppercase tracking-widest opacity-30 mb-2">{edu.degree}</p>
+                                        <p className="text-[10px] opacity-30 uppercase tracking-widest">{edu.startDate} — {edu.endDate}</p>
+                                    </div>
+                                ))}
+                            </section>
+                        )}
+                        {data.projects && data.projects.length > 0 && (
+                            <section className="break-inside-avoid mb-12">
+                                <h2 className="text-sm font-black uppercase tracking-[0.5em] mb-12" style={{ color: primaryColor }}>Projects</h2>
+                                <div className="space-y-8">
+                                    {data.projects.map((proj, i) => (
+                                        <div key={i} className="border-l-2 pl-8" style={{ borderColor: primaryColor }}>
+                                            <h3 className="text-xl font-bold mb-2">{proj.name}</h3>
+                                            <p className="text-sm opacity-60 leading-relaxed mb-4">{proj.description}</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {proj.technologies.slice(0, 3).map((tech, j) => (
+                                                    <span key={j} className="text-[10px] font-bold uppercase tracking-tighter opacity-30">{tech}</span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                        <section className="break-inside-avoid mb-12">
                             <h2 className="text-sm font-black uppercase tracking-[0.5em] mb-12" style={{ color: primaryColor }}>Specializations</h2>
                             <div className="grid grid-cols-2 gap-4">
                                 {data.skills.map((s, i) => (
@@ -1724,6 +2571,48 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 ))}
                             </div>
                         </section>
+                        {data.languages && data.languages.length > 0 && (
+                            <section className="break-inside-avoid mb-12">
+                                <h2 className="text-sm font-black uppercase tracking-[0.5em] mb-12" style={{ color: primaryColor }}>Communication</h2>
+                                <div className="space-y-4">
+                                    {data.languages.map((l, i) => (
+                                        <div key={i} className="flex justify-between items-center text-xs font-bold opacity-60 uppercase tracking-widest">
+                                            <span>{l.language}</span>
+                                            <span>{l.proficiency}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                        {((data.certifications?.length || 0) > 0 || (data.awards?.length || 0) > 0) && (
+                            <section className="break-inside-avoid mb-12">
+                                <h2 className="text-sm font-black uppercase tracking-[0.5em] mb-12" style={{ color: primaryColor }}>Credentials</h2>
+                                <div className="space-y-6">
+                                    {(data.certifications || []).map((c, i) => (
+                                        <div key={i}>
+                                            <p className="text-lg font-bold">{c.name}</p>
+                                            <p className="text-xs font-bold uppercase tracking-widest opacity-30 mt-1">{c.issuer}</p>
+                                        </div>
+                                    ))}
+                                    {(data.awards || []).map((a, i) => (
+                                        <div key={`a-${i}`}>
+                                            <p className="text-lg font-bold">{a.title}</p>
+                                            <p className="text-xs font-bold uppercase tracking-widest opacity-30 mt-1">{a.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                        {data.interests && data.interests.length > 0 && (
+                            <section className="break-inside-avoid">
+                                <h2 className="text-sm font-black uppercase tracking-[0.5em] mb-12" style={{ color: primaryColor }}>Interests</h2>
+                                <div className="flex flex-wrap gap-4">
+                                    {data.interests.map((interest, i) => (
+                                        <span key={i} className="text-xs font-bold uppercase tracking-widest opacity-60 italic">{interest}</span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                     </div>
                 </div>
             </div>
@@ -1763,8 +2652,51 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             ))}
                         </div>
                     </section>
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <SectionHeader title="Certifications" color={primaryColor} variant="line" />
+                            <div className="space-y-4">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <p className="text-xs font-bold uppercase tracking-wider">{cert.name}</p>
+                                        <p className="text-[10px] opacity-40">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <SectionHeader title="Awards" color={primaryColor} variant="line" />
+                            <div className="space-y-4">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <p className="text-xs font-bold uppercase tracking-wider">{award.title}</p>
+                                        <p className="text-[10px] opacity-40">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <SectionHeader title="Interests" color={primaryColor} variant="line" />
+                            <div className="flex flex-wrap gap-2">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="px-2 py-1 bg-slate-50 text-[10px] font-bold uppercase tracking-widest text-slate-500 rounded border border-slate-100">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
                 <div className="col-span-8 flex flex-col gap-12">
+                    <section>
+                        <SectionHeader title="Professional Summary" color={primaryColor} variant="line" />
+                        <p className="text-sm text-slate-500 leading-relaxed font-light">{data.personalInfo.summary}</p>
+                    </section>
                     <section>
                         <SectionHeader title="Work History" color={primaryColor} variant="line" />
                         <div className="space-y-8">
@@ -1772,7 +2704,7 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 <div key={i} className="relative">
                                     <div className="flex justify-between font-bold text-slate-800 mb-1">
                                         <span>{exp.company}</span>
-                                        <span className="text-xs opacity-40 uppercase">{exp.startDate} - {exp.endDate}</span>
+                                        <span className="text-xs opacity-40 uppercase">{exp.startDate} - {exp.endDate || 'Present'}</span>
                                     </div>
                                     <p className="text-xs font-black uppercase tracking-widest mb-3 italic" style={{ color: primaryColor }}>{exp.position}</p>
                                     <p className="text-sm text-slate-500 leading-relaxed font-light">{exp.description}</p>
@@ -1780,6 +2712,48 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             ))}
                         </div>
                     </section>
+                    {data.education && data.education.length > 0 && (
+                        <section>
+                            <SectionHeader title="Education" color={primaryColor} variant="line" />
+                            <div className="space-y-8">
+                                {data.education.map((edu, i) => (
+                                    <div key={i}>
+                                        <div className="flex justify-between font-bold text-slate-800 mb-1">
+                                            <span>{edu.school}</span>
+                                            <span className="text-xs opacity-40 uppercase">{edu.startDate} - {edu.endDate}</span>
+                                        </div>
+                                        <p className="text-xs font-black uppercase tracking-widest italic" style={{ color: primaryColor }}>{edu.degree}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {data.projects && data.projects.length > 0 && (
+                        <section>
+                            <SectionHeader title="Key Projects" color={primaryColor} variant="line" />
+                            <div className="grid grid-cols-2 gap-8">
+                                {data.projects.map((proj, i) => (
+                                    <div key={i} className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                                        <h3 className="text-sm font-bold text-slate-800 mb-2 uppercase tracking-widest">{proj.name}</h3>
+                                        <p className="text-[11px] text-slate-500 leading-relaxed">{proj.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {data.languages && data.languages.length > 0 && (
+                        <section>
+                            <SectionHeader title="Languages" color={primaryColor} variant="line" />
+                            <div className="flex flex-wrap gap-8">
+                                {data.languages.map((l, i) => (
+                                    <div key={i}>
+                                        <p className="text-xs font-bold uppercase tracking-wider">{l.language}</p>
+                                        <p className="text-[10px] opacity-40">{l.proficiency}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </div>
         </div>
@@ -1810,6 +2784,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
+
+                {data.certifications && data.certifications.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 mb-8 border-b pb-4">Certifications</h2>
+                        <div className="space-y-6">
+                            {data.certifications.map((cert, i) => (
+                                <div key={i}>
+                                    <h3 className="text-sm font-bold text-slate-800 uppercase tracking-tight">{cert.name}</h3>
+                                    <p className="text-[10px] font-medium text-slate-400 mt-1 italic">{cert.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.awards && data.awards.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 mb-8 border-b pb-4">Awards</h2>
+                        <div className="space-y-6">
+                            {data.awards.map((award, i) => (
+                                <div key={i}>
+                                    <h3 className="text-sm font-bold text-slate-800 uppercase tracking-tight">{award.title}</h3>
+                                    <p className="text-[10px] font-medium text-slate-400 mt-1 italic">{award.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.interests && data.interests.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 mb-8 border-b pb-4">Interests</h2>
+                        <div className="flex flex-wrap gap-2">
+                            {data.interests.map((interest, i) => (
+                                <span key={i} className="text-xs font-bold text-slate-500 uppercase tracking-widest">{interest}</span>
+                            ))}
+                        </div>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -1831,13 +2844,17 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
             </section>
             <div className="space-y-20">
                 <section>
+                    <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-12 text-center opacity-30">Professional Narrative</h2>
+                    <p className="text-lg leading-relaxed text-center italic max-w-2xl mx-auto opacity-60">"{data.personalInfo.summary}"</p>
+                </section>
+                <section>
                     <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-12 text-center opacity-30">Selection of Works</h2>
                     <div className="space-y-16">
                         {data.experience.map((exp, i) => (
                             <div key={i}>
                                 <div className="flex justify-between items-end border-b border-black/5 pb-2 mb-6">
                                     <h3 className="text-2xl font-black uppercase tracking-tighter">{exp.company}</h3>
-                                    <span className="text-xs font-bold italic opacity-40">{exp.startDate} - {exp.endDate}</span>
+                                    <span className="text-xs font-bold italic opacity-40">{exp.startDate} - {exp.endDate || 'Present'}</span>
                                 </div>
                                 <p className="text-sm font-bold uppercase tracking-widest mb-6 border-l-4 pl-4 border-black">{exp.position}</p>
                                 <p className="text-sm leading-relaxed text-justify opacity-60">{exp.description}</p>
@@ -1845,6 +2862,84 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
+                <div className="grid grid-cols-2 gap-20">
+                    {data.skills && data.skills.length > 0 && (
+                        <section>
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-12 text-center opacity-30">Expertise Spectrum</h2>
+                            <div className="flex flex-wrap justify-center gap-x-8 gap-y-4">
+                                {data.skills.map((s, i) => (
+                                    <span key={i} className="text-xs font-bold uppercase tracking-widest border-b border-black/10 pb-1">{s}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {data.education && data.education.length > 0 && (
+                        <section>
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-12 text-center opacity-30">Scholastic Records</h2>
+                            <div className="space-y-8">
+                                {data.education.map((edu, i) => (
+                                    <div key={i} className="text-center">
+                                        <h3 className="text-sm font-black uppercase tracking-widest mb-2">{edu.school}</h3>
+                                        <p className="text-xs font-bold italic opacity-40">{edu.degree}</p>
+                                        <p className="text-[10px] opacity-20 mt-1 uppercase tracking-widest">{edu.startDate} — {edu.endDate}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                </div>
+                {data.projects && data.projects.length > 0 && (
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-12 text-center opacity-30">Curated Projects</h2>
+                        <div className="grid grid-cols-2 gap-16">
+                            {data.projects.map((proj, i) => (
+                                <div key={i} className="text-center">
+                                    <h3 className="text-sm font-black uppercase tracking-widest mb-4 border-b border-black/5 pb-2">{proj.name}</h3>
+                                    <p className="text-xs leading-relaxed opacity-60 text-center italic">{proj.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+                <div className="grid grid-cols-2 gap-20">
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-12 text-center opacity-30">Linguistic Ability</h2>
+                        <div className="space-y-4 text-center">
+                            {data.languages.map((l, i) => (
+                                <div key={i} className="text-xs font-bold uppercase tracking-widest">
+                                    {l.language} / <span className="opacity-40 italic">{l.proficiency}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                    {((data.certifications?.length || 0) > 0 || (data.awards?.length || 0) > 0) && (
+                        <section>
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-12 text-center opacity-30">Honours & Merits</h2>
+                            <div className="space-y-6 text-center">
+                                {(data.certifications || []).map((c, i) => (
+                                    <div key={i}>
+                                        <p className="text-[11px] font-black uppercase tracking-widest">{c.name}</p>
+                                        <p className="text-[10px] opacity-30 italic">{c.issuer}</p>
+                                    </div>
+                                ))}
+                                {(data.awards || []).map((a, i) => (
+                                    <div key={`a-${i}`}>
+                                        <p className="text-[11px] font-black uppercase tracking-widest">{a.title}</p>
+                                        <p className="text-[10px] opacity-30 italic">{a.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                </div>
+                {data.interests && data.interests.length > 0 && (
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-12 text-center opacity-30">Personal Affinities</h2>
+                        <p className="text-xs font-bold uppercase tracking-[0.5em] text-center opacity-30">
+                            {data.interests.join(" / ")}
+                        </p>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -1947,6 +3042,51 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             </div>
                         </section>
                     )}
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section className="bg-white/5 p-8 border border-white/10">
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-6" style={{ color: primaryColor }}>
+                                CERT_KEYS
+                            </h2>
+                            <div className="space-y-4">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <p className="text-[10px] font-black uppercase">{cert.name}</p>
+                                        <p className="text-[9px] text-gray-500 mb-1">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section className="bg-white/5 p-8 border border-white/10">
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-6" style={{ color: primaryColor }}>
+                                AWARD_TOKENS
+                            </h2>
+                            <div className="space-y-4">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <p className="text-[10px] font-black uppercase">{award.title}</p>
+                                        <p className="text-[9px] text-gray-500 mb-1">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section className="bg-white/5 p-8 border border-white/10">
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-6" style={{ color: primaryColor }}>
+                                INTEREST_FLAGS
+                            </h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="text-[10px] px-2 py-1 bg-white/5 border border-white/10 uppercase font-bold tracking-tighter">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </div>
         </div>
@@ -1959,7 +3099,8 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
             <div className="relative z-10 p-16">
                 <header className="mb-16 backdrop-blur-md bg-white/5 border border-white/10 p-12 rounded-[32px] shadow-2xl">
                     <h1 className="text-6xl font-black text-white tracking-tighter mb-4">{data.personalInfo.fullName}</h1>
-                    <p className="text-lg font-medium text-white/50 mb-8">{data.experience[0]?.position}</p>
+                    <p className="text-lg font-medium text-white/50 mb-4">{data.experience[0]?.position}</p>
+                    <p className="text-sm text-white/40 leading-relaxed font-light mb-8 max-w-2xl italic">"{data.personalInfo.summary}"</p>
                     <div className="flex gap-8 text-[11px] font-bold text-white/30 uppercase tracking-widest">
                         <span>{data.personalInfo.email}</span>
                         <span>•</span>
@@ -2041,6 +3182,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 </div>
                             </section>
                         )}
+
+                        {data.certifications && data.certifications.length > 0 && (
+                            <section className="backdrop-blur-sm bg-white/[0.02] border border-white/5 p-10 rounded-[32px]">
+                                <h2 className="text-xs font-black uppercase tracking-[0.4em] text-white/20 mb-10">Certifications</h2>
+                                <div className="space-y-8">
+                                    {data.certifications.map((cert, i) => (
+                                        <div key={i}>
+                                            <h3 className="text-sm font-bold text-white mb-1">{cert.name}</h3>
+                                            <p className="text-xs text-white/40 mb-2">{cert.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.awards && data.awards.length > 0 && (
+                            <section className="backdrop-blur-sm bg-white/[0.02] border border-white/5 p-10 rounded-[32px]">
+                                <h2 className="text-xs font-black uppercase tracking-[0.4em] text-white/20 mb-10">Awards</h2>
+                                <div className="space-y-8">
+                                    {data.awards.map((award, i) => (
+                                        <div key={i}>
+                                            <h3 className="text-sm font-bold text-white mb-1">{award.title}</h3>
+                                            <p className="text-xs text-white/40 mb-2">{award.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.interests && data.interests.length > 0 && (
+                            <section className="backdrop-blur-sm bg-white/[0.02] border border-white/5 p-10 rounded-[32px]">
+                                <h2 className="text-xs font-black uppercase tracking-[0.4em] text-white/20 mb-10">Interests</h2>
+                                <div className="flex flex-wrap gap-2">
+                                    {data.interests.map((interest, i) => (
+                                        <span key={i} className="px-4 py-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-full text-[10px] font-bold text-white/70">{interest}</span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                     </div>
                 </div>
             </div>
@@ -2106,6 +3286,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 </div>
                             </section>
                         )}
+
+                        {data.certifications && data.certifications.length > 0 && (
+                            <section className="mt-12">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 mb-8">Credentials</h2>
+                                <div className="space-y-6">
+                                    {data.certifications.map((cert, i) => (
+                                        <div key={i} className="border-l border-slate-100 pl-6">
+                                            <p className="text-xs font-bold text-slate-800 uppercase">{cert.name}</p>
+                                            <p className="text-[10px] text-slate-400 mt-1">{cert.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.awards && data.awards.length > 0 && (
+                            <section className="mt-12">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 mb-8">Feats</h2>
+                                <div className="space-y-6">
+                                    {data.awards.map((award, i) => (
+                                        <div key={i} className="border-l border-slate-100 pl-6">
+                                            <p className="text-xs font-bold text-slate-800 uppercase">{award.title}</p>
+                                            <p className="text-[10px] text-slate-400 mt-1">{award.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.interests && data.interests.length > 0 && (
+                            <section className="mt-12">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 mb-8">Interests</h2>
+                                <div className="flex flex-wrap gap-2">
+                                    {data.interests.map((interest, i) => (
+                                        <span key={i} className="px-3 py-1 bg-slate-50 text-[10px] font-bold text-slate-400 rounded-full">{interest}</span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                     </div>
                     <div className="col-span-8">
                         {data.education && data.education.length > 0 && (
@@ -2160,6 +3379,13 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
             </header>
             <div className="grid grid-cols-12 gap-16">
                 <div className="col-span-12">
+                    <section className="mb-20">
+                        <div className="flex items-center gap-6 mb-12">
+                            <div className="h-px w-12 bg-white/10"></div>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/30 italic">Personal Fragment</h2>
+                        </div>
+                        <p className="text-sm leading-relaxed text-white/60 font-medium italic border-l border-white/20 pl-6">"{data.personalInfo.summary}"</p>
+                    </section>
                     <section className="mb-24">
                         <div className="flex justify-between items-center mb-12 border-b border-white/10 pb-4">
                             <h2 className="text-sm font-black uppercase tracking-[0.6em] text-white">System Experience</h2>
@@ -2219,6 +3445,59 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             </div>
                         </section>
                     )}
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section className="mt-24">
+                            <h2 className="text-sm font-black uppercase tracking-[0.6em] text-white mb-10 border-b border-white/10 pb-4">Auth Tokens</h2>
+                            <div className="space-y-8">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-lg font-bold text-white italic">{cert.name}</h3>
+                                        <p className="text-xs text-white/40 mt-1 uppercase tracking-widest">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section className="mt-24">
+                            <h2 className="text-sm font-black uppercase tracking-[0.6em] text-white mb-10 border-b border-white/10 pb-4">Achievements</h2>
+                            <div className="space-y-8">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-lg font-bold text-white italic">{award.title}</h3>
+                                        <p className="text-xs text-white/40 mt-1 uppercase tracking-widest">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.languages && data.languages.length > 0 && (
+                        <section className="mt-24">
+                            <h2 className="text-sm font-black uppercase tracking-[0.6em] text-white mb-10 border-b border-white/10 pb-4">Linguistic Matrix</h2>
+                            <div className="grid grid-cols-2 gap-4">
+                                {data.languages.map((l, i) => (
+                                    <div key={i} className="flex justify-between items-center p-3 bg-white/5 border border-white/10 rounded-lg">
+                                        <span className="text-xs font-bold text-white/70">{l.language}</span>
+                                        <span className="text-[10px] font-medium text-white/30 italic uppercase">{l.proficiency}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section className="mt-24">
+                            <h2 className="text-sm font-black uppercase tracking-[0.6em] text-white mb-10 border-b border-white/10 pb-4">Idle Processes</h2>
+                            <div className="flex flex-wrap gap-3">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="px-3 py-1.5 bg-white/5 border border-white/10 text-[10px] font-bold text-white/60 rounded uppercase tracking-tighter italic">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </div>
         </div>
@@ -2230,10 +3509,11 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                 <div className="h-1.5 w-16 mb-12 rounded-full" style={{ backgroundColor: primaryColor }}></div>
                 <h1 className="text-7xl font-black tracking-tighter mb-4 leading-[0.9]">{data.personalInfo.fullName}</h1>
                 <p className="text-xl font-medium text-slate-400 max-w-lg mb-8 italic">"{data.personalInfo.summary.substring(0, 150)}..."</p>
-                <div className="flex gap-10 text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">
+                <div className="flex gap-16 text-xs font-black uppercase tracking-[0.5em] text-white/40 mb-12">
                     <span>{data.personalInfo.email}</span>
                     <span>{data.personalInfo.phone}</span>
                 </div>
+                <p className="text-lg leading-relaxed text-white/20 font-light italic max-w-2xl">"{data.personalInfo.summary}"</p>
             </header>
             <div className="grid grid-cols-12 gap-16">
                 <div className="col-span-4 self-start sticky top-24">
@@ -2272,6 +3552,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                         <span>{l.language}</span>
                                         <span className="opacity-30">{l.proficiency}</span>
                                     </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-8 border-b pb-4">Certifications</h2>
+                            <div className="space-y-3">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <p className="text-xs font-black text-slate-800 uppercase tracking-tight">{cert.name}</p>
+                                        <p className="text-[10px] text-slate-400 mt-1">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-8 border-b pb-4">Awards</h2>
+                            <div className="space-y-3">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <p className="text-xs font-black text-slate-800 uppercase tracking-tight">{award.title}</p>
+                                        <p className="text-[10px] text-slate-400 mt-1">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-8 border-b pb-4">Interests</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="px-2 py-1 border border-slate-100 text-[10px] font-bold text-slate-500 rounded uppercase tracking-widest">{interest}</span>
                                 ))}
                             </div>
                         </section>
@@ -2326,6 +3645,11 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                 </div>
             </header>
             <div className="space-y-12">
+                <section className="bg-white p-8 border border-slate-200">
+                    <h2 className="text-[10px] font-black uppercase tracking-[0.5em] mb-4 border-b pb-2">Profile Abstract</h2>
+                    <p className="text-xs text-slate-600 leading-relaxed italic">{data.personalInfo.summary}</p>
+                </section>
+
                 <section>
                     <div className="flex items-center gap-4 mb-10">
                         <div className="w-4 h-4" style={{ backgroundColor: primaryColor }}></div>
@@ -2387,6 +3711,51 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                     </div>
                                     <div className="text-[9px] font-bold text-slate-300 italic">TAG_{i}</div>
                                 </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.certifications && data.certifications.length > 0 && (
+                    <section className="bg-white p-8 border border-slate-200">
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] mb-6 border-b pb-4">Auth/Cert</h2>
+                        <div className="space-y-4">
+                            {data.certifications.map((cert, i) => (
+                                <div key={i} className="flex justify-between items-start gap-8">
+                                    <div className="flex-1">
+                                        <h3 className="text-xs font-black uppercase mb-1">{cert.name}</h3>
+                                        <p className="text-[10px] text-slate-400">{cert.issuer}</p>
+                                    </div>
+                                    <div className="text-[9px] font-bold text-slate-300 italic">CRT_{i}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.awards && data.awards.length > 0 && (
+                    <section className="bg-white p-8 border border-slate-200">
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] mb-6 border-b pb-4">Achievements</h2>
+                        <div className="space-y-4">
+                            {data.awards.map((award, i) => (
+                                <div key={i} className="flex justify-between items-start gap-8">
+                                    <div className="flex-1">
+                                        <h3 className="text-xs font-black uppercase mb-1">{award.title}</h3>
+                                        <p className="text-[10px] text-slate-400">{award.issuer}</p>
+                                    </div>
+                                    <div className="text-[9px] font-bold text-slate-300 italic">AWD_{i}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.interests && data.interests.length > 0 && (
+                    <section className="bg-white p-8 border border-slate-200">
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] mb-6 border-b pb-4">Interests Metadata</h2>
+                        <div className="flex flex-wrap gap-2">
+                            {data.interests.map((interest, i) => (
+                                <span key={i} className="text-[10px] font-bold text-slate-500 uppercase tracking-widest bg-slate-50 px-2 py-1 border border-slate-100">{interest}</span>
                             ))}
                         </div>
                     </section>
@@ -2463,6 +3832,59 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         </div>
                     </section>
                 )}
+
+                {data.certifications && data.certifications.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-12 text-center">Certified</h2>
+                        <div className="space-y-6 text-center">
+                            {data.certifications.map((cert, i) => (
+                                <div key={i}>
+                                    <h3 className="text-sm font-bold text-slate-800">{cert.name}</h3>
+                                    <p className="text-xs text-slate-400 italic mt-1">{cert.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.awards && data.awards.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-12 text-center">Honors</h2>
+                        <div className="space-y-6 text-center">
+                            {data.awards.map((award, i) => (
+                                <div key={i}>
+                                    <h3 className="text-sm font-bold text-slate-800">{award.title}</h3>
+                                    <p className="text-xs text-slate-400 italic mt-1">{award.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.languages && data.languages.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-12 text-center">Passions</h2>
+                        <div className="space-y-6 text-center">
+                            {data.languages.map((l, i) => (
+                                <div key={i}>
+                                    <h3 className="text-sm font-bold text-slate-800">{l.language}</h3>
+                                    <p className="text-xs text-slate-400 italic mt-1">{l.proficiency}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.interests && data.interests.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-12 text-center">Passions</h2>
+                        <div className="flex flex-wrap justify-center gap-4">
+                            {data.interests.map((interest, i) => (
+                                <span key={i} className="text-xs font-bold text-slate-600 italic px-3 py-1 bg-white shadow-sm rounded-full">{interest}</span>
+                            ))}
+                        </div>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -2477,6 +3899,10 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                     <span className="ml-4 opacity-30">resume_v2.terminal</span>
                 </div>
                 <h1 className="text-4xl font-bold text-white mb-2 underline decoration-dashed decoration-white/20 underline-offset-8">{data.personalInfo.fullName}</h1>
+                <div className="mt-8 text-[11px] leading-relaxed text-white/40 italic font-bold">
+                    <span className="text-[#00ff41] opacity-50 mr-2"># whoami</span>
+                    {data.personalInfo.summary}
+                </div>
                 <div className="flex gap-6 text-[11px] font-medium mt-6">
                     <span style={{ color: primaryColor }}>$ contact --email</span>
                     <span className="text-white opacity-60">{data.personalInfo.email}</span>
@@ -2548,6 +3974,66 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         </div>
                     </section>
                 )}
+
+                {data.certifications && data.certifications.length > 0 && (
+                    <section>
+                        <h2 className="text-sm font-bold text-[#f7768e] mb-6 flex items-center gap-2">
+                            <span className="text-white opacity-20">❯</span> cat ~/.ssh/certs
+                        </h2>
+                        <div className="space-y-4">
+                            {data.certifications.map((cert, i) => (
+                                <div key={i} className="text-[10px]">
+                                    <p className="text-white font-bold italic"># {cert.name}</p>
+                                    <p className="text-white/40 mt-1">{cert.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.awards && data.awards.length > 0 && (
+                    <section>
+                        <h2 className="text-sm font-bold text-[#2ac3de] mb-6 flex items-center gap-2">
+                            <span className="text-white opacity-20">❯</span> grep "AWARD" ./history.log
+                        </h2>
+                        <div className="space-y-4">
+                            {data.awards.map((award, i) => (
+                                <div key={i} className="text-[10px]">
+                                    <p className="text-white font-bold italic"># {award.title}</p>
+                                    <p className="text-white/40 mt-1">{award.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.languages && data.languages.length > 0 && (
+                    <section>
+                        <h2 className="text-sm font-bold text-[#bb9af7] mb-6 flex items-center gap-2">
+                            <span className="text-white opacity-20">❯</span> cat ~/languages.conf
+                        </h2>
+                        <div className="space-y-2 pl-6">
+                            {data.languages.map((l, i) => (
+                                <div key={i} className="text-[10px] font-bold">
+                                    <span className="text-orange-400">{l.language}:</span> <span className="text-white/60 italic">{l.proficiency}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.interests && data.interests.length > 0 && (
+                    <section>
+                        <h2 className="text-sm font-bold text-[#bb9af7] mb-6 flex items-center gap-2">
+                            <span className="text-white opacity-20">❯</span> ps aux | grep "interest"
+                        </h2>
+                        <div className="flex flex-wrap gap-2 text-[10px]">
+                            {data.interests.map((interest, i) => (
+                                <span key={i} className="bg-white/5 border border-white/10 px-2 py-1 rounded text-white/60 font-mono">{interest}</span>
+                            ))}
+                        </div>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -2562,7 +4048,8 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                 <header className="mb-32 text-center w-full">
                     <div className="h-px w-20 bg-white/20 mx-auto mb-10"></div>
                     <h1 className="text-8xl font-black text-white tracking-widest leading-none mb-6 uppercase" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>{data.personalInfo.fullName.split(' ')[0]}<br /><span className="text-transparent border border-white/20 bg-clip-text" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>{data.personalInfo.fullName.split(' ').slice(1).join(' ')}</span></h1>
-                    <p className="text-xs font-black uppercase tracking-[0.8em] text-white/40 mb-12 italic">{data.experience[0]?.position}</p>
+                    <p className="text-xs font-black uppercase tracking-[0.8em] text-white/40 mb-8 italic">{data.experience[0]?.position}</p>
+                    <p className="text-sm text-white/30 leading-relaxed font-light italic mb-12 max-w-xl mx-auto border-x border-white/5 px-12">"{data.personalInfo.summary}"</p>
                     <div className="flex justify-center gap-12 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">
                         <span>{data.personalInfo.email}</span>
                         <span>{data.personalInfo.phone}</span>
@@ -2593,7 +4080,7 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 <div className="space-y-4">
                                     {data.skills.map((s, i) => (
                                         <div key={i} className="flex items-center gap-4 text-xs font-bold text-white/60">
-                                            <div className="w-1 h-1 rounded-full bg-white/20"></div>
+                                            <div className="w-1.5 h-1.5 rounded-full bg-white/20"></div>
                                             {s}
                                         </div>
                                     ))}
@@ -2627,6 +4114,59 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 </div>
                             </section>
                         )}
+
+                        {data.certifications && data.certifications.length > 0 && (
+                            <section>
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-white/20 mb-16 text-center italic">Stellar Credentials</h2>
+                                <div className="grid grid-cols-2 gap-20">
+                                    {data.certifications.map((cert, i) => (
+                                        <div key={i} className="border-t border-white/5 pt-8">
+                                            <h3 className="text-lg font-black italic mb-2 text-white/90">{cert.name}</h3>
+                                            <p className="text-xs text-white/30 leading-relaxed uppercase">{cert.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.awards && data.awards.length > 0 && (
+                            <section>
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-white/20 mb-16 text-center italic">Galactic Honors</h2>
+                                <div className="grid grid-cols-2 gap-20">
+                                    {data.awards.map((award, i) => (
+                                        <div key={i} className="border-t border-white/5 pt-8">
+                                            <h3 className="text-lg font-black italic mb-2 text-white/90">{award.title}</h3>
+                                            <p className="text-xs text-white/30 leading-relaxed uppercase">{award.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.languages && data.languages.length > 0 && (
+                            <section>
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-white/20 mb-10 italic">Communication Satellites</h2>
+                                <div className="space-y-4">
+                                    {data.languages.map((l, i) => (
+                                        <div key={i} className="flex justify-between items-center text-xs font-bold text-white/40">
+                                            <span>{l.language}</span>
+                                            <span className="italic opacity-50">{l.proficiency}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.interests && data.interests.length > 0 && (
+                            <section>
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-white/20 mb-10 italic">Orbiting Interests</h2>
+                                <div className="flex flex-wrap gap-4">
+                                    {data.interests.map((interest, i) => (
+                                        <span key={i} className="px-4 py-2 border border-white/10 rounded-full text-xs font-bold text-white/40 uppercase tracking-widest">{interest}</span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                     </div>
                 </div>
             </div>
@@ -2642,8 +4182,11 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                     <div className="h-full w-1/3 bg-purple-500"></div>
                     <div className="h-full w-1/3 bg-pink-500"></div>
                 </div>
-                <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-[0.3em] text-slate-300">
-                    <p>{data.experience[0]?.position}</p>
+                <div className="flex justify-between items-end text-[11px] font-black uppercase tracking-[0.3em] text-slate-300">
+                    <div>
+                        <p className="mb-2">{data.experience[0]?.position}</p>
+                        <p className="italic normal-case font-medium text-slate-400 max-w-sm">"{data.personalInfo.summary}"</p>
+                    </div>
                     <div className="flex gap-8">
                         <span>{data.personalInfo.email}</span>
                         <span>{data.personalInfo.phone}</span>
@@ -2674,7 +4217,7 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             <div className="grid grid-cols-2 gap-4">
                                 {data.skills.map((s, i) => (
                                     <div key={i} className="flex items-center gap-3">
-                                        <div className="w-1 h-1" style={{ backgroundColor: i % 2 === 0 ? primaryColor : '#a855f7' }}></div>
+                                        <div className="w-1.5 h-1.5" style={{ backgroundColor: i % 2 === 0 ? primaryColor : '#a855f7' }}></div>
                                         <span className="text-[11px] font-black uppercase tracking-tighter text-slate-600">{s}</span>
                                     </div>
                                 ))}
@@ -2708,6 +4251,60 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             </div>
                         </section>
                     )}
+
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-10 pb-4 border-b border-slate-50">Certifications</h2>
+                            <div className="grid grid-cols-2 gap-10">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-black italic text-slate-800">{cert.name}</h3>
+                                        <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-widest">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-10 pb-4 border-b border-slate-50">Awards</h2>
+                            <div className="grid grid-cols-2 gap-10">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-black italic text-slate-800">{award.title}</h3>
+                                        <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-widest">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.languages && data.languages.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-10 pb-4 border-b border-slate-50">Linguistic Spectrum</h2>
+                            <div className="space-y-4">
+                                {data.languages.map((l, i) => (
+                                    <div key={i} className="flex justify-between text-xs font-bold uppercase tracking-widest">
+                                        <span className="text-slate-800">{l.language}</span>
+                                        <span className="text-slate-300 italic">{l.proficiency}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-10 pb-4 border-b border-slate-50">Interests</h2>
+                            <div className="flex flex-wrap gap-3">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="px-3 py-1 bg-slate-50 border border-slate-100 rounded-full text-[10px] font-black uppercase tracking-wider text-slate-600">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </div>
         </div>
@@ -2735,6 +4332,9 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                 </div>
             </header>
             <div className="grid grid-cols-12 gap-0 border border-slate-100">
+                <div className="col-span-12 border-b border-slate-100 p-8">
+                    <p className="text-sm text-slate-400 font-medium italic leading-relaxed max-w-3xl">"{data.personalInfo.summary}"</p>
+                </div>
                 <div className="col-span-12 border-b border-slate-100 p-8 flex flex-wrap gap-4">
                     {data.skills.map((s, i) => (
                         <div key={i} className="flex items-center gap-2">
@@ -2786,6 +4386,59 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         </div>
                     </section>
                 )}
+
+                {data.certifications && data.certifications.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 mb-8 border-b pb-4">Quantum Credentials</h2>
+                        <div className="space-y-8">
+                            {data.certifications.map((cert, i) => (
+                                <div key={i}>
+                                    <h3 className="text-sm font-black text-slate-800 mb-2 uppercase tracking-wide">{cert.name}</h3>
+                                    <p className="text-[11px] text-slate-500 leading-relaxed">{cert.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.awards && data.awards.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 mb-8 border-b pb-4">Quantum Rewards</h2>
+                        <div className="space-y-8">
+                            {data.awards.map((award, i) => (
+                                <div key={i}>
+                                    <h3 className="text-sm font-black text-slate-800 mb-2 uppercase tracking-wide">{award.title}</h3>
+                                    <p className="text-[11px] text-slate-500 leading-relaxed">{award.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.languages && data.languages.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 mb-8 border-b pb-4">Language Grid</h2>
+                        <div className="space-y-4">
+                            {data.languages.map((l, i) => (
+                                <div key={i} className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                                    <span>{l.language}</span>
+                                    <span style={{ color: primaryColor }}>{l.proficiency}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.interests && data.interests.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 mb-8 border-b pb-4">Spin States</h2>
+                        <div className="flex flex-wrap gap-2">
+                            {data.interests.map((interest, i) => (
+                                <span key={i} className="px-3 py-1 bg-slate-50 border border-slate-100 rounded text-[10px] font-bold text-slate-500 uppercase tracking-wider">{interest}</span>
+                            ))}
+                        </div>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -2803,6 +4456,10 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                 <div className="flex gap-16 text-[10px] font-black uppercase tracking-[0.5em] text-slate-400">
                     <span className="flex items-center gap-3"><div className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }}></div> {data.personalInfo.email}</span>
                     <span className="flex items-center gap-3"><div className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }}></div> {data.personalInfo.phone}</span>
+                </div>
+                <div className="mt-16 border-t border-slate-100 pt-12">
+                    <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-200 mb-6 italic">Strategic Narrative</h2>
+                    <p className="text-lg leading-relaxed italic text-slate-600 font-light">"{data.personalInfo.summary}"</p>
                 </div>
             </header>
             <div className="p-20 grid grid-cols-12 gap-16">
@@ -2864,6 +4521,46 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             </div>
                         </section>
                     )}
+
+
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section className="bg-white/5 p-10 rounded-3xl border border-white/10">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30 mb-8">Access Cards</h2>
+                            <div className="space-y-4">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-black text-white">{cert.name}</h3>
+                                        <p className="text-[10px] text-white/40 mt-1 uppercase tracking-widest">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.awards && data.awards.length > 0 && (
+                        <section className="bg-white/5 p-10 rounded-3xl border border-white/10">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30 mb-8">Commendations</h2>
+                            <div className="space-y-4">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-black text-white">{award.title}</h3>
+                                        <p className="text-[10px] text-white/40 mt-1 uppercase tracking-widest">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section className="bg-white/5 p-10 rounded-3xl border border-white/10">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30 mb-8">Sectors</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="px-2 py-1 bg-white/5 text-[10px] font-bold text-white/60 rounded uppercase tracking-wider border border-white/5">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </div>
         </div>
@@ -2880,7 +4577,8 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
             <header className="mb-32 max-w-lg">
                 <h1 className="text-8xl font-black tracking-tighter leading-[0.8] mb-8 uppercase text-slate-900">{data.personalInfo.fullName}</h1>
                 <div className="h-4 w-full mb-8 shadow-xl" style={{ backgroundColor: primaryColor, clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0% 100%)' }}></div>
-                <p className="text-sm font-black uppercase tracking-[0.4em] text-slate-300 italic">{data.experience[0]?.position}</p>
+                <p className="text-sm font-black uppercase tracking-[0.4em] text-slate-300 italic mb-12">{data.experience[0]?.position}</p>
+                <p className="text-sm leading-relaxed text-slate-500 italic">"{data.personalInfo.summary}"</p>
             </header>
             <div className="grid grid-cols-12 gap-12 border-t-2 border-slate-900 pt-16">
                 <div className="col-span-5 flex flex-col gap-12">
@@ -2911,6 +4609,65 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                         <h3 className="text-sm font-black text-slate-900 uppercase">{edu.school}</h3>
                                         <p className="text-[10px] text-slate-400 mt-1 italic">{edu.degree}</p>
                                     </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.projects && data.projects.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Project Array</h2>
+                            <div className="space-y-6">
+                                {data.projects.map((proj, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-black text-slate-900 uppercase">{proj.name}</h3>
+                                        <p className="text-[10px] text-slate-400 leading-relaxed font-light mt-1">{proj.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.languages && data.languages.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Dialects</h2>
+                            <div className="space-y-3">
+                                {data.languages.map((l, i) => (
+                                    <div key={i} className="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase">
+                                        <span>{l.language}</span>
+                                        <span className="opacity-40">{l.proficiency}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {((data.certifications?.length || 0) > 0 || (data.awards?.length || 0) > 0) && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Commendations</h2>
+                            <div className="space-y-6">
+                                {(data.certifications || []).map((c, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-black text-slate-900 uppercase">{c.name}</h3>
+                                        <p className="text-[10px] text-slate-400 mt-1">{c.issuer}</p>
+                                    </div>
+                                ))}
+                                {(data.awards || []).map((a, i) => (
+                                    <div key={`a-${i}`}>
+                                        <h3 className="text-sm font-black text-slate-900 uppercase">{a.title}</h3>
+                                        <p className="text-[10px] text-slate-400 mt-1">{a.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Sectors</h2>
+                            <div className="flex flex-wrap gap-4">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{interest}</span>
                                 ))}
                             </div>
                         </section>
@@ -2949,6 +4706,7 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             <span>{data.personalInfo.email}</span>
                             <span>{data.personalInfo.phone}</span>
                         </div>
+                        <p className="mt-8 text-sm text-slate-500 leading-relaxed font-light italic">"{data.personalInfo.summary}"</p>
                     </div>
                 </header>
                 <div className="grid grid-cols-12 gap-12">
@@ -2995,10 +4753,69 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 ))}
                             </div>
                         </section>
+
+                        {data.education && data.education.length > 0 && (
+                            <section className="bg-white/30 backdrop-blur-md p-10 rounded-[50px] border border-white shadow-sm">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 mb-8 italic">Academic Pulse</h2>
+                                <div className="space-y-6 text-center">
+                                    {data.education.map((edu, i) => (
+                                        <div key={i}>
+                                            <h3 className="text-sm font-black text-slate-800">{edu.school}</h3>
+                                            <p className="text-[10px] text-slate-400 italic mt-1">{edu.degree}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.languages && data.languages.length > 0 && (
+                            <section className="bg-white/30 backdrop-blur-md p-10 rounded-[50px] border border-white shadow-sm">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 mb-8 italic">Dialects</h2>
+                                <div className="space-y-4">
+                                    {data.languages.map((l, i) => (
+                                        <div key={i} className="flex justify-between items-center text-[10px] font-bold text-slate-500">
+                                            <span>{l.language}</span>
+                                            <span className="opacity-40">{l.proficiency}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {((data.certifications?.length || 0) > 0 || (data.awards?.length || 0) > 0) && (
+                            <section className="bg-white/30 backdrop-blur-md p-10 rounded-[50px] border border-white shadow-sm text-center">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 mb-8 italic">Honors</h2>
+                                <div className="space-y-6">
+                                    {(data.certifications || []).map((c, i) => (
+                                        <div key={i}>
+                                            <h3 className="text-sm font-black text-slate-800 uppercase">{c.name}</h3>
+                                            <p className="text-[10px] text-slate-400 mt-1">{c.issuer}</p>
+                                        </div>
+                                    ))}
+                                    {(data.awards || []).map((a, i) => (
+                                        <div key={`a-${i}`}>
+                                            <h3 className="text-sm font-black text-slate-800 uppercase">{a.title}</h3>
+                                            <p className="text-[10px] text-slate-400 mt-1">{a.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.interests && data.interests.length > 0 && (
+                            <section className="bg-white/30 backdrop-blur-md p-10 rounded-[50px] border border-white shadow-sm">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 mb-8 italic">Passions</h2>
+                                <div className="flex flex-wrap justify-center gap-3">
+                                    {data.interests.map((interest, i) => (
+                                        <span key={i} className="px-4 py-1.5 bg-white/50 rounded-full text-[9px] font-bold text-slate-400 uppercase tracking-widest">{interest}</span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                     </div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     ),
 
     cryptic: ({ data, primaryColor }) => (
@@ -3019,6 +4836,10 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                     <span>{`{ ${data.personalInfo.email} }`}</span>
                     <span>{`[ ${data.personalInfo.phone} ]`}</span>
                 </div>
+                <div className="mt-8 max-w-2xl text-[11px] leading-relaxed text-[#00ff41]/60 italic uppercase">
+                    {`# cat info.txt`} <br />
+                    {data.personalInfo.summary}
+                </div>
             </header>
             <div className="space-y-16 relative z-10">
                 <section>
@@ -3036,6 +4857,87 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
+
+                {data.education && data.education.length > 0 && (
+                    <section>
+                        <h2 className="text-xs font-bold uppercase tracking-[0.5em] mb-10 bg-[#00ff41]/10 px-4 py-1 inline-block border-l-4 border-[#00ff41]">Academic_Records</h2>
+                        <div className="space-y-6">
+                            {data.education.map((edu, i) => (
+                                <div key={i} className="border border-[#00ff41]/5 p-8">
+                                    <h3 className="text-xl font-bold text-white uppercase mb-2">{edu.school}</h3>
+                                    <p className="text-[10px] opacity-40 italic">{edu.degree} // {edu.startDate}-{edu.endDate}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.languages && data.languages.length > 0 && (
+                    <section>
+                        <h2 className="text-xs font-bold uppercase tracking-[0.5em] mb-10 bg-[#00ff41]/10 px-4 py-1 inline-block border-l-4 border-[#00ff41]">Linguistic_Modules</h2>
+                        <div className="grid grid-cols-2 gap-4">
+                            {data.languages.map((l, i) => (
+                                <div key={i} className="border border-[#00ff41]/5 p-4 flex justify-between">
+                                    <span className="text-xs font-bold">{l.language}</span>
+                                    <span className="text-[10px] opacity-30">{l.proficiency}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.projects && data.projects.length > 0 && (
+                    <section>
+                        <h2 className="text-xs font-bold uppercase tracking-[0.5em] mb-10 bg-[#00ff41]/10 px-4 py-1 inline-block border-l-4 border-[#00ff41]">Project_Protocols</h2>
+                        <div className="space-y-12">
+                            {data.projects.map((proj, i) => (
+                                <div key={i} className="group border border-[#00ff41]/5 p-8 hover:bg-[#00ff41]/5 transition-all">
+                                    <h3 className="text-xl font-bold text-white uppercase mb-2">{proj.name}</h3>
+                                    <p className="text-xs leading-relaxed text-[#00ff41]/70 font-medium whitespace-pre-line border-l border-[#00ff41]/20 pl-6">{proj.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.certifications && data.certifications.length > 0 && (
+                    <section>
+                        <h2 className="text-xs font-bold uppercase tracking-[0.5em] mb-10 bg-[#00ff41]/10 px-4 py-1 inline-block border-l-4 border-[#00ff41]">Auth_Keys</h2>
+                        <div className="space-y-6">
+                            {data.certifications.map((cert, i) => (
+                                <div key={i} className="border border-[#00ff41]/5 p-6">
+                                    <h3 className="text-sm font-bold text-white uppercase">{cert.name}</h3>
+                                    <p className="text-[10px] text-[#00ff41]/50 mt-1 font-mono">{cert.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.awards && data.awards.length > 0 && (
+                    <section>
+                        <h2 className="text-xs font-bold uppercase tracking-[0.5em] mb-10 bg-[#00ff41]/10 px-4 py-1 inline-block border-l-4 border-[#00ff41]">System_Rewards</h2>
+                        <div className="space-y-6">
+                            {data.awards.map((award, i) => (
+                                <div key={i} className="border border-[#00ff41]/5 p-6">
+                                    <h3 className="text-sm font-bold text-white uppercase">{award.title}</h3>
+                                    <p className="text-[10px] text-[#00ff41]/50 mt-1 font-mono">{award.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.interests && data.interests.length > 0 && (
+                    <section>
+                        <h2 className="text-xs font-bold uppercase tracking-[0.5em] mb-10 bg-[#00ff41]/10 px-4 py-1 inline-block border-l-4 border-[#00ff41]">Background_Tasks</h2>
+                        <div className="flex flex-wrap gap-2">
+                            {data.interests.map((interest, i) => (
+                                <span key={i} className="px-3 py-1 bg-[#00ff41]/5 text-[10px] font-bold text-[#00ff41]/70 border border-[#00ff41]/20 uppercase tracking-widest">{interest}</span>
+                            ))}
+                        </div>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -3051,6 +4953,9 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                     <span>{data.personalInfo.email}</span>
                     <span>{data.personalInfo.phone}</span>
                 </div>
+                <div className="mt-12 max-w-lg mx-auto">
+                    <p className="text-base font-lora text-slate-500 leading-relaxed italic">"{data.personalInfo.summary}"</p>
+                </div>
             </header>
             <div className="max-w-2xl mx-auto space-y-24">
                 <section>
@@ -3062,11 +4967,78 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 <h3 className="text-3xl font-bold mb-2 italic" style={{ color: primaryColor }}>{exp.company}</h3>
                                 <p className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-6">{exp.position}</p>
                                 <p className="text-sm font-lora text-slate-500 leading-relaxed italic last:mb-0">{exp.description}</p>
-                                {i < data.experience.length - 1 && <div className="h-px w-12 bg-slate-50 mx-auto mt-20"></div>}
                             </div>
                         ))}
                     </div>
                 </section>
+                {data.education && data.education.length > 0 && (
+                    <section>
+                        <h2 className="text-[9px] font-black uppercase tracking-[0.6em] text-slate-200 mb-16 text-center italic">Academic Foundation</h2>
+                        <div className="space-y-12">
+                            {data.education.map((edu, i) => (
+                                <div key={i} className="text-center">
+                                    <h3 className="text-xl font-bold text-slate-800 italic">{edu.school}</h3>
+                                    <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mt-2">{edu.degree}</p>
+                                    <p className="text-[10px] text-slate-300 mt-1">{edu.startDate} — {edu.endDate}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+                {data.projects && data.projects.length > 0 && (
+                    <section>
+                        <h2 className="text-[9px] font-black uppercase tracking-[0.6em] text-slate-200 mb-16 text-center italic">Curated Projects</h2>
+                        <div className="grid grid-cols-2 gap-12">
+                            {data.projects.map((proj, i) => (
+                                <div key={i} className="text-center">
+                                    <h3 className="text-sm font-black text-slate-800 uppercase italic mb-4">{proj.name}</h3>
+                                    <p className="text-xs font-lora text-slate-500 leading-relaxed italic">{proj.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+                <div className="grid grid-cols-2 gap-16">
+                    {data.languages && data.languages.length > 0 && (
+                        <section>
+                            <h2 className="text-[9px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 text-center italic">Dialect</h2>
+                            <div className="space-y-4 text-center">
+                                {data.languages.map((l, i) => (
+                                    <div key={i} className="text-xs font-bold uppercase tracking-widest text-slate-400">
+                                        {l.language} / <span className="text-slate-200">{l.proficiency}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {((data.certifications?.length || 0) > 0 || (data.awards?.length || 0) > 0) && (
+                        <section>
+                            <h2 className="text-[9px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 text-center italic">Distinctions</h2>
+                            <div className="space-y-6 text-center">
+                                {(data.certifications || []).map((c, i) => (
+                                    <div key={i}>
+                                        <p className="text-[11px] font-bold text-slate-800 italic">{c.name}</p>
+                                        <p className="text-[9px] text-slate-300 uppercase mt-1">{c.issuer}</p>
+                                    </div>
+                                ))}
+                                {(data.awards || []).map((a, i) => (
+                                    <div key={`a-${i}`}>
+                                        <p className="text-[11px] font-bold text-slate-800 italic">{a.title}</p>
+                                        <p className="text-[9px] text-slate-300 uppercase mt-1">{a.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                </div>
+                {data.interests && data.interests.length > 0 && (
+                    <section>
+                        <h2 className="text-[9px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 text-center italic">Interests</h2>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-300 text-center">
+                            {data.interests.join(" • ")}
+                        </p>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -3079,10 +5051,11 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                 <div className="bg-white p-12 rounded-[40px] shadow-2xl border border-white flex-1 mr-8">
                     <h1 className="text-6xl font-black tracking-tighter text-slate-900 mb-2 uppercase">{data.personalInfo.fullName}</h1>
                     <p className="text-sm font-bold uppercase tracking-[0.4em] text-slate-300 italic mb-6">Master Domain: {data.experience[0]?.position}</p>
-                    <div className="flex gap-8 text-[10px] font-bold text-slate-400">
+                    <div className="flex gap-8 text-[10px] font-bold text-slate-400 mb-6">
                         <span>{data.personalInfo.email}</span>
                         <span>{data.personalInfo.phone}</span>
                     </div>
+                    <p className="text-sm text-slate-500 leading-relaxed italic font-medium">"{data.personalInfo.summary}"</p>
                 </div>
                 <div className="w-32 h-32 rounded-full p-1 border-2 border-slate-100 flex items-center justify-center bg-white shadow-xl">
                     <div className="w-28 h-28 rounded-full flex items-center justify-center text-4xl font-black text-white" style={{ backgroundColor: primaryColor }}>
@@ -3110,6 +5083,80 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             ))}
                         </div>
                     </section>
+
+                    <div className="grid grid-cols-3 gap-12">
+                        {data.education && data.education.length > 0 && (
+                            <section className="bg-white p-10 rounded-[40px] shadow-sm border border-white/50 col-span-1">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Academy</h2>
+                                <div className="space-y-6">
+                                    {data.education.map((edu, i) => (
+                                        <div key={i}>
+                                            <p className="text-xs font-black text-slate-800 uppercase tracking-tight">{edu.school}</p>
+                                            <p className="text-[9px] text-slate-400 mt-1 italic">{edu.degree}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                        {data.projects && data.projects.length > 0 && (
+                            <section className="bg-white p-10 rounded-[40px] shadow-sm border border-white/50 col-span-2">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Project Constellations</h2>
+                                <div className="grid grid-cols-2 gap-8">
+                                    {data.projects.map((proj, i) => (
+                                        <div key={i}>
+                                            <p className="text-xs font-black text-slate-800 uppercase tracking-tight mb-2">{proj.name}</p>
+                                            <p className="text-[9px] text-slate-400 leading-relaxed line-clamp-2">{proj.description}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-12">
+                        {data.languages && data.languages.length > 0 && (
+                            <section className="bg-white p-10 rounded-[40px] shadow-sm border border-white/50 col-span-1">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Voices</h2>
+                                <div className="space-y-3">
+                                    {data.languages.map((l, i) => (
+                                        <div key={i} className="flex justify-between items-center text-[9px] font-bold text-slate-400 uppercase">
+                                            <span>{l.language}</span>
+                                            <span className="opacity-40">{l.proficiency}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                        {((data.certifications?.length || 0) > 0 || (data.awards?.length || 0) > 0) && (
+                            <section className="bg-white p-10 rounded-[40px] shadow-sm border border-white/50 col-span-2">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Auth & Honors</h2>
+                                <div className="grid grid-cols-2 gap-8">
+                                    {(data.certifications || []).map((c, i) => (
+                                        <div key={i}>
+                                            <p className="text-xs font-bold text-slate-800 uppercase">{c.name}</p>
+                                            <p className="text-[9px] text-slate-300 italic">{c.issuer}</p>
+                                        </div>
+                                    ))}
+                                    {(data.awards || []).map((a, i) => (
+                                        <div key={`a-${i}`}>
+                                            <p className="text-xs font-bold text-slate-800 uppercase">{a.title}</p>
+                                            <p className="text-[9px] text-slate-300 italic">{a.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                        {data.interests && data.interests.length > 0 && (
+                            <section className="bg-white p-10 rounded-[40px] shadow-sm border border-white/50 col-span-1">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Passions</h2>
+                                <div className="flex flex-wrap gap-2">
+                                    {data.interests.map((interest, i) => (
+                                        <span key={i} className="text-[9px] font-bold text-slate-400 italic">{interest}</span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
@@ -3131,7 +5178,11 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                     </div>
                 </div>
             </header>
+            <div className="mb-16 px-12">
+                <p className="text-sm leading-relaxed text-slate-500 italic max-w-2xl mx-auto text-center font-medium">"{data.personalInfo.summary}"</p>
+            </div>
             <div className="grid grid-cols-12 gap-16">
+
                 <div className="col-span-4 space-y-12">
                     <section>
                         <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Signal</h2>
@@ -3141,6 +5192,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             <span className="p-3 bg-slate-50 rounded-2xl border border-slate-100 text-xs text-slate-400">{data.personalInfo.address}</span>
                         </div>
                     </section>
+
+                    {data.education && data.education.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Academy</h2>
+                            <div className="space-y-6">
+                                {data.education.map((edu, i) => (
+                                    <div key={i} className="p-4 border-l-2" style={{ borderColor: primaryColor }}>
+                                        <p className="text-xs font-black text-slate-800 uppercase">{edu.school}</p>
+                                        <p className="text-[10px] text-slate-400 italic">{edu.degree}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.languages && data.languages.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Dialect</h2>
+                            <div className="space-y-3">
+                                {data.languages.map((l, i) => (
+                                    <div key={i} className="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase">
+                                        <span>{l.language}</span>
+                                        <span className="opacity-30">{l.proficiency}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Passions</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="px-3 py-1 bg-slate-50 rounded-full text-[10px] font-bold text-slate-300 uppercase italic tracking-tighter">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
                 <div className="col-span-8 space-y-16">
                     <section>
@@ -3161,6 +5251,40 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             ))}
                         </div>
                     </section>
+
+                    {data.projects && data.projects.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 italic">Visual Pulse</h2>
+                            <div className="grid grid-cols-2 gap-10">
+                                {data.projects.map((proj, i) => (
+                                    <div key={i} className="p-8 bg-slate-50 rounded-[40px] border border-slate-100 group hover:border-slate-900 transition-colors">
+                                        <h3 className="text-lg font-black uppercase tracking-tighter mb-4">{proj.name}</h3>
+                                        <p className="text-xs text-slate-400 leading-relaxed italic">{proj.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {((data.certifications?.length || 0) > 0 || (data.awards?.length || 0) > 0) && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 italic">High Signals</h2>
+                            <div className="grid grid-cols-2 gap-10">
+                                {(data.certifications || []).map((c, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-black text-slate-800 uppercase mb-2">{c.name}</h3>
+                                        <p className="text-[10px] text-slate-400 italic">{c.issuer} // {c.date}</p>
+                                    </div>
+                                ))}
+                                {(data.awards || []).map((a, i) => (
+                                    <div key={`a-${i}`}>
+                                        <h3 className="text-sm font-black text-slate-800 uppercase mb-2">{a.title}</h3>
+                                        <p className="text-[10px] text-slate-400 italic">{a.issuer} // {a.date}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </div>
         </div>
@@ -3172,7 +5296,8 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                 <header>
                     <div className="w-16 h-1 bg-slate-900 mb-8" style={{ backgroundColor: primaryColor }}></div>
                     <h1 className="text-6xl font-black tracking-tighter leading-none uppercase mb-6">{data.personalInfo.fullName.split(' ')[0]}<br /><span className="text-slate-300">{data.personalInfo.fullName.split(' ').slice(1).join(' ')}</span></h1>
-                    <p className="text-xs font-black uppercase tracking-[0.4em] text-slate-300 mb-12 italic">{data.experience[0]?.position}</p>
+                    <p className="text-xs font-black uppercase tracking-[0.4em] text-slate-300 mb-8 italic">{data.experience[0]?.position}</p>
+                    <p className="text-sm text-slate-400 leading-relaxed font-light italic mb-12">"{data.personalInfo.summary}"</p>
                 </header>
                 <div className="space-y-12">
                     <section>
@@ -3186,6 +5311,45 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             ))}
                         </div>
                     </section>
+
+                    {data.education && data.education.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-200 mb-8 pb-2 border-b">Academy</h2>
+                            <div className="space-y-6">
+                                {data.education.map((edu, i) => (
+                                    <div key={i}>
+                                        <p className="text-xs font-black text-slate-800 uppercase">{edu.school}</p>
+                                        <p className="text-[9px] text-slate-400 italic">{edu.degree}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.languages && data.languages.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-200 mb-8 pb-2 border-b">Dialects</h2>
+                            <div className="space-y-3">
+                                {data.languages.map((l, i) => (
+                                    <div key={i} className="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase">
+                                        <span>{l.language}</span>
+                                        <span className="opacity-30">{l.proficiency}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-200 mb-8 pb-2 border-b">Fissions</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="text-[10px] font-bold text-slate-300 uppercase italic">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
                 <footer className="mt-auto pt-12 border-t border-slate-50 text-[10px] font-bold text-slate-300 uppercase tracking-widest leading-loose">
                     <p>{data.personalInfo.email}</p>
@@ -3206,6 +5370,40 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
+
+                {data.projects && data.projects.length > 0 && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20 mb-12 flex items-center gap-6 italic">Visual Fission <div className="h-px flex-1 bg-white/5"></div></h2>
+                        <div className="grid grid-cols-2 gap-12 text-white/40">
+                            {data.projects.map((proj, i) => (
+                                <div key={i}>
+                                    <h3 className="text-lg font-black italic mb-2 uppercase tracking-tighter" style={{ color: primaryColor }}>{proj.name}</h3>
+                                    <p className="text-xs leading-relaxed italic">{proj.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {((data.certifications?.length || 0) > 0 || (data.awards?.length || 0) > 0) && (
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20 mb-12 flex items-center gap-6 italic">Credentials <div className="h-px flex-1 bg-white/5"></div></h2>
+                        <div className="grid grid-cols-2 gap-12 text-white/40">
+                            {(data.certifications || []).map((c, i) => (
+                                <div key={i}>
+                                    <h3 className="text-lg font-black italic mb-2 uppercase tracking-tighter" style={{ color: primaryColor }}>{c.name}</h3>
+                                    <p className="text-xs italic">{c.issuer}</p>
+                                </div>
+                            ))}
+                            {(data.awards || []).map((a, i) => (
+                                <div key={`a-${i}`}>
+                                    <h3 className="text-lg font-black italic mb-2 uppercase tracking-tighter" style={{ color: primaryColor }}>{a.title}</h3>
+                                    <p className="text-xs italic">{a.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -3225,6 +5423,12 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         <span className="bg-white/5 px-2 py-1">{data.personalInfo.email}</span>
                         <span className="bg-white/5 px-2 py-1">{data.personalInfo.phone}</span>
                     </div>
+                </div>
+                <div className="mt-8 p-4 bg-white/5 border border-white/10">
+                    <p className="text-xs text-white/40 leading-relaxed uppercase tracking-tighter">
+                        <span className="text-cyan-500 mr-2">SUMMARY_INIT:</span>
+                        {data.personalInfo.summary}
+                    </p>
                 </div>
             </header>
             <div className="grid grid-cols-12 gap-12 relative z-10">
@@ -3248,6 +5452,55 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             ))}
                         </div>
                     </section>
+
+                    {data.projects && data.projects.length > 0 && (
+                        <section>
+                            <h2 className="text-xs font-bold uppercase tracking-[0.8em] text-white/20 mb-12 border-l-8 pl-6" style={{ borderColor: primaryColor }}>
+                                COMPILED_ASSETS // PROJECTS
+                            </h2>
+                            <div className="grid grid-cols-2 gap-12">
+                                {data.projects.map((proj, i) => (
+                                    <div key={i} className="bg-white/5 p-8 border border-white/10 group hover:border-white/40 transition-all">
+                                        <h3 className="text-xl font-bold italic mb-4 uppercase" style={{ color: primaryColor }}>{proj.name}</h3>
+                                        <p className="text-xs text-white/30 leading-relaxed uppercase tracking-tighter">{proj.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    <div className="grid grid-cols-2 gap-12">
+                        {data.education && data.education.length > 0 && (
+                            <section>
+                                <h2 className="text-xs font-bold uppercase tracking-[0.8em] text-white/20 mb-12 border-l-8 pl-6" style={{ borderColor: primaryColor }}>
+                                    KNOWLEDGE_BASE
+                                </h2>
+                                <div className="space-y-8">
+                                    {data.education.map((edu, i) => (
+                                        <div key={i}>
+                                            <h3 className="text-sm font-bold text-white uppercase">{edu.school}</h3>
+                                            <p className="text-xs text-white/30 mt-1 uppercase italic">{edu.degree}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                        {data.languages && data.languages.length > 0 && (
+                            <section>
+                                <h2 className="text-xs font-bold uppercase tracking-[0.8em] text-white/20 mb-12 border-l-8 pl-6" style={{ borderColor: primaryColor }}>
+                                    ENCODINGS
+                                </h2>
+                                <div className="space-y-4">
+                                    {data.languages.map((l, i) => (
+                                        <div key={i} className="flex justify-between text-xs font-bold uppercase tracking-widest text-white/40">
+                                            <span>{l.language}</span>
+                                            <span style={{ color: primaryColor }}>{l.proficiency}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
@@ -3259,10 +5512,11 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                 <div className="absolute -left-16 -top-16 w-64 h-64 bg-slate-50 rounded-full blur-3xl -z-10"></div>
                 <h1 className="text-8xl font-black tracking-tighter leading-none mb-8 opacity-10 absolute -top-8 -left-4 select-none whitespace-nowrap">{data.personalInfo.fullName}</h1>
                 <h1 className="text-7xl font-black tracking-tighter leading-none mb-8 relative z-10">{data.personalInfo.fullName}</h1>
-                <div className="flex gap-12 text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">
+                <div className="flex gap-12 text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 mb-12">
                     <span style={{ color: primaryColor }}>{data.personalInfo.email}</span>
                     <span>{data.personalInfo.phone}</span>
                 </div>
+                <p className="text-xl font-bold text-slate-400 italic leading-relaxed max-w-2xl">"{data.personalInfo.summary}"</p>
             </header>
             <div className="space-y-24">
                 {data.experience.map((exp, i) => (
@@ -3278,6 +5532,86 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         </div>
                     </section>
                 ))}
+
+                {data.education && data.education.length > 0 && (
+                    <section className="relative pt-12">
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 italic">Academic Reverberations</h2>
+                        <div className="grid grid-cols-2 gap-16">
+                            {data.education.map((edu, i) => (
+                                <div key={i}>
+                                    <h3 className="text-2xl font-black tracking-tighter mb-2 italic">{edu.school}</h3>
+                                    <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">{edu.degree}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {data.projects && data.projects.length > 0 && (
+                    <section className="relative pt-12">
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 italic">Visual Resonance</h2>
+                        <div className="space-y-20">
+                            {data.projects.map((proj, i) => (
+                                <div key={i}>
+                                    <h3 className="text-4xl font-black tracking-tighter mb-4 opacity-40">{proj.name}</h3>
+                                    <p className="text-base text-slate-400 leading-relaxed italic">{proj.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                <div className="grid grid-cols-2 gap-24 pt-12">
+                    {data.languages && data.languages.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Echoes</h2>
+                            <div className="space-y-4">
+                                {data.languages.map((l, i) => (
+                                    <div key={i} className="flex justify-between text-sm font-bold italic">
+                                        <span>{l.language}</span>
+                                        <span className="text-slate-200">{l.proficiency}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Certifications</h2>
+                            <div className="space-y-4">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-bold text-slate-800 italic">{cert.name}</h3>
+                                        <p className="text-xs text-slate-400 mt-1 uppercase tracking-widest">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Awards</h2>
+                            <div className="space-y-4">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-bold text-slate-800 italic">{award.title}</h3>
+                                        <p className="text-xs text-slate-400 mt-1 uppercase tracking-widest">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Vibrations</h2>
+                            <div className="flex flex-wrap gap-4">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="text-xs font-bold text-slate-400 italic uppercase tracking-widest">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                </div>
             </div>
         </div>
     ),
@@ -3293,6 +5627,10 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
             </header>
             <div className="space-y-24">
                 <section>
+                    <div className="text-sm font-black uppercase tracking-[0.8em] text-white/20 mb-8">Base_Protocol</div>
+                    <p className="text-lg text-white/60 leading-relaxed font-light italic">"{data.personalInfo.summary}"</p>
+                </section>
+                <section>
                     <div className="text-sm font-black uppercase tracking-[0.8em] text-white/20 mb-16">Selected_Experience</div>
                     <div className="space-y-20">
                         {data.experience.map((exp, i) => (
@@ -3305,6 +5643,87 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
+
+                <div className="grid grid-cols-2 gap-24">
+                    {data.education && data.education.length > 0 && (
+                        <section>
+                            <div className="text-sm font-black uppercase tracking-[0.8em] text-white/20 mb-12">Education_Void</div>
+                            <div className="space-y-12">
+                                {data.education.map((edu, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-2xl font-black uppercase">{edu.school}</h3>
+                                        <p className="text-xs font-bold text-white/40 mt-1 uppercase italic tracking-widest">{edu.degree}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {data.projects && data.projects.length > 0 && (
+                        <section>
+                            <div className="text-sm font-black uppercase tracking-[0.8em] text-white/20 mb-12">Project_Horizon</div>
+                            <div className="space-y-12">
+                                {data.projects.map((proj, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-2xl font-black uppercase italic" style={{ color: primaryColor }}>{proj.name}</h3>
+                                        <p className="text-xs text-white/40 leading-relaxed uppercase tracking-tighter mt-2">{proj.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                </div>
+
+                <div className="grid grid-cols-2 gap-24">
+                    {data.languages && data.languages.length > 0 && (
+                        <section>
+                            <div className="text-sm font-black uppercase tracking-[0.8em] text-white/20 mb-8">Languages</div>
+                            <div className="space-y-4">
+                                {data.languages.map((l, i) => (
+                                    <div key={i} className="flex justify-between text-xs font-black uppercase tracking-widest">
+                                        <span>{l.language}</span>
+                                        <span className="text-white/20">{l.proficiency}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {data.certifications && data.certifications.length > 0 && (
+                        <section>
+                            <div className="text-sm font-black uppercase tracking-[0.8em] text-white/20 mb-8">Certifications</div>
+                            <div className="space-y-4">
+                                {data.certifications.map((cert, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-bold text-white uppercase">{cert.name}</h3>
+                                        <p className="text-[10px] text-white/40 mt-1 font-mono">{cert.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <div className="text-sm font-black uppercase tracking-[0.8em] text-white/20 mb-8">Awards</div>
+                            <div className="space-y-4">
+                                {data.awards.map((award, i) => (
+                                    <div key={i}>
+                                        <h3 className="text-sm font-bold text-white uppercase">{award.title}</h3>
+                                        <p className="text-[10px] text-white/40 mt-1 font-mono">{award.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <div className="text-sm font-black uppercase tracking-[0.8em] text-white/20 mb-8">Sectors</div>
+                            <div className="flex flex-wrap gap-4">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="text-xs font-black uppercase tracking-widest text-white/40">{interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                </div>
             </div>
         </div>
     ),
@@ -3325,7 +5744,8 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
             <div className="relative z-10 p-20 flex flex-col h-full">
                 <header className="mb-32">
                     <h1 className="text-7xl font-black tracking-tighter mb-4 leading-none uppercase" style={{ textShadow: `0 0 20px ${primaryColor}77` }}>{data.personalInfo.fullName}</h1>
-                    <p className="text-sm font-bold uppercase tracking-[0.6em] text-slate-500 italic mb-12">Professional Trajectory: {data.experience[0]?.position}</p>
+                    <p className="text-sm font-bold uppercase tracking-[0.6em] text-slate-500 italic mb-8">Professional Trajectory: {data.experience[0]?.position}</p>
+                    <p className="text-sm text-slate-400 font-light italic leading-relaxed max-w-xl mb-12">"{data.personalInfo.summary}"</p>
                     <div className="h-px w-full bg-white/10"></div>
                 </header>
                 <div className="grid grid-cols-12 gap-16 flex-1">
@@ -3346,6 +5766,88 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 ))}
                             </div>
                         </section>
+
+                        {data.projects && data.projects.length > 0 && (
+                            <section>
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-700 mb-12 italic">Visual Constellations</h2>
+                                <div className="grid grid-cols-2 gap-12 text-slate-400">
+                                    {data.projects.map((proj, i) => (
+                                        <div key={i} className="border-l border-white/5 pl-8">
+                                            <h3 className="text-lg font-black italic mb-2 uppercase tracking-tighter" style={{ color: primaryColor }}>{proj.name}</h3>
+                                            <p className="text-xs leading-relaxed italic">{proj.description}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                    </div>
+                    <div className="col-span-4 space-y-16">
+                        {data.education && data.education.length > 0 && (
+                            <section>
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-700 mb-8 italic">Academy</h2>
+                                <div className="space-y-8">
+                                    {data.education.map((edu, i) => (
+                                        <div key={i}>
+                                            <h3 className="text-sm font-bold text-white uppercase">{edu.school}</h3>
+                                            <p className="text-[10px] text-slate-500 italic uppercase tracking-widest mt-1">{edu.degree}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.languages && data.languages.length > 0 && (
+                            <section>
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-700 mb-8 italic">Signals</h2>
+                                <div className="space-y-3 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                                    {data.languages.map((l, i) => (
+                                        <div key={i} className="flex justify-between">
+                                            <span>{l.language}</span>
+                                            <span className="text-white/20">{l.proficiency}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.certifications && data.certifications.length > 0 && (
+                            <section>
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-700 mb-8 italic">Auth Tokens</h2>
+                                <div className="space-y-8">
+                                    {data.certifications.map((cert, i) => (
+                                        <div key={i}>
+                                            <h3 className="text-sm font-bold text-white uppercase">{cert.name}</h3>
+                                            <p className="text-[10px] text-slate-500 italic uppercase tracking-widest mt-1">{cert.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.awards && data.awards.length > 0 && (
+                            <section>
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-700 mb-8 italic">Achievements</h2>
+                                <div className="space-y-8">
+                                    {data.awards.map((award, i) => (
+                                        <div key={i}>
+                                            <h3 className="text-sm font-bold text-white uppercase">{award.title}</h3>
+                                            <p className="text-[10px] text-slate-500 italic uppercase tracking-widest mt-1">{award.issuer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.interests && data.interests.length > 0 && (
+                            <section>
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-700 mb-8 italic">Passions</h2>
+                                <div className="flex flex-wrap gap-3">
+                                    {data.interests.map((interest, i) => (
+                                        <span key={i} className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]">{interest}</span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                     </div>
                 </div>
             </div>
@@ -3362,9 +5864,15 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                 <div className="text-right text-[10px] font-black uppercase leading-relaxed">
                     <p>EMAIL: {data.personalInfo.email}</p>
                     <p>PHON: {data.personalInfo.phone}</p>
+                    <p>ADDR: {data.personalInfo.address}</p>
                 </div>
             </header>
             <div className="space-y-12">
+                <section>
+                    <h2 className="text-xs font-black uppercase tracking-[0.3em] mb-4 bg-slate-900 text-white px-4 py-1 inline-block">CORE_SUMMARY</h2>
+                    <p className="text-xs font-bold leading-relaxed">{data.personalInfo.summary}</p>
+                </section>
+
                 <section>
                     <h2 className="text-xs font-black uppercase tracking-[0.3em] mb-8 bg-slate-900 text-white px-4 py-1 inline-block">DEPLOYMENT_LOG</h2>
                     <div className="space-y-10">
@@ -3380,6 +5888,97 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
+
+                <div className="grid grid-cols-2 gap-12">
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.3em] mb-6 bg-slate-900 text-white px-4 py-1 inline-block">ACADEMIC_DATA</h2>
+                        <div className="space-y-6">
+                            {data.education.map((edu, i) => (
+                                <div key={i}>
+                                    <p className="text-sm font-black uppercase">{edu.school}</p>
+                                    <p className="text-[10px] font-bold opacity-50">{edu.degree} IN {edu.fieldOfStudy}</p>
+                                    <p className="text-[10px] tabular-nums mt-1">{edu.startDate} &gt;&gt; {edu.endDate}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.3em] mb-6 bg-slate-900 text-white px-4 py-1 inline-block">SKILLSET_INDEX</h2>
+                        <div className="flex flex-wrap gap-2">
+                            {data.skills.map((skill, i) => (
+                                <span key={i} className="text-[10px] font-black border-2 border-slate-900 px-2 py-0.5 uppercase">{skill}</span>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+
+                {data.projects && data.projects.length > 0 && (
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.3em] mb-8 bg-slate-900 text-white px-4 py-1 inline-block">PROJECT_BUILDS</h2>
+                        <div className="grid grid-cols-2 gap-8">
+                            {data.projects.map((proj, i) => (
+                                <div key={i} className="border-2 border-slate-100 p-6 hover:border-slate-900 transition-colors">
+                                    <h3 className="text-lg font-black uppercase mb-4">{proj.name}</h3>
+                                    <p className="text-[10px] text-slate-500 leading-relaxed mb-4">{proj.description}</p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {proj.technologies.map((tech, t) => (
+                                            <span key={t} className="text-[9px] font-black opacity-30">#{tech}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                <div className="grid grid-cols-3 gap-8">
+                    {data.languages && data.languages.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase mb-4 border-b-2 border-slate-900">ENCODINGS</h2>
+                            <div className="space-y-2">
+                                {data.languages.map((l, i) => (
+                                    <div key={i} className="text-[10px] font-bold uppercase flex justify-between">
+                                        <span>{l.language}</span>
+                                        <span className="opacity-40">{l.proficiency}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {((data.certifications?.length || 0) > 0) && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase mb-4 border-b-2 border-slate-900">CERTS</h2>
+                            <div className="space-y-4">
+                                {(data.certifications || []).map((c, i) => (
+                                    <div key={i}>
+                                        <p className="text-[10px] font-black uppercase leading-tight">{c.name}</p>
+                                        <p className="text-[9px] opacity-40">{c.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                    {data.awards && data.awards.length > 0 && (
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase mb-4 border-b-2 border-slate-900">AWARDS</h2>
+                            <div className="space-y-4">
+                                {data.awards.map((a, i) => (
+                                    <div key={i}>
+                                        <p className="text-[10px] font-black uppercase leading-tight">{a.title}</p>
+                                        <p className="text-[9px] opacity-40">{a.issuer}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                </div>
+                {data.interests && data.interests.length > 0 && (
+                    <section className="pt-8 border-t border-slate-100">
+                        <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest text-center">
+                            FIELDS_OF_INTEREST: {data.interests.join(" // ")}
+                        </p>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -3398,6 +5997,9 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
             </header>
             <div className="max-w-xl mx-auto space-y-24">
                 <section>
+                    <p className="text-lg text-slate-400 text-center italic leading-relaxed font-light">"{data.personalInfo.summary}"</p>
+                </section>
+                <section>
                     <h2 className="text-[9px] font-black uppercase tracking-[0.8em] text-slate-200 mb-16 text-center italic">— Experience Apex —</h2>
                     <div className="space-y-20">
                         {data.experience.map((exp, i) => (
@@ -3411,6 +6013,87 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
+
+                <section>
+                    <h2 className="text-[9px] font-black uppercase tracking-[0.8em] text-slate-200 mb-16 text-center italic">— Education —</h2>
+                    <div className="space-y-12">
+                        {data.education.map((edu, i) => (
+                            <div key={i} className="text-center group">
+                                <h3 className="text-xl font-black mb-1 text-slate-800">{edu.school}</h3>
+                                <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em] mb-4">{edu.degree} in {edu.fieldOfStudy}</p>
+                                <p className="text-xs font-bold text-slate-400 opacity-60 italic">{edu.startDate} — {edu.endDate}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <section>
+                    <h2 className="text-[9px] font-black uppercase tracking-[0.8em] text-slate-200 mb-16 text-center italic">— Projects —</h2>
+                    <div className="space-y-12">
+                        {data.projects.map((project, i) => (
+                            <div key={i} className="text-center group">
+                                <div className="flex justify-center items-baseline gap-4 mb-2">
+                                    <h3 className="text-xl font-black text-slate-800">{project.name}</h3>
+                                    {project.link && <a href={project.link} className="text-[9px] font-black uppercase tracking-widest text-blue-400 hover:text-blue-600 transition-colors">Link ↗</a>}
+                                </div>
+                                <p className="text-sm text-slate-500 leading-relaxed font-medium italic opacity-80 max-w-2xl mx-auto mb-4">{project.description}</p>
+                                <div className="flex justify-center flex-wrap gap-2">
+                                    {project.technologies.map((tech, t) => (
+                                        <span key={t} className="text-[8px] font-black uppercase tracking-[0.2em] bg-slate-50 text-slate-400 px-2 py-1 rounded">{tech}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <section>
+                    <h2 className="text-[9px] font-black uppercase tracking-[0.8em] text-slate-200 mb-16 text-center italic">— Skills —</h2>
+                    <div className="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
+                        {data.skills.map((s, i) => (
+                            <span key={i} className="text-xs font-bold text-slate-600 uppercase tracking-widest bg-slate-50 px-4 py-2 rounded-full">{s}</span>
+                        ))}
+                    </div>
+                </section>
+
+                <div className="grid grid-cols-2 gap-12 pt-12 border-t border-slate-100">
+                    <section>
+                        <h2 className="text-[9px] font-black uppercase tracking-[0.8em] text-slate-200 mb-8 text-center italic">Languages</h2>
+                        <div className="space-y-2 text-center">
+                            {data.languages.map((l, i) => (
+                                <div key={i} className="text-sm font-bold text-slate-600">
+                                    {l.language} <span className="opacity-40 font-normal italic">/ {l.proficiency}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                    <section>
+                        <h2 className="text-[9px] font-black uppercase tracking-[0.8em] text-slate-200 mb-8 text-center italic">Honors</h2>
+                        <div className="space-y-4 text-center">
+                            {(data.certifications || []).map((c, i) => (
+                                <div key={i} className="text-sm font-bold text-slate-600">
+                                    {c.name} <span className="text-[10px] block opacity-40 font-normal italic uppercase tracking-widest">{c.issuer}</span>
+                                </div>
+                            ))}
+                            {(data.awards || []).map((a, i) => (
+                                <div key={`a-${i}`} className="text-sm font-bold text-slate-600">
+                                    {a.title} <span className="text-[10px] block opacity-40 font-normal italic uppercase tracking-widest">{a.issuer}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+
+                {(data.interests?.length || 0) > 0 && (
+                    <section>
+                        <h2 className="text-[9px] font-black uppercase tracking-[0.8em] text-slate-200 mb-8 text-center italic">Interests</h2>
+                        <div className="flex justify-center flex-wrap gap-4">
+                            {(data.interests || []).map((interest, i) => (
+                                <span key={i} className="text-sm font-medium text-slate-500 italic">• {interest}</span>
+                            ))}
+                        </div>
+                    </section>
+                )}
             </div>
         </div>
     ),
@@ -3423,6 +6106,9 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                     <p className="text-lg text-slate-500 italic">{data.experience[0]?.position}</p>
                 </header>
                 <section className="mb-12">
+                    <p className="text-sm text-slate-600 leading-relaxed italic">{data.personalInfo.summary}</p>
+                </section>
+                <section className="mb-12">
                     <h2 className="text-lg font-bold uppercase tracking-widest mb-6 pb-2 border-b-2" style={{ color: primaryColor }}>Experience</h2>
                     <div className="space-y-8">
                         {data.experience.map((exp, i) => (
@@ -3433,6 +6119,42 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                                 </div>
                                 <p className="text-sm font-semibold mb-3 italic opacity-70">{exp.position}</p>
                                 <p className="text-sm text-slate-600 leading-relaxed text-justify whitespace-pre-line">{exp.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <section className="mb-12">
+                    <h2 className="text-lg font-bold uppercase tracking-widest mb-6 pb-2 border-b-2" style={{ color: primaryColor }}>Education</h2>
+                    <div className="space-y-6">
+                        {data.education.map((edu, i) => (
+                            <div key={i}>
+                                <div className="flex justify-between items-baseline mb-1">
+                                    <h3 className="text-lg font-bold text-slate-800">{edu.school}</h3>
+                                    <span className="text-sm text-slate-400 italic">{edu.startDate} — {edu.endDate}</span>
+                                </div>
+                                <p className="text-sm text-slate-600 italic">{edu.degree} in {edu.fieldOfStudy}</p>
+                                {edu.description && <p className="text-sm text-slate-500 mt-2">{edu.description}</p>}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <section>
+                    <h2 className="text-lg font-bold uppercase tracking-widest mb-6 pb-2 border-b-2" style={{ color: primaryColor }}>Projects</h2>
+                    <div className="space-y-6">
+                        {data.projects.map((project, i) => (
+                            <div key={i}>
+                                <div className="flex justify-between items-baseline mb-1">
+                                    <h3 className="text-lg font-bold text-slate-800">{project.name}</h3>
+                                    {project.link && <a href={project.link} className="text-sm text-blue-600 underline decoration-1 underline-offset-2">{project.link}</a>}
+                                </div>
+                                <p className="text-sm text-slate-600 leading-relaxed">{project.description}</p>
+                                <div className="flex flex-wrap gap-2 mt-2">
+                                    {project.technologies.map((tech, tIndex) => (
+                                        <span key={tIndex} className="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600">{tech}</span>
+                                    ))}
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -3462,6 +6184,39 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             <div key={i} className="text-sm text-slate-600">
                                 <span className="font-bold">{l.language}:</span> {l.proficiency}
                             </div>
+                        ))}
+                    </div>
+                </section>
+
+                <section>
+                    <h2 className="text-sm font-bold uppercase tracking-[0.2em] mb-6" style={{ color: primaryColor }}>Certifications</h2>
+                    <div className="space-y-4">
+                        {(data.certifications || []).map((cert, i) => (
+                            <div key={i} className="text-sm text-slate-600">
+                                <h4 className="font-bold">{cert.name}</h4>
+                                <p className="text-slate-400 italic">{cert.issuer}, {cert.date}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <section>
+                    <h2 className="text-sm font-bold uppercase tracking-[0.2em] mb-6" style={{ color: primaryColor }}>Awards</h2>
+                    <div className="space-y-4">
+                        {(data.awards || []).map((award, i) => (
+                            <div key={i} className="text-sm text-slate-600">
+                                <h4 className="font-bold">{award.title}</h4>
+                                <p className="text-slate-400 italic">{award.issuer}, {award.date}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <section>
+                    <h2 className="text-sm font-bold uppercase tracking-[0.2em] mb-6" style={{ color: primaryColor }}>Interests</h2>
+                    <div className="flex flex-wrap gap-x-4 gap-y-2">
+                        {(data.interests || []).map((interest, i) => (
+                            <span key={i} className="text-sm text-slate-600">• {interest}</span>
                         ))}
                     </div>
                 </section>
@@ -3503,8 +6258,95 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
-            </div>
-        </div>
+
+                <section className="relative border-t border-slate-100 pt-12">
+                    <h2 className="text-xs font-black uppercase tracking-[0.5em] text-slate-200 mb-10 absolute -left-20 top-14 rotate-[-90deg] origin-right">Education</h2>
+                    <div className="space-y-12">
+                        {data.education.map((edu, i) => (
+                            <div key={i} className="grid grid-cols-12 gap-8">
+                                <div className="col-span-3 text-[10px] font-black uppercase tracking-widest text-slate-300 pt-2 tabular-nums">
+                                    {edu.startDate} <br /> {edu.endDate}
+                                </div>
+                                <div className="col-span-9">
+                                    <h3 className="text-xl font-bold text-slate-800 mb-1">{edu.school}</h3>
+                                    <p className="text-sm font-bold uppercase tracking-widest mb-2 italic opacity-60">{edu.degree} in {edu.fieldOfStudy}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <section className="relative border-t border-slate-100 pt-12">
+                    <h2 className="text-xs font-black uppercase tracking-[0.5em] text-slate-200 mb-10 absolute -left-20 top-14 rotate-[-90deg] origin-right">Projects</h2>
+                    <div className="space-y-12">
+                        {data.projects.map((project, i) => (
+                            <div key={i} className="grid grid-cols-12 gap-8">
+                                <div className="col-span-3 pt-2">
+                                    {project.link && <a href={project.link} className="text-[10px] font-black uppercase tracking-widest text-blue-400 hover:text-blue-600 transition-colors">View Project ↗</a>}
+                                </div>
+                                <div className="col-span-9">
+                                    <h3 className="text-xl font-bold text-slate-800 mb-2">{project.name}</h3>
+                                    <p className="text-sm text-slate-500 leading-relaxed mb-3">{project.description}</p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {project.technologies.map((tech, t) => (
+                                            <span key={t} className="text-[9px] font-bold uppercase tracking-widest bg-slate-50 text-slate-400 px-2 py-1 rounded">{tech}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <div className="grid grid-cols-2 gap-16 border-t border-slate-100 pt-12">
+                    <section className="relative">
+                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-slate-200 mb-10 absolute -left-20 top-0 rotate-[-90deg] origin-right">Skills</h2>
+                        <div className="flex flex-wrap gap-2">
+                            {data.skills.map((skill, i) => (
+                                <span key={i} className="text-xs font-bold text-slate-600 bg-slate-50 px-3 py-1.5 rounded-full">{skill}</span>
+                            ))}
+                        </div>
+                    </section>
+                    <section className="space-y-8">
+                        <div>
+                            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-300 mb-4">Languages</h3>
+                            {data.languages.map((l, i) => (
+                                <div key={i} className="flex justify-between text-sm mb-2">
+                                    <span className="font-bold text-slate-700">{l.language}</span>
+                                    <span className="text-slate-400 italic">{l.proficiency}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div>
+                            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-300 mb-4">Honors</h3>
+                            {(data.certifications || []).map((c, i) => (
+                                <div key={i} className="mb-2">
+                                    <div className="text-sm font-bold text-slate-700">{c.name}</div>
+                                    <div className="text-xs text-slate-400">{c.issuer}</div>
+                                </div>
+                            ))}
+                            {(data.awards || []).map((a, i) => (
+                                <div key={`a-${i}`} className="mb-2">
+                                    <div className="text-sm font-bold text-slate-700">{a.title}</div>
+                                    <div className="text-xs text-slate-400">{a.issuer}</div>
+                                </div>
+                            ))}
+                        </div>
+                        {(data.interests?.length || 0) > 0 && (
+                            <div>
+                                <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-300 mb-4">Interests</h3>
+                                <div className="flex flex-wrap gap-x-2 gap-y-1">
+                                    {(data.interests || []).map((interest, i) => (
+                                        <span key={i} className="text-sm font-medium text-slate-600 italic">• {interest}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </section>
+                </div>
+            </div >
+        </div >
     ),
 
     airy_minimal: ({ data, primaryColor }) => (
@@ -3515,6 +6357,9 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                 <div className="h-px w-20 bg-slate-900 mt-12 mb-8"></div>
                 <p className="text-[11px] font-medium text-slate-400 uppercase tracking-[0.4em]">{data.personalInfo.email} // {data.personalInfo.phone}</p>
             </header>
+            <section className="mb-24">
+                <p className="text-xl font-light text-slate-500 leading-relaxed italic border-l-4 pl-12" style={{ borderColor: primaryColor }}>"{data.personalInfo.summary}"</p>
+            </section>
             <div className="space-y-24">
                 <section>
                     <div className="flex gap-12">
@@ -3536,6 +6381,112 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         </div>
                     </div>
                 </section>
+
+                <section>
+                    <div className="flex gap-12">
+                        <div className="w-1 bg-slate-100"></div>
+                        <div className="flex-1">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 italic">Academic Path</h2>
+                            <div className="space-y-10">
+                                {data.education.map((edu, i) => (
+                                    <div key={i}>
+                                        <div className="flex justify-between items-baseline mb-2">
+                                            <h3 className="text-2xl font-bold tracking-tight text-slate-800">{edu.school}</h3>
+                                            <span className="text-[10px] font-medium text-slate-300 uppercase tracking-widest">{edu.startDate} - {edu.endDate}</span>
+                                        </div>
+                                        <p className="text-sm font-medium opacity-60 italic">{edu.degree} in {edu.fieldOfStudy}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div className="flex gap-12">
+                        <div className="w-1 bg-slate-100"></div>
+                        <div className="flex-1">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 italic">Key Selected Projects</h2>
+                            <div className="space-y-12">
+                                {data.projects.map((project, i) => (
+                                    <div key={i}>
+                                        <div className="flex justify-between items-baseline mb-2">
+                                            <h3 className="text-xl font-black text-slate-800">{project.name}</h3>
+                                            {project.link && <a href={project.link} className="text-[10px] font-bold uppercase tracking-widest text-slate-300 hover:text-slate-500 transition-colors">Link ↗</a>}
+                                        </div>
+                                        <p className="text-sm text-slate-400 leading-relaxed font-light mb-4">{project.description}</p>
+                                        <div className="flex flex-wrap gap-2">
+                                            {project.technologies.map((tech, t) => (
+                                                <span key={t} className="text-[10px] uppercase tracking-widest font-bold text-slate-300">{tech}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div className="flex gap-12">
+                        <div className="w-1 bg-slate-100"></div>
+                        <div className="flex-1">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 italic">Skillset</h2>
+                            <div className="flex flex-wrap gap-4">
+                                {data.skills.map((skill, i) => (
+                                    <span key={i} className="text-sm font-light text-slate-500 pb-1 border-b border-slate-100">{skill}</span>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div className="grid grid-cols-2 gap-12">
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Languages</h2>
+                        <div className="space-y-2">
+                            {data.languages.map((l, i) => (
+                                <div key={i} className="flex justify-between text-sm text-slate-500 font-light">
+                                    <span>{l.language}</span>
+                                    <span className="opacity-50">{l.proficiency}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Honors & Certs</h2>
+                        <div className="space-y-4">
+                            {(data.certifications || []).map((c, i) => (
+                                <div key={i} className="text-sm text-slate-500 font-light">
+                                    <p className="font-medium text-slate-700">{c.name}</p>
+                                    <p className="text-[10px] uppercase tracking-widest opacity-50">{c.issuer}</p>
+                                </div>
+                            ))}
+                            {(data.awards || []).map((a, i) => (
+                                <div key={i} className="text-sm text-slate-500 font-light">
+                                    <p className="font-medium text-slate-700">{a.title}</p>
+                                    <p className="text-[10px] uppercase tracking-widest opacity-50">{a.issuer}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {(data.interests?.length || 0) > 0 && (
+                        <section>
+                            <div className="flex gap-12">
+                                <div className="w-1 bg-slate-100"></div>
+                                <div className="flex-1">
+                                    <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 italic">Side Quests</h2>
+                                    <div className="flex flex-wrap gap-6">
+                                        {(data.interests || []).map((interest, i) => (
+                                            <span key={i} className="text-sm font-light text-slate-500 pb-1 border-b border-slate-50 italic">{interest}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    )}
+                </div>
             </div>
         </div>
     ),
@@ -3575,6 +6526,22 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
+
+                <section>
+                    <h2 className="text-sm font-black uppercase tracking-[0.3em] mb-6 pb-1 border-b" style={{ color: primaryColor }}>Key Projects</h2>
+                    <div className="space-y-6">
+                        {data.projects.map((project, i) => (
+                            <div key={i}>
+                                <div className="flex justify-between items-baseline mb-1">
+                                    <h3 className="text-lg font-black text-slate-800">{project.name}</h3>
+                                    {project.link && <a href={project.link} className="text-xs text-blue-600 underline">{project.link}</a>}
+                                </div>
+                                <p className="text-[13px] text-slate-600 leading-relaxed">{project.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
                 <div className="grid grid-cols-2 gap-12">
                     <section>
                         <h2 className="text-sm font-black uppercase tracking-[0.3em] mb-6 pb-1 border-b" style={{ color: primaryColor }}>Skills Area</h2>
@@ -3595,6 +6562,37 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             ))}
                         </div>
                     </section>
+                    <section>
+                        <h2 className="text-sm font-black uppercase tracking-[0.3em] mb-6 pb-1 border-b" style={{ color: primaryColor }}>Languages</h2>
+                        <ul className="space-y-2">
+                            {data.languages.map((l, i) => (
+                                <li key={i} className="text-[13px] text-slate-600">
+                                    <span className="font-bold">{l.language}</span>: {l.proficiency}
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                    <section>
+                        <h2 className="text-sm font-black uppercase tracking-[0.3em] mb-6 pb-1 border-b" style={{ color: primaryColor }}>Certifications & Awards</h2>
+                        <div className="space-y-3">
+                            {(data.certifications || []).map((c, i) => (
+                                <div key={i} className="text-[12px] text-slate-600">
+                                    <span className="font-bold">{c.name}</span> <span className="text-slate-400">({c.issuer})</span>
+                                </div>
+                            ))}
+                            {(data.awards || []).map((a, i) => (
+                                <div key={i} className="text-[12px] text-slate-600">
+                                    <span className="font-bold">{a.title}</span> <span className="text-slate-400">({a.issuer})</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                    <section className="col-span-2">
+                        <h2 className="text-sm font-black uppercase tracking-[0.3em] mb-6 pb-1 border-b" style={{ color: primaryColor }}>Interests</h2>
+                        <p className="text-[13px] text-slate-600 leading-relaxed">
+                            {(data.interests || []).join(" • ")}
+                        </p>
+                    </section>
                 </div>
             </div>
         </div>
@@ -3614,7 +6612,11 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest pt-2 italic">{data.personalInfo.address}</p>
                     </div>
                 </header>
+                <div className="mb-12">
+                    <p className="text-sm text-slate-500 leading-relaxed italic">"{data.personalInfo.summary}"</p>
+                </div>
                 <div className="space-y-12">
+
                     <section>
                         <div className="h-0.5 w-12 bg-slate-900 mb-6" style={{ backgroundColor: primaryColor }}></div>
                         <h2 className="text-xs font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Experience Dataset</h2>
@@ -3631,6 +6633,74 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             ))}
                         </div>
                     </section>
+
+                    <section>
+                        <div className="h-0.5 w-12 bg-slate-900 mb-6" style={{ backgroundColor: primaryColor }}></div>
+                        <h2 className="text-xs font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Education Dataset</h2>
+                        <div className="space-y-8">
+                            {data.education.map((edu, i) => (
+                                <div key={i} className="p-4 -ml-4">
+                                    <div className="flex justify-between items-baseline mb-2">
+                                        <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight">{edu.school}</h3>
+                                        <span className="text-[10px] font-bold text-slate-300 tabular-nums uppercase">{edu.startDate} - {edu.endDate}</span>
+                                    </div>
+                                    <p className="text-xs font-black uppercase mb-2 opacity-60 italic">{edu.degree} in {edu.fieldOfStudy}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section>
+                        <div className="h-0.5 w-12 bg-slate-900 mb-6" style={{ backgroundColor: primaryColor }}></div>
+                        <h2 className="text-xs font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Project Dataset</h2>
+                        <div className="space-y-8">
+                            {data.projects.map((project, i) => (
+                                <div key={i} className="p-4 -ml-4">
+                                    <div className="flex justify-between items-baseline mb-2">
+                                        <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight">{project.name}</h3>
+                                        {project.link && <span className="text-[10px] font-bold text-slate-300 uppercase">{project.link}</span>}
+                                    </div>
+                                    <p className="text-[13px] text-slate-500 leading-relaxed text-justify mb-3">{project.description}</p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {project.technologies.map((tech, t) => (
+                                            <span key={t} className="text-[9px] font-bold uppercase tracking-widest bg-slate-100 text-slate-400 px-2 py-1 rounded">{tech}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <div className="grid grid-cols-2 gap-12">
+                        <section>
+                            <div className="h-0.5 w-12 bg-slate-900 mb-6" style={{ backgroundColor: primaryColor }}></div>
+                            <h2 className="text-xs font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Skillset</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.skills.map((skill, i) => (
+                                    <span key={i} className="text-[10px] font-black uppercase tracking-widest bg-slate-100 text-slate-500 px-3 py-1.5 rounded">{skill}</span>
+                                ))}
+                            </div>
+                        </section>
+                        <section>
+                            <div className="h-0.5 w-12 bg-slate-900 mb-6" style={{ backgroundColor: primaryColor }}></div>
+                            <h2 className="text-xs font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Addenda</h2>
+                            <div className="space-y-6">
+                                <div>
+                                    <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Languages</h3>
+                                    {data.languages.map((l, i) => (
+                                        <div key={i} className="text-xs font-bold text-slate-700">{l.language} / {l.proficiency}</div>
+                                    ))}
+                                </div>
+                                {((data.certifications?.length || 0) > 0 || (data.awards?.length || 0) > 0) && (
+                                    <div>
+                                        <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Honors</h3>
+                                        {(data.certifications || []).map((c, i) => <div key={`c-${i}`} className="text-xs font-bold text-slate-700 mb-1">{c.name}</div>)}
+                                        {(data.awards || []).map((a, i) => <div key={`a-${i}`} className="text-xs font-bold text-slate-700 mb-1">{a.title}</div>)}
+                                    </div>
+                                )}
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3666,6 +6736,71 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             ))}
                         </div>
                     </section>
+
+                    <div className="h-px w-20 bg-slate-100 mx-auto mb-20"></div>
+
+                    <section className="mb-16">
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-slate-200 mb-10 text-center italic">— Academic Background —</h2>
+                        <div className="space-y-8 max-w-2xl mx-auto text-center">
+                            {data.education.map((edu, i) => (
+                                <div key={i} className="text-center group">
+                                    <h3 className="text-2xl font-black mb-1 italic text-slate-800">{edu.school}</h3>
+                                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mb-2">{edu.degree} in {edu.fieldOfStudy}</p>
+                                    <p className="text-[10px] font-black text-slate-200 uppercase tracking-[0.2em]">{edu.startDate} — {edu.endDate}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <div className="h-px w-20 bg-slate-100 mx-auto mb-20"></div>
+
+                    <section className="mb-16">
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-slate-200 mb-10 text-center italic">— Strategic Initiatives —</h2>
+                        <div className="space-y-12 max-w-3xl mx-auto">
+                            {data.projects.map((project, i) => (
+                                <div key={i} className="text-center">
+                                    <h3 className="text-xl font-black mb-2 italic text-slate-900">{project.name}</h3>
+                                    <p className="text-sm text-slate-500 leading-loose font-light">{project.description}</p>
+                                    {project.link && <a href={project.link} className="inline-block mt-4 text-[10px] font-black uppercase tracking-widest text-slate-300 hover:text-slate-800 transition-colors">View Resource</a>}
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <div className="h-px w-20 bg-slate-100 mx-auto mb-20"></div>
+
+                    <div className="grid grid-cols-2 gap-16 max-w-4xl mx-auto">
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-slate-200 mb-10 text-center italic whitespace-nowrap">— Core Competencies —</h2>
+                            <div className="flex flex-wrap justify-center gap-4">
+                                {data.skills.map((s, i) => (
+                                    <span key={i} className="text-xs font-bold uppercase tracking-widest text-slate-500">{s}</span>
+                                ))}
+                            </div>
+                        </section>
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-slate-200 mb-10 text-center italic">— Additional Info —</h2>
+                            <div className="text-center space-y-6">
+                                <div>
+                                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2">Languages</p>
+                                    {data.languages.map((l, i) => <p key={i} className="text-xs font-bold text-slate-600 mb-1">{l.language}</p>)}
+                                </div>
+                                {((data.certifications?.length || 0) > 0 || (data.awards?.length || 0) > 0) && (
+                                    <div>
+                                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2">Qualifications</p>
+                                        {(data.certifications || []).map((c, i) => <p key={i} className="text-xs font-bold text-slate-600 mb-1">{c.name}</p>)}
+                                        {(data.awards || []).map((a, i) => <p key={`a-${i}`} className="text-xs font-bold text-slate-600 mb-1">{a.title}</p>)}
+                                    </div>
+                                )}
+                                {(data.interests?.length || 0) > 0 && (
+                                    <div>
+                                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2">Interests</p>
+                                        <p className="text-xs font-bold text-slate-600">{(data.interests || []).join(" / ")}</p>
+                                    </div>
+                                )}
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3684,6 +6819,9 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                     <p>HOST: {data.personalInfo.address}</p>
                 </div>
             </header>
+            <div className="mb-12 p-6 bg-slate-50 border-l-4 border-slate-900">
+                <p className="text-xs font-bold text-slate-600 leading-relaxed uppercase tracking-tighter sm:tracking-normal">{data.personalInfo.summary}</p>
+            </div>
             <div className="flex-1 grid grid-cols-12 gap-12">
                 <div className="col-span-12 space-y-12">
                     <section>
@@ -3702,6 +6840,84 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             ))}
                         </div>
                     </section>
+
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.2em] bg-slate-900 text-white px-4 py-1 inline-block mb-8 underline decoration-2 underline-offset-4" style={{ textDecorationColor: primaryColor }}>02 // COMPILED_MODULES</h2>
+                        <div className="space-y-12 pl-4 border-l border-slate-100">
+                            {data.projects.map((project, i) => (
+                                <div key={i} className="relative group">
+                                    <div className="absolute -left-[21px] top-1 w-2 h-2 bg-slate-200 group-hover:bg-slate-950 transition-colors"></div>
+                                    <div className="flex justify-between items-baseline mb-2">
+                                        <h3 className="text-lg font-black uppercase tracking-tighter">{project.name}</h3>
+                                        {project.link && <a href={project.link} className="text-[10px] font-bold opacity-40 uppercase tracking-widest hover:text-blue-600">source_code ↗</a>}
+                                    </div>
+                                    <p className="text-xs text-slate-500 leading-relaxed font-bold lowercase opacity-70 tracking-tight">{project.description}</p>
+                                    <div className="mt-4 flex flex-wrap gap-2">
+                                        {project.technologies.map((tech, t) => (
+                                            <span key={t} className="text-[9px] font-mono bg-slate-100 px-1 rounded text-slate-600">import {tech}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.2em] bg-slate-900 text-white px-4 py-1 inline-block mb-8 underline decoration-2 underline-offset-4" style={{ textDecorationColor: primaryColor }}>03 // DEPENDENCIES</h2>
+                        <div className="pl-4 border-l border-slate-100 flex flex-wrap gap-x-6 gap-y-3">
+                            {data.skills.map((skill, i) => (
+                                <div key={i} className="text-xs font-bold font-mono text-slate-700">
+                                    <span style={{ color: primaryColor }}>npm i</span> {skill} @latest
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.2em] bg-slate-900 text-white px-4 py-1 inline-block mb-8 underline decoration-2 underline-offset-4" style={{ textDecorationColor: primaryColor }}>04 // KERNEL_VERSION</h2>
+                        <div className="space-y-8 pl-4 border-l border-slate-100">
+                            {data.education.map((edu, i) => (
+                                <div key={i} className="relative group">
+                                    <div className="absolute -left-[21px] top-1 w-2 h-2 bg-slate-200 group-hover:bg-slate-950 transition-colors"></div>
+                                    <h3 className="text-base font-black uppercase tracking-tighter">{edu.school}</h3>
+                                    <p className="text-xs font-bold mt-1" style={{ color: primaryColor }}>{edu.degree} :: {edu.fieldOfStudy}</p>
+                                    <span className="text-[10px] font-bold opacity-40 uppercase tracking-widest block mt-1">{edu.startDate} - {edu.endDate}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <div className="grid grid-cols-2 gap-8">
+                        <section>
+                            <h2 className="text-xs font-black uppercase tracking-[0.2em] bg-slate-900 text-white px-4 py-1 inline-block mb-8 underline decoration-2 underline-offset-4" style={{ textDecorationColor: primaryColor }}>05 // I/O_INTERFACES</h2>
+                            <div className="pl-4 border-l border-slate-100 space-y-2">
+                                {data.languages.map((l, i) => (
+                                    <div key={i} className="text-xs font-mono">
+                                        <span className="font-bold">{l.language}</span>: <span className="text-slate-500">{l.proficiency}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                        {((data.certifications?.length || 0) > 0 || (data.awards?.length || 0) > 0) && (
+                            <section>
+                                <h2 className="text-xs font-black uppercase tracking-[0.2em] bg-slate-900 text-white px-4 py-1 inline-block mb-8 underline decoration-2 underline-offset-4" style={{ textDecorationColor: primaryColor }}>06 // CERT_KEYS</h2>
+                                <div className="pl-4 border-l border-slate-100 space-y-2">
+                                    {(data.certifications || []).map((c, i) => <div key={i} className="text-xs font-mono text-slate-600">[{c.issuer}] {c.name}</div>)}
+                                    {(data.awards || []).map((a, i) => <div key={`a-${i}`} className="text-xs font-mono text-slate-600">[{a.issuer}] {a.title}</div>)}
+                                </div>
+                            </section>
+                        )}
+                    </div>
+                    {data.interests && data.interests.length > 0 && (
+                        <section>
+                            <h2 className="text-xs font-black uppercase tracking-[0.2em] bg-slate-900 text-white px-4 py-1 inline-block mb-8 underline decoration-2 underline-offset-4" style={{ textDecorationColor: primaryColor }}>07 // IDLE_PROCESSES</h2>
+                            <div className="pl-4 border-l border-slate-100 flex flex-wrap gap-4">
+                                {data.interests.map((interest, i) => (
+                                    <span key={i} className="text-[10px] font-mono text-slate-400"># {interest}</span>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </div>
         </div>
@@ -3747,6 +6963,47 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
+                <section>
+                    <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-200 mb-8 border-l-4 pl-6" style={{ borderColor: primaryColor }}>Research Grants & Projects</h2>
+                    <div className="space-y-8 pl-6">
+                        {data.projects.map((project, i) => (
+                            <div key={i} className="group">
+                                <div className="flex justify-between items-baseline mb-2">
+                                    <h3 className="text-lg font-bold text-slate-800">{project.name}</h3>
+                                    {project.link && <a href={project.link} className="text-xs font-medium italic text-slate-400 hover:text-blue-600 transition-colors">View Research ↗</a>}
+                                </div>
+                                <p className="text-sm text-slate-500 leading-relaxed font-light text-justify">{project.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+                <section>
+                    <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-200 mb-8 border-l-4 pl-6" style={{ borderColor: primaryColor }}>Core Competencies</h2>
+                    <div className="flex flex-wrap gap-x-6 gap-y-3 pl-6">
+                        {data.skills.map((s, i) => (
+                            <span key={i} className="text-sm italic font-medium text-slate-600">• {s}</span>
+                        ))}
+                    </div>
+                </section>
+                <div className="grid grid-cols-2 gap-12 border-t border-slate-100 pt-12">
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-200 mb-8 border-l-4 pl-6" style={{ borderColor: primaryColor }}>Languages</h2>
+                        <div className="pl-6 space-y-2">
+                            {data.languages.map((l, i) => (
+                                <div key={i} className="text-sm text-slate-600 italic"><span className="font-bold not-italic">{l.language}</span>: {l.proficiency}</div>
+                            ))}
+                        </div>
+                    </section>
+                    {((data.certifications?.length || 0) > 0 || (data.awards?.length || 0) > 0) && (
+                        <section>
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-200 mb-8 border-l-4 pl-6" style={{ borderColor: primaryColor }}>Distinctions</h2>
+                            <div className="pl-6 space-y-4">
+                                {(data.certifications || []).map((c, i) => <div key={i} className="text-sm text-slate-600 italic"><span className="font-bold not-italic">{c.name}</span> ({c.issuer})</div>)}
+                                {(data.awards || []).map((a, i) => <div key={`a-${i}`} className="text-sm text-slate-600 italic"><span className="font-bold not-italic">{a.title}</span> ({a.issuer})</div>)}
+                            </div>
+                        </section>
+                    )}
+                </div>
             </div>
         </div>
     ),
@@ -3764,6 +7021,14 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
             <div className="grid grid-cols-12 gap-16">
                 <div className="col-span-12">
                     <section className="mb-20">
+                        <div className="flex items-center gap-6 mb-8">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-slate-200 italic whitespace-nowrap">The Professional</h2>
+                            <div className="h-px flex-1 bg-slate-50"></div>
+                        </div>
+                        <p className="text-xl font-light text-slate-400 leading-loose italic max-w-3xl mx-auto text-center">"{data.personalInfo.summary}"</p>
+                    </section>
+                    <section className="mb-20">
+
                         <div className="flex items-center gap-6 mb-12">
                             <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-slate-200 italic whitespace-nowrap">Professional Base</h2>
                             <div className="h-px flex-1 bg-slate-50"></div>
@@ -3783,7 +7048,83 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                             ))}
                         </div>
                     </section>
+
+                    <section className="mb-20">
+                        <div className="flex items-center gap-6 mb-12">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-slate-200 italic whitespace-nowrap">Academic History</h2>
+                            <div className="h-px flex-1 bg-slate-50"></div>
+                        </div>
+                        <div className="space-y-12">
+                            {data.education.map((edu, i) => (
+                                <div key={i} className="relative pl-12">
+                                    <div className="absolute left-[-2px] top-1.5 w-1 h-[120%] bg-slate-50"></div>
+                                    <div className="absolute left-[-2px] top-1.5 w-1 h-8 group-hover:h-full transition-all duration-500" style={{ backgroundColor: primaryColor }}></div>
+                                    <h3 className="text-xl font-black text-slate-900 tracking-tight">{edu.school}</h3>
+                                    <p className="text-xs font-bold uppercase mb-2 tracking-widest italic opacity-50">{edu.degree} in {edu.fieldOfStudy}</p>
+                                    <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">{edu.startDate} - {edu.endDate}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section className="mb-20">
+                        <div className="flex items-center gap-6 mb-12">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-slate-200 italic whitespace-nowrap">Key Projects</h2>
+                            <div className="h-px flex-1 bg-slate-50"></div>
+                        </div>
+                        <div className="space-y-12">
+                            {data.projects.map((project, i) => (
+                                <div key={i} className="relative pl-12">
+                                    <div className="absolute left-[-2px] top-1.5 w-1 h-[120%] bg-slate-50"></div>
+                                    <div className="flex justify-between items-baseline mb-2">
+                                        <h3 className="text-lg font-black text-slate-900 tracking-tight">{project.name}</h3>
+                                        {project.link && <a href={project.link} className="text-[10px] font-black uppercase tracking-widest text-slate-300 hover:text-slate-500 transition-colors">Link ↗</a>}
+                                    </div>
+                                    <p className="text-sm text-slate-400 leading-loose font-medium text-justify">{project.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <div className="grid grid-cols-2 gap-16">
+                        <section>
+                            <div className="flex items-center gap-6 mb-12">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-slate-200 italic whitespace-nowrap">Competencies</h2>
+                                <div className="h-px flex-1 bg-slate-50"></div>
+                            </div>
+                            <div className="pl-12 flex flex-wrap gap-4">
+                                {data.skills.map((s, i) => (
+                                    <span key={i} className="text-xs font-bold uppercase tracking-widest text-slate-400">{s}</span>
+                                ))}
+                            </div>
+                        </section>
+                        <section>
+                            <div className="flex items-center gap-6 mb-12">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-slate-200 italic whitespace-nowrap">Distinctions</h2>
+                                <div className="h-px flex-1 bg-slate-50"></div>
+                            </div>
+                            <div className="pl-12 space-y-4">
+                                {data.languages.map((l, i) => <div key={i} className="text-xs font-bold text-slate-500 uppercase tracking-widest">{l.language} / {l.proficiency}</div>)}
+                                {(data.certifications || []).map((c, i) => <div key={`c-${i}`} className="text-xs font-bold text-slate-500 uppercase tracking-widest">{c.name}</div>)}
+                                {(data.awards || []).map((a, i) => <div key={`a-${i}`} className="text-xs font-bold text-slate-500 uppercase tracking-widest">{a.title}</div>)}
+                            </div>
+                        </section>
+                        {data.interests && data.interests.length > 0 && (
+                            <section>
+                                <div className="flex items-center gap-6 mb-12">
+                                    <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-slate-200 italic whitespace-nowrap">The Person</h2>
+                                    <div className="h-px flex-1 bg-slate-50"></div>
+                                </div>
+                                <div className="pl-12 flex flex-wrap gap-6">
+                                    {data.interests.map((interest, i) => (
+                                        <span key={i} className="text-xs font-medium text-slate-400 italic"># {interest}</span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                    </div>
                 </div>
+
             </div>
             <footer className="mt-auto flex justify-between pt-12 border-t border-slate-50 text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 italic">
                 <span>{data.personalInfo.email}</span>
@@ -3805,6 +7146,10 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
             </header>
             <div className="space-y-12">
                 <section>
+                    <p className="text-sm text-slate-500 leading-relaxed italic border-l-4 pl-8 mb-12" style={{ borderColor: `${primaryColor}44` }}>"{data.personalInfo.summary}"</p>
+                </section>
+                <section>
+
                     <h2 className="text-xs font-black uppercase tracking-[0.5em] text-slate-200 mb-10 pb-2 border-b-2" style={{ borderBottomColor: `${primaryColor}22` }}>Experience Record</h2>
                     <div className="space-y-12">
                         {data.experience.map((exp, i) => (
@@ -3821,6 +7166,59 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                         ))}
                     </div>
                 </section>
+
+                <section>
+                    <h2 className="text-xs font-black uppercase tracking-[0.5em] text-slate-200 mb-10 pb-2 border-b-2" style={{ borderBottomColor: `${primaryColor}22` }}>Academic Record</h2>
+                    <div className="space-y-8">
+                        {data.education.map((edu, i) => (
+                            <div key={i} className="group">
+                                <div className="flex justify-between items-baseline mb-2 pl-8 border-l-4 border-transparent group-hover:border-slate-100 transition-colors">
+                                    <h3 className="text-xl font-black text-slate-800 italic">{edu.school}</h3>
+                                    <span className="text-sm font-medium italic text-slate-300">{edu.startDate} — {edu.endDate}</span>
+                                </div>
+                                <p className="text-sm text-slate-500 pl-9 font-medium italic">{edu.degree} in {edu.fieldOfStudy}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <section>
+                    <h2 className="text-xs font-black uppercase tracking-[0.5em] text-slate-200 mb-10 pb-2 border-b-2" style={{ borderBottomColor: `${primaryColor}22` }}>Project Portfolio</h2>
+                    <div className="space-y-8">
+                        {data.projects.map((project, i) => (
+                            <div key={i} className="group">
+                                <div className="flex justify-between items-baseline mb-2 pl-8 border-l-4 border-transparent group-hover:border-slate-100 transition-colors">
+                                    <h3 className="text-lg font-black text-slate-800 italic">{project.name}</h3>
+                                    {project.link && <a href={project.link} className="text-xs font-medium italic text-slate-300 hover:text-slate-500">View ↗</a>}
+                                </div>
+                                <p className="text-sm text-slate-600 leading-relaxed text-left pl-9 italic font-medium opacity-80 whitespace-pre-line">{project.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                <div className="grid grid-cols-2 gap-16">
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-slate-200 mb-10 pb-2 border-b-2" style={{ borderBottomColor: `${primaryColor}22` }}>Skills Overview</h2>
+                        <div className="pl-8 flex flex-wrap gap-x-8 gap-y-3">
+                            {data.skills.map((s, i) => (
+                                <span key={i} className="text-sm italic font-medium text-slate-500">• {s}</span>
+                            ))}
+                        </div>
+                    </section>
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-slate-200 mb-10 pb-2 border-b-2" style={{ borderBottomColor: `${primaryColor}22` }}>Et Cetera</h2>
+                        <div className="pl-8 space-y-4">
+                            {data.languages.map((l, i) => (
+                                <div key={i} className="text-sm text-slate-500 italic"><span className="font-bold text-slate-700">{l.language}</span> — {l.proficiency}</div>
+                            ))}
+                            {(data.certifications?.length || 0) > 0 && <div className="h-px w-8 bg-slate-100 my-4"></div>}
+                            {(data.certifications || []).map((c, i) => (
+                                <div key={i} className="text-sm text-slate-500 italic"><span className="font-bold text-slate-700">{c.name}</span></div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
     ),
