@@ -1224,7 +1224,1028 @@ const templates: Record<string, React.FC<{ data: ResumeData; primaryColor: strin
                 </section>
             </div>
         </div>
-    )
+    ),
+
+    cyber: ({ data, primaryColor }) => (
+        <div className="bg-[#050505] w-[794px] mx-auto shadow-2xl p-16 resume-page font-mono text-white relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-[2px]" style={{ background: `linear-gradient(90deg, transparent, ${primaryColor}, transparent)` }}></div>
+            <div className="absolute bottom-0 left-0 w-full h-[2px]" style={{ background: `linear-gradient(90deg, transparent, ${primaryColor}, transparent)` }}></div>
+            <header className="mb-16 relative">
+                <div className="absolute -left-8 top-0 w-1 h-full" style={{ backgroundColor: primaryColor }}></div>
+                <h1 className="text-6xl font-black tracking-tighter mb-4 uppercase italic" style={{ textShadow: `0 0 10px ${primaryColor}` }}>{data.personalInfo.fullName}</h1>
+                <div className="flex gap-6 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                    <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primaryColor }}></div> {data.personalInfo.email}</span>
+                    <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primaryColor }}></div> {data.personalInfo.phone}</span>
+                </div>
+            </header>
+            <div className="grid grid-cols-12 gap-12">
+                <div className="col-span-8 space-y-12">
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-8 flex items-center gap-4" style={{ color: primaryColor }}>
+                            <span className="opacity-50">[01]</span> PROFESSIONAL_LOG
+                        </h2>
+                        <div className="space-y-10">
+                            {data.experience.map((exp, i) => (
+                                <div key={i} className="relative pl-6 border-l border-white/10 group">
+                                    <div className="absolute -left-[5px] top-0 w-[9px] h-[9px] bg-white/10 group-hover:bg-current transition-colors" style={{ color: primaryColor }}></div>
+                                    <div className="flex justify-between items-baseline mb-2">
+                                        <h3 className="text-lg font-bold uppercase">{exp.company}</h3>
+                                        <span className="text-[10px] opacity-40">{exp.startDate} // {exp.endDate || 'PRESENT'}</span>
+                                    </div>
+                                    <p className="text-xs font-bold mb-4 opacity-70 italic" style={{ color: primaryColor }}>{exp.position}</p>
+                                    <p className="text-xs text-gray-400 leading-relaxed font-light">{exp.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+                <div className="col-span-4 space-y-12">
+                    <section className="bg-white/5 p-8 border border-white/10">
+                        <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-6" style={{ color: primaryColor }}>
+                            CORE_STACK
+                        </h2>
+                        <div className="flex flex-wrap gap-2">
+                            {data.skills.map((s, i) => (
+                                <span key={i} className="text-[10px] px-2 py-1 bg-white/5 border border-white/10 uppercase font-bold tracking-tighter">{s}</span>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    ),
+
+    glass: ({ data, primaryColor }) => (
+        <div className="bg-slate-900 w-[794px] mx-auto shadow-2xl resume-page font-inter relative overflow-hidden min-h-[1123px]">
+            <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-[120px] opacity-20" style={{ backgroundColor: primaryColor }}></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[100px] opacity-10" style={{ backgroundColor: primaryColor }}></div>
+            <div className="relative z-10 p-16">
+                <header className="mb-16 backdrop-blur-md bg-white/5 border border-white/10 p-12 rounded-[32px] shadow-2xl">
+                    <h1 className="text-6xl font-black text-white tracking-tighter mb-4">{data.personalInfo.fullName}</h1>
+                    <p className="text-lg font-medium text-white/50 mb-8">{data.experience[0]?.position}</p>
+                    <div className="flex gap-8 text-[11px] font-bold text-white/30 uppercase tracking-widest">
+                        <span>{data.personalInfo.email}</span>
+                        <span>•</span>
+                        <span>{data.personalInfo.phone}</span>
+                    </div>
+                </header>
+                <div className="grid grid-cols-12 gap-8">
+                    <div className="col-span-7 space-y-8">
+                        <section className="backdrop-blur-sm bg-white/[0.02] border border-white/5 p-10 rounded-[32px]">
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-white/20 mb-10">Experience</h2>
+                            <div className="space-y-12">
+                                {data.experience.map((exp, i) => (
+                                    <div key={i}>
+                                        <div className="flex justify-between mb-2 text-white">
+                                            <h3 className="text-xl font-bold">{exp.company}</h3>
+                                            <span className="text-[10px] font-black opacity-30">{exp.startDate} - {exp.endDate || 'Now'}</span>
+                                        </div>
+                                        <p className="text-sm font-bold mb-4 opacity-60" style={{ color: primaryColor }}>{exp.position}</p>
+                                        <p className="text-xs text-white/40 leading-relaxed font-light">{exp.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+                    <div className="col-span-5 space-y-8">
+                        <section className="backdrop-blur-sm bg-white/[0.02] border border-white/5 p-10 rounded-[32px]">
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-white/20 mb-8">Technical</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.skills.map((s, i) => (
+                                    <span key={i} className="px-4 py-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-full text-[10px] font-bold text-white/70">{s}</span>
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ),
+
+    neural: ({ data, primaryColor }) => (
+        <div className="bg-white w-[794px] mx-auto shadow-2xl p-16 resume-page font-outfit text-slate-900 border-x-[16px] border-slate-50 relative overflow-hidden">
+            <svg className="absolute inset-0 w-full h-full opacity-[0.03] pointer-events-none" viewBox="0 0 800 1200">
+                <circle cx="100" cy="100" r="2" fill={primaryColor} />
+                <circle cx="700" cy="200" r="3" fill={primaryColor} />
+                <circle cx="400" cy="600" r="2" fill={primaryColor} />
+                <path d="M100 100 L700 200 L400 600 Z" stroke={primaryColor} fill="none" strokeWidth="0.5" />
+            </svg>
+            <header className="mb-20 flex justify-between items-center relative z-10">
+                <div className="max-w-xl">
+                    <h1 className="text-7xl font-black tracking-tight leading-none mb-4 uppercase">{data.personalInfo.fullName}</h1>
+                    <p className="text-sm font-bold tracking-[0.4em] text-slate-300 uppercase">{data.personalInfo.summary.substring(0, 100)}...</p>
+                </div>
+                <div className="w-24 h-24 rounded-full border border-slate-100 flex items-center justify-center p-2">
+                    <div className="w-full h-full rounded-full animate-pulse" style={{ backgroundColor: primaryColor }}></div>
+                </div>
+            </header>
+            <div className="grid grid-cols-1 gap-20 relative z-10">
+                <section>
+                    <div className="flex items-center gap-6 mb-12">
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-400">Nodes</h2>
+                        <div className="flex-1 h-px bg-slate-100"></div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-12">
+                        {data.experience.map((exp, i) => (
+                            <div key={i} className="p-8 border border-slate-50 rounded-[40px] hover:border-slate-200 transition-colors bg-white">
+                                <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest block mb-4 italic">{exp.startDate} // {exp.endDate || 'LATEST'}</span>
+                                <h3 className="text-2xl font-black mb-1">{exp.company}</h3>
+                                <p className="text-sm font-bold mb-6" style={{ color: primaryColor }}>{exp.position}</p>
+                                <p className="text-xs text-slate-500 leading-relaxed font-medium line-clamp-4">{exp.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </div>
+        </div>
+    ),
+
+    hologram: ({ data, primaryColor }) => (
+        <div className="bg-[#000411] w-[794px] mx-auto shadow-2xl p-16 resume-page font-inter text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-full h-[300px] opacity-30" style={{ background: `linear-gradient(135deg, ${primaryColor}77, transparent)` }}></div>
+            <header className="mb-24 text-center">
+                <h1 className="text-8xl font-black tracking-tighter italic mb-4" style={{
+                    background: `linear-gradient(to right, #fff, ${primaryColor}, #fff)`,
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    textShadow: `0 0 30px ${primaryColor}44`
+                }}>{data.personalInfo.fullName}</h1>
+                <div className="flex justify-center gap-12 text-[10px] font-black uppercase tracking-[0.5em] text-white/40">
+                    <span>{data.personalInfo.email}</span>
+                    <div className="w-1 h-1 rounded-full bg-white/20 mt-1.5"></div>
+                    <span>{data.personalInfo.phone}</span>
+                </div>
+            </header>
+            <div className="grid grid-cols-12 gap-16">
+                <div className="col-span-12">
+                    <section className="mb-24">
+                        <div className="flex justify-between items-center mb-12 border-b border-white/10 pb-4">
+                            <h2 className="text-sm font-black uppercase tracking-[0.6em] text-white">System Experience</h2>
+                            <span className="text-[10px] text-white/30 font-mono tracking-tighter">BUILD v2.0.4</span>
+                        </div>
+                        <div className="space-y-16">
+                            {data.experience.map((exp, i) => (
+                                <div key={i} className="grid grid-cols-12 gap-8 items-start">
+                                    <div className="col-span-3">
+                                        <div className="text-[10px] font-black font-mono text-white/20 uppercase mb-2">TIMELINE</div>
+                                        <div className="text-sm font-bold text-white/50">{exp.startDate} — {exp.endDate || 'INF'}</div>
+                                    </div>
+                                    <div className="col-span-9 border-l-2 border-white/5 pl-10">
+                                        <h3 className="text-3xl font-black mb-2 italic" style={{ color: primaryColor }}>{exp.company}</h3>
+                                        <p className="text-sm font-bold text-white/40 mb-6 uppercase tracking-widest">{exp.position}</p>
+                                        <p className="text-xs text-white/50 leading-relaxed font-medium text-justify">{exp.description}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    ),
+
+    focus: ({ data, primaryColor }) => (
+        <div className="bg-white w-[794px] mx-auto shadow-2xl p-24 resume-page font-inter text-slate-900 border-[32px] border-slate-50">
+            <header className="mb-24 flex flex-col items-start">
+                <div className="h-1.5 w-16 mb-12 rounded-full" style={{ backgroundColor: primaryColor }}></div>
+                <h1 className="text-7xl font-black tracking-tighter mb-4 leading-[0.9]">{data.personalInfo.fullName}</h1>
+                <p className="text-xl font-medium text-slate-400 max-w-lg mb-8 italic">"{data.personalInfo.summary.substring(0, 150)}..."</p>
+                <div className="flex gap-10 text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">
+                    <span>{data.personalInfo.email}</span>
+                    <span>{data.personalInfo.phone}</span>
+                </div>
+            </header>
+            <div className="grid grid-cols-12 gap-16">
+                <div className="col-span-4 self-start sticky top-24">
+                    <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-8 border-b pb-4">Specialties</h2>
+                    <div className="flex flex-col gap-4">
+                        {data.skills.slice(0, 8).map((s, i) => (
+                            <div key={i} className="flex items-center gap-4">
+                                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primaryColor }}></div>
+                                <span className="text-xs font-bold text-slate-600 uppercase tracking-widest">{s}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="col-span-8 space-y-20">
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-12">Track Record</h2>
+                        <div className="space-y-16">
+                            {data.experience.map((exp, i) => (
+                                <div key={i}>
+                                    <div className="flex justify-between items-baseline mb-4">
+                                        <h3 className="text-3xl font-black tracking-tighter text-slate-800">{exp.company}</h3>
+                                        <span className="text-[10px] font-black text-slate-300 tabular-nums">{exp.startDate} - {exp.endDate || 'NOW'}</span>
+                                    </div>
+                                    <p className="text-sm font-bold uppercase tracking-[0.2em] mb-6 italic" style={{ color: primaryColor }}>{exp.position}</p>
+                                    <p className="text-sm text-slate-500 leading-relaxed font-medium">{exp.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    ),
+
+    data: ({ data, primaryColor }) => (
+        <div className="bg-slate-50 w-[794px] mx-auto shadow-2xl p-16 resume-page font-mono text-slate-800">
+            <header className="mb-20 grid grid-cols-4 gap-4">
+                <div className="col-span-3 bg-white p-10 border border-slate-200">
+                    <h1 className="text-5xl font-black uppercase tracking-tighter mb-2">{data.personalInfo.fullName}</h1>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.3em] italic">Identity verified // {data.experience[0]?.position}</p>
+                </div>
+                <div className="bg-slate-900 p-8 text-white flex flex-col justify-center">
+                    <div className="text-[8px] font-black uppercase tracking-widest opacity-40 mb-4">Contact Detail</div>
+                    <p className="text-[10px] font-bold truncate">{data.personalInfo.email}</p>
+                    <p className="text-[10px] font-bold">{data.personalInfo.phone}</p>
+                </div>
+            </header>
+            <div className="space-y-12">
+                <section>
+                    <div className="flex items-center gap-4 mb-10">
+                        <div className="w-4 h-4" style={{ backgroundColor: primaryColor }}></div>
+                        <h2 className="text-xs font-black uppercase tracking-[0.5em]">Professional Dataset</h2>
+                    </div>
+                    {data.experience.map((exp, i) => (
+                        <div key={i} className="mb-8 p-8 bg-white border border-slate-100 hover:shadow-xl transition-all">
+                            <div className="flex justify-between items-baseline mb-4">
+                                <h3 className="text-lg font-black uppercase tracking-tight">{exp.company}</h3>
+                                <span className="text-[10px] tabular-nums font-bold text-slate-300">{exp.startDate} :: {exp.endDate || 'NULL'}</span>
+                            </div>
+                            <div className="h-px w-full bg-slate-50 mb-4"></div>
+                            <p className="text-xs font-bold uppercase mb-4" style={{ color: primaryColor }}>{exp.position}</p>
+                            <p className="text-xs text-slate-500 leading-relaxed">{exp.description}</p>
+                        </div>
+                    ))}
+                </section>
+            </div>
+        </div>
+    ),
+
+    organic: ({ data, primaryColor }) => (
+        <div className="bg-[#fffcf9] w-[794px] mx-auto shadow-2xl p-16 resume-page font-outfit text-slate-800 relative overflow-hidden">
+            <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full opacity-[0.05] blur-3xl" style={{ backgroundColor: primaryColor }}></div>
+            <header className="mb-24 flex flex-col items-center text-center">
+                <div className="w-20 h-20 rounded-full border-2 border-slate-100 p-1 mb-8">
+                    <div className="w-full h-full rounded-full flex items-center justify-center text-white font-black text-3xl" style={{ backgroundColor: primaryColor }}>
+                        {data.personalInfo.fullName.charAt(0)}
+                    </div>
+                </div>
+                <h1 className="text-5xl font-black tracking-tighter mb-4 text-slate-900">{data.personalInfo.fullName}</h1>
+                <p className="text-lg text-slate-400 font-medium italic mb-8 max-w-lg leading-relaxed">"{data.personalInfo.summary}"</p>
+                <div className="flex gap-10 items-center justify-center">
+                    <div className="h-px w-10 bg-slate-100"></div>
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">{data.personalInfo.email}</span>
+                    <div className="h-px w-10 bg-slate-100"></div>
+                </div>
+            </header>
+            <div className="grid grid-cols-1 gap-16">
+                <section>
+                    <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-12 text-center">Timeline</h2>
+                    <div className="space-y-16">
+                        {data.experience.map((exp, i) => (
+                            <div key={i} className="relative text-center max-w-2xl mx-auto">
+                                <h3 className="text-2xl font-black text-slate-900 mb-1 leading-tight">{exp.company}</h3>
+                                <p className="text-sm font-bold mb-6 italic" style={{ color: primaryColor }}>{exp.position} • {exp.startDate} - {exp.endDate || 'Now'}</p>
+                                <p className="text-sm text-slate-500 leading-relaxed font-light">{exp.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </div>
+        </div>
+    ),
+
+    terminal: ({ data, primaryColor }) => (
+        <div className="bg-[#1a1b26] w-[794px] mx-auto shadow-2xl p-12 resume-page font-mono text-[#a9b1d6] border-t-8" style={{ borderColor: primaryColor }}>
+            <header className="mb-12 border-b border-white/5 pb-8">
+                <div className="flex items-center gap-2 mb-4 text-[10px]">
+                    <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                    <span className="ml-4 opacity-30">resume_v2.terminal</span>
+                </div>
+                <h1 className="text-4xl font-bold text-white mb-2 underline decoration-dashed decoration-white/20 underline-offset-8">{data.personalInfo.fullName}</h1>
+                <div className="flex gap-6 text-[11px] font-medium mt-6">
+                    <span style={{ color: primaryColor }}>$ contact --email</span>
+                    <span className="text-white opacity-60">{data.personalInfo.email}</span>
+                </div>
+            </header>
+            <div className="space-y-12">
+                <section>
+                    <h2 className="text-sm font-bold text-[#bb9af7] mb-8 flex items-center gap-2">
+                        <span className="text-white opacity-20">❯</span> ls ~/experience
+                    </h2>
+                    <div className="space-y-10 pl-6 border-l border-white/5">
+                        {data.experience.map((exp, i) => (
+                            <div key={i} className="group">
+                                <div className="flex justify-between items-center mb-2">
+                                    <h3 className="text-white font-bold">{exp.company} <span className="text-[#7aa2f7] opacity-60">({exp.startDate})</span></h3>
+                                    <span className="text-[10px] opacity-30 font-bold uppercase">PID: {1000 + i}</span>
+                                </div>
+                                <p className="text-xs font-bold mb-4 italic" style={{ color: primaryColor }}>{exp.position}</p>
+                                <p className="text-xs leading-relaxed opacity-60 text-justify">{exp.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+                <section>
+                    <h2 className="text-sm font-bold text-[#7dcfff] mb-6 flex items-center gap-2">
+                        <span className="text-white opacity-20">❯</span> cat ~/skills.json
+                    </h2>
+                    <div className="bg-black/20 p-6 rounded-lg font-bold text-[10px] grid grid-cols-4 gap-4">
+                        {data.skills.map((s, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                                <span className="text-orange-400">"</span>
+                                <span className="text-white/80">{s}</span>
+                                <span className="text-orange-400">"</span>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </div>
+        </div>
+    ),
+
+    nebula: ({ data, primaryColor }) => (
+        <div className="bg-slate-900 w-[794px] mx-auto shadow-2xl resume-page font-inter relative overflow-hidden text-white min-h-[1123px]">
+            <div className="absolute top-0 right-0 w-full h-full">
+                <div className="absolute top-[20%] right-[10%] w-[500px] h-[500px] rounded-full blur-[150px] opacity-20" style={{ backgroundColor: primaryColor }}></div>
+                <div className="absolute bottom-[20%] left-[10%] w-[400px] h-[400px] rounded-full blur-[120px] opacity-[0.15]" style={{ backgroundColor: '#a855f7' }}></div>
+            </div>
+            <div className="relative z-10 p-20 flex flex-col items-center">
+                <header className="mb-32 text-center w-full">
+                    <div className="h-px w-20 bg-white/20 mx-auto mb-10"></div>
+                    <h1 className="text-8xl font-black text-white tracking-widest leading-none mb-6 uppercase" style={{ textShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>{data.personalInfo.fullName.split(' ')[0]}<br /><span className="text-transparent border border-white/20 bg-clip-text" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>{data.personalInfo.fullName.split(' ').slice(1).join(' ')}</span></h1>
+                    <p className="text-xs font-black uppercase tracking-[0.8em] text-white/40 mb-12 italic">{data.experience[0]?.position}</p>
+                    <div className="flex justify-center gap-12 text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">
+                        <span>{data.personalInfo.email}</span>
+                        <span>{data.personalInfo.phone}</span>
+                    </div>
+                </header>
+                <div className="grid grid-cols-12 gap-16 w-full">
+                    <div className="col-span-12 space-y-24">
+                        <section className="relative">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-white/20 mb-16 text-center italic">Professional Orbit</h2>
+                            <div className="space-y-20">
+                                {data.experience.map((exp, i) => (
+                                    <div key={i} className="group relative">
+                                        <div className="absolute -left-10 top-2 w-1.5 h-1.5 rounded-full border border-white/20 group-hover:scale-150 group-hover:bg-white/50 transition-all duration-500"></div>
+                                        <div className="flex justify-between items-baseline mb-4">
+                                            <h3 className="text-2xl font-black uppercase tracking-tighter text-white/90">{exp.company}</h3>
+                                            <span className="text-[11px] font-bold text-white/20 tabular-nums">{exp.startDate} - {exp.endDate || 'INF'}</span>
+                                        </div>
+                                        <p className="text-xs font-bold uppercase mb-6 tracking-widest italic" style={{ color: primaryColor }}>{exp.position}</p>
+                                        <p className="text-sm text-white/40 leading-relaxed font-light text-justify max-w-2xl">{exp.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ),
+
+    prism: ({ data, primaryColor }) => (
+        <div className="bg-white w-[794px] mx-auto shadow-2xl p-16 resume-page font-inter text-slate-900 border-x-[20px] relative overflow-hidden" style={{ borderImage: `linear-gradient(to bottom, ${primaryColor}, #a855f7, #ec4899) 1` }}>
+            <header className="mb-20">
+                <h1 className="text-7xl font-black tracking-tighter mb-4 italic leading-none">{data.personalInfo.fullName}</h1>
+                <div className="h-1.5 w-full bg-slate-900 mb-8 flex">
+                    <div className="h-full w-1/3" style={{ backgroundColor: primaryColor }}></div>
+                    <div className="h-full w-1/3 bg-purple-500"></div>
+                    <div className="h-full w-1/3 bg-pink-500"></div>
+                </div>
+                <div className="flex justify-between items-center text-[11px] font-black uppercase tracking-[0.3em] text-slate-300">
+                    <p>{data.experience[0]?.position}</p>
+                    <div className="flex gap-8">
+                        <span>{data.personalInfo.email}</span>
+                        <span>{data.personalInfo.phone}</span>
+                    </div>
+                </div>
+            </header>
+            <div className="grid grid-cols-12 gap-12">
+                <div className="col-span-12 space-y-16">
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-200 mb-10 pb-4 border-b border-slate-50">Experience Portfolio</h2>
+                        <div className="space-y-12">
+                            {data.experience.map((exp, i) => (
+                                <div key={i} className="grid grid-cols-12 gap-8 items-start">
+                                    <div className="col-span-3 text-[10px] tabular-nums font-black text-slate-300 pt-2 italic">{exp.startDate} — {exp.endDate || 'NOW'}</div>
+                                    <div className="col-span-9 border-l-4 border-slate-50 pl-10 group hover:border-slate-900 transition-colors">
+                                        <h3 className="text-2xl font-black mb-1 uppercase tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:[background-image:var(--gradient-bg)] transition-all" style={{ '--gradient-bg': `linear-gradient(to right, ${primaryColor}, #a855f7)` } as React.CSSProperties}>{exp.company}</h3>
+                                        <p className="text-xs font-bold uppercase mb-4 italic" style={{ color: primaryColor }}>{exp.position}</p>
+                                        <p className="text-sm text-slate-500 leading-relaxed font-medium">{exp.description}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    ),
+
+    quantum: ({ data, primaryColor }) => (
+        <div className="bg-white w-[794px] mx-auto shadow-2xl p-16 resume-page font-inter text-slate-900 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-full h-[5px] flex">
+                {Array.from({ length: 20 }).map((_, i) => (
+                    <div key={i} className="flex-1 h-full" style={{ backgroundColor: primaryColor, opacity: (20 - i) / 20 }}></div>
+                ))}
+            </div>
+            <header className="mb-20 grid grid-cols-12 gap-8 items-end">
+                <div className="col-span-8">
+                    <h1 className="text-8xl font-black tracking-tighter leading-[0.8] mb-6 uppercase">{data.personalInfo.fullName}</h1>
+                    <div className="flex gap-4 items-center">
+                        <div className="h-4 w-4 bg-slate-900 rotate-45"></div>
+                        <p className="text-sm font-black uppercase tracking-[0.4em] text-slate-400">{data.experience[0]?.position}</p>
+                    </div>
+                </div>
+                <div className="col-span-4 text-right">
+                    <div className="text-[10px] font-black uppercase tracking-widest text-slate-300 mb-2">Access Point</div>
+                    <p className="text-sm font-bold">{data.personalInfo.email}</p>
+                    <p className="text-sm font-bold">{data.personalInfo.phone}</p>
+                </div>
+            </header>
+            <div className="grid grid-cols-12 gap-0 border border-slate-100">
+                {data.experience.map((exp, i) => (
+                    <div key={i} className="col-span-12 border-b border-slate-100 grid grid-cols-12 hover:bg-slate-50 transition-colors group">
+                        <div className="col-span-3 p-8 border-r border-slate-100 bg-slate-50/50">
+                            <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">{exp.startDate}</span>
+                            <div className="h-px w-8 bg-slate-200 my-4"></div>
+                            <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">{exp.endDate || 'INF'}</span>
+                        </div>
+                        <div className="col-span-9 p-8">
+                            <h3 className="text-2xl font-black mb-1 group-hover:translate-x-2 transition-transform">{exp.company}</h3>
+                            <p className="text-sm font-bold mb-6" style={{ color: primaryColor }}>{exp.position}</p>
+                            <p className="text-xs text-slate-500 leading-relaxed font-medium">{exp.description}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    ),
+
+    atlas: ({ data, primaryColor }) => (
+        <div className="bg-slate-900 w-[794px] mx-auto shadow-2xl resume-page font-inter text-white min-h-[1123px]">
+            <header className="p-20 bg-white text-slate-900">
+                <div className="flex justify-between items-start mb-16">
+                    <h1 className="text-6xl font-black tracking-tighter uppercase leading-none">{data.personalInfo.fullName}</h1>
+                    <div className="text-right">
+                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 mb-2">Global Position</p>
+                        <p className="text-sm font-bold">{data.personalInfo.address}</p>
+                    </div>
+                </div>
+                <div className="flex gap-16 text-[10px] font-black uppercase tracking-[0.5em] text-slate-400">
+                    <span className="flex items-center gap-3"><div className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }}></div> {data.personalInfo.email}</span>
+                    <span className="flex items-center gap-3"><div className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }}></div> {data.personalInfo.phone}</span>
+                </div>
+            </header>
+            <div className="p-20 grid grid-cols-12 gap-16">
+                <div className="col-span-8 space-y-16">
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.6em] text-white/20 mb-12 flex items-center gap-6">Exp <div className="flex-1 h-px bg-white/10"></div></h2>
+                        <div className="space-y-12">
+                            {data.experience.map((exp, i) => (
+                                <div key={i} className="relative pl-10 border-l border-white/10">
+                                    <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-slate-900 border-2" style={{ borderColor: primaryColor }}></div>
+                                    <div className="flex justify-between mb-2">
+                                        <h3 className="text-2xl font-black">{exp.company}</h3>
+                                        <span className="text-[10px] font-black text-white/20 tabular-nums">{exp.startDate} - {exp.endDate || 'NOW'}</span>
+                                    </div>
+                                    <p className="text-xs font-bold uppercase mb-6 tracking-widest text-white/40 italic">{exp.position}</p>
+                                    <p className="text-sm text-white/50 leading-relaxed font-light text-justify">{exp.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+                <div className="col-span-4 space-y-12">
+                    <section className="bg-white/5 p-10 rounded-3xl border border-white/10">
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30 mb-8 underline decoration-white/10 underline-offset-8">Directives</h2>
+                        <div className="space-y-4">
+                            {data.skills.map((s, i) => (
+                                <div key={i} className="flex justify-between items-center group">
+                                    <span className="text-[11px] font-bold text-white/70 group-hover:text-white transition-colors uppercase tracking-tighter">{s}</span>
+                                    <div className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:scale-150 transition-all" style={{ backgroundColor: i % 2 === 0 ? primaryColor : undefined }}></div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    ),
+
+    vector: ({ data, primaryColor }) => (
+        <div className="bg-white w-[794px] mx-auto shadow-2xl p-16 resume-page font-inter text-slate-900 overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-slate-900 rotate-[45deg] translate-x-1/2 -translate-y-1/2 flex items-end justify-start p-20">
+                <div className="text-white text-right">
+                    <p className="text-[10px] font-black uppercase tracking-[0.5em] mb-2 opacity-40 italic">System User</p>
+                    <p className="text-sm font-bold">{data.personalInfo.fullName.split(' ')[0]}</p>
+                </div>
+            </div>
+            <header className="mb-32 max-w-lg">
+                <h1 className="text-8xl font-black tracking-tighter leading-[0.8] mb-8 uppercase text-slate-900">{data.personalInfo.fullName}</h1>
+                <div className="h-4 w-full mb-8 shadow-xl" style={{ backgroundColor: primaryColor, clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0% 100%)' }}></div>
+                <p className="text-sm font-black uppercase tracking-[0.4em] text-slate-300 italic">{data.experience[0]?.position}</p>
+            </header>
+            <div className="grid grid-cols-12 gap-12 border-t-2 border-slate-900 pt-16">
+                <div className="col-span-5 flex flex-col gap-12">
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Contact Info</h2>
+                        <div className="text-sm font-bold flex flex-col gap-2">
+                            <span>{data.personalInfo.email}</span>
+                            <span>{data.personalInfo.phone}</span>
+                            <span className="text-slate-300 font-medium">{data.personalInfo.address}</span>
+                        </div>
+                    </section>
+                </div>
+                <div className="col-span-7 space-y-16">
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 italic">Experience Log</h2>
+                        <div className="space-y-16">
+                            {data.experience.map((exp, i) => (
+                                <div key={i} className="group cursor-default">
+                                    <div className="flex justify-between items-baseline mb-2">
+                                        <h3 className="text-2xl font-black uppercase tracking-tighter group-hover:italic transition-all">{exp.company}</h3>
+                                        <span className="text-[10px] font-black text-slate-300">{exp.startDate} - {exp.endDate || 'INF'}</span>
+                                    </div>
+                                    <p className="text-xs font-bold uppercase mb-6" style={{ color: primaryColor }}>{exp.position}</p>
+                                    <p className="text-sm text-slate-500 leading-relaxed font-medium text-justify">{exp.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    ),
+
+    aurora: ({ data, primaryColor }) => (
+        <div className="bg-slate-50 w-[794px] mx-auto shadow-2xl resume-page font-outfit relative overflow-hidden min-h-[1123px]">
+            <div className="absolute top-0 left-0 w-full h-[400px] opacity-20" style={{ background: `linear-gradient(to bottom right, ${primaryColor}, #10b981, #3b82f6)` }}></div>
+            <div className="relative z-10 p-20">
+                <header className="mb-24 flex flex-col items-center text-center">
+                    <div className="bg-white/50 backdrop-blur-xl p-12 rounded-[60px] shadow-2xl border border-white max-w-2xl">
+                        <h1 className="text-7xl font-black tracking-tighter text-slate-900 mb-4 uppercase">{data.personalInfo.fullName}</h1>
+                        <p className="text-sm font-bold uppercase tracking-[0.5em] text-slate-400 mb-8 italic">Next Gen {data.experience[0]?.position}</p>
+                        <div className="flex justify-center gap-10 text-[10px] font-black uppercase tracking-widest text-slate-300">
+                            <span>{data.personalInfo.email}</span>
+                            <span>{data.personalInfo.phone}</span>
+                        </div>
+                    </div>
+                </header>
+                <div className="grid grid-cols-12 gap-12">
+                    <div className="col-span-8 space-y-12">
+                        <section className="bg-white/30 backdrop-blur-md p-10 rounded-[50px] border border-white shadow-sm">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 mb-12 text-center">Journey Map</h2>
+                            <div className="space-y-16">
+                                {data.experience.map((exp, i) => (
+                                    <div key={i} className="relative pl-12">
+                                        <div className="absolute left-0 top-1 w-6 h-6 rounded-full border-2 border-white flex items-center justify-center" style={{ backgroundColor: `${primaryColor}22` }}>
+                                            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }}></div>
+                                        </div>
+                                        <div className="flex justify-between items-baseline mb-2">
+                                            <h3 className="text-2xl font-black text-slate-800 tracking-tight">{exp.company}</h3>
+                                            <span className="text-[10px] font-bold text-slate-300">{exp.startDate} - {exp.endDate || 'Now'}</span>
+                                        </div>
+                                        <p className="text-sm font-bold mb-4 italic" style={{ color: primaryColor }}>{exp.position}</p>
+                                        <p className="text-[13px] text-slate-500 leading-relaxed font-light text-justify">{exp.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+                    <div className="col-span-4 space-y-8">
+                        <section className="bg-white/30 backdrop-blur-md p-10 rounded-[50px] border border-white shadow-sm">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 mb-8 italic">Vitals</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data.skills.map((s, i) => (
+                                    <span key={i} className="px-5 py-2.5 bg-white/50 backdrop-blur-sm rounded-full text-[10px] font-bold text-slate-600 border border-white shadow-sm">{s}</span>
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ),
+
+    cryptic: ({ data, primaryColor }) => (
+        <div className="bg-black w-[794px] mx-auto shadow-2xl p-16 resume-page font-mono text-[#00ff41] relative overflow-hidden">
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none text-[8px] leading-none overflow-hidden">
+                {Array.from({ length: 50 }).map((_, i) => (
+                    <div key={i}>{Array.from({ length: 100 }).map(() => Math.random() > 0.5 ? '1' : '0').join('')}</div>
+                ))}
+            </div>
+            <header className="mb-20 border-b border-[#00ff41]/20 pb-12 relative z-10">
+                <h1 className="text-5xl font-bold mb-4 tracking-tighter uppercase glitch-text" style={{ textShadow: `2px 0 #ff00c1, -2px 0 #00fff9` }}>{data.personalInfo.fullName}</h1>
+                <div className="flex flex-col gap-2 opacity-50 text-[10px]">
+                    <p>UUID: {Math.random().toString(36).substring(2, 15).toUpperCase()}</p>
+                    <p>LEVEL: SENIOR_ENGR_{new Date().getFullYear()}</p>
+                    <p>STATUS: ACTIVE</p>
+                </div>
+                <div className="mt-8 flex gap-8 text-xs font-bold">
+                    <span>{`{ ${data.personalInfo.email} }`}</span>
+                    <span>{`[ ${data.personalInfo.phone} ]`}</span>
+                </div>
+            </header>
+            <div className="space-y-16 relative z-10">
+                <section>
+                    <h2 className="text-xs font-bold uppercase tracking-[0.5em] mb-10 bg-[#00ff41]/10 px-4 py-1 inline-block border-l-4 border-[#00ff41]">Core_Data.exe</h2>
+                    <div className="space-y-12">
+                        {data.experience.map((exp, i) => (
+                            <div key={i} className="group border border-[#00ff41]/5 p-8 hover:bg-[#00ff41]/5 transition-all">
+                                <div className="flex justify-between items-baseline mb-4">
+                                    <h3 className="text-xl font-bold text-white uppercase">{exp.company}</h3>
+                                    <span className="text-[10px] opacity-40 font-mono tracking-tighter">{exp.startDate} {">>"} {exp.endDate || 'NULL'}</span>
+                                </div>
+                                <p className="text-xs font-bold mb-6 italic" style={{ color: primaryColor }}>@Role: {exp.position}</p>
+                                <p className="text-xs leading-relaxed text-[#00ff41]/70 font-medium whitespace-pre-line border-l border-[#00ff41]/20 pl-6">{exp.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </div>
+        </div>
+    ),
+
+    zenith: ({ data, primaryColor }) => (
+        <div className="bg-white w-[794px] mx-auto shadow-2xl p-16 resume-page font-playfair text-slate-900 border-t-[12px]" style={{ borderColor: primaryColor }}>
+            <header className="mb-24 text-center">
+                <div className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 mb-6 italic">— Excellence Profile —</div>
+                <h1 className="text-7xl font-bold mb-4 tracking-tighter italic">{data.personalInfo.fullName}</h1>
+                <p className="text-sm font-light tracking-[0.3em] uppercase text-slate-400 mb-12">{data.experience[0]?.position}</p>
+                <div className="h-px w-24 bg-slate-100 mx-auto mb-12"></div>
+                <div className="flex justify-center gap-12 text-[10px] font-bold uppercase tracking-widest text-slate-300">
+                    <span>{data.personalInfo.email}</span>
+                    <span>{data.personalInfo.phone}</span>
+                </div>
+            </header>
+            <div className="max-w-2xl mx-auto space-y-24">
+                <section>
+                    <h2 className="text-[9px] font-black uppercase tracking-[0.6em] text-slate-200 mb-16 text-center italic">Professional Chronicles</h2>
+                    <div className="space-y-20">
+                        {data.experience.map((exp, i) => (
+                            <div key={i} className="text-center group">
+                                <span className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.4em] mb-4 block italic">{exp.startDate} - {exp.endDate || 'Now'}</span>
+                                <h3 className="text-3xl font-bold mb-2 italic" style={{ color: primaryColor }}>{exp.company}</h3>
+                                <p className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-6">{exp.position}</p>
+                                <p className="text-sm font-lora text-slate-500 leading-relaxed italic last:mb-0">{exp.description}</p>
+                                {i < data.experience.length - 1 && <div className="h-px w-12 bg-slate-50 mx-auto mt-20"></div>}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </div>
+        </div>
+    ),
+
+    orbit: ({ data, primaryColor }) => (
+        <div className="bg-slate-50 w-[794px] mx-auto shadow-2xl p-16 resume-page font-inter text-slate-800 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full border border-slate-200 -mr-20 -mt-20 opacity-20 animate-spin-slow"></div>
+            <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full border border-slate-200 -mr-10 -mt-10 opacity-30 animate-spin-reverse-slow"></div>
+            <header className="mb-20 flex justify-between items-center relative z-10">
+                <div className="bg-white p-12 rounded-[40px] shadow-2xl border border-white flex-1 mr-8">
+                    <h1 className="text-6xl font-black tracking-tighter text-slate-900 mb-2 uppercase">{data.personalInfo.fullName}</h1>
+                    <p className="text-sm font-bold uppercase tracking-[0.4em] text-slate-300 italic mb-6">Master Domain: {data.experience[0]?.position}</p>
+                    <div className="flex gap-8 text-[10px] font-bold text-slate-400">
+                        <span>{data.personalInfo.email}</span>
+                        <span>{data.personalInfo.phone}</span>
+                    </div>
+                </div>
+                <div className="w-32 h-32 rounded-full p-1 border-2 border-slate-100 flex items-center justify-center bg-white shadow-xl">
+                    <div className="w-28 h-28 rounded-full flex items-center justify-center text-4xl font-black text-white" style={{ backgroundColor: primaryColor }}>
+                        {data.personalInfo.fullName.charAt(0)}
+                    </div>
+                </div>
+            </header>
+            <div className="grid grid-cols-12 gap-12 relative z-10">
+                <div className="col-span-12 space-y-12">
+                    <section className="bg-white p-10 rounded-[40px] shadow-sm border border-white/50">
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 flex items-center gap-6 underline underline-offset-8 decoration-slate-100">Experience Orbit</h2>
+                        <div className="grid grid-cols-2 gap-10">
+                            {data.experience.map((exp, i) => (
+                                <div key={i} className="group hover:bg-slate-50 p-6 rounded-3xl transition-colors">
+                                    <div className="flex justify-between items-center mb-4">
+                                        <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-white font-black" style={{ backgroundColor: `${primaryColor}${i % 2 === 0 ? 'ff' : '88'}` }}>
+                                            0{i + 1}
+                                        </div>
+                                        <span className="text-[9px] font-bold text-slate-300 uppercase tracking-widest">{exp.startDate} - {exp.endDate || 'Now'}</span>
+                                    </div>
+                                    <h3 className="text-xl font-black text-slate-800 mb-1">{exp.company}</h3>
+                                    <p className="text-xs font-bold mb-4 opacity-40 uppercase tracking-widest">{exp.position}</p>
+                                    <p className="text-xs text-slate-500 leading-relaxed font-medium line-clamp-4 italic">{exp.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    ),
+
+    pulse: ({ data, primaryColor }) => (
+        <div className="bg-white w-[794px] mx-auto shadow-2xl p-16 resume-page font-inter text-slate-900 border-l-[24px]" style={{ borderLeftColor: primaryColor }}>
+            <header className="mb-24 flex justify-between items-start">
+                <div className="max-w-lg">
+                    <h1 className="text-7xl font-black tracking-tighter leading-none mb-6 uppercase italic underline decoration-slate-100 decoration-[16px] underline-offset-[-8px]">{data.personalInfo.fullName}</h1>
+                    <p className="text-lg font-bold text-slate-400 uppercase tracking-widest italic">{data.experience[0]?.position}</p>
+                </div>
+                <div className="text-right">
+                    <div className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-200 mb-4">Pulse ID</div>
+                    <div className="h-8 w-1 flex flex-col gap-1 ml-auto">
+                        <div className="h-4 w-full" style={{ backgroundColor: primaryColor }}></div>
+                        <div className="h-2 w-full bg-slate-200"></div>
+                        <div className="h-1 w-full bg-slate-100"></div>
+                    </div>
+                </div>
+            </header>
+            <div className="grid grid-cols-12 gap-16">
+                <div className="col-span-4 space-y-12">
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-8 italic">Signal</h2>
+                        <div className="flex flex-col gap-4 text-sm font-bold">
+                            <span className="p-3 bg-slate-50 rounded-2xl border border-slate-100">{data.personalInfo.email}</span>
+                            <span className="p-3 bg-slate-50 rounded-2xl border border-slate-100">{data.personalInfo.phone}</span>
+                            <span className="p-3 bg-slate-50 rounded-2xl border border-slate-100 text-xs text-slate-400">{data.personalInfo.address}</span>
+                        </div>
+                    </section>
+                </div>
+                <div className="col-span-8 space-y-16">
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-200 mb-12 italic">History Wave</h2>
+                        <div className="space-y-12">
+                            {data.experience.map((exp, i) => (
+                                <div key={i} className="relative group">
+                                    <div className="absolute -left-10 h-full w-1 bg-slate-50 group-hover:bg-current transition-colors overflow-hidden" style={{ color: primaryColor }}>
+                                        <div className="h-full w-full animate-pulse bg-current opacity-20"></div>
+                                    </div>
+                                    <h3 className="text-2xl font-black tracking-tighter mb-1 uppercase">{exp.company}</h3>
+                                    <div className="flex justify-between items-center mb-4">
+                                        <p className="text-sm font-bold italic" style={{ color: primaryColor }}>{exp.position}</p>
+                                        <span className="text-[10px] font-black text-slate-300 tabular-nums uppercase">{exp.startDate} :: {exp.endDate || 'NOW'}</span>
+                                    </div>
+                                    <p className="text-sm text-slate-500 leading-relaxed font-medium text-justify">{exp.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    ),
+
+    fission: ({ data, primaryColor }) => (
+        <div className="bg-slate-900 w-[794px] mx-auto shadow-2xl resume-page font-inter flex min-h-[1123px]">
+            <div className="w-[340px] bg-white p-16 flex flex-col gap-16 shadow-2xl z-10">
+                <header>
+                    <div className="w-16 h-1 bg-slate-900 mb-8" style={{ backgroundColor: primaryColor }}></div>
+                    <h1 className="text-6xl font-black tracking-tighter leading-none uppercase mb-6">{data.personalInfo.fullName.split(' ')[0]}<br /><span className="text-slate-300">{data.personalInfo.fullName.split(' ').slice(1).join(' ')}</span></h1>
+                    <p className="text-xs font-black uppercase tracking-[0.4em] text-slate-300 mb-12 italic">{data.experience[0]?.position}</p>
+                </header>
+                <div className="space-y-12">
+                    <section>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-200 mb-8 pb-2 border-b">Directives</h2>
+                        <div className="flex flex-col gap-4">
+                            {data.skills.map((s, i) => (
+                                <div key={i} className="flex items-center gap-4 group">
+                                    <div className="w-1.5 h-1.5 rotate-45 border border-slate-200 group-hover:bg-slate-900 transition-all" style={{ backgroundColor: i % 2 === 0 ? primaryColor : undefined }}></div>
+                                    <span className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{s}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+                <footer className="mt-auto pt-12 border-t border-slate-50 text-[10px] font-bold text-slate-300 uppercase tracking-widest leading-loose">
+                    <p>{data.personalInfo.email}</p>
+                    <p>{data.personalInfo.phone}</p>
+                </footer>
+            </div>
+            <div className="flex-1 p-20 bg-slate-900 text-white flex flex-col gap-12 overflow-hidden">
+                <section>
+                    <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20 mb-12 flex items-center gap-6 italic">Professional Core <div className="h-px flex-1 bg-white/5"></div></h2>
+                    <div className="space-y-16">
+                        {data.experience.map((exp, i) => (
+                            <div key={i} className="relative group">
+                                <div className="absolute -left-10 top-2 text-[10px] font-black text-white/10 uppercase origin-left rotate-90">{exp.startDate}</div>
+                                <h3 className="text-3xl font-black text-white tracking-widest mb-2 italic" style={{ textShadow: `0 0 20px ${primaryColor}44` }}>{exp.company}</h3>
+                                <p className="text-sm font-bold uppercase tracking-[0.2em] mb-6" style={{ color: primaryColor }}>{exp.position}</p>
+                                <p className="text-sm text-white/40 leading-relaxed font-light text-justify italic">{exp.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </div>
+        </div>
+    ),
+
+    glitch: ({ data, primaryColor }) => (
+        <div className="bg-black w-[794px] mx-auto shadow-2xl p-16 resume-page font-mono text-white relative overflow-hidden">
+            <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_50%,#111,black)]"></div>
+            <header className="mb-24 relative z-10 group">
+                <h1 className="text-8xl font-black tracking-tighter leading-none mb-4 uppercase inline-block relative border-b-8 border-white/10 italic">
+                    <span className="relative z-10">{data.personalInfo.fullName}</span>
+                    <span className="absolute top-1 left-1 z-0 text-red-500 opacity-50 group-hover:translate-x-1 transition-transform">{data.personalInfo.fullName}</span>
+                    <span className="absolute -top-1 -left-1 z-0 text-cyan-500 opacity-50 group-hover:-translate-x-1 transition-transform">{data.personalInfo.fullName}</span>
+                </h1>
+                <div className="flex justify-between items-center mt-8 text-[10px] font-bold uppercase tracking-widest text-white/30">
+                    <p>{`>>> IDENTIFIED: ${data.experience[0]?.position}`}</p>
+                    <div className="flex gap-8">
+                        <span className="bg-white/5 px-2 py-1">{data.personalInfo.email}</span>
+                        <span className="bg-white/5 px-2 py-1">{data.personalInfo.phone}</span>
+                    </div>
+                </div>
+            </header>
+            <div className="grid grid-cols-12 gap-12 relative z-10">
+                <div className="col-span-12 space-y-16">
+                    <section>
+                        <h2 className="text-xs font-bold uppercase tracking-[0.8em] text-white/20 mb-12 border-l-8 pl-6 flex justify-between" style={{ borderColor: primaryColor }}>
+                            LOG_EXTRACT // HISTORY
+                            <span className="opacity-10">BUILD_{Date.now().toString(36).toUpperCase()}</span>
+                        </h2>
+                        <div className="space-y-16">
+                            {data.experience.map((exp, i) => (
+                                <div key={i} className="border-l border-white/5 pl-10 hover:border-white/20 transition-colors relative">
+                                    <div className="absolute -left-[5px] top-0 w-2 h-2 rounded-full border border-white/20 bg-black"></div>
+                                    <div className="flex justify-between items-baseline mb-4">
+                                        <h3 className="text-3xl font-black italic tracking-widest uppercase" style={{ color: i === 0 ? primaryColor : 'white' }}>{exp.company}</h3>
+                                        <span className="text-[10px] font-bold text-white/10 tabular-nums">{exp.startDate} - {exp.endDate || 'INF'}</span>
+                                    </div>
+                                    <p className="text-sm font-bold mb-6 italic text-white/40 tracking-[0.2em]">{exp.position}</p>
+                                    <p className="text-xs text-white/30 leading-relaxed font-medium text-justify uppercase tracking-tighter sm:tracking-normal">{exp.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    ),
+
+    echo: ({ data, primaryColor }) => (
+        <div className="bg-white w-[794px] mx-auto shadow-2xl p-16 resume-page font-inter text-slate-900 overflow-hidden relative">
+            <header className="mb-24 relative">
+                <div className="absolute -left-16 -top-16 w-64 h-64 bg-slate-50 rounded-full blur-3xl -z-10"></div>
+                <h1 className="text-8xl font-black tracking-tighter leading-none mb-8 opacity-10 absolute -top-8 -left-4 select-none whitespace-nowrap">{data.personalInfo.fullName}</h1>
+                <h1 className="text-7xl font-black tracking-tighter leading-none mb-8 relative z-10">{data.personalInfo.fullName}</h1>
+                <div className="flex gap-12 text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">
+                    <span style={{ color: primaryColor }}>{data.personalInfo.email}</span>
+                    <span>{data.personalInfo.phone}</span>
+                </div>
+            </header>
+            <div className="space-y-24">
+                {data.experience.map((exp, i) => (
+                    <section key={i} className="relative">
+                        <div className="absolute -left-8 top-0 text-[80px] font-black opacity-[0.03] select-none leading-none -mt-4">{i + 1}</div>
+                        <div className="relative z-10">
+                            <div className="flex justify-between items-baseline mb-4">
+                                <h3 className="text-3xl font-black tracking-tighter">{exp.company}</h3>
+                                <span className="text-[10px] font-bold text-slate-200 tabular-nums uppercase">{exp.startDate} - {exp.endDate || 'Present'}</span>
+                            </div>
+                            <p className="text-sm font-bold uppercase mb-6 italic tracking-widest" style={{ color: primaryColor }}>{exp.position}</p>
+                            <p className="text-base text-slate-400 leading-relaxed font-medium text-justify max-w-2xl">{exp.description}</p>
+                        </div>
+                    </section>
+                ))}
+            </div>
+        </div>
+    ),
+
+    void: ({ data, primaryColor }) => (
+        <div className="bg-black w-[794px] mx-auto shadow-2xl p-24 resume-page font-inter text-white">
+            <header className="mb-32 border-b-2 border-white pb-16">
+                <h1 className="text-8xl font-black tracking-tighter leading-[0.8] mb-12 uppercase">{data.personalInfo.fullName}</h1>
+                <div className="flex gap-16 text-xs font-black uppercase tracking-[0.5em] text-white/40">
+                    <span>{data.personalInfo.email}</span>
+                    <span>{data.personalInfo.phone}</span>
+                </div>
+            </header>
+            <div className="space-y-24">
+                <section>
+                    <div className="text-sm font-black uppercase tracking-[0.8em] text-white/20 mb-16">Selected_Experience</div>
+                    <div className="space-y-20">
+                        {data.experience.map((exp, i) => (
+                            <div key={i} className="group">
+                                <span className="text-[10px] font-black text-white/10 uppercase mb-4 block tracking-[0.4em]">{exp.startDate} — {exp.endDate || 'LATEST'}</span>
+                                <h3 className="text-4xl font-black uppercase mb-2 group-hover:italic transition-all">{exp.company}</h3>
+                                <p className="text-sm font-bold uppercase mb-8" style={{ color: primaryColor }}>{exp.position}</p>
+                                <p className="text-sm text-white/40 leading-relaxed font-medium text-justify">{exp.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </div>
+        </div>
+    ),
+
+    stellar: ({ data, primaryColor }) => (
+        <div className="bg-[#020617] w-[794px] mx-auto shadow-2xl resume-page font-outfit text-white min-h-[1123px] relative overflow-hidden">
+            <div className="absolute inset-0 z-0">
+                {Array.from({ length: 100 }).map((_, i) => (
+                    <div key={i} className="absolute bg-white rounded-full" style={{
+                        top: `${Math.random() * 100}%`,
+                        left: `${Math.random() * 100}%`,
+                        width: Math.random() * 2 + 'px',
+                        height: Math.random() * 2 + 'px',
+                        opacity: Math.random() * 0.5
+                    }}></div>
+                ))}
+            </div>
+            <div className="relative z-10 p-20 flex flex-col h-full">
+                <header className="mb-32">
+                    <h1 className="text-7xl font-black tracking-tighter mb-4 leading-none uppercase" style={{ textShadow: `0 0 20px ${primaryColor}77` }}>{data.personalInfo.fullName}</h1>
+                    <p className="text-sm font-bold uppercase tracking-[0.6em] text-slate-500 italic mb-12">Professional Trajectory: {data.experience[0]?.position}</p>
+                    <div className="h-px w-full bg-white/10"></div>
+                </header>
+                <div className="grid grid-cols-12 gap-16 flex-1">
+                    <div className="col-span-8 space-y-20">
+                        <section>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-700 mb-12 italic">Experience Nodes</h2>
+                            <div className="space-y-16">
+                                {data.experience.map((exp, i) => (
+                                    <div key={i} className="relative pl-12">
+                                        <div className="absolute left-0 top-1.5 w-2 h-2 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]" style={{ backgroundColor: primaryColor }}></div>
+                                        <div className="flex justify-between items-baseline mb-4">
+                                            <h3 className="text-2xl font-black text-white/90">{exp.company}</h3>
+                                            <span className="text-[10px] font-bold text-slate-600 tabular-nums uppercase">{exp.startDate} - {exp.endDate || 'INF'}</span>
+                                        </div>
+                                        <p className="text-xs font-bold uppercase mb-6 tracking-widest text-slate-400 italic" style={{ color: primaryColor }}>{exp.position}</p>
+                                        <p className="text-sm text-slate-500 leading-relaxed font-light text-justify">{exp.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ),
+
+    pixel: ({ data, primaryColor }) => (
+        <div className="bg-white w-[794px] mx-auto shadow-2xl p-16 resume-page font-mono text-slate-900 border-8 border-slate-900 border-double">
+            <header className="mb-16 border-b-4 border-slate-900 pb-12 flex justify-between items-end">
+                <div>
+                    <h1 className="text-5xl font-black uppercase mb-4 tracking-tighter underline underline-offset-8 decoration-4">{data.personalInfo.fullName}</h1>
+                    <p className="text-xs font-bold uppercase tracking-widest">_SYSTEM_INIT: {data.experience[0]?.position}</p>
+                </div>
+                <div className="text-right text-[10px] font-black uppercase leading-relaxed">
+                    <p>EMAIL: {data.personalInfo.email}</p>
+                    <p>PHON: {data.personalInfo.phone}</p>
+                </div>
+            </header>
+            <div className="space-y-12">
+                <section>
+                    <h2 className="text-xs font-black uppercase tracking-[0.3em] mb-8 bg-slate-900 text-white px-4 py-1 inline-block">DEPLOYMENT_LOG</h2>
+                    <div className="space-y-10">
+                        {data.experience.map((exp, i) => (
+                            <div key={i} className="border-l-4 border-slate-100 pl-8 hover:border-slate-900 transition-colors">
+                                <div className="flex justify-between items-center mb-2">
+                                    <h3 className="text-xl font-black uppercase">{exp.company}</h3>
+                                    <span className="text-[10px] font-bold opacity-30">[{exp.startDate} - {exp.endDate || 'CURR'}]</span>
+                                </div>
+                                <p className="text-xs font-black mb-4 italic" style={{ color: primaryColor }}>@Role: {exp.position}</p>
+                                <p className="text-xs text-slate-500 leading-relaxed font-bold">{exp.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </div>
+        </div>
+    ),
+
+    apex: ({ data, primaryColor }) => (
+        <div className="bg-white w-[794px] mx-auto shadow-2xl p-20 resume-page font-inter text-slate-900 border-[24px] border-slate-50">
+            <header className="mb-24 flex flex-col items-center">
+                <div className="w-px h-16 bg-slate-200 mb-8"></div>
+                <h1 className="text-6xl font-black tracking-[0.2em] mb-4 uppercase leading-none text-center transform scale-y-110">{data.personalInfo.fullName}</h1>
+                <p className="text-xs font-black uppercase tracking-[0.6em] text-slate-300 mb-12 italic">{data.experience[0]?.position}</p>
+                <div className="flex gap-12 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                    <span>{data.personalInfo.email}</span>
+                    <span className="text-slate-200">/</span>
+                    <span>{data.personalInfo.phone}</span>
+                </div>
+            </header>
+            <div className="max-w-xl mx-auto space-y-24">
+                <section>
+                    <h2 className="text-[9px] font-black uppercase tracking-[0.8em] text-slate-200 mb-16 text-center italic">— Experience Apex —</h2>
+                    <div className="space-y-20">
+                        {data.experience.map((exp, i) => (
+                            <div key={i} className="relative group">
+                                <div className="absolute -left-16 top-2 text-[8px] font-black text-slate-100 uppercase tracking-widest rotate-[-90deg] origin-right">{exp.startDate}</div>
+                                <h3 className="text-2xl font-black mb-1 uppercase tracking-tighter text-center italic" style={{ color: i === 0 ? primaryColor : 'inherit' }}>{exp.company}</h3>
+                                <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em] mb-8 text-center">{exp.position}</p>
+                                <p className="text-sm text-slate-500 leading-relaxed font-medium text-center italic opacity-80">{exp.description}</p>
+                                {i < data.experience.length - 1 && <div className="h-px w-12 bg-slate-100 mx-auto mt-20"></div>}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </div>
+        </div>
+    ),
 };
 
 export default function ResumeTemplate({ data, template, primaryColor = '#3b82f6' }: ResumeTemplateProps) {

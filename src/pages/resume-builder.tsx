@@ -56,7 +56,33 @@ const TEMPLATES = [
     { id: 'folio', name: 'Portfolio Exhibition' },
     { id: 'hybrid', name: 'Hybrid Multi-Column' },
     { id: 'clean', name: 'Clean Swiss Design' },
-    { id: 'monochrome', name: 'Monochrome Mastery' }
+    { id: 'monochrome', name: 'Monochrome Mastery' },
+    // AI-Inspired Templates
+    { id: 'cyber', name: 'AI Matrix Theme' },
+    { id: 'glass', name: 'Frosted Glass UI' },
+    { id: 'neural', name: 'Neural Grid' },
+    { id: 'hologram', name: 'Holograph Pro' },
+    { id: 'focus', name: 'Precision Focus' },
+    { id: 'data', name: 'Data Metadata' },
+    { id: 'organic', name: 'Organic Fluid' },
+    { id: 'terminal', name: 'CLI Root Access' },
+    { id: 'nebula', name: 'Deep Nebula' },
+    { id: 'prism', name: 'Prism Spectrum' },
+    { id: 'quantum', name: 'Quantum Pulse' },
+    { id: 'atlas', name: 'Global Atlas' },
+    { id: 'vector', name: 'Vector Flow' },
+    { id: 'aurora', name: 'Aurora Sky' },
+    { id: 'cryptic', name: 'Cryptic Code' },
+    { id: 'zenith', name: 'Zenith Peak' },
+    { id: 'orbit', name: 'Orbit Motion' },
+    { id: 'pulse', name: 'Pulse Signal' },
+    { id: 'fission', name: 'Atomic Fission' },
+    { id: 'glitch', name: 'Cyber Glitch' },
+    { id: 'echo', name: 'Visual Echo' },
+    { id: 'void', name: 'Void Deep Black' },
+    { id: 'stellar', name: 'Stellar Universe' },
+    { id: 'pixel', name: 'Retro Pixel' },
+    { id: 'apex', name: 'Apex Elite' }
 ];
 
 export default function ResumeBuilder() {
