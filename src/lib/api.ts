@@ -385,6 +385,18 @@ export interface ResumeData {
   template: string;
   color: string;
   font: string;
+  styling?: {
+    fontSize: {
+      name: number;
+      headings: number;
+      body: number;
+    };
+    sectionFonts: {
+      name: string;
+      headings: string;
+      body: string;
+    };
+  };
 }
 
 export const resumeAPI = {

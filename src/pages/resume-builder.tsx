@@ -24,7 +24,11 @@ const INITIAL_DATA: ResumeData = {
     interests: [],
     template: 'modern',
     color: '#3b82f6',
-    font: 'Inter'
+    font: 'Inter',
+    styling: {
+        fontSize: { name: 48, headings: 14, body: 10 },
+        sectionFonts: { name: 'Inter', headings: 'Inter', body: 'Inter' }
+    }
 };
 
 const TEMPLATES = [
@@ -723,6 +727,95 @@ export default function ResumeBuilder() {
                                             style={{ backgroundColor: c }}
                                         />
                                     ))}
+                                </div>
+                            </Card>
+
+                            <Card className="p-6">
+                                <label className="text-xs text-gray-400 uppercase font-bold block mb-4">Advanced Typography</label>
+                                <div className="space-y-6">
+                                    <div className="space-y-3">
+                                        <p className="text-[10px] text-gray-500 uppercase font-black tracking-widest">Full Name</p>
+                                        <div className="flex gap-2">
+                                            <input
+                                                type="number"
+                                                className="bg-white/5 border border-white/10 rounded px-2 py-1 text-xs w-16 focus:border-blue-500 outline-none"
+                                                value={resumeData.styling?.fontSize.name}
+                                                onChange={e => setResumeData(prev => ({
+                                                    ...prev,
+                                                    styling: { ...prev.styling!, fontSize: { ...prev.styling!.fontSize, name: parseInt(e.target.value) || 0 } }
+                                                }))}
+                                            />
+                                            <select
+                                                className="bg-gray-800 border border-white/10 rounded px-2 py-1 text-xs flex-1 outline-none"
+                                                value={resumeData.styling?.sectionFonts.name}
+                                                onChange={e => setResumeData(prev => ({
+                                                    ...prev,
+                                                    styling: { ...prev.styling!, sectionFonts: { ...prev.styling!.sectionFonts, name: e.target.value } }
+                                                }))}
+                                            >
+                                                <option value="Inter">Inter</option>
+                                                <option value="Lora">Lora</option>
+                                                <option value="Outfit">Outfit</option>
+                                                <option value="JetBrains Mono">Mono</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <p className="text-[10px] text-gray-500 uppercase font-black tracking-widest">Headings</p>
+                                        <div className="flex gap-2">
+                                            <input
+                                                type="number"
+                                                className="bg-white/5 border border-white/10 rounded px-2 py-1 text-xs w-16 focus:border-blue-500 outline-none"
+                                                value={resumeData.styling?.fontSize.headings}
+                                                onChange={e => setResumeData(prev => ({
+                                                    ...prev,
+                                                    styling: { ...prev.styling!, fontSize: { ...prev.styling!.fontSize, headings: parseInt(e.target.value) || 0 } }
+                                                }))}
+                                            />
+                                            <select
+                                                className="bg-gray-800 border border-white/10 rounded px-2 py-1 text-xs flex-1 outline-none"
+                                                value={resumeData.styling?.sectionFonts.headings}
+                                                onChange={e => setResumeData(prev => ({
+                                                    ...prev,
+                                                    styling: { ...prev.styling!, sectionFonts: { ...prev.styling!.sectionFonts, headings: e.target.value } }
+                                                }))}
+                                            >
+                                                <option value="Inter">Inter</option>
+                                                <option value="Lora">Lora</option>
+                                                <option value="Outfit">Outfit</option>
+                                                <option value="JetBrains Mono">Mono</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <p className="text-[10px] text-gray-500 uppercase font-black tracking-widest">Body Text</p>
+                                        <div className="flex gap-2">
+                                            <input
+                                                type="number"
+                                                className="bg-white/5 border border-white/10 rounded px-2 py-1 text-xs w-16 focus:border-blue-500 outline-none"
+                                                value={resumeData.styling?.fontSize.body}
+                                                onChange={e => setResumeData(prev => ({
+                                                    ...prev,
+                                                    styling: { ...prev.styling!, fontSize: { ...prev.styling!.fontSize, body: parseInt(e.target.value) || 0 } }
+                                                }))}
+                                            />
+                                            <select
+                                                className="bg-gray-800 border border-white/10 rounded px-2 py-1 text-xs flex-1 outline-none"
+                                                value={resumeData.styling?.sectionFonts.body}
+                                                onChange={e => setResumeData(prev => ({
+                                                    ...prev,
+                                                    styling: { ...prev.styling!, sectionFonts: { ...prev.styling!.sectionFonts, body: e.target.value } }
+                                                }))}
+                                            >
+                                                <option value="Inter">Inter</option>
+                                                <option value="Lora">Lora</option>
+                                                <option value="Outfit">Outfit</option>
+                                                <option value="JetBrains Mono">Mono</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </Card>
 
