@@ -329,4 +329,85 @@ export const fileAPI = {
   },
 };
 
+export interface ResumeData {
+  _id?: string;
+  title?: string;
+  personalInfo: {
+    fullName: string;
+    email: string;
+    phone: string;
+    address: string;
+    summary: string;
+    website?: string;
+    linkedin?: string;
+    github?: string;
+  };
+  experience: Array<{
+    company: string;
+    position: string;
+    location: string;
+    startDate: string;
+    endDate: string;
+    current: boolean;
+    description: string;
+  }>;
+  education: Array<{
+    school: string;
+    degree: string;
+    fieldOfStudy: string;
+    location: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+  }>;
+  skills: string[];
+  projects: Array<{
+    name: string;
+    description: string;
+    link?: string;
+    technologies: string[];
+  }>;
+  languages: Array<{
+    language: string;
+    proficiency: string;
+  }>;
+  certifications?: Array<{
+    name: string;
+    issuer: string;
+    date: string;
+  }>;
+  awards?: Array<{
+    title: string;
+    issuer: string;
+    date: string;
+  }>;
+  interests?: string[];
+  template: string;
+  color: string;
+  font: string;
+}
+
+export const resumeAPI = {
+  parseResume: async (file: File): Promise<{ success: boolean; data: ResumeData }> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await api.post("/resumes/parse", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+  },
+  saveResume: async (data: ResumeData): Promise<{ success: boolean; data: ResumeData }> => {
+    const response = await api.post("/resumes", data);
+    return response.data;
+  },
+  getUserResumes: async (): Promise<{ success: boolean; data: ResumeData[] }> => {
+    const response = await api.get("/resumes");
+    return response.data;
+  },
+  exportResume: async (id: string, html: string): Promise<{ success: boolean; downloadUrl: string }> => {
+    const response = await api.post(`/resumes/${id}/export`, { html });
+    return response.data;
+  },
+};
+
 export default api;

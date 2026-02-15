@@ -16,8 +16,9 @@ import {
     Sparkles,
     Minimize2,
     Presentation,
-    FileCode,
     FileType,
+    Search,
+    FileCode,
 } from "lucide-react";
 import { fileAPI, FileData } from "@/lib/api";
 import Toast from "@/components/Toast";
@@ -291,104 +292,67 @@ export default function Tools() {
     };
 
     const features = [
+
         { icon: Merge, title: "Merge PDF", action: handleMergePDFs, gradient: "from-blue-500 to-cyan-500" },
         { icon: Scissors, title: "Split PDF", action: handleSplitPDF, gradient: "from-purple-500 to-pink-500" },
         { icon: FileText, title: "PDF to Word", action: handleToWord, gradient: "from-green-500 to-emerald-500" },
-        { icon: FileSpreadsheet, title: "PDF to Excel", action: handleToExcel, gradient: "from-orange-500 to-yellow-500" },
         { icon: Minimize2, title: "Compress PDF", action: handleCompressPDF, gradient: "from-red-500 to-pink-500" },
         { icon: Image, title: "PDF to Image", action: handleToImage, gradient: "from-indigo-500 to-purple-500" },
-        { icon: Lock, title: "Protect PDF", action: handleProtectPDF, gradient: "from-yellow-500 to-orange-500" },
-        { icon: RotateCw, title: "Rotate PDF", action: handleRotatePDF, gradient: "from-teal-500 to-cyan-500" },
         {
-            icon: Edit,
-            title: "Edit PDF",
-            action: () => {
+            icon: Edit, title: "Advanced PDF Editor", action: () => {
                 if (files.length === 0) {
                     showToast("Please upload a PDF file to edit", "error");
                     return;
                 }
                 window.location.href = `/editor/${files[0]._id}`;
-            },
-            gradient: "from-pink-500 to-rose-500"
+            }, gradient: "from-pink-500 to-rose-500"
         },
-        {
-            icon: Mic,
-            title: "Speech to PDF",
-            action: () => {
-                window.location.href = "/speech-to-pdf";
-            },
-            gradient: "from-violet-500 to-purple-500"
-        },
+        { icon: Presentation, title: "PDF to PowerPoint", action: () => window.location.href = "/pdf-to-pptx", gradient: "from-orange-500 to-red-500" },
+        { icon: FileSpreadsheet, title: "PDF to Excel", action: handleToExcel, gradient: "from-orange-500 to-yellow-500" },
+        { icon: Lock, title: "Protect PDF", action: handleProtectPDF, gradient: "from-yellow-500 to-orange-500" },
+        { icon: RotateCw, title: "Rotate PDF", action: handleRotatePDF, gradient: "from-teal-500 to-cyan-500" },
+        { icon: Mic, title: "Speech to PDF", action: () => window.location.href = "/speech-to-pdf", gradient: "from-violet-500 to-purple-500" },
+        { icon: Sparkles, title: "Image to SVG", action: () => window.location.href = "/svg", gradient: "from-fuchsia-500 to-pink-500" },
+        { icon: FileText, title: "OCR Image to PDF", action: () => window.location.href = "/ocr", gradient: "from-sky-500 to-blue-500" },
+        { icon: FileCode, title: "HTML to PDF", action: () => window.location.href = "/html-to-pdf", gradient: "from-blue-500 to-indigo-600" },
+        { icon: FileType, title: "PDF to Text", action: () => window.location.href = "/pdf-to-text", gradient: "from-gray-500 to-slate-500" },
+        { icon: FileCode, title: "PDF to HTML", action: () => (window.location.href = "/pdf-to-html"), gradient: "from-indigo-500 to-violet-500" },
         {
             icon: Sparkles,
-            title: "Image to SVG",
-            action: () => {
-                window.location.href = "/svg";
-            },
-            gradient: "from-fuchsia-500 to-pink-500"
+            title: "Create Professional Resume",
+            action: () => (window.location.href = "/resume-builder"),
+            gradient: "from-amber-400 to-orange-600",
+            description: "Build a job-winning resume from scratch or by uploading your old one."
         },
-        {
-            icon: FileText,
-            title: "Image OCR",
-            action: () => {
-                window.location.href = "/ocr";
-            },
-            gradient: "from-sky-500 to-blue-500"
-        },
-        {
-            icon: Presentation,
-            title: "PDF to PowerPoint",
-            action: () => window.location.href = "/pdf-to-pptx",
-            gradient: "from-orange-500 to-red-500"
-        },
-        {
-            icon: FileSpreadsheet,
-            title: "Excel to PDF",
-            action: () => window.location.href = "/excel-to-pdf",
-            gradient: "from-green-500 to-emerald-600"
-        },
-        {
-            icon: Presentation,
-            title: "PowerPoint to PDF",
-            action: () => window.location.href = "/ppt-to-pdf",
-            gradient: "from-orange-600 to-red-600"
-        },
-        {
-            icon: FileCode,
-            title: "HTML to PDF",
-            action: () => window.location.href = "/html-to-pdf",
-            gradient: "from-blue-500 to-indigo-600"
-        },
-        {
-            icon: FileType,
-            title: "PDF to Text",
-            action: () => window.location.href = "/pdf-to-text",
-            gradient: "from-gray-500 to-slate-500"
-        },
-        {
-            icon: FileCode,
-            title: "PDF to HTML",
-            action: () => window.location.href = "/pdf-to-html",
-            gradient: "from-indigo-500 to-violet-500"
-        },
+
     ];
 
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-[#0f172a] text-white">
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
             <Navbar />
 
             {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 py-24">
+            <div className="max-w-7xl mx-auto px-4 py-32">
                 {/* Page Header */}
-                <div className="text-center mb-12 animate-fadeIn">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                        <span className="gradient-text">PDF Tools</span> at Your Service
+                <div className="text-center mb-20 space-y-6 animate-fadeIn">
+                    <h1 className="text-6xl font-black gradient-text tracking-tighter">
+                        Powerful Tools for Every File
                     </h1>
-                    <p className="text-xl text-gray-400">
-                        Upload your files and choose from our powerful tools
+                    <p className="text-gray-400 text-xl max-w-2xl mx-auto font-light leading-relaxed">
+                        Effortlessly edit, convert, and manage your documents with our high-end professional toolset.
+                        From AI-powered resumes to advanced PDF editing.
                     </p>
+                    <div className="flex justify-center pt-8">
+                        <div className="relative w-full max-w-md group">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-500 transition-colors" size={20} />
+                            <input
+                                placeholder="Search all tools (Merge, Resize, Resume...)"
+                                className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-medium"
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 {/* Upload Area */}
@@ -455,6 +419,7 @@ export default function Tools() {
                                     title={feature.title}
                                     onClick={feature.action}
                                     gradient={feature.gradient}
+                                    description={feature.description}
                                 />
                             </div>
                         ))}
