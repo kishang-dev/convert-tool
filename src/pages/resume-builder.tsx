@@ -12,22 +12,146 @@ import {
     Plus, Trash2, Edit3, ChevronRight, CheckCircle, Layout
 } from 'lucide-react';
 
+// const INITIAL_DATA: ResumeData = {
+//     personalInfo: { fullName: '', email: '', phone: '', address: '', summary: '', linkedin: '', github: '', website: '' },
+//     experience: [],
+//     education: [],
+//     skills: [],
+//     projects: [],
+//     languages: [],
+//     certifications: [],
+//     awards: [],
+//     interests: [],
+//     template: 'modern',
+//     color: '#3b82f6',
+//     font: 'Inter',
+//     styling: {
+//         fontSize: { name: 48, headings: 14, body: 10 },
+//         sectionFonts: { name: 'Inter', headings: 'Inter', body: 'Inter' }
+//     }
+// };
+
+
 const INITIAL_DATA: ResumeData = {
-    personalInfo: { fullName: '', email: '', phone: '', address: '', summary: '', linkedin: '', github: '', website: '' },
-    experience: [],
-    education: [],
-    skills: [],
-    projects: [],
-    languages: [],
-    certifications: [],
-    awards: [],
-    interests: [],
+    _id: undefined,
+    title: 'Senior Software Engineer — 2024',
+    personalInfo: {
+        fullName: 'Alexandra Carter',
+        email: 'alexandra.carter@gmail.com',
+        phone: '+1 (555) 234-7890',
+        address: 'San Francisco, CA 94102',
+        summary: 'Results-driven Senior Software Engineer with 7+ years of experience building scalable web applications and leading cross-functional teams. Passionate about clean architecture, developer experience, and delivering high-impact products that serve millions of users.',
+        linkedin: 'linkedin.com/in/alexandracarter',
+        github: 'github.com/alexcarter',
+        website: 'alexandracarter.dev'
+    },
+    experience: [
+        {
+            company: 'Stripe',
+            position: 'Senior Software Engineer',
+            location: 'San Francisco, CA',
+            startDate: 'Jan 2022',
+            endDate: '',
+            current: true,
+            description: 'Led development of Stripe\'s next-gen payment dashboard used by 2M+ merchants. Architected a micro-frontend system reducing load time by 42%. Mentored a team of 5 engineers and drove adoption of TypeScript across 3 product squads.'
+        },
+        {
+            company: 'Airbnb',
+            position: 'Software Engineer II',
+            location: 'San Francisco, CA',
+            startDate: 'Mar 2019',
+            endDate: 'Dec 2021',
+            current: false,
+            description: 'Built and maintained critical booking flow features handling $1B+ in annual transactions. Implemented A/B testing framework that improved conversion rates by 18%. Collaborated with design and product to ship 12 major features on time.'
+        },
+        {
+            company: 'HubSpot',
+            position: 'Software Engineer',
+            location: 'Boston, MA',
+            startDate: 'Jun 2017',
+            endDate: 'Feb 2019',
+            current: false,
+            description: 'Developed CRM integrations and REST APIs consumed by 50,000+ business customers. Reduced API response time by 35% through query optimization and Redis caching. Contributed to open-source tooling used across the engineering org.'
+        }
+    ],
+    education: [
+        {
+            school: 'University of California, Berkeley',
+            degree: 'Bachelor of Science',
+            fieldOfStudy: 'Computer Science',
+            location: 'Berkeley, CA',
+            startDate: 'Aug 2013',
+            endDate: 'May 2017',
+            description: 'GPA: 3.8/4.0 — Dean\'s List all semesters. Senior thesis on distributed systems fault tolerance. President of Women in Computing club.'
+        },
+        {
+            school: 'Stanford Online (Coursera)',
+            degree: 'Professional Certificate',
+            fieldOfStudy: 'Machine Learning Specialization',
+            location: 'Online',
+            startDate: 'Jan 2021',
+            endDate: 'Aug 2021',
+            description: 'Completed Andrew Ng\'s ML Specialization with distinction. Built projects covering supervised learning, neural networks, and recommender systems.'
+        }
+    ],
+    skills: [
+        'TypeScript', 'React', 'Next.js', 'Node.js', 'GraphQL',
+        'PostgreSQL', 'Redis', 'AWS', 'Docker', 'Kubernetes',
+        'Python', 'System Design', 'CI/CD', 'REST APIs', 'Git'
+    ],
+    projects: [
+        {
+            name: 'OpenFlow — API Gateway',
+            description: 'Built an open-source API gateway with rate limiting, auth middleware, and real-time analytics. Gained 2,400+ GitHub stars and adopted by 300+ developers worldwide.',
+            link: 'github.com/alexcarter/openflow',
+            technologies: ['Node.js', 'TypeScript', 'Redis', 'Docker']
+        },
+        {
+            name: 'Budgetly — Personal Finance App',
+            description: 'Full-stack SaaS app for expense tracking and budget forecasting with 1,800+ active users. Featured on Product Hunt as #3 Product of the Day.',
+            link: 'budgetly.app',
+            technologies: ['Next.js', 'PostgreSQL', 'Stripe', 'Tailwind CSS']
+        },
+        {
+            name: 'NeuralSort — ML Document Classifier',
+            description: 'Document classification tool using fine-tuned BERT achieving 94% accuracy. Deployed on AWS Lambda, processing 10k+ documents/day for an enterprise client.',
+            link: 'github.com/alexcarter/neuralsort',
+            technologies: ['Python', 'PyTorch', 'AWS Lambda', 'FastAPI']
+        }
+    ],
+    languages: [
+        { language: 'English', proficiency: 'Native' },
+        { language: 'Spanish', proficiency: 'Fluent' },
+        { language: 'French', proficiency: 'Conversational' }
+    ],
+    certifications: [
+        { name: 'AWS Certified Solutions Architect', issuer: 'Amazon Web Services', date: 'Mar 2023' },
+        { name: 'Google Cloud Professional Data Engineer', issuer: 'Google', date: 'Nov 2022' },
+        { name: 'Certified Kubernetes Administrator (CKA)', issuer: 'CNCF', date: 'Jul 2021' }
+    ],
+    awards: [
+        { title: 'Engineer of the Year', issuer: 'Stripe', date: '2023' },
+        { title: 'Best Hackathon Project', issuer: 'TechCrunch Disrupt', date: '2020' },
+        { title: "Dean's List — Academic Excellence", issuer: 'UC Berkeley', date: '2017' }
+    ],
+    interests: [
+        'Open Source', 'Rock Climbing', 'Technical Writing',
+        'Chess', 'Photography', 'Hiking'
+    ],
     template: 'modern',
     color: '#3b82f6',
     font: 'Inter',
     styling: {
-        fontSize: { name: 48, headings: 14, body: 10 },
-        sectionFonts: { name: 'Inter', headings: 'Inter', body: 'Inter' }
+        fontSize: {
+            name: 48,
+            headings: 14,
+            body: 10
+        },
+        sectionFonts: {
+            name: 'Inter',
+            headings: 'Inter',
+            body: 'Inter'
+        }
     }
 };
 
