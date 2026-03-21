@@ -324,6 +324,13 @@ export default function Tools() {
             gradient: "from-amber-400 to-orange-600",
             description: "Build a job-winning resume from scratch or by uploading your old one."
         },
+        {
+            icon: Edit,
+            title: "Pro Flowchart Maker",
+            action: () => (window.location.href = "/drowChart"),
+            gradient: "from-blue-600 to-indigo-600",
+            description: "Create interactive flowcharts, diagrams, and logic maps easily."
+        },
 
     ];
 

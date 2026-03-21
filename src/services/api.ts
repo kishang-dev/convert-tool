@@ -117,4 +117,33 @@ export const ocrApi = {
   },
 };
 
+export const chartApi = {
+  createChart: async (data: any) => {
+    const response = await api.post("/charts", data);
+    return response.data;
+  },
+  getCharts: async () => {
+    const response = await api.get("/charts");
+    return response.data;
+  },
+  getChartById: async (id: string) => {
+    const response = await api.get(`/charts/${id}`);
+    return response.data;
+  },
+  updateChart: async (id: string, data: any) => {
+    const response = await api.put(`/charts/${id}`, data);
+    return response.data;
+  },
+  deleteChart: async (id: string) => {
+    const response = await api.delete(`/charts/${id}`);
+    return response.data;
+  },
+  exportFlowchart: async (id: string) => {
+    const response = await api.get(`/charts/${id}/export`, {
+      responseType: "blob",
+    });
+    return response;
+  },
+};
+
 export default api;
