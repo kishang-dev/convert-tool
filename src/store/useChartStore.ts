@@ -12,6 +12,7 @@ interface ChartState {
     createChart: (data: any) => Promise<any>;
     updateChart: (id: string, data: any) => Promise<void>;
     deleteChart: (id: string) => Promise<void>;
+    generateAIChart: (data: { title: string; prompt: string; platform: string; apiKey: string }) => Promise<any>;
     setCurrentChart: (chart: any | null) => void;
 }
 
@@ -84,6 +85,22 @@ export const useChartStore = create<ChartState>((set, get) => ({
             }));
         } catch (error: any) {
             set({ loading: false, error: error.message || "Failed to delete chart" });
+            throw error;
+        }
+    },
+
+    generateAIChart: async (data: any) => {
+        set({ loading: true, error: null });
+        try {
+            const response = await chartApi.generateAIChart(data);
+            const newChart = response.chart;
+            set((state) => ({
+                charts: [newChart, ...state.charts],
+                loading: false
+            }));
+            return newChart;
+        } catch (error: any) {
+            set({ loading: false, error: error.message || "Failed to generate AI chart" });
             throw error;
         }
     },
