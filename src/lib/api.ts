@@ -44,6 +44,21 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Response interceptor to handle global errors
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 403) {
+      if (error.response.data && error.response.data.requiresLogin) {
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login?error=Free trial expired. Please login or register to continue.';
+        }
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export interface FileData {
   _id: string;
   filename: string;
