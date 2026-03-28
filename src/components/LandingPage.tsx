@@ -6,6 +6,7 @@ import HowItWorks from './HowItWorks';
 import FAQ from './FAQ';
 import Button from './Button';
 import Card from './Card';
+import Footer from './Footer';
 import { useRouter } from 'next/router';
 
 export default function LandingPage() {
@@ -128,48 +129,7 @@ export default function LandingPage() {
             </section>
 
             {/* Footer */}
-            <footer className="border-t border-white/10 py-12 px-4">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                        <div>
-                            <h3 className="text-lg font-semibold mb-4 text-white">QuickPDF Tools</h3>
-                            <p className="text-gray-400 text-sm">
-                                Your all-in-one solution for PDF and document management.
-                            </p>
-                        </div>
-                        <div>
-                            <h4 className="text-sm font-semibold mb-3 text-white">Tools</h4>
-                            <ul className="space-y-2 text-sm text-gray-400">
-                                <li><a href="/tools" className="hover:text-purple-400 transition-smooth">PDF Converter</a></li>
-                                <li><a href="/tools" className="hover:text-purple-400 transition-smooth">Merge PDF</a></li>
-                                <li><a href="/tools" className="hover:text-purple-400 transition-smooth">Split PDF</a></li>
-                                <li><a href="/tools" className="hover:text-purple-400 transition-smooth">Edit PDF</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="text-sm font-semibold mb-3 text-white">Company</h4>
-                            <ul className="space-y-2 text-sm text-gray-400">
-                                <li><a href="#" className="hover:text-purple-400 transition-smooth">About Us</a></li>
-                                <li><a href="#" className="hover:text-purple-400 transition-smooth">Contact</a></li>
-                                <li><a href="#" className="hover:text-purple-400 transition-smooth">Privacy Policy</a></li>
-                                <li><a href="#" className="hover:text-purple-400 transition-smooth">Terms of Service</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="text-sm font-semibold mb-3 text-white">Support</h4>
-                            <ul className="space-y-2 text-sm text-gray-400">
-                                <li><a href="#" className="hover:text-purple-400 transition-smooth">Help Center</a></li>
-                                <li><a href="#" className="hover:text-purple-400 transition-smooth">FAQ</a></li>
-                                <li><a href="#" className="hover:text-purple-400 transition-smooth">Blog</a></li>
-                                <li><a href="#" className="hover:text-purple-400 transition-smooth">API</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="border-t border-white/10 pt-8 text-center text-gray-400 text-sm">
-                        <p>&copy; 2026 QuickPDF Tools. All rights reserved.</p>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 }

@@ -99,8 +99,14 @@ export default function Navbar() {
                     >
                         Features
                     </a>
-                    <Link href="/svg" className="text-gray-300 hover:text-white transition-smooth">
+                    <Link href="/svg" className="text-gray-300 hover:text-white transition-smooth uppercase text-[10px] font-black tracking-widest">
                         Image to SVG
+                    </Link>
+                    <Link href="/about" className="text-gray-400 hover:text-white transition-smooth uppercase text-[10px] font-black tracking-widest">
+                        About
+                    </Link>
+                    <Link href="/contact" className="text-gray-400 hover:text-white transition-smooth uppercase text-[10px] font-black tracking-widest">
+                        Contact
                     </Link>
 
                     {user ? (
@@ -208,9 +214,21 @@ export default function Navbar() {
                             </a>
                             <Link
                                 href="/svg"
-                                className="px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-smooth"
+                                className="px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-smooth font-bold uppercase text-xs tracking-widest"
                             >
                                 Image to SVG
+                            </Link>
+                            <Link
+                                href="/about"
+                                className="px-4 py-3 rounded-lg text-gray-400 hover:bg-white/10 hover:text-white transition-smooth font-bold uppercase text-xs tracking-widest"
+                            >
+                                About
+                            </Link>
+                            <Link
+                                href="/contact"
+                                className="px-4 py-3 rounded-lg text-gray-400 hover:bg-white/10 hover:text-white transition-smooth font-bold uppercase text-xs tracking-widest"
+                            >
+                                Contact
                             </Link>
 
                             <div className="border-t border-gray-700 my-2"></div>

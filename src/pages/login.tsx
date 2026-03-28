@@ -105,6 +105,11 @@ export default function LoginPage() {
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </div>
+                                <div className="text-right mt-2 font-medium">
+                                    <Link href="/auth/forgot-password" title="Recover Password" className="text-xs text-purple-400 hover:text-purple-300 transition-smooth uppercase tracking-widest">
+                                        Forgot Password?
+                                    </Link>
+                                </div>
                             </div>
 
                             {/* Error Message */}

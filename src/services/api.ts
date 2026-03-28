@@ -15,18 +15,20 @@ api.interceptors.request.use((config) => {
   // Get store state (reading directly from localStorage for persistence if Zustand not yet hydrated, 
   // but Zustand persist writes to localStorage 'auth-storage')
 
-  const storageStr = localStorage.getItem('auth-storage');
   let token = null;
   let guestId = null;
 
-  if (storageStr) {
-    const storage = JSON.parse(storageStr);
-    if (storage.state) {
-      if (storage.state.user && storage.state.user.token) {
-        token = storage.state.user.token;
-      }
-      if (storage.state.guestId) {
-        guestId = storage.state.guestId;
+  if (typeof window !== 'undefined') {
+    const storageStr = localStorage.getItem('auth-storage');
+    if (storageStr) {
+      const storage = JSON.parse(storageStr);
+      if (storage.state) {
+        if (storage.state.user && storage.state.user.token) {
+          token = storage.state.user.token;
+        }
+        if (storage.state.guestId) {
+          guestId = storage.state.guestId;
+        }
       }
     }
   }
@@ -147,6 +149,24 @@ export const chartApi = {
       responseType: "blob",
     });
     return response;
+  },
+};
+
+export const authApi = {
+  forgotPassword: async (email: string) => {
+    const response = await api.post("/auth/forgotpassword", { email });
+    return response.data;
+  },
+  resetPassword: async (token: string, password: string) => {
+    const response = await api.put(`/auth/resetpassword/${token}`, { password });
+    return response.data;
+  },
+};
+
+export const supportApi = {
+  contact: async (data: { name: string; email: string; subject: string; message: string }) => {
+    const response = await api.post("/support/contact", data);
+    return response.data;
   },
 };
 
