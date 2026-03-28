@@ -1,562 +1,935 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import dynamic from "next/dynamic";
-import { X, Save, Type, MousePointer2, Loader2, Grab } from "lucide-react";
+import * as React from "react";
+import { useState, useEffect, useRef } from "react";
+import {
+    Save, Loader2, ChevronLeft, Undo2, AlertCircle,
+    FileText, Columns, Layers, Edit3, AlignLeft, Check, X, RefreshCw, Eye
+} from "lucide-react";
 import { fileAPI } from "@/lib/api";
 
-// Dynamic import for ReactQuill to avoid SSR issues
-const ReactQuill = dynamic(() => import("react-quill-new"), {
-    ssr: false,
-    loading: () => <div className="absolute inset-0 flex items-center justify-center bg-gray-50"><Loader2 className="animate-spin text-blue-600" /></div>
-});
-import "react-quill-new/dist/quill.snow.css";
-
-// Configure Quill to use inline styles for better PDF fidelity
-const Q = (typeof window !== 'undefined') ? require('quill') : null;
-const Quill = Q?.default || Q;
-if (Quill && typeof Quill.import === 'function') {
-    const SizeStyle = Quill.import('attributors/style/size');
-    const ColorStyle = Quill.import('attributors/style/color');
-    const AlignStyle = Quill.import('attributors/style/align');
-
-    // Allow any pixel value for size
-    SizeStyle.whitelist = null;
-
-    Quill.register(SizeStyle, true);
-    Quill.register(ColorStyle, true);
-    Quill.register(AlignStyle, true);
-}
-
+// ─────────────────────────────────────────────
+//  Types
+// ─────────────────────────────────────────────
 interface TextItem {
-    str: string;
-    x: number;
-    y: number;
-    originalY: number;
-    width: number;
-    height: number;
-    fontSize: number; // Original font size
-    fontName: string;
-    hasEOL: boolean;
-    transform: number[];
+    str: string; x: number; y: number; originalY: number;
+    width: number; height: number; fontSize: number;
+    fontName: string; hasEOL: boolean; transform: number[];
+    color?: string;
 }
 
 interface Modification {
     id: string;
     type: "replace" | "add";
-    text: string;
-    x: number;
-    y: number;
-    size: number;
-    color?: string;
-    originalX?: number; // For replace
-    originalY?: number; // For replace
-    originalWidth?: number; // For replace
-    originalHeight?: number; // For replace
-    boxWidth?: number;
-    boxHeight?: number;
-    backgroundColor?: string;
-    isBold?: boolean;
-    isItalic?: boolean;
-    isSerif?: boolean;
+    text?: string;
+    x: number; y: number;
+    size?: number; color?: string;
+    originalX?: number; originalY?: number;
+    originalWidth?: number; originalHeight?: number;
+    originalText?: string;
+    align?: "left" | "center" | "right";
+}
+
+interface Paragraph {
+    id: string;
+    lines: TextItem[];
+    fullText: string;
+    x: number; y: number;
+    width: number; height: number;
+    fontSize: number; fontName: string;
 }
 
 interface PageContentEditorProps {
-    fileId: string;
-    pageIndex: number;
-    imageUrl: string;
-    onClose: () => void;
-    onSave: (newFileId: string) => void;
+    fileId: string; pageIndex: number; imageUrl: string;
+    onClose: () => void; onSave: (newFileId: string) => void;
 }
 
-export default function PageContentEditor({
-    fileId,
-    pageIndex,
-    imageUrl,
-    onClose,
-    onSave,
-}: PageContentEditorProps) {
-    const [items, setItems] = useState<TextItem[]>([]);
-    const [groupedItems, setGroupedItems] = useState<TextItem[]>([]);
+// ─────────────────────────────────────────────
+//  Edit Modes
+// ─────────────────────────────────────────────
+type EditMode =
+    | "full-doc"        // Mode 1 — One giant textarea
+    | "split-view"      // Mode 2 — PDF left / text editor right
+    | "paragraph"       // Mode 3 — Click paragraph block
+    | "overlay"         // Mode 4 — Translucent overlay textarea on top of PDF
+    | "line"            // Mode 5 — Original line-by-line
 
-    const [scale, setScale] = useState(1);
+const MODES = [
+    { id: "full-doc", icon: FileText, label: "Full Doc", desc: "Edit all text at once in one editor" },
+    { id: "split-view", icon: Columns, label: "Split View", desc: "PDF left, live text editor right" },
+    { id: "paragraph", icon: AlignLeft, label: "Paragraphs", desc: "Click any paragraph to edit it whole" },
+    { id: "overlay", icon: Layers, label: "Overlay", desc: "Transparent editor directly over PDF" },
+    { id: "line", icon: Edit3, label: "Line", desc: "Original line-by-line editing" },
+] as const;
+
+// ─────────────────────────────────────────────
+//  Helpers
+// ─────────────────────────────────────────────
+const groupIntoLines = (raw: TextItem[]): TextItem[] => {
+    if (!raw.length) return [];
+    const sorted = [...raw].sort((a, b) =>
+        Math.abs(a.y - b.y) < 4 ? a.x - b.x : a.y - b.y
+    );
+    const merged: TextItem[] = [];
+    let cur = { ...sorted[0] };
+    for (let i = 1; i < sorted.length; i++) {
+        const it = sorted[i];
+        const sameLine = Math.abs(it.y - cur.y) < cur.height * 0.4;
+        const near = it.x - (cur.x + cur.width) < 40;
+        if (sameLine && near) {
+            const gap = it.x - (cur.x + cur.width);
+            cur.str += gap > 2 ? " " + it.str : it.str;
+            cur.width = it.x + it.width - cur.x;
+            cur.height = Math.max(cur.height, it.height);
+            cur.fontSize = Math.max(cur.fontSize, it.fontSize);
+        } else {
+            merged.push(cur);
+            cur = { ...it };
+        }
+    }
+    merged.push(cur);
+    return merged;
+};
+
+/** Group lines into paragraphs (gap > 1.5× line height = new paragraph) */
+const groupIntoParagraphs = (lines: TextItem[]): Paragraph[] => {
+    if (!lines.length) return [];
+    const paras: Paragraph[] = [];
+    let group: TextItem[] = [lines[0]];
+
+    for (let i = 1; i < lines.length; i++) {
+        const prev = group[group.length - 1];
+        const gap = lines[i].y - (prev.y + prev.height);
+        if (gap > prev.height * 1.5) {
+            paras.push(buildParagraph(group, paras.length));
+            group = [];
+        }
+        group.push(lines[i]);
+    }
+    if (group.length) paras.push(buildParagraph(group, paras.length));
+    return paras;
+};
+
+const buildParagraph = (lines: TextItem[], idx: number): Paragraph => {
+    const xs = lines.map(l => l.x);
+    const x = Math.min(...xs);
+    const y = lines[0].y;
+    const width = Math.max(...lines.map(l => l.x + l.width)) - x;
+    const height = lines[lines.length - 1].y + lines[lines.length - 1].height - y;
+    const fullText = lines.map(l => l.str).join(" ");
+    const fontSize = Math.max(...lines.map(l => l.fontSize));
+    const fontName = lines[0].fontName || "";
+    return { id: `para-${idx}`, lines, fullText, x, y, width, height, fontSize, fontName };
+};
+
+// ─────────────────────────────────────────────
+//  Main Component
+// ─────────────────────────────────────────────
+export default function PageContentEditor({
+    fileId, pageIndex, imageUrl, onClose, onSave,
+}: PageContentEditorProps) {
+    const [lines, setLines] = useState<TextItem[]>([]);
+    const [paragraphs, setParagraphs] = useState<Paragraph[]>([]);
+    const [pdfDims, setPdfDims] = useState<{ width: number; height: number } | null>(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
-    const [mode, setMode] = useState<"select" | "add">("select");
+    const [scale, setScale] = useState(1);
+    const [mode, setMode] = useState<EditMode>("full-doc");
+
+    // ── Mode 1 & 2: Full-doc / split-view ──
+    const [fullDocText, setFullDocText] = useState("");
+    const [originalFullText, setOriginalFullText] = useState("");
+
+    // ── Mode 3: Paragraph editing ──
+    const [paraEdits, setParaEdits] = useState<Record<string, string>>({});
+    const [activePara, setActivePara] = useState<string | null>(null);
+    const [paraEditVal, setParaEditVal] = useState("");
+
+    // ── Mode 4: Overlay editing ──
+    const [overlayText, setOverlayText] = useState("");
+    const [originalOverlay, setOriginalOverlay] = useState("");
+    const [showOverlay, setShowOverlay] = useState(false);
+
+    // ── Mode 5: Line-by-line ──
+    const [lineEdits, setLineEdits] = useState<Record<string, string>>({});
+    const [activeLineId, setActiveLineId] = useState<string | null>(null);
+    const [lineEditVal, setLineEditVal] = useState("");
+
     const containerRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
-    const editorWrapperRef = useRef<HTMLDivElement>(null);
-    const [editorContent, setEditorContent] = useState("");
-    const [blockContents, setBlockContents] = useState<Record<string, string>>({});
-    const [pdfDims, setPdfDims] = useState<{ width: number; height: number } | null>(null);
-    const [activeColor, setActiveColor] = useState("#000000");
-    const [activeSize, setActiveSize] = useState(12);
+    const lineInputRef = useRef<HTMLInputElement>(null);
+    const paraInputRef = useRef<HTMLTextAreaElement>(null);
 
-    const quillModules = useMemo(() => ({
-        toolbar: [
-            [{ 'size': [] }],
-            ['bold', 'italic', 'underline'],
-            [{ 'color': [] }, { 'background': [] }],
-            [{ 'align': [] }],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            ['clean']
-        ]
-    }), []);
+    // ── Load data ──
+    useEffect(() => { loadData(); }, [fileId, pageIndex]);
 
-    const quillFormats = [
-        'size', 'bold', 'italic', 'underline', 'color', 'background', 'align', 'list', 'bullet'
-    ];
-
-    // 1. Initialize block-based contents
-    useEffect(() => {
-        if (groupedItems.length > 0 && pdfDims) {
-            const initialContents: Record<string, string> = {};
-            groupedItems.forEach((item, idx) => {
-                const centerX = item.x + item.width / 2;
-                const pageMiddle = pdfDims.width / 2;
-                const isCentered = Math.abs(centerX - pageMiddle) < (pdfDims.width * 0.1);
-
-                const alignClass = isCentered ? 'ql-align-center' : '';
-                const fontSize = `${item.fontSize * scale}px`;
-
-                // Bold/Italic Detection from fontName
-                const fn = (item.fontName || "").toLowerCase();
-                const isBold = fn.includes('bold') || fn.includes('700') || fn.includes('black');
-                const isItalic = fn.includes('italic') || fn.includes('oblique');
-                const isSerif = fn.includes('serif') || fn.includes('times') || fn.includes('roman') || fn.includes('georgia') || fn.includes('minion') || fn.includes('cambria') || fn.includes('garamond') || fn.includes('book') || fn.includes('liberation') || fn.includes('bitstream');
-                const fontFamily = isSerif ? "'Times New Roman', serif" : "Arial, sans-serif";
-
-                let content = item.str;
-                if (isItalic) content = `<em>${content}</em>`;
-                if (isBold) content = `<strong>${content}</strong>`;
-
-                const wrappedContent = `<p class="${alignClass}" style="font-size: ${fontSize}; font-family: ${fontFamily}; line-height: 1.2;">${content}</p>`;
-                initialContents[`block-${idx}`] = wrappedContent;
-            });
-            setBlockContents(initialContents);
-        }
-    }, [groupedItems, pdfDims, scale]);
-
-    const handleBlockChange = (id: string, content: string) => {
-        setBlockContents(prev => ({ ...prev, [id]: content }));
-    };
-
-    // 1. Load Text Data (PDF Coordinates)
-    useEffect(() => {
-        loadText();
-    }, [fileId, pageIndex]);
-
-    const loadText = async () => {
+    const loadData = async () => {
         try {
             setLoading(true);
             const res = await fileAPI.getPageText(fileId, pageIndex);
             if (res.success) {
-                const itemsWithFontSize = res.data.items.map((it: any) => ({ ...it, fontSize: it.height }));
-                setItems(itemsWithFontSize);
+                const raw: TextItem[] = res.data.items.map((it: any) => ({ ...it, fontSize: it.height }));
                 setPdfDims({ width: res.data.width, height: res.data.height });
-                setGroupedItems(groupTextItems(itemsWithFontSize));
+                const grouped = groupIntoLines(raw);
+                setLines(grouped);
+                const paras = groupIntoParagraphs(grouped);
+                setParagraphs(paras);
+
+                const fullText = grouped.map(l => l.str).join("\n");
+                setFullDocText(fullText);
+                setOriginalFullText(fullText);
+                setOverlayText(fullText);
+                setOriginalOverlay(fullText);
             }
-        } catch (error) {
-            console.error("Failed to load text", error);
-        } finally {
-            setLoading(false);
-        }
+        } catch (e) { console.error(e); } finally { setLoading(false); }
     };
 
-
-
-    // Helper to group PDF text fragments into lines and then paragraphs
-    const groupTextItems = (rawItems: TextItem[]): TextItem[] => {
-        if (!rawItems.length) return [];
-
-        // 1. Group fragments into visual lines
-        // Sort by Y first, then X
-        const sortedFragments = [...rawItems].sort((a, b) => {
-            const yDiff = Math.abs(a.y - b.y);
-            if (yDiff < (Math.min(a.height, b.height) * 0.5)) return a.x - b.x;
-            return a.y - b.y;
-        });
-
-        const lines: TextItem[] = [];
-        let currentLine: TextItem | null = null;
-
-        sortedFragments.forEach(item => {
-            if (!currentLine) {
-                currentLine = { ...item };
-                return;
-            }
-
-            // Check if on same visual line plane
-            const isSameLinePlane = Math.abs(item.y - currentLine.y) < (currentLine.height * 0.8);
-            // Check if roughly adjacent horizontally (allow for spaces/tabs)
-            const gap = item.x - (currentLine.x + currentLine.width);
-            const isAdjacent = gap > -10 && gap < 20; // Very tight for merging fragments within words
-
-            if (isSameLinePlane && isAdjacent) {
-                // PDFs often split words into multiple fragments. 
-                // A space is typically > 25% of font height.
-                const spaceThreshold = currentLine.height * 0.25;
-                const needsSpace = gap > spaceThreshold;
-
-                currentLine.str += (needsSpace ? " " : "") + item.str;
-                currentLine.width = (item.x + item.width) - currentLine.x;
-                currentLine.height = Math.max(currentLine.height, item.height);
-            } else {
-                lines.push(currentLine);
-                currentLine = { ...item };
-            }
-        });
-        if (currentLine) lines.push(currentLine);
-
-        // 2. Group lines into logical paragraphs/blocks
-        // Sort lines purely by Y to process top-down
-        lines.sort((a, b) => a.y - b.y);
-
-        const blocks: TextItem[] = [];
-        if (lines.length === 0) return blocks;
-
-        // State for block merging
-        let currentBlock = { ...lines[0] };
-        currentBlock.fontSize = lines[0].height; // Base font size from first line
-        let lastLineBottom = currentBlock.y + currentBlock.height;
-        let baseFontSize = currentBlock.fontSize;
-        if (!baseFontSize || baseFontSize < 2) baseFontSize = 12; // Fallback
-
-        for (let i = 1; i < lines.length; i++) {
-            const line = lines[i];
-
-            // Calculate vertical gap between bottom of previous line in block and top of this line
-            const gap = line.y - lastLineBottom;
-
-            // Heuristics for merging:
-            // 1. Vertical proximity: Tighten to keep paragraphs distinct
-            const isCloseVertically = gap < (baseFontSize * 0.3) && gap > -(baseFontSize * 0.1);
-
-            // 2. Alignment: Left side should be closely aligned
-            const isAligned = Math.abs(line.x - currentBlock.x) < 30;
-
-            // 3. Font Size: Should match closely
-            const isSameSize = Math.abs(line.height - baseFontSize) < 2;
-
-            // 4. Check for list markers at start of lines (don't merge distinct bulleted items)
-            const isListStart = /^[\u2022\u00b7\u25cf\u25cb\u25aa\*-]\s+/.test(line.str.trim());
-
-            if (isCloseVertically && isAligned && isSameSize && !isListStart) {
-                // Merge line into block
-                currentBlock.str += " " + line.str;
-
-                // Expand dimensions
-                const blockRight = currentBlock.x + currentBlock.width;
-                const lineRight = line.x + line.width;
-                currentBlock.width = Math.max(blockRight, lineRight) - currentBlock.x;
-
-                // Update height to encompass this new line
-                const newBottom = line.y + line.height;
-                currentBlock.height = newBottom - currentBlock.y;
-
-                // Update state
-                lastLineBottom = newBottom;
-            } else {
-                // Push finished block
-                blocks.push(currentBlock);
-
-                // Start new block
-                currentBlock = { ...line };
-                currentBlock.fontSize = line.height;
-                lastLineBottom = currentBlock.y + currentBlock.height;
-                baseFontSize = currentBlock.fontSize;
-            }
-        }
-        blocks.push(currentBlock);
-
-        return blocks;
-    };
-
-    // 2. Calculate Scale
+    // ── Scale on resize ──
     useEffect(() => {
-        const updateScale = () => {
-            if (imageRef.current && pdfDims) {
-                const renderedWidth = imageRef.current.offsetWidth;
-                const newScale = renderedWidth / pdfDims.width;
-                setScale(newScale);
-            }
+        const update = () => {
+            if (imageRef.current && pdfDims)
+                setScale(imageRef.current.offsetWidth / pdfDims.width);
         };
-        window.addEventListener("resize", updateScale);
-        if (imageRef.current && pdfDims) updateScale();
-        return () => window.removeEventListener("resize", updateScale);
+        window.addEventListener("resize", update);
+        update();
+        return () => window.removeEventListener("resize", update);
     }, [pdfDims]);
 
-    const handleImageLoad = () => {
-        if (imageRef.current && pdfDims) {
-            const renderedWidth = imageRef.current.offsetWidth;
-            setScale(renderedWidth / pdfDims.width);
+    // ── Auto-focus ──
+    useEffect(() => { if (activeLineId && lineInputRef.current) lineInputRef.current.focus(); }, [activeLineId]);
+    useEffect(() => { if (activePara && paraInputRef.current) paraInputRef.current.focus(); }, [activePara]);
+
+    // ─────────────────────────────────────────
+    //  Build Modifications for Save
+    // ─────────────────────────────────────────
+    const buildMods = (): Modification[] => {
+        const mods: Modification[] = [];
+
+        if (mode === "full-doc" || mode === "split-view" || mode === "overlay") {
+            const currentText = mode === "overlay" ? overlayText : fullDocText;
+            const origText = mode === "overlay" ? originalOverlay : originalFullText;
+
+            if (currentText !== origText) {
+                const newLines = currentText.split("\n");
+                const maxIdx = Math.max(lines.length, newLines.length);
+
+                for (let idx = 0; idx < maxIdx; idx++) {
+                    const line = lines[idx];
+                    const newText = newLines[idx];
+
+                    if (line && newText !== undefined) {
+                        // Modified line
+                        if (newText !== line.str) {
+                            const isCenter = pdfDims ? Math.abs((line.x + line.width / 2) - (pdfDims.width / 2)) < 25 : false;
+                            mods.push({
+                                id: `edit-${idx}`, type: "replace", text: newText,
+                                x: line.x, y: line.y, size: line.fontSize, color: line.color || "#000000",
+                                originalX: line.x, originalY: line.originalY, originalText: line.str,
+                                originalWidth: line.width, originalHeight: line.height,
+                                align: isCenter ? "center" : "left",
+                            });
+                        }
+                    } else if (line && newText === undefined) {
+                        // Deleted line
+                        mods.push({
+                            id: `edit-${idx}`, type: "replace", text: "",
+                            x: line.x, y: line.y, size: line.fontSize, color: line.color || "#000000",
+                            originalX: line.x, originalY: line.originalY, originalText: line.str,
+                            originalWidth: line.width, originalHeight: line.height,
+                        });
+                    } else if (!line && newText !== undefined && newText.trim().length > 0) {
+                        // Added line
+                        const last = lines[lines.length - 1] || { x: 50, y: 100, fontSize: 12, height: 12, color: "#000000" };
+                        const offset = (idx - lines.length + 1) * (last.fontSize * 1.5);
+                        mods.push({
+                            id: `add-${idx}`, type: "add", text: newText,
+                            x: last.x, y: last.y + offset, size: last.fontSize, color: last.color || "#000000",
+                        });
+                    }
+                }
+            }
         }
+
+        else if (mode === "paragraph") {
+            Object.entries(paraEdits).forEach(([pid, newText]) => {
+                const para = paragraphs.find(p => p.id === pid);
+                if (!para) return;
+
+                const newLineTexts = newText.split("\n");
+                const maxIdx = Math.max(para.lines.length, newLineTexts.length);
+
+                for (let li = 0; li < maxIdx; li++) {
+                    const line = para.lines[li];
+                    const nt = newLineTexts[li];
+
+                    if (line && nt !== undefined) {
+                        if (nt !== line.str) {
+                            const isCenter = pdfDims ? Math.abs((line.x + line.width / 2) - (pdfDims.width / 2)) < 25 : false;
+                            mods.push({
+                                id: `${pid}-${li}`, type: "replace", text: nt,
+                                x: line.x, y: line.y, size: line.fontSize, color: line.color || "#000000",
+                                originalX: line.x, originalY: line.originalY, originalText: line.str,
+                                originalWidth: line.width, originalHeight: line.height,
+                                align: isCenter ? "center" : "left",
+                            });
+                        }
+                    } else if (line && nt === undefined) {
+                        mods.push({
+                            id: `${pid}-${li}`, type: "replace", text: "",
+                            x: line.x, y: line.y, size: line.fontSize, color: line.color || "#000000",
+                            originalX: line.x, originalY: line.originalY, originalText: line.str,
+                            originalWidth: line.width, originalHeight: line.height,
+                        });
+                    } else if (!line && nt !== undefined && nt.trim().length > 0) {
+                        const last = para.lines[para.lines.length - 1];
+                        const offset = (li - para.lines.length + 1) * (last.fontSize * 1.5);
+                        mods.push({
+                            id: `${pid}-add-${li}`, type: "add", text: nt,
+                            x: last.x, y: last.y + offset, size: last.fontSize, color: last.color || "#000000",
+                        });
+                    }
+                }
+            });
+        }
+
+        else if (mode === "line") {
+            Object.entries(lineEdits).forEach(([id, newText]) => {
+                const idx = parseInt(id.split("-")[1]);
+                const line = lines[idx];
+                if (!line) return;
+
+                if (newText !== line.str) {
+                    const isCenter = pdfDims ? Math.abs((line.x + line.width / 2) - (pdfDims.width / 2)) < 25 : false;
+                    mods.push({
+                        id: `edit-${idx}`, type: "replace", text: newText,
+                        x: line.x, y: line.y, size: line.fontSize, color: line.color || "#000000",
+                        originalX: line.x, originalY: line.originalY, originalText: line.str,
+                        originalWidth: line.width, originalHeight: line.height,
+                        align: isCenter ? "center" : "left",
+                    });
+                }
+            });
+        }
+
+        return mods;
     };
-
-
 
     const handleSave = async () => {
+        const mods = buildMods();
+        if (!mods.length) return;
         try {
             setSaving(true);
-
-            // 1. Redact all original items
-            const redactionMods: Modification[] = items.map((item, idx) => ({
-                id: `redact-${idx}`,
-                type: "replace",
-                text: "",
-                x: item.x,
-                y: item.y,
-                size: item.fontSize,
-                originalX: item.x,
-                originalY: item.originalY,
-                originalWidth: item.width,
-                originalHeight: item.fontSize * 1.5, // More aggressive masking
-            }));
-
-            // 2. Extract content from each block
-            const contentMods: Modification[] = [];
-
-            Object.entries(blockContents).forEach(([id, html]) => {
-                const idx = parseInt(id.split('-')[1]);
-                const item = groupedItems[idx];
-                if (!item) return;
-
-                const temp = document.createElement('div');
-                temp.innerHTML = html;
-                const paragraphs = Array.from(temp.querySelectorAll('p, li, h1, h2, h3'));
-
-                paragraphs.forEach((p, pIdx) => {
-                    let text = (p as HTMLElement).innerText.trim();
-                    if (!text) return;
-
-                    // Handle list markers manually since innerText strips them
-                    if (p.tagName === 'LI') {
-                        const parent = p.parentElement;
-                        if (parent?.tagName === 'OL') {
-                            const index = Array.from(parent.children).indexOf(p) + 1;
-                            text = `${index}. ${text}`;
-                        } else {
-                            text = `• ${text}`;
-                        }
-                    }
-
-                    const fn = (item.fontName || "").toLowerCase();
-                    const isSerif = fn.includes('serif') || fn.includes('times') || fn.includes('roman') || fn.includes('georgia') || fn.includes('minion') || fn.includes('cambria') || fn.includes('garamond') || fn.includes('book') || fn.includes('liberation') || fn.includes('bitstream');
-
-                    contentMods.push({
-                        id: `add-b-${idx}-${pIdx}`,
-                        type: "add" as const,
-                        text: text,
-                        x: item.x,
-                        y: item.y + (pIdx * (item.fontSize * 1.2)), // Use standard line height for offset
-                        size: item.fontSize,
-                        boxWidth: item.width,
-                        color: "#000000",
-                        isBold: (p as HTMLElement).querySelector('strong, b') !== null || (p as HTMLElement).style.fontWeight === 'bold',
-                        isItalic: (p as HTMLElement).querySelector('em, i') !== null || (p as HTMLElement).style.fontStyle === 'italic',
-                        isSerif: isSerif
-                    });
-                });
-            });
-
-
-
-
-
-            const res = await fileAPI.savePageContent(fileId, pageIndex, [...redactionMods, ...contentMods]);
-            if (res.success) {
-                onSave(res.file._id);
-                onClose();
-            }
-        } catch (error) {
-            console.error("Save failed", error);
-            alert("Failed to save changes");
-        } finally {
-            setSaving(false);
-        }
+            const res = await fileAPI.savePageContent(fileId, pageIndex, mods);
+            if (res.success) { onSave(res.file._id); onClose(); }
+        } catch (e) { console.error(e); } finally { setSaving(false); }
     };
 
-    return (
-        <div className="fixed inset-0 bg-black/90 z-50 flex flex-col backdrop-blur-sm">
-            {/* Toolbar */}
-            <div className="bg-white p-4 flex items-center justify-between shadow-md z-50">
-                <div className="flex items-center gap-4">
-                    <h2 className="text-xl font-bold">Edit Content (Page {pageIndex + 1})</h2>
-                    <div className="flex bg-gray-100 rounded-lg p-1 gap-1">
-                        <button
-                            onClick={() => setMode("select")}
-                            className={`p-2 rounded flex items-center gap-2 ${mode === "select" ? "bg-white shadow text-blue-600" : "text-gray-600 hover:bg-gray-200"}`}
-                        >
-                            <MousePointer2 size={18} />
-                            <span className="text-sm font-medium">Select</span>
-                        </button>
-                        <button
-                            onClick={() => setMode("add")}
-                            className={`p-2 rounded flex items-center gap-2 ${mode === "add" ? "bg-white shadow text-blue-600" : "text-gray-600 hover:bg-gray-200"}`}
-                        >
-                            <Type size={18} />
-                            <span className="text-sm font-medium">Text</span>
-                        </button>
-                    </div>
+    const hasChanges = (() => {
+        if (mode === "full-doc" || mode === "split-view") return fullDocText !== originalFullText;
+        if (mode === "overlay") return overlayText !== originalOverlay;
+        if (mode === "paragraph") return Object.keys(paraEdits).length > 0;
+        if (mode === "line") return Object.keys(lineEdits).length > 0;
+        return false;
+    })();
 
-                    {/* Style Controls */}
-                    <div className="flex items-center gap-2 border-l pl-4">
-                        <div className="flex items-center bg-gray-100 rounded p-1">
-                            <span className="text-xs text-gray-500 px-2">Size</span>
-                            <input
-                                type="number"
-                                className="w-12 bg-transparent text-sm text-center outline-none"
-                                value={activeSize}
-                                onChange={(e) => setActiveSize(Number(e.target.value))}
-                            />
-                        </div>
-                        <input
-                            type="color"
-                            className="w-8 h-8 rounded cursor-pointer border-none bg-transparent"
-                            value={activeColor}
-                            onChange={(e) => setActiveColor(e.target.value)}
-                        />
+    const resetAll = () => {
+        setFullDocText(originalFullText);
+        setOverlayText(originalOverlay);
+        setParaEdits({});
+        setLineEdits({});
+        setActivePara(null);
+        setActiveLineId(null);
+        setShowOverlay(false);
+    };
+
+    // ─────────────────────────────────────────
+    //  Render
+    // ─────────────────────────────────────────
+    return (
+        <div className="fixed inset-0 z-50 flex flex-col bg-[#0f1117] text-slate-100 font-sans overflow-hidden">
+            {/* ── Header ── */}
+            <header className="bg-[#1a1d27] border-b border-white/10 px-6 py-3 flex items-center justify-between z-[120] shadow-lg">
+                <div className="flex items-center gap-4">
+                    <button onClick={onClose} className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-all">
+                        <ChevronLeft size={20} />
+                    </button>
+                    <div>
+                        <h1 className="text-base font-bold tracking-tight flex items-center gap-2">
+                            PDF Content Editor
+                            <span className="text-[9px] bg-violet-500/20 text-violet-300 border border-violet-500/30 px-2 py-0.5 rounded-full font-black uppercase tracking-widest">
+                                5 Modes
+                            </span>
+                        </h1>
+                        <p className="text-[11px] text-slate-500 mt-0.5">Choose your preferred editing mode below</p>
                     </div>
                 </div>
 
-                <div className="flex gap-4">
-                    <button onClick={onClose} className="px-4 py-2 hover:bg-gray-100 rounded text-gray-700 font-medium">
-                        Cancel
-                    </button>
+                <div className="flex items-center gap-3">
+                    {hasChanges && (
+                        <>
+                            <span className="text-xs font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                                <AlertCircle size={12} /> Unsaved changes
+                            </span>
+                            <button onClick={resetAll} className="px-3 py-2 text-xs font-bold rounded-lg border border-white/10 hover:border-white/20 text-slate-400 hover:text-white transition-all flex items-center gap-1.5">
+                                <RefreshCw size={13} /> Reset
+                            </button>
+                        </>
+                    )}
                     <button
                         onClick={handleSave}
-                        disabled={saving}
-                        className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-2 font-medium transition-colors"
+                        disabled={saving || !hasChanges}
+                        className="px-5 py-2 bg-violet-600 hover:bg-violet-500 disabled:opacity-40 disabled:bg-slate-700 text-white text-sm font-bold rounded-lg transition-all flex items-center gap-2 shadow-lg shadow-violet-900/40"
                     >
-                        {saving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                        Save Changes
+                        {saving ? <Loader2 className="animate-spin" size={15} /> : <Save size={15} />}
+                        Save PDF
                     </button>
+                </div>
+            </header>
+
+            {/* ── Mode Switcher ── */}
+            <div className="bg-[#13151f] border-b border-white/10 px-6 py-2 flex items-center gap-2 z-[110]">
+                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mr-2">Mode:</span>
+                {MODES.map(m => (
+                    <button
+                        key={m.id}
+                        onClick={() => setMode(m.id as EditMode)}
+                        title={m.desc}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${mode === m.id
+                            ? "bg-violet-600 border-violet-500 text-white shadow-md shadow-violet-900/40"
+                            : "border-transparent text-slate-400 hover:text-white hover:bg-white/5"
+                            }`}
+                    >
+                        <m.icon size={12} />
+                        {m.label}
+                    </button>
+                ))}
+                <span className="ml-3 text-[11px] text-slate-500 hidden md:block italic">
+                    {MODES.find(m => m.id === mode)?.desc}
+                </span>
+            </div>
+
+            {/* ── Body ── */}
+            {loading ? (
+                <div className="flex-1 flex flex-col items-center justify-center gap-4">
+                    <Loader2 className="animate-spin text-violet-400" size={48} />
+                    <p className="text-sm text-slate-400 font-medium">Loading document…</p>
+                </div>
+            ) : (
+                <div className="flex-1 overflow-hidden">
+                    {/* ═══════════════════════════════════════════════════════
+                        MODE 1 — FULL DOC EDITOR
+                        Single textarea with ALL text. Edit everything at once.
+                    ═══════════════════════════════════════════════════════ */}
+                    {mode === "full-doc" && (
+                        <FullDocMode
+                            imageUrl={imageUrl}
+                            value={fullDocText}
+                            onChange={setFullDocText}
+                            originalValue={originalFullText}
+                        />
+                    )}
+
+                    {/* ═══════════════════════════════════════════════════════
+                        MODE 2 — SPLIT VIEW
+                        PDF rendered on the left, text editor on the right.
+                    ═══════════════════════════════════════════════════════ */}
+                    {mode === "split-view" && (
+                        <SplitViewMode
+                            imageUrl={imageUrl}
+                            imageRef={imageRef}
+                            pdfDims={pdfDims}
+                            scale={scale}
+                            value={fullDocText}
+                            onChange={setFullDocText}
+                        />
+                    )}
+
+                    {/* ═══════════════════════════════════════════════════════
+                        MODE 3 — PARAGRAPH BLOCK EDITING
+                        Click a whole paragraph to edit it as one text area.
+                    ═══════════════════════════════════════════════════════ */}
+                    {mode === "paragraph" && (
+                        <ParagraphMode
+                            imageUrl={imageUrl}
+                            imageRef={imageRef}
+                            containerRef={containerRef}
+                            paragraphs={paragraphs}
+                            pdfDims={pdfDims}
+                            scale={scale}
+                            paraEdits={paraEdits}
+                            setParaEdits={setParaEdits}
+                            activePara={activePara}
+                            setActivePara={setActivePara}
+                            paraEditVal={paraEditVal}
+                            setParaEditVal={setParaEditVal}
+                            paraInputRef={paraInputRef}
+                        />
+                    )}
+
+                    {/* ═══════════════════════════════════════════════════════
+                        MODE 4 — OVERLAY EDITOR
+                        Semi-transparent textarea floated directly over the PDF.
+                    ═══════════════════════════════════════════════════════ */}
+                    {mode === "overlay" && (
+                        <OverlayMode
+                            imageUrl={imageUrl}
+                            imageRef={imageRef}
+                            containerRef={containerRef}
+                            pdfDims={pdfDims}
+                            scale={scale}
+                            value={overlayText}
+                            onChange={setOverlayText}
+                            showOverlay={showOverlay}
+                            setShowOverlay={setShowOverlay}
+                        />
+                    )}
+
+                    {/* ═══════════════════════════════════════════════════════
+                        MODE 5 — LINE BY LINE (original)
+                    ═══════════════════════════════════════════════════════ */}
+                    {mode === "line" && (
+                        <LineMode
+                            imageUrl={imageUrl}
+                            imageRef={imageRef}
+                            containerRef={containerRef}
+                            lines={lines}
+                            pdfDims={pdfDims}
+                            scale={scale}
+                            lineEdits={lineEdits}
+                            setLineEdits={setLineEdits}
+                            activeLineId={activeLineId}
+                            setActiveLineId={setActiveLineId}
+                            lineEditVal={lineEditVal}
+                            setLineEditVal={setLineEditVal}
+                            lineInputRef={lineInputRef}
+                        />
+                    )}
+                </div>
+            )}
+        </div>
+    );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  MODE 1 — Full Document Editor
+//  Shows PDF thumbnail + one big textarea with all text.
+// ─────────────────────────────────────────────────────────────────────────────
+function FullDocMode({
+    imageUrl, value, onChange, originalValue,
+}: {
+    imageUrl: string; value: string; onChange: React.Dispatch<React.SetStateAction<string>>; originalValue: string;
+}) {
+    const lineCount = value.split("\n").length;
+    const changed = value.split("\n").filter((l, i) => l !== originalValue.split("\n")[i]).length;
+
+    return (
+        <div className="h-full flex gap-0 overflow-hidden">
+            {/* Left: Thumbnail */}
+            <div className="w-56 flex-shrink-0 bg-[#0d0f18] border-r border-white/10 overflow-y-auto flex flex-col items-center py-6 gap-3">
+                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">PDF Preview</p>
+                <div className="w-44 shadow-xl rounded overflow-hidden border border-white/10">
+                    <img src={imageUrl} alt="PDF" className="w-full h-auto block" />
+                </div>
+                <div className="mt-2 px-4 w-full space-y-2">
+                    <div className="flex justify-between text-[10px] text-slate-500">
+                        <span>Total lines</span><span className="text-slate-300 font-bold">{lineCount}</span>
+                    </div>
+                    <div className="flex justify-between text-[10px] text-slate-500">
+                        <span>Modified</span>
+                        <span className={changed > 0 ? "text-amber-400 font-bold" : "text-slate-300 font-bold"}>{changed}</span>
+                    </div>
+                </div>
+                <div className="mt-4 px-4 w-full">
+                    <div className="bg-violet-500/10 border border-violet-500/20 rounded-lg p-3 text-[10px] text-violet-300 leading-relaxed">
+                        <strong className="block mb-1">✦ Mode 1: Full Doc</strong>
+                        Edit the entire PDF text in this editor. Each line corresponds to one line in the PDF. Save when done.
+                    </div>
                 </div>
             </div>
 
-            {/* Workspace */}
-            <div className="flex-1 overflow-auto p-8 flex justify-center bg-gray-900/50 cursor-grab active:cursor-grabbing">
-                <div className="relative shadow-2xl bg-white" ref={containerRef}>
-                    {/* Base Image */}
-                    <img
-                        ref={imageRef}
-                        src={imageUrl}
-                        alt="Page Background"
-                        onLoad={handleImageLoad}
-                        className="max-w-[1000px] w-full h-auto block select-none pointer-events-none"
-                        style={{ minWidth: '600px' }}
-                    />
-
-                    {/* Loading Overlay */}
-                    {loading && (
-                        <div className="absolute inset-0 bg-white/80 flex items-center justify-center z-50">
-                            <div className="flex flex-col items-center gap-2 text-blue-600">
-                                <Loader2 className="animate-spin" size={32} />
-                                <span className="font-semibold">Analyzing text positions...</span>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* -------------------- BLOCK-BASED Editor Layer -------------------- */}
-                    {!loading && pdfDims && (
-                        <div
-                            className="absolute inset-0 z-20 pointer-events-none"
-                            style={{ width: pdfDims.width * scale, height: pdfDims.height * scale }}
-                        >
-                            <style>{`
-                                .ql-container.ql-snow { border: none !important; }
-                                .ql-editor { 
-                                    padding: 0 !important; 
-                                    overflow: visible !important; 
-                                    line-height: normal !important; 
-                                    color: #000000 !important;
-                                }
-                                .block-editor-item { 
-                                    position: absolute; 
-                                    background: white; 
-                                    pointer-events: auto; 
-                                    transition: outline 0.1s, box-shadow 0.1s;
-                                    min-width: 20px;
-                                }
-                                .block-editor-item:hover { 
-                                    outline: 1px dashed #3b82f6; 
-                                    box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
-                                }
-                                .block-editor-item:focus-within { 
-                                    outline: 2px solid #3b82f6; 
-                                    z-index: 50; 
-                                    box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
-                                }
-                                .block-editor-item .ql-editor p {
-                                    margin: 0;
-                                }
-                                .block-editor-item .ql-editor p.ql-align-center { text-align: center; }
-                                .block-editor-item .ql-editor p.ql-align-right { text-align: right; }
-
-                                .quill-floating-toolbar { 
-                                    position: fixed;
-                                    top: 80px;
-                                    left: 50%;
-                                    transform: translateX(-50%);
-                                    background: white;
-                                    border: 1px solid #e2e8f0 !important; 
-                                    z-index: 1000;
-                                    border-radius: 8px;
-                                    width: auto;
-                                    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-                                    padding: 4px 12px;
-                                }
-                            `}</style>
-
-                            <div id="toolbar-container" className="quill-floating-toolbar">
-                                <span className="ql-formats">
-                                    <select className="ql-size">
-                                        <option value="small"></option>
-                                        <option defaultValue=""></option>
-                                        <option value="large"></option>
-                                        <option value="huge"></option>
-                                    </select>
-                                    <button className="ql-bold"></button>
-                                    <button className="ql-italic"></button>
-                                    <button className="ql-underline"></button>
-                                </span>
-                                <span className="ql-formats">
-                                    <select className="ql-color"></select>
-                                    <select className="ql-background"></select>
-                                </span>
-                                <span className="ql-formats">
-                                    <button className="ql-align" value=""></button>
-                                    <button className="ql-align" value="center"></button>
-                                    <button className="ql-align" value="right"></button>
-                                </span>
-                                <span className="ql-formats">
-                                    <button className="ql-clean"></button>
-                                </span>
-                            </div>
-
-                            {groupedItems.map((item, idx) => (
-                                <div
-                                    key={`block-wrapper-${idx}`}
-                                    className="block-editor-item"
-                                    style={{
-                                        left: item.x * scale,
-                                        top: (item.y - (item.fontSize * 0.9)) * scale, // Improved baseline adjustment
-                                        width: (item.width + 40) * scale, // More generous width
-                                        minHeight: (item.height + 5) * scale, // Block coverage
-                                    }}
-                                >
-                                    <ReactQuill
-                                        theme="snow"
-                                        value={blockContents[`block-${idx}`] || ""}
-                                        onChange={(content) => handleBlockChange(`block-${idx}`, content)}
-                                        modules={{
-                                            toolbar: '#toolbar-container'
-                                        }}
-                                        formats={quillFormats}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    )}
+            {/* Right: Editor */}
+            <div className="flex-1 flex flex-col overflow-hidden bg-[#0f1117]">
+                <div className="px-6 py-3 border-b border-white/10 flex items-center gap-3">
+                    <FileText size={14} className="text-violet-400" />
+                    <span className="text-xs font-bold text-slate-300">Full Document Text Editor</span>
+                    <span className="text-[10px] text-slate-500 ml-auto">Each line = one PDF text line. Edit freely.</span>
                 </div>
+                <div className="flex flex-1 overflow-hidden">
+                    {/* Line numbers */}
+                    <div className="bg-[#0d0f18] border-r border-white/10 py-4 px-3 overflow-hidden select-none" style={{ minWidth: 48 }}>
+                        {value.split("\n").map((_, i) => (
+                            <div key={i} className="text-[11px] text-slate-600 text-right leading-6 font-mono">{i + 1}</div>
+                        ))}
+                    </div>
+                    {/* Textarea */}
+                    <textarea
+                        value={value}
+                        onChange={e => onChange(e.target.value)}
+                        spellCheck={false}
+                        className="flex-1 bg-transparent text-slate-200 text-sm leading-6 font-mono resize-none outline-none py-4 px-4 overflow-auto"
+                        style={{ tabSize: 4 }}
+                    />
+                    {/* Diff highlight sidebar */}
+                    <div className="w-1 flex-shrink-0">
+                        {value.split("\n").map((l, i) => (
+                            <div
+                                key={i}
+                                className="h-6"
+                                style={{ backgroundColor: l !== originalValue.split("\n")[i] ? "#f59e0b" : "transparent" }}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  MODE 2 — Split View
+//  PDF on left (live), text editor on right — changes reflect visually in PDF.
+// ─────────────────────────────────────────────────────────────────────────────
+interface SplitViewModeProps {
+    imageUrl: string;
+    imageRef: any;
+    pdfDims: { width: number; height: number } | null;
+    scale: number;
+    value: string;
+    onChange: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function SplitViewMode({
+    imageUrl, imageRef, pdfDims, scale, value, onChange,
+}: SplitViewModeProps) {
+    return (
+        <div className="h-full flex overflow-hidden">
+            {/* Left: PDF */}
+            <div className="flex-1 overflow-auto bg-[#0d0f18] flex flex-col items-center py-8 border-r border-white/10">
+                <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+                    <Eye size={11} /> Original PDF
+                </div>
+                <div className="shadow-2xl rounded overflow-hidden border border-white/10" style={{ width: pdfDims ? pdfDims.width * scale * 0.8 : "auto" }}>
+                    <img ref={imageRef} src={imageUrl} alt="PDF" className="w-full h-auto block" />
+                </div>
+            </div>
+
+            {/* Right: Editor */}
+            <div className="flex-1 flex flex-col overflow-hidden bg-[#0f1117]">
+                <div className="px-6 py-3 border-b border-white/10 flex items-center gap-3 bg-[#13151f]">
+                    <Columns size={14} className="text-cyan-400" />
+                    <span className="text-xs font-bold text-slate-300">Live Text Editor</span>
+                    <div className="ml-auto flex items-center gap-2 text-[10px] text-slate-500">
+                        <span className="w-2 h-2 rounded-full bg-cyan-500 inline-block animate-pulse" />
+                        Changes apply on save
+                    </div>
+                </div>
+                <div className="px-3 py-2 bg-[#0d0f18] border-b border-white/10">
+                    <p className="text-[10px] text-slate-500">
+                        ✦ <strong className="text-slate-400">Mode 2 — Split View:</strong> Edit all PDF text freely on the right. The left shows the original PDF reference.
+                    </p>
+                </div>
+                <textarea
+                    value={value}
+                    onChange={e => onChange(e.target.value)}
+                    spellCheck={false}
+                    className="flex-1 bg-transparent text-slate-200 text-sm leading-7 font-mono resize-none outline-none p-6 overflow-auto"
+                    placeholder="PDF text will load here…"
+                />
+            </div>
+        </div>
+    );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  MODE 3 — Paragraph Block Editing
+//  Click on any paragraph on the PDF to open a textarea for that whole block.
+// ─────────────────────────────────────────────────────────────────────────────
+interface ParagraphModeProps {
+    imageUrl: string;
+    imageRef: any;
+    containerRef: any;
+    paragraphs: Paragraph[];
+    pdfDims: { width: number; height: number } | null;
+    scale: number;
+    paraEdits: Record<string, string>;
+    setParaEdits: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+    activePara: string | null;
+    setActivePara: React.Dispatch<React.SetStateAction<string | null>>;
+    paraEditVal: string;
+    setParaEditVal: React.Dispatch<React.SetStateAction<string>>;
+    paraInputRef: any;
+}
+
+function ParagraphMode({
+    imageUrl, imageRef, containerRef, paragraphs, pdfDims, scale,
+    paraEdits, setParaEdits, activePara, setActivePara, paraEditVal, setParaEditVal, paraInputRef,
+}: ParagraphModeProps) {
+    const confirmPara = () => {
+        if (!activePara) return;
+        const para = paragraphs.find((p: Paragraph) => p.id === activePara);
+        if (paraEditVal.trim() === "" || paraEditVal === para?.fullText) {
+            setParaEdits((prev: any) => { const n = { ...prev }; delete n[activePara]; return n; });
+        } else {
+            setParaEdits((prev: any) => ({ ...prev, [activePara]: paraEditVal }));
+        }
+        setActivePara(null);
+    };
+
+    return (
+        <div className="h-full overflow-auto bg-[#0d0f18] flex flex-col items-center py-8 px-4">
+            <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+                <AlignLeft size={11} /> Mode 3: Click any paragraph to edit it as a whole block
+            </div>
+            <div
+                className="relative shadow-2xl bg-white rounded overflow-hidden border border-white/10"
+                ref={containerRef}
+                style={{ width: pdfDims ? pdfDims.width * scale : "auto" }}
+            >
+                <img ref={imageRef} src={imageUrl} alt="PDF" className="block w-full h-auto select-none pointer-events-none" />
+
+                {/* Paragraph overlays */}
+                {pdfDims && paragraphs.map((para: Paragraph) => {
+                    const isActive = activePara === para.id;
+                    const isEdited = paraEdits[para.id] !== undefined;
+                    const displayTx = isEdited ? paraEdits[para.id] : para.fullText;
+
+                    return (
+                        <div
+                            key={para.id}
+                            className="absolute"
+                            style={{
+                                left: (para.x - 4) * scale, top: (para.y - para.fontSize) * scale,
+                                width: (para.width + 8) * scale, minHeight: (para.height + para.fontSize) * scale,
+                                zIndex: isActive ? 100 : 50,
+                            }}
+                        >
+                            {isActive ? (
+                                <div className="relative">
+                                    <textarea
+                                        ref={paraInputRef}
+                                        value={paraEditVal}
+                                        onChange={e => setParaEditVal(e.target.value)}
+                                        onKeyDown={e => { if (e.key === "Escape") setActivePara(null); }}
+                                        onBlur={confirmPara}
+                                        className="w-full bg-white/95 border-2 border-violet-500 rounded text-slate-900 outline-none resize-none px-1 py-1 shadow-xl"
+                                        style={{
+                                            fontSize: para.fontSize * scale,
+                                            fontFamily: para.fontName.toLowerCase().includes("serif") ? "serif" : "sans-serif",
+                                            lineHeight: 1.5,
+                                            minHeight: (para.height + para.fontSize) * scale + 20,
+                                        }}
+                                    />
+                                    <div className="absolute -top-7 right-0 bg-violet-700 text-white text-[9px] font-bold px-2 py-1 rounded shadow-lg">
+                                        Blur or Esc to confirm
+                                    </div>
+                                </div>
+                            ) : (
+                                <div
+                                    onClick={() => { setActivePara(para.id); setParaEditVal(isEdited ? paraEdits[para.id] : para.fullText); }}
+                                    className={`w-full h-full cursor-pointer rounded transition-all border ${isEdited
+                                        ? "bg-violet-500/20 border-violet-400 shadow-md"
+                                        : "border-transparent hover:border-violet-400 hover:bg-violet-400/10"
+                                        }`}
+                                    title="Click to edit this paragraph"
+                                >
+                                    {isEdited && (
+                                        <div className="absolute inset-0 bg-white/90 rounded flex items-start p-1 overflow-hidden">
+                                            <span className="text-violet-700 font-medium leading-snug"
+                                                style={{ fontSize: para.fontSize * scale, fontFamily: para.fontName.toLowerCase().includes("serif") ? "serif" : "sans-serif" }}>
+                                                {displayTx}
+                                            </span>
+                                            <button
+                                                className="absolute top-0.5 right-0.5 p-0.5 bg-red-500 text-white rounded-full"
+                                                onClick={e => { e.stopPropagation(); setParaEdits((prev: any) => { const n = { ...prev }; delete n[para.id]; return n; }); }}
+                                            ><X size={10} /></button>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+            <p className="mt-4 text-[10px] text-slate-600">
+                {Object.keys(paraEdits).length} paragraph(s) modified · Hover over paragraph areas to see edit zones
+            </p>
+        </div>
+    );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  MODE 4 — Overlay Editor
+//  A semi-transparent textarea overlaid directly on the PDF image.
+// ─────────────────────────────────────────────────────────────────────────────
+interface OverlayModeProps {
+    imageUrl: string;
+    imageRef: any;
+    containerRef: any;
+    pdfDims: { width: number; height: number } | null;
+    scale: number;
+    value: string;
+    onChange: React.Dispatch<React.SetStateAction<string>>;
+    showOverlay: boolean;
+    setShowOverlay: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function OverlayMode({
+    imageUrl, imageRef, containerRef, pdfDims, scale, value, onChange, showOverlay, setShowOverlay,
+}: OverlayModeProps) {
+    return (
+        <div className="h-full overflow-auto bg-[#0d0f18] flex flex-col items-center py-8 px-4">
+            <div className="mb-4 flex items-center gap-3">
+                <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest flex items-center gap-2">
+                    <Layers size={11} /> Mode 4: Overlay Editor — text editor sits directly on top of the PDF
+                </div>
+                <button
+                    onClick={() => setShowOverlay(!showOverlay)}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition-all ${showOverlay
+                        ? "bg-violet-600 border-violet-500 text-white"
+                        : "border-white/10 text-slate-400 hover:text-white hover:border-white/20"
+                        }`}
+                >
+                    {showOverlay ? <><Check size={12} /> Editing Active</> : <><Edit3 size={12} /> Enable Overlay Editor</>}
+                </button>
+            </div>
+
+            <div
+                ref={containerRef}
+                className="relative shadow-2xl rounded overflow-hidden border border-white/10"
+                style={{ width: pdfDims ? pdfDims.width * scale : "auto" }}
+            >
+                {/* PDF base */}
+                <img
+                    ref={imageRef}
+                    src={imageUrl}
+                    alt="PDF"
+                    className={`block w-full h-auto select-none transition-all duration-300 ${showOverlay ? "opacity-25" : "opacity-100"}`}
+                />
+
+                {/* Overlay textarea */}
+                {showOverlay && (
+                    <textarea
+                        value={value}
+                        onChange={e => onChange(e.target.value)}
+                        spellCheck={false}
+                        className="absolute inset-0 w-full h-full bg-[#fff] text-slate-900 text-sm leading-relaxed font-mono resize-none outline-none px-[5%] py-[3%] overflow-auto"
+                        style={{
+                            opacity: 0.93,
+                            fontSize: pdfDims ? Math.max(11, (pdfDims.width * scale * 0.013)) : 13,
+                        }}
+                        placeholder="Your PDF text appears here — edit freely…"
+                    />
+                )}
+
+                {!showOverlay && (
+                    <div
+                        className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                        onClick={() => setShowOverlay(true)}
+                    >
+                        <div className="bg-violet-600 hover:bg-violet-500 transition-colors text-white px-5 py-3 rounded-xl font-bold flex items-center gap-2 shadow-xl text-sm">
+                            <Edit3 size={16} /> Click to Start Editing
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {showOverlay && (
+                <p className="mt-3 text-[10px] text-slate-500">
+                    Editing directly over the PDF. Click "Enable Overlay Editor" again to preview the original.
+                </p>
+            )}
+        </div>
+    );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  MODE 5 — Line-by-Line (original, improved)
+// ─────────────────────────────────────────────────────────────────────────────
+interface LineModeProps {
+    imageUrl: string;
+    imageRef: any;
+    containerRef: any;
+    lines: TextItem[];
+    pdfDims: { width: number; height: number } | null;
+    scale: number;
+    lineEdits: Record<string, string>;
+    setLineEdits: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+    activeLineId: string | null;
+    setActiveLineId: React.Dispatch<React.SetStateAction<string | null>>;
+    lineEditVal: string;
+    setLineEditVal: React.Dispatch<React.SetStateAction<string>>;
+    lineInputRef: any;
+}
+
+function LineMode({
+    imageUrl, imageRef, containerRef, lines, pdfDims, scale,
+    lineEdits, setLineEdits, activeLineId, setActiveLineId, lineEditVal, setLineEditVal, lineInputRef,
+}: LineModeProps) {
+    const confirmLine = () => {
+        if (!activeLineId) return;
+        const idx = parseInt(activeLineId.split("-")[1]);
+        const original = lines[idx];
+        if (lineEditVal.trim() === "" || lineEditVal === original?.str) {
+            setLineEdits((prev: any) => { const n = { ...prev }; delete n[activeLineId]; return n; });
+        } else {
+            setLineEdits((prev: any) => ({ ...prev, [activeLineId]: lineEditVal }));
+        }
+        setActiveLineId(null);
+    };
+
+    return (
+        <div className="h-full overflow-auto bg-[#0d0f18] flex flex-col items-center py-8 px-4">
+            <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+                <Edit3 size={11} /> Mode 5: Line-by-line · Click any line on the PDF to edit it
+            </div>
+            <div
+                ref={containerRef}
+                className="relative shadow-2xl bg-white rounded overflow-hidden border border-white/10"
+                style={{ width: pdfDims ? pdfDims.width * scale : "auto" }}
+            >
+                <img ref={imageRef} src={imageUrl} alt="PDF" className="block w-full h-auto select-none pointer-events-none" />
+
+                {pdfDims && (
+                    <div className="absolute inset-0 z-30">
+                        {lines.map((line: TextItem, idx: number) => {
+                            const id = `l-${idx}`;
+                            const isEdited = lineEdits[id] !== undefined;
+                            const isActive = activeLineId === id;
+                            const dsText = isEdited ? lineEdits[id] : line.str;
+
+                            return (
+                                <div key={id} className="absolute group flex items-center" style={{
+                                    left: line.x * scale, top: (line.y - line.fontSize) * scale,
+                                    minWidth: line.width * scale, height: line.fontSize * 1.4 * scale,
+                                    zIndex: isActive ? 100 : isEdited ? 90 : 80,
+                                }}>
+                                    {isActive ? (
+                                        <div className="relative flex items-center w-full shadow-2xl rounded-sm" style={{ backgroundColor: "white" }}>
+                                            <input
+                                                ref={lineInputRef}
+                                                type="text"
+                                                value={lineEditVal}
+                                                onChange={e => setLineEditVal(e.target.value)}
+                                                onKeyDown={e => { if (e.key === "Enter") confirmLine(); if (e.key === "Escape") setActiveLineId(null); }}
+                                                onBlur={confirmLine}
+                                                className="w-full bg-transparent border-2 border-violet-500 outline-none rounded-sm text-slate-900 px-1"
+                                                style={{ fontSize: line.fontSize * scale, fontFamily: line.fontName?.toLowerCase().includes("serif") ? "serif" : "sans-serif", minWidth: Math.max(line.width * scale + 20, 200) }}
+                                            />
+                                            <div className="absolute -top-7 right-0 bg-violet-700 text-white text-[9px] font-bold px-2 py-1 rounded shadow pointer-events-none">Enter to save</div>
+                                        </div>
+                                    ) : isEdited ? (
+                                        <div onClick={() => { setActiveLineId(id); setLineEditVal(lineEdits[id]); }} className="relative flex items-center w-full cursor-pointer hover:bg-blue-50/90 px-[2px] rounded-sm" style={{ backgroundColor: "white" }}>
+                                            <span className="truncate text-blue-600" style={{ fontSize: line.fontSize * scale, fontFamily: line.fontName?.toLowerCase().includes("serif") ? "serif" : "sans-serif" }}>{dsText}</span>
+                                            <button onClick={e => { e.stopPropagation(); setLineEdits((p: any) => { const n = { ...p }; delete n[id]; return n; }); }} className="absolute right-[-22px] opacity-0 group-hover:opacity-100 p-0.5 bg-white text-red-500 rounded-full shadow">
+                                                <Undo2 size={11} />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div onClick={() => { setActiveLineId(id); setLineEditVal(line.str); }} className="w-full h-full cursor-text border border-transparent hover:border-violet-400 hover:bg-violet-400/10 rounded-sm transition-all" title="Click to edit" />
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
         </div>
     );
