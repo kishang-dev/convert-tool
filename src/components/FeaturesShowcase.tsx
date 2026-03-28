@@ -88,6 +88,12 @@ const features = [
         description: 'Extract text from images using advanced OCR technology.',
         color: 'from-sky-500 to-blue-500',
     },
+    {
+        icon: Sparkles,
+        title: 'AI Chart Maker',
+        description: 'Generate flowcharts, workflow diagrams, and BPMN charts using AI prompts.',
+        color: 'from-blue-600 to-indigo-600',
+    },
 ];
 
 export default function FeaturesShowcase() {
