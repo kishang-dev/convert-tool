@@ -332,14 +332,49 @@ export const fileAPI = {
   },
 
   // PDF to HTML
-  pdfToHtml: async (
-    fileId: string,
-  ): Promise<{
-    success: boolean;
-    message: string;
-    file: FileData;
-  }> => {
+  pdfToHtml: async (fileId: string): Promise<{ success: boolean; message: string; file: FileData; }> => {
     const response = await api.post("/pdf-to-html", { fileId });
+    return response.data;
+  },
+
+  // ---- Extra Conversions ----
+  wordToPdf: async (fileId: string): Promise<{ success: boolean; message: string; file: FileData; }> => {
+    const response = await api.post("/word-to-pdf", { fileId });
+    return response.data;
+  },
+
+  textToPdf: async (fileId: string): Promise<{ success: boolean; message: string; file: FileData; }> => {
+    const response = await api.post("/text-to-pdf", { fileId });
+    return response.data;
+  },
+
+  csvToPdf: async (fileId: string): Promise<{ success: boolean; message: string; file: FileData; }> => {
+    const response = await api.post("/csv-to-pdf", { fileId });
+    return response.data;
+  },
+
+  pdfToCsv: async (fileId: string): Promise<{ success: boolean; message: string; file: FileData; }> => {
+    const response = await api.post("/pdf-to-csv", { fileId });
+    return response.data;
+  },
+
+  pdfToSpeech: async (fileId: string): Promise<{ success: boolean; message: string; audioUrls: string[] }> => {
+    const response = await api.post("/pdf-to-speech", { fileId });
+    return response.data;
+  },
+
+  videoToPdf: async (fileId: string): Promise<{ success: boolean; message: string; file: FileData; }> => {
+    const response = await api.post("/video-to-pdf", { fileId });
+    return response.data;
+  },
+
+  audioToPdf: async (fileId: string): Promise<{ success: boolean; message: string; file: FileData; }> => {
+    const response = await api.post("/audio-to-pdf", { fileId });
+    return response.data;
+  },
+
+  imageConvert: async (fileId: string, targetFormat: string): Promise<{ success: boolean; message: string; file: FileData; }> => {
+    const response = await api.post("/image-convert", { fileId, targetFormat });
     return response.data;
   },
 };

@@ -11,6 +11,10 @@ import {
     Mic,
     Sparkles,
     Minimize2,
+    Video,
+    Music,
+    Presentation,
+    Type,
 } from 'lucide-react';
 import Card from './Card';
 import { useRouter } from 'next/router';
@@ -93,6 +97,55 @@ const features = [
         title: 'AI Chart Maker',
         description: 'Generate flowcharts, workflow diagrams, and BPMN charts using AI prompts.',
         color: 'from-blue-600 to-indigo-600',
+    },
+    // ---- New Additions ----
+    {
+        icon: FileText,
+        title: 'Word to PDF',
+        description: 'Convert Microsoft Word documents (DOCX) seamlessly into PDF format.',
+        color: 'from-blue-500 to-indigo-500',
+    },
+    {
+        icon: Presentation,
+        title: 'PowerPoint to PDF',
+        description: 'Transform PPT presentations into static PDF slides.',
+        color: 'from-orange-500 to-red-500',
+    },
+    {
+        icon: Image,
+        title: 'Image Converter',
+        description: 'Convert between JPG, PNG, and WebP, or SVG to raster formats.',
+        color: 'from-teal-400 to-emerald-500',
+    },
+    {
+        icon: Type,
+        title: 'Text & CSV to PDF',
+        description: 'Generate clean PDF documents from plain text and CSV files.',
+        color: 'from-stone-500 to-gray-500',
+    },
+    {
+        icon: FileSpreadsheet,
+        title: 'PDF to CSV',
+        description: 'Extract tables and data from PDF straight into CSV files.',
+        color: 'from-cyan-500 to-blue-500',
+    },
+    {
+        icon: Mic,
+        title: 'PDF to Speech',
+        description: 'Convert document text into lifelike audio using AI.',
+        color: 'from-pink-500 to-rose-500',
+    },
+    {
+        icon: Video,
+        title: 'Video to PDF Notes',
+        description: 'Automatically transcribe videos and generate summarized PDF notes.',
+        color: 'from-purple-500 to-fuchsia-500',
+    },
+    {
+        icon: Music,
+        title: 'Audio to PDF Transcript',
+        description: 'Generate complete PDF text transcriptions from spoken audio.',
+        color: 'from-indigo-500 to-violet-500',
     },
 ];
 

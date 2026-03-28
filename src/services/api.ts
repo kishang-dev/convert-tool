@@ -170,4 +170,23 @@ export const supportApi = {
   },
 };
 
+export const conversionApi = {
+  pdfToPptx: async (fileId: string) => (await api.post("/conversion/pdf-to-pptx", { fileId })).data,
+  excelToPdf: async (fileId: string) => (await api.post("/conversion/excel-to-pdf", { fileId })).data,
+  pptToPdf: async (fileId: string) => (await api.post("/conversion/ppt-to-pdf", { fileId })).data,
+  htmlToPdf: async (fileId: string) => (await api.post("/conversion/html-to-pdf", { fileId })).data,
+  pdfToText: async (fileId: string) => (await api.post("/conversion/pdf-to-text", { fileId })).data,
+  pdfToHtml: async (fileId: string) => (await api.post("/conversion/pdf-to-html", { fileId })).data,
+
+  // Extra Conversions
+  wordToPdf: async (fileId: string) => (await api.post("/conversion/word-to-pdf", { fileId })).data,
+  textToPdf: async (fileId: string) => (await api.post("/conversion/text-to-pdf", { fileId })).data,
+  csvToPdf: async (fileId: string) => (await api.post("/conversion/csv-to-pdf", { fileId })).data,
+  pdfToCsv: async (fileId: string) => (await api.post("/conversion/pdf-to-csv", { fileId })).data,
+  pdfToSpeech: async (fileId: string) => (await api.post("/conversion/pdf-to-speech", { fileId })).data,
+  videoToPdf: async (fileId: string) => (await api.post("/conversion/video-to-pdf", { fileId })).data,
+  audioToPdf: async (fileId: string) => (await api.post("/conversion/audio-to-pdf", { fileId })).data,
+  imageConvert: async (fileId: string, targetFormat: string) => (await api.post("/conversion/image-convert", { fileId, targetFormat })).data,
+};
+
 export default api;

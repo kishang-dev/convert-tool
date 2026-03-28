@@ -14,11 +14,14 @@ import {
     Edit,
     Mic,
     Sparkles,
-    Minimize2,
+    Music,
     Presentation,
     FileType,
     Search,
     FileCode,
+    Video,
+    Type,
+    Minimize2,
 } from "lucide-react";
 import { fileAPI, FileData } from "@/lib/api";
 import Toast from "@/components/Toast";
@@ -75,9 +78,7 @@ export default function Tools() {
     const handleDrop = async (e: React.DragEvent) => {
         e.preventDefault();
         setIsDragging(false);
-        const droppedFiles = Array.from(e.dataTransfer.files).filter(
-            (file) => file.type === "application/pdf",
-        );
+        const droppedFiles = Array.from(e.dataTransfer.files);
         await handleFiles(droppedFiles);
     };
 
@@ -90,7 +91,7 @@ export default function Tools() {
 
     const handleFiles = async (newFiles: File[]) => {
         if (newFiles.length === 0) {
-            showToast("Please select PDF files only", "error");
+            showToast("Please select valid files", "error");
             return;
         }
 
@@ -246,6 +247,26 @@ export default function Tools() {
         }
     };
 
+    const handleGenericConversion = async (apiCall: (id: string) => Promise<any>, successMsg: string) => {
+        if (files.length === 0) {
+            showToast("Please upload a file first", "error");
+            return;
+        }
+        setLoading(true);
+        try {
+            const response = await apiCall(files[0]._id);
+            showToast(successMsg, "success");
+            if (response.file) {
+                setFiles([response.file, ...files]);
+                window.open(fileAPI.getDownloadUrl(response.file.filename), "_blank");
+            }
+        } catch (error: any) {
+            showToast(error.response?.data?.error || "Conversion failed", "error");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleProtectPDF = () => {
         if (files.length === 0) {
             showToast("Please upload a PDF file to protect", "error");
@@ -300,18 +321,26 @@ export default function Tools() {
         { icon: Image, title: "PDF to Image", action: handleToImage, gradient: "from-indigo-500 to-purple-500" },
         {
             icon: Edit, title: "Advanced PDF Editor", action: () => {
-                if (files.length === 0) {
-                    showToast("Please upload a PDF file to edit", "error");
-                    return;
-                }
+                if (files.length === 0) { showToast("Please upload a PDF to edit", "error"); return; }
                 window.location.href = `/editor/${files[0]._id}`;
             }, gradient: "from-pink-500 to-rose-500"
         },
-        { icon: Presentation, title: "PDF to PowerPoint", action: () => window.location.href = "/pdf-to-pptx", gradient: "from-orange-500 to-red-500" },
+        { icon: Presentation, title: "PowerPoint to PDF", action: () => handleGenericConversion(fileAPI.pptToPdf, "PPT converted to PDF!"), gradient: "from-orange-500 to-red-500" },
         { icon: FileSpreadsheet, title: "PDF to Excel", action: handleToExcel, gradient: "from-orange-500 to-yellow-500" },
         { icon: Lock, title: "Protect PDF", action: handleProtectPDF, gradient: "from-yellow-500 to-orange-500" },
         { icon: RotateCw, title: "Rotate PDF", action: handleRotatePDF, gradient: "from-teal-500 to-cyan-500" },
-        { icon: Mic, title: "Speech to PDF", action: () => window.location.href = "/speech-to-pdf", gradient: "from-violet-500 to-purple-500" },
+
+        // --- Newly Added Tools ---
+        { icon: FileText, title: "Word to PDF", action: () => handleGenericConversion(fileAPI.wordToPdf, "Word converted to PDF!"), gradient: "from-blue-500 to-indigo-500" },
+        { icon: Image, title: "Convert to JPG", action: () => handleGenericConversion((id) => fileAPI.imageConvert(id, "jpg"), "Converted to JPG!"), gradient: "from-emerald-400 to-green-500" },
+        { icon: Image, title: "Convert to PNG", action: () => handleGenericConversion((id) => fileAPI.imageConvert(id, "png"), "Converted to PNG!"), gradient: "from-teal-400 to-cyan-500" },
+        { icon: Type, title: "Text to PDF", action: () => handleGenericConversion(fileAPI.textToPdf, "Text converted to PDF!"), gradient: "from-stone-500 to-gray-500" },
+        { icon: FileSpreadsheet, title: "CSV to PDF", action: () => handleGenericConversion(fileAPI.csvToPdf, "CSV converted to PDF!"), gradient: "from-cyan-500 to-blue-500" },
+        { icon: FileSpreadsheet, title: "PDF to CSV", action: () => handleGenericConversion(fileAPI.pdfToCsv, "PDF extracted to CSV!"), gradient: "from-purple-500 to-pink-500" },
+        { icon: Mic, title: "PDF to Speech", action: () => handleGenericConversion(fileAPI.pdfToSpeech, "Generated Speech from PDF!"), gradient: "from-pink-500 to-rose-500" },
+        { icon: Video, title: "Video to PDF Notes", action: () => handleGenericConversion(fileAPI.videoToPdf, "Generated PDF Notes from Video!"), gradient: "from-purple-500 to-fuchsia-500" },
+        { icon: Music, title: "Audio to Transcript", action: () => handleGenericConversion(fileAPI.audioToPdf, "Transcript generated successfully!"), gradient: "from-indigo-500 to-violet-500" },
+
         { icon: Sparkles, title: "Image to SVG", action: () => window.location.href = "/svg", gradient: "from-fuchsia-500 to-pink-500" },
         { icon: FileText, title: "OCR Image to PDF", action: () => window.location.href = "/ocr", gradient: "from-sky-500 to-blue-500" },
         { icon: FileCode, title: "HTML to PDF", action: () => window.location.href = "/html-to-pdf", gradient: "from-blue-500 to-indigo-600" },
@@ -394,7 +423,7 @@ export default function Tools() {
                                 ref={fileInputRef}
                                 type="file"
                                 multiple
-                                accept=".pdf"
+                                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.jpg,.jpeg,.png,.webp,.svg,.mp3,.mp4,.wav,.avi"
                                 onChange={handleFileSelect}
                                 className="hidden"
                             />
