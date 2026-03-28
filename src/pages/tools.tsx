@@ -326,10 +326,10 @@ export default function Tools() {
         },
         {
             icon: Edit,
-            title: "Pro Flowchart Maker",
+            title: "Pro AI Chart & Diagram Maker",
             action: () => (window.location.href = "/drowChart"),
             gradient: "from-blue-600 to-indigo-600",
-            description: "Create interactive flowcharts, diagrams, and logic maps easily."
+            description: "Create flowcharts, DFDs, BPMN, Swimlanes, and logic maps with expert AI."
         },
 
     ];

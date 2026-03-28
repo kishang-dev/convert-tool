@@ -97,6 +97,27 @@ const SHAPE_CATEGORIES = [
     ],
   },
   {
+    name: "BPMN",
+    shapes: [
+      { type: "circle", icon: Circle, label: "Start Event" },
+      { type: "circle", icon: Circle, label: "End Event" },
+      { type: "roundedRect", icon: Square, label: "Activity" },
+      { type: "diamond", icon: Diamond, label: "Gateway" },
+      { type: "parallelogram", icon: Shapes, label: "Data Object" },
+      { type: "document", icon: FileText, label: "Message" },
+      { type: "cylinder", icon: Database, label: "Data Store" },
+    ],
+  },
+  {
+    name: "DFD",
+    shapes: [
+      { type: "circle", icon: Circle, label: "Process" },
+      { type: "cylinder", icon: Database, label: "Data Store" },
+      { type: "square", icon: Square, label: "External Ent." },
+      { type: "parallelogram", icon: Shapes, label: "Data Flow" },
+    ],
+  },
+  {
     name: "Extras",
     shapes: [
       { type: "heart", icon: Heart, label: "Heart" },

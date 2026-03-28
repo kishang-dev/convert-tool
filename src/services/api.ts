@@ -138,7 +138,7 @@ export const chartApi = {
     const response = await api.delete(`/charts/${id}`);
     return response.data;
   },
-  generateAIChart: async (data: { title: string; prompt: string; platform: string; apiKey: string }) => {
+  generateAIChart: async (data: { title: string; prompt: string; platform: string; apiKey: string; chartType?: string }) => {
     const response = await api.post("/charts/generate-ai", data);
     return response.data;
   },

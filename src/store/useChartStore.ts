@@ -12,7 +12,7 @@ interface ChartState {
     createChart: (data: any) => Promise<any>;
     updateChart: (id: string, data: any) => Promise<void>;
     deleteChart: (id: string) => Promise<void>;
-    generateAIChart: (data: { title: string; prompt: string; platform: string; apiKey: string }) => Promise<any>;
+    generateAIChart: (data: { title: string; prompt: string; platform: string; apiKey: string; chartType?: string }) => Promise<any>;
     setCurrentChart: (chart: any | null) => void;
 }
 

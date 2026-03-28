@@ -207,7 +207,7 @@ export const ChartEditor = ({ id }: { id?: string }) => {
                 </h1>
               )}
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em]">POWER EDITOR</span>
+                <span className="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em]">{currentChart?.chartType || "FLOWCHART"}</span>
                 <div className="w-1 h-1 rounded-full bg-gray-300 dark:bg-white/20" />
                 <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">PROJECT ASSET</span>
               </div>

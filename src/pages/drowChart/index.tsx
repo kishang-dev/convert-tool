@@ -14,13 +14,31 @@ export default function ChartDashboard() {
     const [isAIModalOpen, setIsAIModalOpen] = useState(false);
     const [isGenerating, setIsGenerating] = useState(false);
 
+    // Supported Chart Types
+    const chartTypes = [
+        "Flowchart",
+        "Process Flow Diagram (PFD)",
+        "Workflow Diagram",
+        "Swimlane Diagram",
+        "BPMN Diagram",
+        "Data Flow Diagram (DFD)",
+        "Decision Tree",
+        "Algorithm Flowchart",
+        "System Flowchart",
+        "Cross-functional Flowchart"
+    ];
+
     // AI Form State
     const [aiForm, setAiForm] = useState({
         title: "",
         prompt: "",
         platform: "openai",
-        apiKey: ""
+        apiKey: "",
+        chartType: "Flowchart"
     });
+
+    const [isManualModalOpen, setIsManualModalOpen] = useState(false);
+    const [manualType, setManualType] = useState("Flowchart");
 
     useEffect(() => {
         fetchCharts();
@@ -28,10 +46,14 @@ export default function ChartDashboard() {
 
     const handleCreateNew = async () => {
         try {
-            const newChart = await createChart({ title: "Untitled Masterpiece" });
+            const newChart = await createChart({
+                title: `Untitled ${manualType}`,
+                chartType: manualType
+            });
+            setIsManualModalOpen(false);
             router.push(`/drowChart/${newChart._id}`);
         } catch (err) {
-            setToast({ message: "Failed to create new flowchart", type: "error" });
+            setToast({ message: "Failed to create new diagram", type: "error" });
         }
     };
 
@@ -48,10 +70,11 @@ export default function ChartDashboard() {
                 title: aiForm.title,
                 prompt: aiForm.prompt,
                 platform: aiForm.platform,
-                apiKey: aiForm.apiKey
+                apiKey: aiForm.apiKey,
+                chartType: aiForm.chartType
             });
             setIsAIModalOpen(false);
-            setToast({ message: "Flowchart generated successfully!", type: "success" });
+            setToast({ message: `${aiForm.chartType} generated successfully!`, type: "success" });
             router.push(`/drowChart/${newChart._id}`);
         } catch (err: any) {
             setToast({ message: err.response?.data?.error || "AI Generation failed", type: "error" });
@@ -62,12 +85,12 @@ export default function ChartDashboard() {
 
     const handleDelete = async (e: React.MouseEvent, id: string) => {
         e.stopPropagation();
-        if (confirm("Are you sure you want to delete this flowchart?")) {
+        if (confirm("Are you sure you want to delete this diagram?")) {
             try {
                 await deleteChart(id);
-                setToast({ message: "Chart deleted successfully", type: "success" });
+                setToast({ message: "Diagram deleted successfully", type: "success" });
             } catch (err) {
-                setToast({ message: "Failed to delete flowchart", type: "error" });
+                setToast({ message: "Failed to delete diagram", type: "error" });
             }
         }
     };
@@ -85,7 +108,7 @@ export default function ChartDashboard() {
         try {
             await updateChart(id, { title: editTitle });
             setEditingId(null);
-            setToast({ message: "Chart renamed", type: "success" });
+            setToast({ message: "Diagram renamed", type: "success" });
         } catch (err) {
             setToast({ message: "Failed to rename", type: "error" });
         }
@@ -93,13 +116,71 @@ export default function ChartDashboard() {
 
     return (
         <div className="min-h-screen bg-[#0f172a] text-white">
+            <style jsx>{`
+                .custom-scrollbar::-webkit-scrollbar {
+                    width: 6px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-track {
+                    background: rgba(255, 255, 255, 0.05);
+                    border-radius: 10px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                    background: rgba(59, 130, 246, 0.5);
+                    border-radius: 10px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                    background: rgba(59, 130, 246, 0.8);
+                }
+                .no-scrollbar::-webkit-scrollbar {
+                    display: none;
+                }
+                .no-scrollbar {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+            `}</style>
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
+
+            {/* Manual Creation Modal */}
+            {isManualModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+                    <div className="bg-[#1e293b] border border-white/10 rounded-3xl p-6 md:p-8 w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar overflow-x-hidden shadow-2xl relative">
+                        <button
+                            onClick={() => setIsManualModalOpen(false)}
+                            className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors"
+                        >
+                            <X size={24} />
+                        </button>
+                        <h2 className="text-2xl font-black text-white mb-6 uppercase tracking-tight">Select Diagram Type</h2>
+                        <div className="relative">
+                            <select
+                                value={manualType}
+                                onChange={(e) => setManualType(e.target.value)}
+                                className="w-full bg-white/5 border-2 border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-[#1e293b] transition-all font-black text-lg appearance-none cursor-pointer"
+                            >
+                                {chartTypes.map(t => (
+                                    <option key={t} value={t} className="bg-[#1e293b] text-white py-2">{t}</option>
+                                ))}
+                            </select>
+                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                                <LayoutGrid size={20} />
+                            </div>
+                        </div>
+                        <button
+                            onClick={handleCreateNew}
+                            className="w-full mt-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-black text-lg transition-all shadow-xl hover:shadow-blue-500/30 active:scale-95"
+                        >
+                            CREATE {manualType.split(' ')[0].toUpperCase()}
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {/* AI Modal */}
             {isAIModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-all duration-500">
-                    <div className="bg-[#1e293b] border border-white/10 rounded-[2.5rem] p-8 md:p-12 w-full max-w-2xl shadow-[0_0_100px_rgba(59,130,246,0.1)] relative overflow-hidden group">
+                    <div className="bg-[#1e293b] border border-white/10 rounded-[2.5rem] p-6 md:p-10 w-full max-w-2xl max-h-[95vh] overflow-y-auto no-scrollbar overflow-x-hidden shadow-[0_0_100px_rgba(59,130,246,0.1)] relative group">
 
                         {/* Decorative background effects */}
                         <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] group-hover:bg-blue-500/20 transition-all duration-1000" />
@@ -118,7 +199,7 @@ export default function ChartDashboard() {
                                 </div>
                                 <h2 className="text-4xl font-black gradient-text mb-4 animate-pulse uppercase tracking-tighter">Designing Brilliance</h2>
                                 <p className="text-gray-400 text-lg max-w-sm mx-auto leading-relaxed font-medium">
-                                    Our AI architect is mapping out your logic flow with precision and style...
+                                    Our AI architect is mapping out your ${aiForm.chartType} with precision and style...
                                 </p>
                             </div>
                         ) : (
@@ -130,18 +211,18 @@ export default function ChartDashboard() {
                                     <X size={28} />
                                 </button>
 
-                                <div className="flex items-center gap-4 mb-10 relative">
+                                <div className="flex items-center gap-4 mb-6 relative">
                                     <div className="p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-[1.5rem] shadow-xl shadow-blue-500/20">
                                         <Sparkles className="text-white" size={32} />
                                     </div>
                                     <div>
-                                        <h2 className="text-3xl font-black text-white tracking-tight uppercase">AI Flow Architect</h2>
-                                        <p className="text-gray-400 font-bold uppercase text-[10px] tracking-[0.2em] opacity-70 mt-1">Generate deep-detail professional logic maps</p>
+                                        <h2 className="text-3xl font-black text-white tracking-tight uppercase">AI Chart Architect</h2>
+                                        <p className="text-gray-400 font-bold uppercase text-[10px] tracking-[0.2em] opacity-70 mt-1">Generate professional diagrams in seconds</p>
                                     </div>
                                 </div>
 
-                                <form onSubmit={handleAIContextSubmit} className="space-y-8 relative">
-                                    <div className="grid md:grid-cols-2 gap-8">
+                                <form onSubmit={handleAIContextSubmit} className="space-y-6 relative">
+                                    <div className="grid md:grid-cols-2 gap-4">
                                         <div className="space-y-6">
                                             <div>
                                                 <label className="block text-xs font-black text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Project Identity</label>
@@ -152,6 +233,24 @@ export default function ChartDashboard() {
                                                     className="w-full bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-black text-lg placeholder:text-gray-600"
                                                     placeholder="e.g. Master Auth Flow"
                                                 />
+                                            </div>
+
+                                            <div>
+                                                <label className="block text-xs font-black text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Diagram Type</label>
+                                                <div className="relative">
+                                                    <select
+                                                        value={aiForm.chartType}
+                                                        onChange={(e) => setAiForm({ ...aiForm, chartType: e.target.value })}
+                                                        className="w-full bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-[#1e293b] transition-all font-black text-lg appearance-none cursor-pointer"
+                                                    >
+                                                        {chartTypes.map(t => (
+                                                            <option key={t} value={t} className="bg-[#1e293b] text-white py-2">{t}</option>
+                                                        ))}
+                                                    </select>
+                                                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                                                        <LayoutGrid size={20} />
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div>
@@ -179,7 +278,7 @@ export default function ChartDashboard() {
                                                     value={aiForm.prompt}
                                                     onChange={(e) => setAiForm({ ...aiForm, prompt: e.target.value })}
                                                     className="w-full bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all h-[13.5rem] resize-none font-bold placeholder:text-gray-600"
-                                                    placeholder="Describe the flow you want to map out..."
+                                                    placeholder="Describe the logic you want to map out..."
                                                 />
                                             </div>
                                         </div>
@@ -202,7 +301,7 @@ export default function ChartDashboard() {
                                             className="w-full md:w-auto px-10 flex items-center justify-center gap-3 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-[1.5rem] font-black text-lg transition-all shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 active:scale-[0.98] group/btn whitespace-nowrap"
                                         >
                                             <Sparkles size={22} className="group-hover/btn:rotate-12 transition-transform" />
-                                            <span>GENERATE FLOW</span>
+                                            <span>GENERATE DIAGRAM</span>
                                         </button>
                                     </div>
                                 </form>
@@ -216,10 +315,10 @@ export default function ChartDashboard() {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
                     <div>
                         <h1 className="text-4xl md:text-5xl font-black gradient-text tracking-tighter mb-4">
-                            Your Flowcharts
+                            All Professional Charts
                         </h1>
                         <p className="text-gray-400 text-lg">
-                            Manage your logic flows, architecture diagrams, and mind maps.
+                            Manage your logic flows, architecture diagrams, DFDs, and business processes.
                         </p>
                     </div>
                     <div className="flex gap-3">
@@ -231,7 +330,7 @@ export default function ChartDashboard() {
                             <span>Create with AI</span>
                         </button>
                         <button
-                            onClick={handleCreateNew}
+                            onClick={() => setIsManualModalOpen(true)}
                             disabled={loading && charts.length === 0}
                             className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-95"
                         >
@@ -248,9 +347,9 @@ export default function ChartDashboard() {
                 ) : charts.length === 0 ? (
                     <div className="text-center py-20 bg-white/5 border border-white/10 rounded-3xl">
                         <LayoutGrid className="mx-auto h-16 w-16 text-gray-400 mb-6" />
-                        <h3 className="text-2xl font-bold text-white mb-2">No Flowcharts Yet</h3>
+                        <h3 className="text-2xl font-bold text-white mb-2">No Diagrams Yet</h3>
                         <p className="text-gray-400 mb-8 max-w-sm mx-auto">
-                            Create your first flowchart to start mapping out your brilliant ideas.
+                            Create your first diagram to start mapping out your brilliant ideas.
                         </p>
                         <div className="flex justify-center gap-4">
                             <button
@@ -261,7 +360,7 @@ export default function ChartDashboard() {
                                 Start with AI
                             </button>
                             <button
-                                onClick={handleCreateNew}
+                                onClick={() => setIsManualModalOpen(true)}
                                 className="px-8 py-3 bg-white text-blue-900 rounded-xl font-bold hover:bg-gray-100 transition-colors"
                             >
                                 Manual Design
@@ -280,9 +379,11 @@ export default function ChartDashboard() {
                                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl group-hover:bg-blue-500/30 transition-all pointer-events-none" />
 
                                 <div className="relative z-10 flex flex-col h-full">
-                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center border border-white/10 mb-6 group-hover:scale-110 transition-transform">
+                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center border border-white/10 mb-2 group-hover:scale-110 transition-transform">
                                         <LayoutGrid className="text-blue-400" size={24} />
                                     </div>
+
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-blue-500/60 mb-3">{chart.chartType || 'Flowchart'}</span>
 
                                     {editingId === chart._id ? (
                                         <div className="flex items-center gap-2 mb-2" onClick={e => e.stopPropagation()}>
