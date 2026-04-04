@@ -391,6 +391,7 @@ export interface ResumeData {
     website?: string;
     linkedin?: string;
     github?: string;
+    photo?: string;
   };
   experience: Array<{
     company: string;
@@ -466,8 +467,8 @@ export const resumeAPI = {
     const response = await api.get("/resumes");
     return response.data;
   },
-  exportResume: async (id: string, html: string): Promise<{ success: boolean; downloadUrl: string }> => {
-    const response = await api.post(`/resumes/${id}/export`, { html });
+  exportResume: async (id: string, html: string, resumeData?: ResumeData): Promise<{ success: boolean; downloadUrl: string }> => {
+    const response = await api.post(`/resumes/${id}/export`, { html, resumeData });
     return response.data;
   },
 };

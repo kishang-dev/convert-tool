@@ -15,7 +15,7 @@ const GlobalStyles = () => (
             .resume-page { box-shadow:none!important;margin:0!important;width:100%!important; }
             * { -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important; }
         }
-        .resume-page { -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;background:white;overflow:hidden; }
+        .resume-page { -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;background:white;overflow:visible; padding-bottom: 40px !important; }
         `
     }} />
 );
@@ -211,6 +211,12 @@ const T_Classic = ({ data, primaryColor: c }: any) => (
                                 <div className="text-gray-400 italic">{cert.issuer}, {cert.date}</div>
                             </div>
                         ))}
+                    </section>
+                )}
+                {data.interests?.length > 0 && (
+                    <section>
+                        <h2 className="text-xs font-bold uppercase tracking-[0.25em] text-gray-500 border-b border-gray-200 pb-1 mb-3">Interests</h2>
+                        <div className="text-[11px] text-gray-600 italic">{data.interests.join(' · ')}</div>
                     </section>
                 )}
             </div>
@@ -1082,6 +1088,12 @@ const T_Formal = ({ data, primaryColor: c }: any) => (
                             <p className="text-[12px] text-gray-700 leading-relaxed ml-4">{p.description}</p>
                         </div>
                     ))}
+                </section>
+            )}
+            {data.interests?.length > 0 && (
+                <section>
+                    <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-700 border-b-2 border-gray-800 pb-1 mb-4">INTERESTS</h2>
+                    <div className="text-[12px] text-gray-700 leading-loose italic">{data.interests.join(' · ')}</div>
                 </section>
             )}
         </div>

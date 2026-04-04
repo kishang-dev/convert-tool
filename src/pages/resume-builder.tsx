@@ -316,7 +316,7 @@ export default function ResumeBuilder() {
                     </head>
                     <body class="bg-white">${html}</body>
                 </html>
-            `);
+            `, resumeData);
 
             if (res.success) {
                 const downloadUrl = res.downloadUrl.startsWith('http')
@@ -472,8 +472,42 @@ export default function ResumeBuilder() {
                                             className="w-full bg-white/5 border border-white/10 p-3 rounded-lg mt-1 focus:border-blue-500 outline-none"
                                         />
                                     </div>
+                                    <div className="col-span-2">
+                                        <label className="text-xs text-gray-400 uppercase font-bold">Photo (Optional)</label>
+                                        <div className="flex items-center gap-4 mt-2">
+                                            {resumeData.personalInfo.photo && (
+                                                <div className="relative group">
+                                                    <img src={resumeData.personalInfo.photo} className="w-16 h-16 rounded-xl object-cover border-2 border-white/10" alt="Avatar" />
+                                                    <button
+                                                        onClick={() => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, photo: '' } })}
+                                                        className="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                                    >
+                                                        <Trash2 size={12} />
+                                                    </button>
+                                                </div>
+                                            )}
+                                            <div className="flex-1">
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={e => {
+                                                        const file = e.target.files?.[0];
+                                                        if (file) {
+                                                            const reader = new FileReader();
+                                                            reader.onloadend = () => {
+                                                                setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, photo: reader.result as string } });
+                                                            };
+                                                            reader.readAsDataURL(file);
+                                                        }
+                                                    }}
+                                                    className="w-full bg-white/5 border border-dashed border-white/20 p-4 rounded-xl text-xs text-gray-400 hover:border-blue-500 transition-colors cursor-pointer"
+                                                />
+                                                <p className="text-[10px] text-gray-500 mt-2">Recommended: Square Aspect Ratio, Base64 embedded</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div>
-                                        <label className="text-xs text-gray-400 uppercase font-bold">Email</label>
+                                        <label className="text-xs text-gray-400 uppercase font-bold text-blue-400">Email Address</label>
                                         <input
                                             value={resumeData.personalInfo.email}
                                             onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, email: e.target.value } })}
@@ -486,6 +520,15 @@ export default function ResumeBuilder() {
                                             value={resumeData.personalInfo.phone}
                                             onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, phone: e.target.value } })}
                                             className="w-full bg-white/5 border border-white/10 p-3 rounded-lg mt-1 focus:border-blue-500 outline-none"
+                                        />
+                                    </div>
+                                    <div className="col-span-2">
+                                        <label className="text-xs text-gray-400 uppercase font-bold">Address</label>
+                                        <input
+                                            value={resumeData.personalInfo.address}
+                                            onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, address: e.target.value } })}
+                                            className="w-full bg-white/5 border border-white/10 p-3 rounded-lg mt-1 focus:border-blue-500 outline-none"
+                                            placeholder="City, State / Full Address"
                                         />
                                     </div>
                                     <div className="col-span-2 grid grid-cols-3 gap-4">
