@@ -870,23 +870,28 @@ export default function ResumeBuilder() {
                         </div>
 
                         {/* Preview */}
-                        <div className="sticky top-24 hidden lg:block h-[calc(100vh-120px)] flex flex-col">
-                            <div className="flex justify-between items-center mb-4">
+                        <div className="sticky top-28 hidden lg:block h-[calc(100vh-140px)]">
+                            <div className="flex justify-between items-center mb-6 px-2">
                                 <div className="flex items-center gap-2">
                                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                                    <h3 className="font-bold text-gray-300">Live Preview</h3>
+                                    <h3 className="font-bold text-gray-300 uppercase text-[10px] tracking-widest">Live Rendering</h3>
                                 </div>
-                                <div className="flex gap-2">
-                                    <Button size="sm" onClick={() => setStep(3)} className="shadow-lg shadow-blue-600/20">Next: Styling <ChevronRight size={16} /></Button>
-                                </div>
+                                <Button size="sm" onClick={() => setStep(3)} className="shadow-lg shadow-blue-600/20 bg-blue-600 hover:bg-blue-700">
+                                    Next: Style <ChevronRight size={14} className="ml-1" />
+                                </Button>
                             </div>
-                            <div className="flex-1 bg-gray-900/50 rounded-2xl border border-white/5 p-4 overflow-hidden relative flex justify-center items-start">
-                                <div className="scale-[0.45] origin-top transform-gpu transition-transform duration-500 hover:scale-[0.5] shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-                                    <div className="bg-white rounded-lg pointer-events-none">
-                                        <ResumeTemplate data={resumeData} template={resumeData.template} primaryColor={resumeData.color} />
+
+                            <div className="bg-gray-900/50 rounded-[32px] border border-white/5 p-8 h-full flex justify-center items-start overflow-hidden relative group">
+                                {/* The Wrapper: Fixed dimensions to match the scaled resume (794 * 0.45 = ~357) */}
+                                <div className="relative w-[357px] h-[505px] transition-all duration-500 group-hover:scale-[1.02]">
+                                    <div className="absolute top-0 left-0 origin-top-left scale-[0.45] pointer-events-none shadow-[0_30px_100px_rgba(0,0,0,0.5)] rounded-sm overflow-hidden">
+                                        <div className="bg-white">
+                                            <ResumeTemplate data={resumeData} template={resumeData.template} primaryColor={resumeData.color} />
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/40 backdrop-blur-md rounded-full text-[10px] text-gray-400 uppercase tracking-widest font-black border border-white/5">
+
+                                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-6 py-2 bg-black/60 backdrop-blur-xl rounded-full text-[9px] text-gray-400 uppercase tracking-[0.3em] font-black border border-white/10 z-20">
                                     Preview Mode
                                 </div>
                             </div>
