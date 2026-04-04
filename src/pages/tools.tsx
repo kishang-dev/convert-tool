@@ -370,13 +370,13 @@ export default function Tools() {
             <Navbar />
 
             {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 py-32">
+            <div className="max-w-7xl mx-auto px-4 py-24 md:py-32">
                 {/* Page Header */}
-                <div className="text-center mb-20 space-y-6 animate-fadeIn">
-                    <h1 className="text-6xl font-black gradient-text tracking-tighter">
+                <div className="text-center mb-12 md:mb-20 space-y-4 md:space-y-6 animate-fadeIn">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-black gradient-text tracking-tighter leading-tight">
                         Powerful Tools for Every File
                     </h1>
-                    <p className="text-gray-400 text-xl max-w-2xl mx-auto font-light leading-relaxed">
+                    <p className="text-gray-400 text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed px-4">
                         Effortlessly edit, convert, and manage your documents with our high-end professional toolset.
                         From AI-powered resumes to advanced PDF editing.
                     </p>
@@ -401,14 +401,14 @@ export default function Tools() {
                         onDragOver={handleDragOver}
                         onDragLeave={handleDragLeave}
                         onDrop={handleDrop}
-                        className={`p-12 text-center transition-smooth rounded-xl ${isDragging ? "bg-purple-500/10 border-2 border-purple-500" : ""
+                        className={`p-8 md:p-12 text-center transition-smooth rounded-xl ${isDragging ? "bg-purple-500/10 border-2 border-purple-500" : ""
                             }`}
                     >
                         <div className="flex flex-col items-center gap-4">
-                            <div className="bg-gradient-to-br from-purple-600 to-blue-600 p-6 rounded-full shadow-lg">
-                                <Upload className="text-white" size={48} />
+                            <div className="bg-gradient-to-br from-purple-600 to-blue-600 p-4 md:p-6 rounded-full shadow-lg">
+                                <Upload className="text-white" size={32} md-size={48} />
                             </div>
-                            <p className="text-xl text-gray-300">
+                            <p className="text-lg md:text-xl text-gray-300 px-4">
                                 Drag & Drop PDF Files Here or
                             </p>
                             <Button
@@ -416,6 +416,7 @@ export default function Tools() {
                                 disabled={loading}
                                 loading={loading}
                                 size="lg"
+                                className="w-full sm:w-auto"
                             >
                                 {loading ? "Processing..." : "Choose Files"}
                             </Button>

@@ -156,12 +156,12 @@ export default function FeaturesShowcase() {
         <section id="features" className="py-20 px-4">
             <div className="max-w-7xl mx-auto">
                 {/* Section Header */}
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                <div className="text-center mb-16 px-4">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 text-white leading-[1.1] tracking-tighter uppercase">
                         Powerful Tools at Your
                         <span className="gradient-text"> Fingertips</span>
                     </h2>
-                    <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                    <p className="text-sm sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed px-4 opacity-80 font-bold uppercase tracking-widest text-[10px] sm:text-xs">
                         Everything you need to work with PDFs and documents, all in one place.
                     </p>
                 </div>

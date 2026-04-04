@@ -41,46 +41,34 @@ export default function ContactPage() {
         <div className="min-h-screen bg-[#0f172a] text-white flex flex-col font-sans">
             <Navbar />
 
-            <main className="flex-1 pt-32 pb-20">
-                <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-20">
+            <main className="flex-1 pt-24 md:pt-32 pb-16 md:pb-20">
+                <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
                     {/* Info Section */}
-                    <section className="relative">
-                        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] animate-pulse" />
-                        <h1 className="text-5xl md:text-7xl font-black gradient-text tracking-tighter mb-8 leading-[0.9]">
-                            Let's Start a <br /> Conversation.
+                    <section className="relative text-center md:text-left">
+                        <div className="absolute top-0 left-1/2 md:left-0 -translate-x-1/2 md:translate-x-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] animate-pulse" />
+                        <h1 className="text-4xl sm:text-5xl md:text-7xl font-black gradient-text tracking-tighter mb-8 leading-[1.1]">
+                            Let's Start a <br className="hidden sm:block" /> Conversation.
                         </h1>
-                        <p className="text-gray-400 text-xl max-w-md leading-relaxed mb-12">
+                        <p className="text-gray-400 text-lg md:text-xl max-w-md mx-auto md:mx-0 leading-relaxed mb-12">
                             Have a question or a project in mind? We'd love to hear from you. Our team typically responds within 24 hours.
                         </p>
 
-                        <div className="space-y-8 relative z-10">
-                            <div className="flex items-center gap-6 group">
-                                <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-[1.25rem] flex items-center justify-center text-blue-500 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 shadow-2xl">
-                                    <Mail size={24} />
+                        <div className="space-y-6 md:space-y-8 relative z-10">
+                            {[
+                                { icon: Mail, label: "Email Support", value: "support@convertertool.com", color: "text-blue-500", hover: "hover:bg-blue-600" },
+                                { icon: MessageCircle, label: "Real-time Chat", value: "@converter_support", color: "text-purple-500", hover: "hover:bg-purple-600" },
+                                { icon: MapPin, label: "Office Location", value: "Ahmedabad, Gujarat, IN", color: "text-pink-500", hover: "hover:bg-pink-600" }
+                            ].map((item, idx) => (
+                                <div key={idx} className="flex flex-col sm:flex-row items-center md:items-center gap-4 sm:gap-6 group">
+                                    <div className={`w-14 h-14 bg-white/5 border border-white/10 rounded-[1.25rem] flex items-center justify-center ${item.color} group-hover:text-white group-active:scale-95 transition-all duration-500 shadow-2xl`}>
+                                        <item.icon size={24} />
+                                    </div>
+                                    <div className="text-center sm:text-left">
+                                        <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1">{item.label}</p>
+                                        <p className="text-lg md:text-xl font-bold">{item.value}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1">Email Support</p>
-                                    <p className="text-xl font-bold">support@convertertool.com</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-6 group">
-                                <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-[1.25rem] flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500 shadow-2xl">
-                                    <MessageCircle size={24} />
-                                </div>
-                                <div>
-                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1">Real-time Chat</p>
-                                    <p className="text-xl font-bold">@converter_support</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-6 group">
-                                <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-[1.25rem] flex items-center justify-center text-pink-500 group-hover:bg-pink-600 group-hover:text-white transition-all duration-500 shadow-2xl">
-                                    <MapPin size={24} />
-                                </div>
-                                <div>
-                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1">Office Location</p>
-                                    <p className="text-xl font-bold">Ahmedabad, Gujarat, IN</p>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </section>
 

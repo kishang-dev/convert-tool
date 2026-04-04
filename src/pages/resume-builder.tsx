@@ -9,7 +9,7 @@ import { resumeAPI, ResumeData } from '@/lib/api';
 import {
     Upload, FileText, Download, Save, Palette,
     User, Briefcase, GraduationCap, Code, Globe,
-    Plus, Trash2, Edit3, ChevronRight, CheckCircle, Layout
+    Plus, Trash2, Edit3, ChevronRight, CheckCircle, Layout, Eye, X
 } from 'lucide-react';
 
 // const INITIAL_DATA: ResumeData = {
@@ -227,6 +227,7 @@ export default function ResumeBuilder() {
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const resumeRef = useRef<HTMLDivElement>(null);
+    const [mobilePreviewOpen, setMobilePreviewOpen] = useState(false);
 
     const showToast = (message: string, type: 'success' | 'error' = 'success') => {
         setToast({ message, type });
@@ -384,11 +385,11 @@ export default function ResumeBuilder() {
                 </div>
 
                 {step === 1 && (
-                    <div className="max-w-6xl mx-auto text-center animate-fadeIn py-12">
-                        <h1 className="text-6xl font-black mb-6 gradient-text tracking-tighter">
-                            Resume Builder & Converter
+                    <div className="max-w-6xl mx-auto text-center animate-fadeIn py-8 md:py-12">
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 gradient-text tracking-tighter leading-tight">
+                            Resume Builder <br className="sm:hidden" /> & Converter
                         </h1>
-                        <p className="text-gray-400 text-xl mb-16 max-w-2xl mx-auto font-light">
+                        <p className="text-gray-400 text-base sm:text-lg md:text-xl mb-12 md:mb-16 max-w-2xl mx-auto font-light px-4">
                             Choose how you want to start. Upload an existing document for an instant AI conversion,
                             or build a professional resume from scratch.
                         </p>
@@ -850,7 +851,7 @@ export default function ResumeBuilder() {
                                     {resumeData.interests?.map((interest, i) => (
                                         <div key={i} className="bg-white/10 px-3 py-1 rounded-full flex items-center gap-2 group border border-white/5">
                                             <span>{interest}</span>
-                                            <button onClick={() => removeListItem('interests', i)} className="opacity-0 group-hover:opacity-100 text-red-400 transition-all">
+                                            <button onClick={() => removeListItem('interests', i)} className="text-red-400 transition-all">
                                                 <Trash2 size={14} />
                                             </button>
                                         </div>
@@ -867,6 +868,16 @@ export default function ResumeBuilder() {
                                     />
                                 </div>
                             </Card>
+
+                            {/* Mobile Preview FAB */}
+                            <div className="lg:hidden fixed bottom-6 right-6 z-40">
+                                <Button
+                                    onClick={() => setMobilePreviewOpen(true)}
+                                    className="rounded-full w-16 h-16 shadow-2xl shadow-blue-500/40 p-0 flex items-center justify-center bg-blue-600"
+                                >
+                                    <Eye size={24} />
+                                </Button>
+                            </div>
                         </div>
 
                         {/* Preview */}
@@ -1115,8 +1126,47 @@ export default function ResumeBuilder() {
                         </div>
                     </div>
                 )}
+                {/* Mobile Preview Modal */}
+                {mobilePreviewOpen && (
+                    <div className="fixed inset-0 z-50 lg:hidden animate-fadeIn">
+                        <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={() => setMobilePreviewOpen(false)}></div>
+                        <div className="relative h-full flex flex-col p-6 pointer-events-none">
+                            <div className="flex justify-between items-center mb-6 pointer-events-auto">
+                                <h3 className="text-xl font-bold tracking-tight">Live Render</h3>
+                                <button
+                                    onClick={() => setMobilePreviewOpen(false)}
+                                    className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all"
+                                >
+                                    <X size={20} />
+                                </button>
+                            </div>
+                            <div className="flex-1 flex justify-center items-center overflow-hidden">
+                                <div className="scale-[0.4] sm:scale-[0.6] origin-center shadow-2xl">
+                                    <div className="bg-white pointer-events-auto">
+                                        <ResumeTemplate data={resumeData} template={resumeData.template} primaryColor={resumeData.color} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="py-6 pointer-events-auto">
+                                <Button onClick={() => setMobilePreviewOpen(false)} className="w-full py-4 bg-white/10 border-white/10 text-white">
+                                    Back to Editing
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+                {/* Floating Preview Button (Mobile) */}
+                {step === 2 && (
+                    <div className="fixed bottom-8 right-8 z-40 lg:hidden animate-bounce-subtle">
+                        <button
+                            onClick={() => setMobilePreviewOpen(true)}
+                            className="w-16 h-16 bg-blue-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-blue-700 transition-all border-4 border-[#0f172a]"
+                        >
+                            <Eye size={28} />
+                        </button>
+                    </div>
+                )}
             </div>
-        </div>
+        </div >
     );
 }
-

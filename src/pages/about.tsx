@@ -29,10 +29,10 @@ export default function AboutPage() {
                             <Sparkles size={16} className="text-blue-400" />
                             <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.2em]">Our Mission</span>
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black gradient-text tracking-tighter mb-8 leading-[0.9]">
-                            Revolutionizing <br /> Modern Workflows
+                        <h1 className="text-4xl sm:text-6xl md:text-7xl font-black gradient-text tracking-tighter mb-8 leading-[1.1]">
+                            Revolutionizing <br className="hidden sm:block" /> Modern Workflows
                         </h1>
-                        <p className="text-gray-400 text-xl max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed px-4">
                             We are building the world's most powerful, AI-driven conversion engine to help creators, engineers, and businesses transform data with precision and style.
                         </p>
                     </div>
@@ -74,14 +74,14 @@ export default function AboutPage() {
                 </section>
 
                 {/* Content Section */}
-                <section className="py-32">
+                <section className="py-16 md:py-32">
                     <div className="max-w-4xl mx-auto px-6">
-                        <div className="space-y-12">
-                            <h2 className="text-4xl font-black text-white mb-8 tracking-tighter uppercase">Who We Are</h2>
-                            <p className="text-gray-400 text-lg leading-relaxed mb-8">
+                        <div className="space-y-8 md:space-y-12">
+                            <h2 className="text-3xl md:text-4xl font-black text-white mb-6 tracking-tighter uppercase leading-tight text-center md:text-left">Who We Are</h2>
+                            <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-6 md:mb-8 text-center md:text-left">
                                 Founded in 2024, Converter Tool started with a simple belief: file conversion shouldn't be a chore. Most tools on the market are slow, filled with intrusive ads, and look like they belong in the early 2000s. We decided to change that.
                             </p>
-                            <p className="text-gray-400 text-lg leading-relaxed mb-12">
+                            <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-8 md:mb-12 text-center md:text-left">
                                 Today, we provide a comprehensive suite of tools ranging from simple PDF conversions to advanced AI-powered Flowchart generation and CV building. Our team consists of passionate developers and designers dedicated to pushing the boundaries of what's possible in a browser.
                             </p>
 

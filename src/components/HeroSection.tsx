@@ -27,14 +27,14 @@ export default function HeroSection() {
                 </div>
 
                 {/* Main Heading */}
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fadeIn" style={{ animationDelay: '0.1s' }}>
+                <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 animate-fadeIn leading-[1.1] tracking-tight px-2" style={{ animationDelay: '0.1s' }}>
                     Transform Your Documents
                     <br />
                     <span className="gradient-text">In Seconds</span>
                 </h1>
 
                 {/* Subheading */}
-                <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto animate-fadeIn" style={{ animationDelay: '0.2s' }}>
+                <p className="text-base sm:text-lg md:text-2xl text-gray-400 mb-10 max-w-3xl mx-auto animate-fadeIn leading-relaxed px-4" style={{ animationDelay: '0.2s' }}>
                     All-in-one PDF toolkit with AI-powered features. Convert, edit, merge, split, and more—all in your browser, completely free.
                 </p>
 
@@ -42,6 +42,7 @@ export default function HeroSection() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fadeIn" style={{ animationDelay: '0.3s' }}>
                     <Button
                         size="lg"
+                        className="w-full sm:w-auto flex items-center justify-center gap-2"
                         onClick={() => router.push('/tools')}
                     >
                         Get Started Free
@@ -50,6 +51,7 @@ export default function HeroSection() {
                     <Button
                         variant="secondary"
                         size="lg"
+                        className="w-full sm:w-auto flex items-center justify-center gap-2"
                         onClick={() => {
                             document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
                         }}

@@ -33,22 +33,22 @@ export default function ForgotPassword() {
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white flex flex-col font-sans">
+        <div className="min-h-screen bg-[#0a0a0f] text-white flex flex-col font-sans overflow-x-hidden">
             <Navbar />
 
-            <main className="flex-1 flex items-center justify-center p-6 py-20">
+            <main className="flex-1 flex items-center justify-center p-4 sm:p-6 pt-32 pb-20">
                 <div className="w-full max-w-md relative">
                     {/* Animated background effects */}
                     <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-500/20 rounded-full blur-[100px] animate-pulse" />
                     <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-purple-500/20 rounded-full blur-[100px] animate-pulse delay-700" />
 
-                    <div className="bg-[#1e293b]/50 border border-white/10 rounded-[2.5rem] p-8 md:p-12 backdrop-blur-xl shadow-2xl relative overflow-hidden group">
+                    <div className="bg-[#1e293b]/50 border border-white/10 rounded-[2.5rem] p-6 md:p-12 backdrop-blur-xl shadow-2xl relative overflow-hidden group">
                         <div className="flex flex-col items-center text-center mb-10">
                             <div className="p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-[1.5rem] shadow-xl shadow-blue-500/20 mb-6 group-hover:scale-110 transition-transform duration-500">
                                 <Sparkles className="text-white" size={32} />
                             </div>
-                            <h2 className="text-4xl font-black text-white tracking-tight uppercase mb-2 leading-none">Recover Access</h2>
-                            <p className="text-gray-400 font-bold uppercase text-[10px] tracking-[0.2em] opacity-70">
+                            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight uppercase mb-2 leading-none">Recover Access</h2>
+                            <p className="text-gray-400 font-bold uppercase text-[9px] sm:text-[10px] tracking-[0.2em] opacity-70">
                                 {isSent ? "Check your inbox" : "We'll send you a magic link"}
                             </p>
                         </div>

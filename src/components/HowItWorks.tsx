@@ -28,11 +28,11 @@ export default function HowItWorks() {
         <section className="py-20 px-4 bg-gradient-to-b from-transparent via-purple-900/10 to-transparent">
             <div className="max-w-6xl mx-auto">
                 {/* Section Header */}
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                <div className="text-center mb-16 px-4">
+                    <h2 className="text-3xl sm:text-5xl font-black mb-4 uppercase tracking-tighter leading-none">
                         How It <span className="gradient-text">Works</span>
                     </h2>
-                    <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                    <p className="text-xs sm:text-base text-gray-400 font-bold uppercase tracking-widest opacity-60">
                         Three simple steps to transform your documents
                     </p>
                 </div>

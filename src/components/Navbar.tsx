@@ -41,7 +41,7 @@ export default function Navbar() {
 
     if (!mounted) {
         return (
-            <header className="fixed top-0 left-0 right-0 z-50 glass">
+            <header className="fixed top-0 left-0 right-0 z-[100] bg-[#0a0a0f]/95 backdrop-blur-xl border-b border-white/10">
                 <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <div className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg p-2">
@@ -57,14 +57,16 @@ export default function Navbar() {
     }
 
     return (
-        <header className={`fixed top-0 left-0 right-0 z-50 transition-smooth ${scrolled ? 'glass-strong shadow-xl' : 'glass'
+        <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled
+            ? 'bg-[#0a0a0f]/95 backdrop-blur-xl border-b border-white/10 shadow-2xl py-3'
+            : 'bg-[#0a0a0f]/40 backdrop-blur-md py-4 sm:py-5'
             }`}>
-            <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-2 hover-scale transition-smooth">
                     <div className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg p-2 shadow-lg">
                         <FileText className="text-white" size={24} />
                     </div>
-                    <span className="text-xl md:text-2xl font-bold gradient-text">
+                    <span className="text-lg sm:text-xl md:text-2xl font-bold gradient-text whitespace-nowrap">
                         QuickPDF Tools
                     </span>
                 </Link>
@@ -99,13 +101,25 @@ export default function Navbar() {
                     >
                         Features
                     </a>
-                    <Link href="/svg" className="text-gray-300 hover:text-white transition-smooth uppercase text-[10px] font-black tracking-widest">
+                    <Link
+                        href="/svg"
+                        className={`hover:text-white transition-smooth uppercase text-xs font-black tracking-widest ${router.pathname === '/svg' ? 'text-white' : 'text-gray-400'
+                            }`}
+                    >
                         Image to SVG
                     </Link>
-                    <Link href="/about" className="text-gray-400 hover:text-white transition-smooth uppercase text-[10px] font-black tracking-widest">
+                    <Link
+                        href="/about"
+                        className={`hover:text-white transition-smooth uppercase text-xs font-black tracking-widest ${router.pathname === '/about' ? 'text-white' : 'text-gray-400'
+                            }`}
+                    >
                         About
                     </Link>
-                    <Link href="/contact" className="text-gray-400 hover:text-white transition-smooth uppercase text-[10px] font-black tracking-widest">
+                    <Link
+                        href="/contact"
+                        className={`hover:text-white transition-smooth uppercase text-xs font-black tracking-widest ${router.pathname === '/contact' ? 'text-white' : 'text-gray-400'
+                            }`}
+                    >
                         Contact
                     </Link>
 
@@ -175,8 +189,8 @@ export default function Navbar() {
 
                     {/* Menu Panel */}
                     <div
-                        className="fixed top-[72px] left-0 right-0 glass-strong border-t border-gray-700 md:hidden animate-slideInRight shadow-2xl"
-                        style={{ maxHeight: 'calc(100vh - 72px)', overflowY: 'auto' }}
+                        className="fixed top-20 left-0 right-0 bg-[#0a0a0f]/95 backdrop-blur-xl border-t border-white/5 md:hidden animate-slideInRight shadow-2xl"
+                        style={{ maxHeight: 'calc(100vh - 80px)', overflowY: 'auto' }}
                     >
                         <nav className="flex flex-col p-4 space-y-2">
                             <Link

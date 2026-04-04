@@ -48,12 +48,12 @@ export default function FAQ() {
         <section className="py-20 px-4">
             <div className="max-w-4xl mx-auto">
                 {/* Section Header */}
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                <div className="text-center mb-16 px-4">
+                    <h2 className="text-3xl sm:text-5xl font-black mb-4 uppercase tracking-tighter leading-none">
                         Frequently Asked
                         <span className="gradient-text"> Questions</span>
                     </h2>
-                    <p className="text-xl text-gray-400">
+                    <p className="text-sm sm:text-lg text-gray-400 font-bold uppercase tracking-widest opacity-60">
                         Everything you need to know about our tools
                     </p>
                 </div>

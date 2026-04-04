@@ -36,7 +36,7 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-[#0a0a0f]">
             <Navbar />
 
             {/* Background */}
@@ -49,22 +49,22 @@ export default function RegisterPage() {
             <div className="fixed bottom-20 left-10 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1.5s' }}></div>
 
             {/* Main Content */}
-            <div className="flex items-center justify-center min-h-screen py-24 px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-center min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full animate-fadeIn">
                     {/* Header */}
                     <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-4">
+                        <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-4">
                             <Sparkles className="text-purple-400" size={16} />
                             <span className="text-sm text-gray-300">Join Us Today</span>
                         </div>
-                        <h2 className="text-4xl font-bold mb-2">
+                        <h2 className="text-3xl sm:text-4xl font-bold mb-2">
                             <span className="gradient-text">Create Account</span>
                         </h2>
-                        <p className="text-gray-400">Start using our powerful PDF tools for free</p>
+                        <p className="text-gray-400 text-sm sm:text-base px-4">Start using our powerful PDF tools for free</p>
                     </div>
 
                     {/* Register Form */}
-                    <Card variant="elevated" className="p-8">
+                    <Card variant="elevated" className="p-6 sm:p-8">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             {/* Name Input */}
                             <div>
@@ -79,7 +79,7 @@ export default function RegisterPage() {
                                         id="name"
                                         type="text"
                                         required
-                                        className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500 transition-smooth"
+                                        className="w-full bg-white/5 border border-white/10 pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500 transition-smooth"
                                         placeholder="John Doe"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
@@ -100,7 +100,7 @@ export default function RegisterPage() {
                                         id="email"
                                         type="email"
                                         required
-                                        className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500 transition-smooth"
+                                        className="w-full bg-white/5 border border-white/10 pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500 transition-smooth"
                                         placeholder="you@example.com"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
@@ -121,7 +121,7 @@ export default function RegisterPage() {
                                         id="password"
                                         type="password"
                                         required
-                                        className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500 transition-smooth"
+                                        className="w-full bg-white/5 border border-white/10 pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500 transition-smooth"
                                         placeholder="••••••••"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
