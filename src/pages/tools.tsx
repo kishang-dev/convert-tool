@@ -338,6 +338,7 @@ export default function Tools() {
         { icon: FileSpreadsheet, title: "CSV to PDF", action: () => handleGenericConversion(fileAPI.csvToPdf, "CSV converted to PDF!"), gradient: "from-cyan-500 to-blue-500" },
         { icon: FileSpreadsheet, title: "PDF to CSV", action: () => handleGenericConversion(fileAPI.pdfToCsv, "PDF extracted to CSV!"), gradient: "from-purple-500 to-pink-500" },
         { icon: Mic, title: "PDF to Speech", action: () => handleGenericConversion(fileAPI.pdfToSpeech, "Generated Speech from PDF!"), gradient: "from-pink-500 to-rose-500" },
+        { icon: Mic, title: "Speech to PDF", action: () => (window.location.href = "/speech-to-pdf"), gradient: "from-indigo-600 to-blue-600", description: "Convert your live voice into a polished PDF document instantly." },
         { icon: Video, title: "Video to PDF Notes", action: () => handleGenericConversion(fileAPI.videoToPdf, "Generated PDF Notes from Video!"), gradient: "from-purple-500 to-fuchsia-500" },
         { icon: Music, title: "Audio to Transcript", action: () => handleGenericConversion(fileAPI.audioToPdf, "Transcript generated successfully!"), gradient: "from-indigo-500 to-violet-500" },
 
