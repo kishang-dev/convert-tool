@@ -1,12 +1,45 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Head from 'next/head';
-import { Mic, MicOff, Download, FileText, Trash2, StopCircle, PlayCircle, Settings, CheckCircle2 } from 'lucide-react';
+import {
+    Mic, Download, FileText, Trash2, Settings, CheckCircle2,
+    Copy, Languages, BarChart2, AlignLeft, Save, Undo2, Type
+} from 'lucide-react';
 import api from '@/services/api';
+import RichTextEditor from '@/components/RichTextEditor';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
+}
+
+// Languages supported by Web Speech API
+const LANGUAGES = [
+    { code: 'en-US', label: 'English (US)' },
+    { code: 'en-GB', label: 'English (UK)' },
+    { code: 'hi-IN', label: 'Hindi' },
+    { code: 'gu-IN', label: 'Gujarati' },
+    { code: 'es-ES', label: 'Spanish' },
+    { code: 'fr-FR', label: 'French' },
+    { code: 'de-DE', label: 'German' },
+    { code: 'zh-CN', label: 'Chinese (Simplified)' },
+    { code: 'ja-JP', label: 'Japanese' },
+    { code: 'ar-SA', label: 'Arabic' },
+    { code: 'pt-BR', label: 'Portuguese (Brazil)' },
+    { code: 'ru-RU', label: 'Russian' },
+];
+
+const AUTO_SAVE_KEY = 'voicepdf_autosave';
+const AUTO_SAVE_TITLE_KEY = 'voicepdf_autosave_title';
+
+function countWords(html: string): number {
+    const text = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    if (!text) return 0;
+    return text.split(' ').filter(Boolean).length;
+}
+
+function countChars(html: string): number {
+    return html.replace(/<[^>]*>/g, '').length;
 }
 
 export default function SpeechToPdf() {
@@ -17,102 +50,269 @@ export default function SpeechToPdf() {
     const [title, setTitle] = useState('Meeting Notes');
     const [status, setStatus] = useState<'idle' | 'listening' | 'generating' | 'success'>('idle');
     const [error, setError] = useState<string | null>(null);
+    const [selectedLang, setSelectedLang] = useState('en-US');
+    const [autoSaveStatus, setAutoSaveStatus] = useState<'saved' | 'saving' | null>(null);
+    const [copyStatus, setCopyStatus] = useState(false);
+    const [speechSupported, setSpeechSupported] = useState(true);
+    const [volume, setVolume] = useState(0);
+    const [history, setHistory] = useState<string[]>([]);
 
     const recognitionRef = useRef<any>(null);
+    const editorRef = useRef<any>(null);
+    const isListeningRef = useRef(false);
+    // Track result indices that have been committed to avoid duplicates
+    const committedIndicesRef = useRef(new Set<number>());
+    const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const restartTimerRef = useRef<NodeJS.Timeout | null>(null);
+    // AudioContext for volume visualizer
+    const audioContextRef = useRef<AudioContext | null>(null);
+    const analyserRef = useRef<AnalyserNode | null>(null);
+    const micStreamRef = useRef<MediaStream | null>(null);
+    const volumeRafRef = useRef<number | null>(null);
 
+    // ── Load auto-save on mount ──────────────────────────────────────────────
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-            if (SpeechRecognition) {
-                recognitionRef.current = new SpeechRecognition();
-                recognitionRef.current.continuous = true;
-                recognitionRef.current.interimResults = true;
-
-                recognitionRef.current.onresult = (event: any) => {
-                    let currentFinalTranscript = "";
-                    let currentInterim = "";
-
-                    for (let i = event.resultIndex; i < event.results.length; i++) {
-                        const transcriptSegment = event.results[i][0].transcript;
-                        if (event.results[i].isFinal) {
-                            currentFinalTranscript += transcriptSegment;
-                        } else {
-                            currentInterim += transcriptSegment;
-                        }
-                    }
-
-                    if (currentFinalTranscript) {
-                        setTranscript((prev) => {
-                            const cleanedPrev = prev.trim();
-                            return cleanedPrev ? cleanedPrev + " " + currentFinalTranscript.trim() : currentFinalTranscript.trim();
-                        });
-                        setInterimText('');
-                    } else {
-                        setInterimText(currentInterim);
-                    }
-                };
-
-                recognitionRef.current.onerror = (event: any) => {
-                    console.error("Speech recognition error:", event.error);
-                    setError(`Error: ${event.error}`);
-                    setIsListening(false);
-                    setStatus('idle');
-                };
-
-                recognitionRef.current.onend = () => {
-                    setIsListening(false);
-                    setInterimText('');
-                    // Only set to idle if we weren't explicitly stopped or error
-                };
-            } else {
-                setError('Browser does not support Speech Recognition.');
-            }
-        }
+        try {
+            const savedTranscript = localStorage.getItem(AUTO_SAVE_KEY);
+            const savedTitle = localStorage.getItem(AUTO_SAVE_TITLE_KEY);
+            if (savedTranscript) setTranscript(savedTranscript);
+            if (savedTitle) setTitle(savedTitle);
+        } catch (_) { }
     }, []);
 
-    const toggleListening = () => {
-        if (isListening) {
-            recognitionRef.current.stop();
-            setIsListening(false);
-            setStatus('idle');
-        } else {
-            setError(null);
-            setTranscript('');
-            setInterimText('');
-            recognitionRef.current.start();
-            setIsListening(true);
-            setStatus('listening');
+    // ── Auto-save transcript ─────────────────────────────────────────────────
+    useEffect(() => {
+        if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+        if (!transcript) return;
+
+        setAutoSaveStatus('saving');
+        autoSaveTimerRef.current = setTimeout(() => {
+            try {
+                localStorage.setItem(AUTO_SAVE_KEY, transcript);
+                localStorage.setItem(AUTO_SAVE_TITLE_KEY, title);
+                setAutoSaveStatus('saved');
+                setTimeout(() => setAutoSaveStatus(null), 2000);
+            } catch (_) { }
+        }, 1500);
+
+        return () => {
+            if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+        };
+    }, [transcript, title]);
+
+    // ── Speech recognition setup ─────────────────────────────────────────────
+    const setupRecognition = useCallback(() => {
+        if (typeof window === 'undefined') return;
+        const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            setSpeechSupported(false);
+            setError('Your browser does not support Speech Recognition. Please use Chrome or Edge.');
+            return;
         }
+
+        // Cleanup old instance
+        if (recognitionRef.current) {
+            try { recognitionRef.current.abort(); } catch (_) { }
+        }
+
+        const recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.maxAlternatives = 1;
+        recognition.lang = selectedLang;
+
+        recognition.onstart = () => {
+            setStatus('listening');
+            setError(null);
+        };
+
+        recognition.onresult = (event: any) => {
+            let newFinalText = '';
+            let currentInterim = '';
+
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const result = event.results[i];
+                const transcript = result[0].transcript;
+
+                if (result.isFinal) {
+                    // Only commit if we haven't already committed this result index
+                    if (!committedIndicesRef.current.has(i)) {
+                        committedIndicesRef.current.add(i);
+                        newFinalText += transcript;
+                    }
+                } else {
+                    currentInterim += transcript;
+                }
+            }
+
+            // Commit final text to editor
+            if (newFinalText.trim()) {
+                const textToInsert = ' ' + newFinalText.trim();
+                setHistory(prev => [...prev.slice(-49), transcript]); // keep last 50 snapshots
+                if (editorRef.current) {
+                    editorRef.current.insertTextAtCursor(textToInsert);
+                } else {
+                    setTranscript(prev => prev.trim()
+                        ? prev + textToInsert
+                        : `<p>${newFinalText.trim()}</p>`
+                    );
+                }
+            }
+
+            // Interim is only shown as preview — NEVER committed proactively
+            setInterimText(currentInterim);
+        };
+
+        recognition.onerror = (event: any) => {
+            // 'no-speech' is a benign browser timeout — suppress it
+            if (event.error === 'no-speech') return;
+            // 'aborted' happens on manual stop — suppress it
+            if (event.error === 'aborted') return;
+            setError(`Recognition error: ${event.error}`);
+            stopListening();
+        };
+
+        recognition.onend = () => {
+            // If we still want to listen, auto-restart (handles browser's 60s cutoff)
+            if (isListeningRef.current) {
+                if (restartTimerRef.current) clearTimeout(restartTimerRef.current);
+                restartTimerRef.current = setTimeout(() => {
+                    try {
+                        if (isListeningRef.current) recognition.start();
+                    } catch (_) { }
+                }, 200); // small delay prevents "already started" errors
+            } else {
+                setIsListening(false);
+                setInterimText('');
+                setStatus('idle');
+            }
+        };
+
+        recognitionRef.current = recognition;
+    }, [selectedLang]);
+
+    useEffect(() => {
+        setupRecognition();
+        return () => {
+            try { recognitionRef.current?.abort(); } catch (_) { }
+        };
+    }, [setupRecognition]);
+
+    // ── Volume visualizer via AudioContext ───────────────────────────────────
+    const startVolumeMonitor = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            micStreamRef.current = stream;
+            const ctx = new AudioContext();
+            audioContextRef.current = ctx;
+            const analyser = ctx.createAnalyser();
+            analyser.fftSize = 256;
+            analyserRef.current = analyser;
+            const source = ctx.createMediaStreamSource(stream);
+            source.connect(analyser);
+
+            const data = new Uint8Array(analyser.frequencyBinCount);
+            const tick = () => {
+                if (!isListeningRef.current) return;
+                analyser.getByteFrequencyData(data);
+                const avg = data.reduce((a, b) => a + b, 0) / data.length;
+                setVolume(Math.min(100, Math.round((avg / 128) * 100)));
+                volumeRafRef.current = requestAnimationFrame(tick);
+            };
+            tick();
+        } catch (_) {
+            // Mic access denied — volume meter stays at 0, not critical
+        }
+    };
+
+    const stopVolumeMonitor = () => {
+        if (volumeRafRef.current) cancelAnimationFrame(volumeRafRef.current);
+        micStreamRef.current?.getTracks().forEach(t => t.stop());
+        audioContextRef.current?.close();
+        audioContextRef.current = null;
+        analyserRef.current = null;
+        micStreamRef.current = null;
+        setVolume(0);
+    };
+
+    // ── Controls ─────────────────────────────────────────────────────────────
+    const startListening = () => {
+        setError(null);
+        committedIndicesRef.current.clear();
+        setInterimText('');
+        isListeningRef.current = true;
+        try {
+            recognitionRef.current?.start();
+        } catch (_) { }
+        setIsListening(true);
+        setStatus('listening');
+        startVolumeMonitor();
+    };
+
+    const stopListening = () => {
+        isListeningRef.current = false;
+        if (restartTimerRef.current) clearTimeout(restartTimerRef.current);
+        try {
+            recognitionRef.current?.stop();
+        } catch (_) { }
+        setIsListening(false);
+        setInterimText('');
+        setStatus('idle');
+        stopVolumeMonitor();
+    };
+
+    const toggleListening = () => {
+        if (isListening) stopListening();
+        else startListening();
+    };
+
+    const handleUndo = () => {
+        if (history.length === 0) return;
+        const prev = history[history.length - 1];
+        setHistory(h => h.slice(0, -1));
+        setTranscript(prev ?? '');
+    };
+
+    const handleCopy = async () => {
+        const text = transcript.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+        try {
+            await navigator.clipboard.writeText(text);
+            setCopyStatus(true);
+            setTimeout(() => setCopyStatus(false), 2000);
+        } catch (_) { }
+    };
+
+    const handleDownloadTxt = () => {
+        const text = transcript.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${title || 'transcript'}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
     };
 
     const handleDownloadPdf = async () => {
         if (!transcript) return;
-
         try {
             setIsProcessing(true);
             setStatus('generating');
-
             const response = await api.post('/speech-to-pdf/generate', {
                 text: transcript,
-                title: title
+                title,
             });
-
             if (response.data.success) {
                 setStatus('success');
-                const downloadUrl = response.data.data.downloadUrl;
-
-                // Trigger download
                 const link = document.createElement('a');
-                link.href = downloadUrl;
+                link.href = response.data.data.downloadUrl;
                 link.setAttribute('download', response.data.data.fileName);
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-
                 setTimeout(() => setStatus('idle'), 3000);
             }
-        } catch (err) {
-            console.error(err);
+        } catch (_) {
             setError('Failed to generate PDF. Please try again.');
             setStatus('idle');
         } finally {
@@ -121,90 +321,161 @@ export default function SpeechToPdf() {
     };
 
     const clearTranscript = () => {
+        setHistory([]);
         setTranscript('');
         setInterimText('');
         setStatus('idle');
+        try {
+            localStorage.removeItem(AUTO_SAVE_KEY);
+        } catch (_) { }
     };
 
+    const wordCount = countWords(transcript);
+    const charCount = countChars(transcript);
+
     return (
-        <div className="min-h-screen bg-[#0f172a] text-slate-100 font-sans selection:bg-purple-500/30">
+        <div className="min-h-screen bg-[#080c14] text-slate-100 font-sans selection:bg-indigo-500/30">
             <Head>
                 <title>VoicePDF | Speech to Professional PDF</title>
-                <meta name="description" content="Convert your speech to properly formatted PDF documents with 100% accuracy." />
+                <meta name="description" content="Convert your speech to properly formatted PDF documents." />
             </Head>
 
-            <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-900/20 blur-[120px] rounded-full animate-pulse" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/20 blur-[120px] rounded-full animate-pulse delay-700" />
+            {/* Background blobs */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none select-none">
+                <div className="absolute top-[-15%] left-[-5%] w-[50%] h-[50%] bg-indigo-900/15 blur-[160px] rounded-full" />
+                <div className="absolute bottom-[-10%] right-[-5%] w-[45%] h-[45%] bg-cyan-900/10 blur-[160px] rounded-full" />
+                <div className="absolute top-[40%] left-[40%] w-[30%] h-[30%] bg-violet-900/10 blur-[120px] rounded-full" />
+                {/* Subtle grid overlay */}
+                <div
+                    className="absolute inset-0 opacity-[0.03]"
+                    style={{
+                        backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
+                        backgroundSize: '40px 40px',
+                    }}
+                />
             </div>
 
-            <main className="relative z-10 max-w-5xl mx-auto px-6 py-12">
-                {/* Header */}
-                <header className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+            <main className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-10">
+                {/* ── Header ── */}
+                <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
                     <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-gradient-to-tr from-purple-600 to-blue-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
-                            <Mic className="w-6 h-6 text-white" />
+                        <div className="w-11 h-11 bg-gradient-to-tr from-indigo-500 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/30 rotate-3">
+                            <Mic className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                            <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
-                                VoicePDF
-                            </h1>
-                            <p className="text-slate-400 text-sm">Convert speech to structured PDF</p>
+                            <h1 className="text-2xl font-bold tracking-tight text-white">VoicePDF</h1>
+                            <p className="text-slate-400 text-xs">Real-time speech → formatted document</p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4 bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 p-1.5 rounded-full">
-                        <button className="px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-slate-700">How it works</button>
-                        <button className="px-4 py-2 bg-purple-600 rounded-full text-sm font-medium shadow-lg shadow-purple-900/20 transition-all hover:bg-purple-500 hover:scale-105 active:scale-95">Support</button>
+                    {/* Auto-save status */}
+                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                        {autoSaveStatus === 'saving' && (
+                            <span className="flex items-center gap-1.5 animate-pulse">
+                                <Save className="w-3 h-3" /> Auto-saving…
+                            </span>
+                        )}
+                        {autoSaveStatus === 'saved' && (
+                            <span className="flex items-center gap-1.5 text-green-400 animate-in fade-in duration-300">
+                                <CheckCircle2 className="w-3 h-3" /> Saved locally
+                            </span>
+                        )}
                     </div>
                 </header>
 
-                {/* Main Content Card */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                    {/* Controls Panel */}
-                    <div className="lg:col-span-1 space-y-6">
-                        <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 shadow-2xl">
-                            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                                <Settings className="w-4 h-4 text-purple-400" /> Settings
+                    {/* ── Left Panel: Settings & Controls ── */}
+                    <aside className="lg:col-span-1 space-y-4">
+
+                        {/* Settings Card */}
+                        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl p-5 shadow-xl">
+                            <h2 className="text-sm font-semibold mb-4 flex items-center gap-2 text-slate-300">
+                                <Settings className="w-4 h-4 text-indigo-400" /> Settings
                             </h2>
 
                             <div className="space-y-4">
+                                {/* Document title */}
                                 <div>
-                                    <label className="block text-xs font-medium text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Document Title</label>
+                                    <label className="block text-[11px] font-medium text-slate-500 uppercase tracking-wider mb-1.5">
+                                        Document Title
+                                    </label>
                                     <input
                                         type="text"
                                         value={title}
-                                        onChange={(e) => setTitle(e.target.value)}
-                                        placeholder="Enter PDF title..."
-                                        className="w-full bg-slate-950/50 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                                        onChange={e => setTitle(e.target.value)}
+                                        placeholder="Enter PDF title…"
+                                        className="w-full bg-slate-950/50 border border-slate-700/60 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/50 transition-all placeholder-slate-600"
                                     />
                                 </div>
 
-                                <div className="pt-4 border-t border-slate-800/50">
-                                    <p className="text-xs text-slate-500 mb-4 ml-1">Accuracy: <span className="text-green-400 font-semibold tracking-wide">100% Guaranteed</span></p>
+                                {/* Language selector */}
+                                <div>
+                                    <label className="block text-[11px] font-medium text-slate-500 uppercase tracking-wider mb-1.5">
+                                        <span className="flex items-center gap-1.5"><Languages className="w-3 h-3" /> Language</span>
+                                    </label>
+                                    <select
+                                        value={selectedLang}
+                                        onChange={e => {
+                                            if (isListening) stopListening();
+                                            setSelectedLang(e.target.value);
+                                        }}
+                                        className="w-full bg-slate-950/50 border border-slate-700/60 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/50 transition-all text-slate-200"
+                                    >
+                                        {LANGUAGES.map(l => (
+                                            <option key={l.code} value={l.code}>{l.label}</option>
+                                        ))}
+                                    </select>
+                                </div>
 
+                                {/* Volume visualizer */}
+                                {isListening && (
+                                    <div className="space-y-1.5 animate-in fade-in duration-300">
+                                        <p className="text-[11px] text-slate-500 uppercase tracking-wider">Mic Level</p>
+                                        <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                            <div
+                                                className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-cyan-400 transition-all duration-75"
+                                                style={{ width: `${volume}%` }}
+                                            />
+                                        </div>
+                                        <div className="flex justify-between">
+                                            {[...Array(12)].map((_, i) => (
+                                                <div
+                                                    key={i}
+                                                    className="w-1 rounded-full transition-all duration-75"
+                                                    style={{
+                                                        height: `${Math.max(4, volume > (i * 8.5) ? 8 + Math.random() * 16 : 4)}px`,
+                                                        backgroundColor: volume > (i * 8.5) ? '#818cf8' : '#1e293b',
+                                                    }}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Record button */}
+                                <div className="pt-1 border-t border-slate-800/50">
                                     <button
                                         onClick={toggleListening}
-                                        disabled={!!error && error.includes('Browser')}
+                                        disabled={!speechSupported}
                                         className={cn(
-                                            "w-full flex items-center justify-center gap-3 py-4 rounded-2xl font-bold transition-all shadow-xl",
+                                            'w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl font-semibold text-sm transition-all duration-200 select-none',
                                             isListening
-                                                ? "bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20"
-                                                : "bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:opacity-90 hover:shadow-purple-500/20 active:scale-95"
+                                                ? 'bg-red-500/10 text-red-400 border border-red-500/25 hover:bg-red-500/20 active:scale-95'
+                                                : 'bg-gradient-to-r from-indigo-600 to-cyan-500 text-white shadow-lg shadow-indigo-500/20 hover:brightness-110 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed'
                                         )}
                                     >
                                         {isListening ? (
                                             <>
-                                                <div className="relative flex h-3 w-3">
-                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                                                </div>
+                                                <span className="relative flex h-2.5 w-2.5">
+                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                                                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
+                                                </span>
                                                 Stop Recording
                                             </>
                                         ) : (
                                             <>
-                                                <Mic className="w-5 h-5 transition-transform group-hover:scale-110" />
+                                                <Mic className="w-4 h-4" />
                                                 Start Recording
                                             </>
                                         )}
@@ -213,123 +484,185 @@ export default function SpeechToPdf() {
                             </div>
                         </div>
 
+                        {/* Stats Card */}
+                        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl p-5 shadow-xl">
+                            <h2 className="text-sm font-semibold mb-4 flex items-center gap-2 text-slate-300">
+                                <BarChart2 className="w-4 h-4 text-indigo-400" /> Stats
+                            </h2>
+                            <div className="grid grid-cols-2 gap-3">
+                                {[
+                                    { icon: <Type className="w-3.5 h-3.5" />, label: 'Words', value: wordCount.toLocaleString() },
+                                    { icon: <AlignLeft className="w-3.5 h-3.5" />, label: 'Characters', value: charCount.toLocaleString() },
+                                ].map(stat => (
+                                    <div key={stat.label} className="bg-slate-800/50 rounded-xl p-3 border border-slate-700/30">
+                                        <div className="flex items-center gap-1.5 text-slate-500 text-xs mb-1">{stat.icon}{stat.label}</div>
+                                        <p className="text-xl font-bold text-slate-100 tabular-nums">{stat.value}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="mt-3 bg-slate-800/50 rounded-xl p-3 border border-slate-700/30">
+                                <div className="flex items-center gap-1.5 text-slate-500 text-xs mb-1">
+                                    <FileText className="w-3.5 h-3.5" /> Est. Reading Time
+                                </div>
+                                <p className="text-base font-semibold text-slate-100">
+                                    {wordCount < 200 ? '< 1 min' : `~${Math.round(wordCount / 200)} min`}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Errors / success */}
                         {error && (
-                            <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex items-start gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
-                                <div className="bg-red-500 rounded-full p-1 mt-0.5">
+                            <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex items-start gap-2.5 animate-in fade-in slide-in-from-top-4 duration-300">
+                                <div className="shrink-0 bg-red-500 rounded-full p-0.5 mt-0.5">
                                     <Trash2 className="w-3 h-3 text-white" />
                                 </div>
-                                <p className="text-sm text-red-400">{error}</p>
+                                <p className="text-xs text-red-400 leading-relaxed">{error}</p>
                             </div>
                         )}
 
                         {status === 'success' && (
-                            <div className="bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-start gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
-                                <div className="bg-green-500 rounded-full p-0.5 mt-0.5">
-                                    <CheckCircle2 className="w-4 h-4 text-white" />
-                                </div>
-                                <p className="text-sm text-green-400 font-medium">PDF successfully generated and downloaded!</p>
+                            <div className="bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-start gap-2.5 animate-in fade-in slide-in-from-top-4 duration-300">
+                                <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                                <p className="text-xs text-green-400 font-medium">PDF generated and downloaded!</p>
                             </div>
                         )}
-                    </div>
+                    </aside>
 
-                    {/* Transcript Panel */}
-                    <div className="lg:col-span-2 space-y-4">
-                        <div className="relative bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-3xl p-1 shadow-2xl flex flex-col h-[500px]">
-                            <div className="p-4 border-b border-slate-800/50 flex justify-between items-center text-sm">
-                                <span className="flex items-center gap-2 text-slate-400">
-                                    <FileText className="w-4 h-4" /> Live Transcript
+                    {/* ── Right Panel: Transcript ── */}
+                    <section className="lg:col-span-2 flex flex-col gap-4">
+                        <div className="relative bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl shadow-2xl flex flex-col"
+                            style={{ minHeight: '620px', maxHeight: '780px' }}>
+
+                            {/* Panel header */}
+                            <div className="px-5 py-3.5 border-b border-slate-800/60 flex justify-between items-center gap-3 shrink-0">
+                                <span className="flex items-center gap-2 text-sm text-slate-400 font-medium">
+                                    <FileText className="w-4 h-4 text-indigo-400" /> Live Transcript
+                                    {isListening && (
+                                        <span className="text-[10px] bg-red-500 text-white px-2 py-0.5 rounded-full uppercase font-black tracking-tight animate-pulse">
+                                            Live
+                                        </span>
+                                    )}
                                 </span>
-                                <div className="flex items-center gap-2">
-                                    {isListening && <span className="text-[10px] bg-red-500 text-white px-2 py-0.5 rounded uppercase font-black tracking-tighter animate-pulse">Live</span>}
+
+                                <div className="flex items-center gap-1.5">
+                                    {/* Undo */}
+                                    <button
+                                        onClick={handleUndo}
+                                        disabled={history.length === 0}
+                                        title="Undo last speech"
+                                        className="p-2 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-slate-700/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                    >
+                                        <Undo2 className="w-4 h-4" />
+                                    </button>
+
+                                    {/* Copy */}
+                                    <button
+                                        onClick={handleCopy}
+                                        disabled={!transcript}
+                                        title="Copy as plain text"
+                                        className="p-2 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-slate-700/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                    >
+                                        {copyStatus
+                                            ? <CheckCircle2 className="w-4 h-4 text-green-400" />
+                                            : <Copy className="w-4 h-4" />
+                                        }
+                                    </button>
+
+                                    {/* Clear */}
                                     <button
                                         onClick={clearTranscript}
-                                        className="p-1.5 hover:bg-slate-800 rounded-lg text-slate-500 transition-colors"
+                                        title="Clear transcript"
+                                        className="p-2 rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </button>
                                 </div>
                             </div>
 
-                            <div className="flex-1 p-6 overflow-y-auto custom-scrollbar">
-                                {transcript || interimText ? (
-                                    <div className="text-lg leading-relaxed text-slate-200 whitespace-pre-wrap">
-                                        <span>{transcript}</span>
-                                        {interimText && <span className="text-slate-500"> {interimText}</span>}
-                                        {isListening && <span className="inline-block w-1 h-6 bg-purple-500 animate-blink ml-1 align-middle" />}
-                                    </div>
-                                ) : (
-                                    <div className="h-full flex flex-col items-center justify-center text-slate-500 space-y-4 opacity-40">
-                                        <Mic className="w-12 h-12 stroke-1" />
-                                        <p className="text-sm font-medium">Capture your thoughts. Speak clearly.</p>
+                            {/* Editor */}
+                            <div className="flex-1 flex flex-col overflow-hidden min-h-0">
+                                <RichTextEditor
+                                    ref={editorRef}
+                                    value={transcript}
+                                    onChange={setTranscript}
+                                    placeholder={isListening
+                                        ? 'Listening… speak now.'
+                                        : 'Your transcript appears here. You can also type manually or paste text.'}
+                                    className="flex-1"
+                                    isSpeechActive={isListening}
+                                />
+
+                                {/* Interim preview bar */}
+                                {isListening && (
+                                    <div className="px-5 py-3 border-t border-slate-800/50 bg-slate-950/40 backdrop-blur-sm shrink-0 animate-in slide-in-from-bottom-2 duration-200">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <span className="relative flex h-2 w-2">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
+                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
+                                            </span>
+                                            <span className="text-[10px] font-semibold text-indigo-400 uppercase tracking-widest">Recognizing…</span>
+                                        </div>
+                                        <p className="text-slate-400 italic text-sm min-h-[1.25rem] leading-relaxed line-clamp-2">
+                                            {interimText || 'Waiting for speech…'}
+                                        </p>
                                     </div>
                                 )}
                             </div>
 
-                            <div className="p-6 border-t border-slate-800/50">
+                            {/* Export footer */}
+                            <div className="p-4 border-t border-slate-800/50 flex gap-3 shrink-0">
+                                {/* Export .txt */}
+                                <button
+                                    onClick={handleDownloadTxt}
+                                    disabled={!transcript}
+                                    title="Export as plain text"
+                                    className={cn(
+                                        'flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all border',
+                                        !transcript
+                                            ? 'bg-slate-800/50 text-slate-600 border-slate-700/30 cursor-not-allowed'
+                                            : 'bg-slate-800 text-slate-200 border-slate-700/50 hover:bg-slate-700 active:scale-95'
+                                    )}
+                                >
+                                    <FileText className="w-4 h-4" /> .TXT
+                                </button>
+
+                                {/* Export PDF */}
                                 <button
                                     onClick={handleDownloadPdf}
                                     disabled={!transcript || isProcessing}
                                     className={cn(
-                                        "w-full group relative flex items-center justify-center gap-3 py-4 rounded-2xl font-bold transition-all overflow-hidden",
+                                        'flex-1 group relative flex items-center justify-center gap-2.5 py-3 rounded-xl font-semibold text-sm transition-all overflow-hidden',
                                         !transcript || isProcessing
-                                            ? "bg-slate-800 text-slate-600 cursor-not-allowed"
-                                            : "bg-white text-slate-950 hover:-translate-y-1 hover:shadow-2xl shadow-white/10 active:scale-95"
+                                            ? 'bg-slate-800 text-slate-600 cursor-not-allowed'
+                                            : 'bg-white text-slate-950 hover:-translate-y-0.5 hover:shadow-2xl shadow-white/10 active:scale-95'
                                     )}
                                 >
                                     {isProcessing ? (
                                         <>
-                                            <div className="w-5 h-5 border-2 border-slate-400 border-t-slate-900 rounded-full animate-spin" />
-                                            Generating Document...
+                                            <div className="w-4 h-4 border-2 border-slate-400 border-t-slate-900 rounded-full animate-spin" />
+                                            Generating…
                                         </>
                                     ) : (
                                         <>
-                                            <Download className="w-5 h-5" />
-                                            Export to PDF
+                                            <Download className="w-4 h-4" /> Export PDF
+                                            {transcript && (
+                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shine_1.5s_ease_infinite]" />
+                                            )}
                                         </>
-                                    )}
-                                    {transcript && !isProcessing && (
-                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shine" />
                                     )}
                                 </button>
                             </div>
                         </div>
-                    </div>
-
+                    </section>
                 </div>
 
-                {/* Footer info */}
-                <footer className="mt-16 text-center text-slate-500 text-sm">
-                    <p>© 2026 VoicePDF. AI-Powered Transcription. All rights reserved.</p>
+                <footer className="mt-12 text-center text-slate-600 text-xs">
+                    © 2026 VoicePDF · AI-Powered Transcription
                 </footer>
             </main>
 
             <style jsx global>{`
-        @keyframes shine {
-          100% { transform: translateX(100%); }
-        }
-        .animate-shine {
-          animation: shine 1.5s infinite;
-        }
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
-        }
-        .animate-blink {
-          animation: blink 1s infinite;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 5px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #1e293b;
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #334155;
-        }
+        @keyframes shine { 100% { transform: translateX(100%); } }
       `}</style>
         </div>
     );
