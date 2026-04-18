@@ -186,6 +186,8 @@ export const conversionApi = {
   pdfToSpeech: async (fileId: string) => (await api.post("/conversion/pdf-to-speech", { fileId })).data,
   videoToPdf: async (fileId: string) => (await api.post("/conversion/video-to-pdf", { fileId })).data,
   audioToPdf: async (fileId: string) => (await api.post("/conversion/audio-to-pdf", { fileId })).data,
+  transcribeFile: async (fileId: string) => (await api.post("/conversion/transcribe-file", { fileId })).data,
+  transcribeChunk: async (formData: FormData) => (await api.post("/conversion/transcribe-chunk", formData, { headers: { 'Content-Type': 'multipart/form-data' } })).data,
   imageConvert: async (fileId: string, targetFormat: string) => (await api.post("/conversion/image-convert", { fileId, targetFormat })).data,
 };
 
