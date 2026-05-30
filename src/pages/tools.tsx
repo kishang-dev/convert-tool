@@ -42,6 +42,7 @@ export default function Tools() {
     const [isDragging, setIsDragging] = useState(false);
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [password, setPassword] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Load files on mount
@@ -313,179 +314,95 @@ export default function Tools() {
         window.open(fileAPI.getDownloadUrl(file.filename), "_blank");
     };
 
-    const features = [
-
-        { icon: Merge, title: "Merge PDF", action: handleMergePDFs, gradient: "from-blue-500 to-cyan-500" },
-        { icon: Scissors, title: "Split PDF", action: handleSplitPDF, gradient: "from-purple-500 to-pink-500" },
-        { icon: FileText, title: "PDF to Word", action: handleToWord, gradient: "from-green-500 to-emerald-500" },
-        { icon: Minimize2, title: "Compress PDF", action: handleCompressPDF, gradient: "from-red-500 to-pink-500" },
-        { icon: Image, title: "PDF to Image", action: handleToImage, gradient: "from-indigo-500 to-purple-500" },
+    const categories = [
         {
-            icon: Edit, title: "Advanced PDF Editor", action: () => {
-                if (files.length === 0) { showToast("Please upload a PDF to edit", "error"); return; }
-                window.location.href = `/editor/${files[0]._id}`;
-            }, gradient: "from-pink-500 to-rose-500"
-        },
-        { icon: Presentation, title: "PowerPoint to PDF", action: () => handleGenericConversion(fileAPI.pptToPdf, "PPT converted to PDF!"), gradient: "from-orange-500 to-red-500" },
-        { icon: FileSpreadsheet, title: "PDF to Excel", action: handleToExcel, gradient: "from-orange-500 to-yellow-500" },
-        { icon: Lock, title: "Protect PDF", action: handleProtectPDF, gradient: "from-yellow-500 to-orange-500" },
-        { icon: RotateCw, title: "Rotate PDF", action: handleRotatePDF, gradient: "from-teal-500 to-cyan-500" },
-
-        // --- Newly Added Tools ---
-        { icon: FileText, title: "Word to PDF", action: () => handleGenericConversion(fileAPI.wordToPdf, "Word converted to PDF!"), gradient: "from-blue-500 to-indigo-500" },
-        { icon: Image, title: "Convert to JPG", action: () => handleGenericConversion((id) => fileAPI.imageConvert(id, "jpg"), "Converted to JPG!"), gradient: "from-emerald-400 to-green-500" },
-        { icon: Image, title: "Convert to PNG", action: () => handleGenericConversion((id) => fileAPI.imageConvert(id, "png"), "Converted to PNG!"), gradient: "from-teal-400 to-cyan-500" },
-        { icon: Type, title: "Text to PDF", action: () => handleGenericConversion(fileAPI.textToPdf, "Text converted to PDF!"), gradient: "from-stone-500 to-gray-500" },
-        { icon: FileSpreadsheet, title: "CSV to PDF", action: () => handleGenericConversion(fileAPI.csvToPdf, "CSV converted to PDF!"), gradient: "from-cyan-500 to-blue-500" },
-        { icon: FileSpreadsheet, title: "PDF to CSV", action: () => handleGenericConversion(fileAPI.pdfToCsv, "PDF extracted to CSV!"), gradient: "from-purple-500 to-pink-500" },
-        { icon: Mic, title: "PDF to Speech", action: () => handleGenericConversion(fileAPI.pdfToSpeech, "Generated Speech from PDF!"), gradient: "from-pink-500 to-rose-500" },
-        { icon: Mic, title: "Speech to PDF", action: () => (window.location.href = "/speech-to-pdf"), gradient: "from-indigo-600 to-blue-600", description: "Convert your live voice into a polished PDF document instantly." },
-        { icon: Video, title: "Video to PDF Notes", action: () => handleGenericConversion(fileAPI.videoToPdf, "Generated PDF Notes from Video!"), gradient: "from-purple-500 to-fuchsia-500" },
-        { icon: Music, title: "Audio to Transcript", action: () => handleGenericConversion(fileAPI.audioToPdf, "Transcript generated successfully!"), gradient: "from-indigo-500 to-violet-500" },
-
-        { icon: Sparkles, title: "Image to SVG", action: () => window.location.href = "/svg", gradient: "from-fuchsia-500 to-pink-500" },
-        { icon: FileText, title: "OCR Image to PDF", action: () => window.location.href = "/ocr", gradient: "from-sky-500 to-blue-500" },
-        { icon: FileCode, title: "HTML to PDF", action: () => window.location.href = "/html-to-pdf", gradient: "from-blue-500 to-indigo-600" },
-        { icon: FileType, title: "PDF to Text", action: () => window.location.href = "/pdf-to-text", gradient: "from-gray-500 to-slate-500" },
-        { icon: FileCode, title: "PDF to HTML", action: () => (window.location.href = "/pdf-to-html"), gradient: "from-indigo-500 to-violet-500" },
-        {
-            icon: Sparkles,
-            title: "Create Professional Resume",
-            action: () => (window.location.href = "/resume-builder"),
-            gradient: "from-amber-400 to-orange-600",
-            description: "Build a job-winning resume from scratch or by uploading your old one."
+            title: "📄 Document & PDF Management",
+            description: "Edit, split, compress, and secure your files",
+            items: [
+                { icon: Merge, title: "Merge PDF", action: handleMergePDFs, gradient: "from-blue-500 to-cyan-500", description: "Combine multiple PDF documents into a single file." },
+                { icon: Scissors, title: "Split PDF", action: handleSplitPDF, gradient: "from-purple-500 to-pink-500", description: "Separate pages from a PDF or save each page individually." },
+                { icon: Minimize2, title: "Compress PDF", action: handleCompressPDF, gradient: "from-red-500 to-pink-500", description: "Reduce the file size of your PDF documents." },
+                {
+                    icon: Edit, title: "Advanced PDF Editor", action: () => {
+                        if (files.length === 0) { showToast("Please upload a PDF to edit", "error"); return; }
+                        window.location.href = `/editor/${files[0]._id}`;
+                    }, gradient: "from-pink-500 to-rose-500", description: "Annotate, draw, and modify text on your PDF pages visually."
+                },
+                { icon: Lock, title: "Protect PDF", action: handleProtectPDF, gradient: "from-yellow-500 to-orange-500", description: "Encrypt and secure your PDFs with a custom password." },
+                { icon: Unlock, title: "Unlock PDF / Remove PW", action: () => (window.location.href = "/pdf-unlock"), gradient: "from-amber-500 to-orange-600", description: "Decrypt password protected PDFs and strip passwords." },
+                { icon: RotateCw, title: "Rotate PDF", action: handleRotatePDF, gradient: "from-teal-500 to-cyan-500", description: "Rotate PDF pages clockwise or counter-clockwise." },
+                { icon: Image, title: "PDF to Image", action: handleToImage, gradient: "from-indigo-500 to-purple-500", description: "Extract pages from your PDF as high-resolution images." }
+            ]
         },
         {
-            icon: Edit,
-            title: "Pro AI Chart & Diagram Maker",
-            action: () => (window.location.href = "/drowChart"),
-            gradient: "from-blue-600 to-indigo-600",
-            description: "Create flowcharts, DFDs, BPMN, Swimlanes, and logic maps with expert AI."
-        },
-        // --- Developer Utilities & Document Unlocks ---
-        {
-            icon: Unlock,
-            title: "Unlock PDF / Remove Password",
-            action: () => (window.location.href = "/pdf-unlock"),
-            gradient: "from-yellow-500 to-amber-600",
-            description: "Decrypt password protected PDFs and strip passwords in seconds."
-        },
-        {
-            icon: FileCode,
-            title: "Base64 Encoder/Decoder",
-            action: () => (window.location.href = "/base64"),
-            gradient: "from-indigo-500 to-violet-600",
-            description: "Convert plain text and files to Base64 data strings or decode back."
+            title: "🔄 Document & Audio Converters",
+            description: "Convert office docs, transcripts, speech, and web layouts",
+            items: [
+                { icon: FileText, title: "PDF to Word", action: handleToWord, gradient: "from-green-500 to-emerald-500", description: "Convert PDF documents to editable Microsoft Word files." },
+                { icon: FileText, title: "Word to PDF", action: () => handleGenericConversion(fileAPI.wordToPdf, "Word converted to PDF!"), gradient: "from-blue-500 to-indigo-500", description: "Transform .docx files into standard PDF format." },
+                { icon: FileSpreadsheet, title: "PDF to Excel", action: handleToExcel, gradient: "from-orange-500 to-yellow-500", description: "Extract tabular data from PDFs to spreadsheets." },
+                { icon: Presentation, title: "PowerPoint to PDF", action: () => handleGenericConversion(fileAPI.pptToPdf, "PPT converted to PDF!"), gradient: "from-orange-500 to-red-500", description: "Convert presentation slides into PDF pages." },
+                { icon: FileCode, title: "HTML to PDF", action: () => window.location.href = "/html-to-pdf", gradient: "from-blue-500 to-indigo-600", description: "Convert web layouts and HTML pages to PDF format." },
+                { icon: FileCode, title: "PDF to HTML", action: () => (window.location.href = "/pdf-to-html"), gradient: "from-indigo-500 to-violet-500", description: "Export PDF documents into responsive HTML web pages." },
+                { icon: FileType, title: "PDF to Text", action: () => window.location.href = "/pdf-to-text", gradient: "from-gray-500 to-slate-500", description: "Extract raw plain text from PDF pages." },
+                { icon: Type, title: "Text to PDF", action: () => handleGenericConversion(fileAPI.textToPdf, "Text converted to PDF!"), gradient: "from-stone-500 to-gray-500", description: "Generate a formatted PDF document from raw text input." },
+                { icon: FileSpreadsheet, title: "CSV to PDF", action: () => handleGenericConversion(fileAPI.csvToPdf, "CSV converted to PDF!"), gradient: "from-cyan-500 to-blue-500", description: "Transform spreadsheet CSV files into organized PDF pages." },
+                { icon: FileSpreadsheet, title: "PDF to CSV", action: () => handleGenericConversion(fileAPI.pdfToCsv, "PDF extracted to CSV!"), gradient: "from-purple-500 to-pink-500", description: "Extract tables and rows from PDFs into CSV format." },
+                { icon: Mic, title: "PDF to Speech", action: () => handleGenericConversion(fileAPI.pdfToSpeech, "Generated Speech from PDF!"), gradient: "from-pink-500 to-rose-500", description: "Convert document text into high-fidelity audible voiceovers." },
+                { icon: Mic, title: "Speech to PDF", action: () => (window.location.href = "/speech-to-pdf"), gradient: "from-indigo-600 to-blue-600", description: "Convert your live voice into a polished PDF document instantly." },
+                { icon: Video, title: "Video to PDF Notes", action: () => handleGenericConversion(fileAPI.videoToPdf, "Generated PDF Notes from Video!"), gradient: "from-purple-500 to-fuchsia-500", description: "Extract slide transitions from video files to study notes." },
+                { icon: Music, title: "Audio to Transcript", action: () => handleGenericConversion(fileAPI.audioToPdf, "Transcript generated successfully!"), gradient: "from-indigo-500 to-violet-500", description: "Generate textual transcriptions from voice records." }
+            ]
         },
         {
-            icon: Lock,
-            title: "JWT Decoder",
-            action: () => (window.location.href = "/jwt"),
-            gradient: "from-purple-500 to-indigo-600",
-            description: "Inspect and decode JSON Web Tokens (JWT) client-side in real-time."
+            title: "🖼️ Graphic & Advanced Image Tools",
+            description: "Scale, crop, and transform file types offline or hybrid",
+            items: [
+                { icon: Image, title: "Image Resizer", action: () => (window.location.href = "/image-resizer"), gradient: "from-blue-500 to-indigo-600", description: "Scale and compress dimensions of PNG, JPG, and WebP images client-side." },
+                { icon: Scissors, title: "Image Cropper", action: () => (window.location.href = "/image-cropper"), gradient: "from-emerald-500 to-teal-600", description: "Crop and adjust image regions with visual aspect ratio frames." },
+                { icon: Image, title: "Image Converter (HEIC, WEBP, JPG, PNG)", action: () => (window.location.href = "/image-converter"), gradient: "from-teal-500 to-cyan-600", description: "Convert HEIC to JPG, WEBP to JPG, JPG to WEBP, PNG to WEBP, and more." },
+                { icon: Sparkles, title: "Image to SVG", action: () => window.location.href = "/svg", gradient: "from-fuchsia-500 to-pink-500", description: "Vectorise pixel images into fully scaleable SVG structures." },
+                { icon: FileText, title: "OCR Image to PDF", action: () => window.location.href = "/ocr", gradient: "from-sky-500 to-blue-500", description: "Extract scanned letters in images and place them inside searchable PDFs." },
+                { icon: Image, title: "Convert to JPG", action: () => handleGenericConversion((id) => fileAPI.imageConvert(id, "jpg"), "Converted to JPG!"), gradient: "from-emerald-400 to-green-500", description: "Convert uploaded files into standard JPEG image records." },
+                { icon: Image, title: "Convert to PNG", action: () => handleGenericConversion((id) => fileAPI.imageConvert(id, "png"), "Converted to PNG!"), gradient: "from-teal-400 to-cyan-500", description: "Convert documents to lossless transparent portable network graphics." }
+            ]
         },
         {
-            icon: FileCode,
-            title: "JSON Formatter",
-            action: () => (window.location.href = "/json-formatter"),
-            gradient: "from-teal-500 to-emerald-600",
-            description: "Pretty print and beautify raw JSON, or minify JSON payloads."
+            title: "✨ Professional Work & AI Assistants",
+            description: "Build resumes and generate chart diagrams using AI assistance",
+            items: [
+                { icon: Sparkles, title: "Create Professional Resume", action: () => (window.location.href = "/resume-builder"), gradient: "from-amber-400 to-orange-600", description: "Build a job-winning resume from scratch or by uploading your old one." },
+                { icon: Edit, title: "Pro AI Chart & Diagram Maker", action: () => (window.location.href = "/drowChart"), gradient: "from-blue-600 to-indigo-600", description: "Create flowcharts, DFDs, BPMN, Swimlanes, and logic maps with expert AI." }
+            ]
         },
         {
-            icon: Sparkles,
-            title: "JSON Validator",
-            action: () => (window.location.href = "/json-validator"),
-            gradient: "from-sky-500 to-blue-600",
-            description: "Check structural syntax validation of JSON documents with line highlights."
-        },
-        {
-            icon: FileCode,
-            title: "YAML ↔ JSON Converter",
-            action: () => (window.location.href = "/yaml-json"),
-            gradient: "from-orange-500 to-amber-600",
-            description: "Convert YAML text files to JSON strings and JSON arrays to YAML format."
-        },
-        {
-            icon: FileSpreadsheet,
-            title: "CSV ↔ JSON Converter",
-            action: () => (window.location.href = "/csv-json"),
-            gradient: "from-cyan-500 to-teal-600",
-            description: "Transform CSV tabular sheets to JSON array of objects and vice versa."
-        },
-        // --- Image Tools ---
-        {
-            icon: Image,
-            title: "Image Resizer",
-            action: () => (window.location.href = "/image-resizer"),
-            gradient: "from-blue-500 to-indigo-600",
-            description: "Scale and compress dimensions of PNG, JPG, and WebP images client-side."
-        },
-        {
-            icon: Scissors,
-            title: "Image Cropper",
-            action: () => (window.location.href = "/image-cropper"),
-            gradient: "from-emerald-500 to-teal-600",
-            description: "Crop and adjust image regions with visual aspect ratio frames."
-        },
-        {
-            icon: Image,
-            title: "Image Converter (HEIC, WEBP, JPG, PNG)",
-            action: () => (window.location.href = "/image-converter"),
-            gradient: "from-teal-500 to-cyan-600",
-            description: "Convert HEIC to JPG, WEBP to JPG, JPG to WEBP, PNG to WEBP, and more."
-        },
-        // --- Developer Utilities ---
-        {
-            icon: Search,
-            title: "Regex Tester",
-            action: () => (window.location.href = "/regex-tester"),
-            gradient: "from-purple-500 to-pink-600",
-            description: "Test regular expressions in real-time with visual match highlighting."
-        },
-        {
-            icon: FileCode,
-            title: "XML Formatter & Validator",
-            action: () => (window.location.href = "/xml-tool"),
-            gradient: "from-orange-500 to-amber-600",
-            description: "Beautify XML nesting nodes and parse syntax validation errors instantly."
-        },
-        {
-            icon: FileCode,
-            title: "SQL Formatter",
-            action: () => (window.location.href = "/sql-formatter"),
-            gradient: "from-sky-500 to-blue-600",
-            description: "Pretty print SQL scripts and capitalize database query statements."
-        },
-        {
-            icon: Edit,
-            title: "Visual SQL Query Builder",
-            action: () => (window.location.href = "/sql-query-builder"),
-            gradient: "from-blue-600 to-indigo-700",
-            description: "Create SQL queries visually for SELECT, INSERT, UPDATE, and DELETE tasks."
-        },
-        {
-            icon: FileText,
-            title: "Markdown Editor & HTML Converter",
-            action: () => (window.location.href = "/markdown-editor"),
-            gradient: "from-pink-500 to-rose-600",
-            description: "Write rich Markdown and compile it into styled visual HTML codes instantly."
-        },
-        {
-            icon: FileCode,
-            title: "Unified Code Minifier",
-            action: () => (window.location.href = "/code-minifier"),
-            gradient: "from-teal-600 to-emerald-700",
-            description: "Compress HTML codes, CSS stylesheets, and Javascript files client-side."
-        },
-        {
-            icon: FileCode,
-            title: "JSON Diff Checker",
-            action: () => (window.location.href = "/json-diff"),
-            gradient: "from-indigo-600 to-violet-700",
-            description: "Compare baseline and modified JSON structures with color highlights."
-        },
-
+            title: "💻 Developer Utilities & Data Tools",
+            description: "Format, validate, parse, compare, and minify development code scopes",
+            items: [
+                { icon: FileCode, title: "Base64 Encoder/Decoder", action: () => (window.location.href = "/base64"), gradient: "from-indigo-500 to-violet-600", description: "Convert plain text and files to Base64 data strings or decode back." },
+                { icon: Lock, title: "JWT Decoder", action: () => (window.location.href = "/jwt"), gradient: "from-purple-500 to-indigo-600", description: "Inspect and decode JSON Web Tokens (JWT) client-side in real-time." },
+                { icon: FileCode, title: "JSON Formatter", action: () => (window.location.href = "/json-formatter"), gradient: "from-teal-500 to-emerald-600", description: "Pretty print and beautify raw JSON, or minify JSON payloads." },
+                { icon: Sparkles, title: "JSON Validator", action: () => (window.location.href = "/json-validator"), gradient: "from-sky-500 to-blue-600", description: "Check structural syntax validation of JSON documents with line highlights." },
+                { icon: FileCode, title: "JSON Diff Checker", action: () => (window.location.href = "/json-diff"), gradient: "from-indigo-600 to-violet-700", description: "Compare baseline and modified JSON structures with color highlights." },
+                { icon: FileCode, title: "YAML ↔ JSON Converter", action: () => (window.location.href = "/yaml-json"), gradient: "from-orange-500 to-amber-600", description: "Convert YAML text files to JSON strings and JSON arrays to YAML format." },
+                { icon: FileSpreadsheet, title: "CSV ↔ JSON Converter", action: () => (window.location.href = "/csv-json"), gradient: "from-cyan-500 to-teal-600", description: "Transform CSV tabular sheets to JSON array of objects and vice versa." },
+                { icon: Search, title: "Regex Tester", action: () => (window.location.href = "/regex-tester"), gradient: "from-purple-500 to-pink-600", description: "Test regular expressions in real-time with visual match highlighting." },
+                { icon: FileCode, title: "XML Formatter & Validator", action: () => (window.location.href = "/xml-tool"), gradient: "from-orange-500 to-amber-600", description: "Beautify XML nesting nodes and parse syntax validation errors instantly." },
+                { icon: FileCode, title: "SQL Formatter", action: () => (window.location.href = "/sql-formatter"), gradient: "from-sky-500 to-blue-600", description: "Pretty print SQL scripts and capitalize database query statements." },
+                { icon: Edit, title: "Visual SQL Query Builder", action: () => (window.location.href = "/sql-query-builder"), gradient: "from-blue-600 to-indigo-700", description: "Create SQL queries visually for SELECT, INSERT, UPDATE, and DELETE tasks." },
+                { icon: FileText, title: "Markdown Editor & HTML Converter", action: () => (window.location.href = "/markdown-editor"), gradient: "from-pink-500 to-rose-600", description: "Write rich Markdown and compile it into styled visual HTML codes instantly." },
+                { icon: FileCode, title: "Unified Code Minifier", action: () => (window.location.href = "/code-minifier"), gradient: "from-teal-600 to-emerald-700", description: "Compress HTML codes, CSS stylesheets, and Javascript files client-side." }
+            ]
+        }
     ];
+
+    const filteredCategories = categories.map(category => {
+        const items = category.items.filter(item => 
+            item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+            (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()))
+        );
+        return { ...category, items };
+    }).filter(category => category.items.length > 0);
 
     return (
         <div className="min-h-screen bg-[#0f172a] text-white">
@@ -509,7 +426,9 @@ export default function Tools() {
                             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-500 transition-colors" size={20} />
                             <input
                                 placeholder="Search all tools (Merge, Resize, Resume...)"
-                                className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-medium"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-medium text-white"
                             />
                         </div>
                     </div>
@@ -565,26 +484,43 @@ export default function Tools() {
                     />
                 </div>
 
-                {/* Features Grid */}
-                <div className="mb-8">
-                    <h2 className="text-2xl font-bold mb-6 text-white">Available Tools</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {features.map((feature, idx) => (
-                            <div
-                                key={idx}
-                                className="animate-fadeIn"
-                                style={{ animationDelay: `${0.3 + idx * 0.05}s` } as React.CSSProperties}
-                            >
-                                <FeatureCard
-                                    icon={feature.icon}
-                                    title={feature.title}
-                                    onClick={feature.action}
-                                    gradient={feature.gradient}
-                                    description={feature.description}
-                                />
+                {/* Features Categories */}
+                <div className="space-y-12 mb-12">
+                    {filteredCategories.map((category, catIdx) => (
+                        <div key={catIdx} className="space-y-6 animate-fadeIn" style={{ animationDelay: `${0.2 + catIdx * 0.05}s` } as React.CSSProperties}>
+                            <div>
+                                <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                                    {category.title}
+                                </h2>
+                                <p className="text-sm text-gray-400 font-light mt-1">
+                                    {category.description}
+                                </p>
                             </div>
-                        ))}
-                    </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                {category.items.map((feature, idx) => (
+                                    <div
+                                        key={idx}
+                                        className="transition-transform duration-300 hover:-translate-y-1 animate-fadeIn"
+                                        style={{ animationDelay: `${0.3 + idx * 0.02}s` } as React.CSSProperties}
+                                    >
+                                        <FeatureCard
+                                            icon={feature.icon}
+                                            title={feature.title}
+                                            onClick={feature.action}
+                                            gradient={feature.gradient}
+                                            description={feature.description}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                    {filteredCategories.length === 0 && (
+                        <div className="text-center py-16 bg-white/5 border border-white/5 rounded-3xl">
+                            <p className="text-gray-500 font-semibold text-lg">No tools matching "{searchQuery}"</p>
+                            <p className="text-xs text-gray-600 mt-1">Try searching for other terms like 'Merge', 'Resizer', or 'Diff'</p>
+                        </div>
+                    )}
                 </div>
 
                 {/* Info Banner */}
