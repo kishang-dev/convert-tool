@@ -124,18 +124,34 @@ export default function Navbar() {
                     </Link>
 
                     {user ? (
-                        <div className="flex items-center gap-4">
-                            <div className="flex items-center gap-2 glass px-3 py-2 rounded-lg">
-                                <User size={18} className="text-purple-400" />
+                        <div className="flex items-center gap-4 group relative">
+                            <div className="flex items-center gap-2 glass px-3 py-2 rounded-lg cursor-pointer">
+                                {user.avatar ? (
+                                    <img src={user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000${user.avatar}`} alt="Avatar" className="w-6 h-6 rounded-full object-cover border border-purple-500/30" />
+                                ) : (
+                                    <User size={18} className="text-purple-400" />
+                                )}
                                 <span className="text-white font-medium">{user.name}</span>
                             </div>
-                            <button
-                                onClick={logout}
-                                className="text-gray-300 hover:text-red-400 flex items-center gap-1 transition-smooth"
-                            >
-                                <LogOut size={18} />
-                                Logout
-                            </button>
+                            
+                            {/* Dropdown Menu */}
+                            <div className="absolute top-full right-0 mt-2 w-48 bg-[#0a0a0f]/95 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                                <div className="flex flex-col py-2">
+                                    <Link href="/profile" className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
+                                        Profile
+                                    </Link>
+                                    <Link href="/history" className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
+                                        History
+                                    </Link>
+                                    <button
+                                        onClick={logout}
+                                        className="px-4 py-2 text-left text-red-400 hover:text-red-300 hover:bg-white/5 transition-colors flex items-center gap-2"
+                                    >
+                                        <LogOut size={16} />
+                                        Logout
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     ) : (
                         <>
@@ -250,9 +266,19 @@ export default function Navbar() {
                             {user ? (
                                 <>
                                     <div className="px-4 py-3 glass rounded-lg flex items-center gap-2">
-                                        <User size={18} className="text-purple-400" />
+                                        {user.avatar ? (
+                                            <img src={user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000${user.avatar}`} alt="Avatar" className="w-6 h-6 rounded-full object-cover border border-purple-500/30" />
+                                        ) : (
+                                            <User size={18} className="text-purple-400" />
+                                        )}
                                         <span className="text-white font-medium">{user.name}</span>
                                     </div>
+                                    <Link href="/profile" className="px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-smooth">
+                                        Profile
+                                    </Link>
+                                    <Link href="/history" className="px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-smooth">
+                                        History
+                                    </Link>
                                     <button
                                         onClick={logout}
                                         className="px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition-smooth flex items-center gap-2"

@@ -161,6 +161,14 @@ export const authApi = {
     const response = await api.put(`/auth/resetpassword/${token}`, { password });
     return response.data;
   },
+  updateProfile: async (data: FormData) => {
+    const response = await api.put("/auth/update", data, {
+      headers: {
+        "Content-Type": undefined,
+      },
+    });
+    return response.data;
+  },
 };
 
 export const supportApi = {

@@ -7,6 +7,8 @@ interface User {
     name: string;
     email: string;
     token: string;
+    phone?: string;
+    avatar?: string;
 }
 
 interface AuthState {
@@ -15,6 +17,7 @@ interface AuthState {
     login: (userData: User) => void;
     logout: () => void;
     initGuestId: () => void;
+    updateUser: (userData: Partial<User>) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -36,6 +39,10 @@ export const useAuthStore = create<AuthState>()(
                     set({ guestId: uuidv4() });
                 }
             },
+
+            updateUser: (userData) => set((state) => ({ 
+                user: state.user ? { ...state.user, ...userData } : null 
+            })),
         }),
         {
             name: 'auth-storage', // name of the item in the storage (must be unique)

@@ -96,6 +96,18 @@ export const fileAPI = {
     return response.data;
   },
 
+  // Get active files
+  getActiveFiles: async (): Promise<{ success: boolean; files: FileData[] }> => {
+    const response = await api.get("/files?activeOnly=true");
+    return response.data;
+  },
+
+  // Hide file
+  hideFile: async (id: string): Promise<{ success: boolean; message: string }> => {
+    const response = await api.put(`/files/${id}/hide`);
+    return response.data;
+  },
+
   // Get file by ID
   getFileById: async (
     id: string,

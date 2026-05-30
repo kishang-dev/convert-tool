@@ -50,7 +50,7 @@ export default function Tools() {
 
     const loadFiles = async () => {
         try {
-            const response = await fileAPI.getAllFiles();
+            const response = await fileAPI.getActiveFiles();
             setFiles(response.files || []);
         } catch (error) {
             console.error("Failed to load files:", error);
@@ -297,12 +297,12 @@ export default function Tools() {
 
     const handleRemoveFile = async (id: string) => {
         try {
-            await fileAPI.deleteFile(id);
+            await fileAPI.hideFile(id);
             setFiles(files.filter((f) => f._id !== id));
-            showToast("File removed successfully", "success");
+            showToast("File removed from active list", "success");
         } catch (error: any) {
             showToast(
-                error.response?.data?.error || "Failed to remove file",
+                error.response?.data?.error || "Failed to hide file",
                 "error",
             );
         }
