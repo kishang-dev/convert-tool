@@ -72,7 +72,7 @@ export default function Navbar() {
                 </Link>
 
                 {/* Desktop Navigation */}
-                <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+                <nav className="hidden xl:flex items-center gap-6 lg:gap-8">
                     <Link
                         href="/"
                         className={`text-gray-300 hover:text-white transition-smooth ${router.pathname === '/' ? 'text-white font-semibold' : ''
@@ -182,7 +182,7 @@ export default function Navbar() {
                 {/* Mobile Menu Button */}
                 <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-smooth"
+                    className="xl:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-smooth"
                     aria-label="Toggle menu"
                 >
                     {mobileMenuOpen ? (
@@ -198,15 +198,14 @@ export default function Navbar() {
                 <>
                     {/* Backdrop */}
                     <div
-                        className="fixed inset-0 bg-black/60 backdrop-blur-sm md:hidden"
-                        style={{ top: '72px' }}
+                        className="absolute top-full left-0 right-0 h-screen bg-black/60 backdrop-blur-sm xl:hidden"
                         onClick={() => setMobileMenuOpen(false)}
                     />
 
                     {/* Menu Panel */}
                     <div
-                        className="fixed top-20 left-0 right-0 bg-[#0a0a0f]/95 backdrop-blur-xl border-t border-white/5 md:hidden animate-slideInRight shadow-2xl"
-                        style={{ maxHeight: 'calc(100vh - 80px)', overflowY: 'auto' }}
+                        className="absolute top-full left-0 right-0 bg-[#0a0a0f]/95 backdrop-blur-xl border-t border-white/5 xl:hidden animate-slideInRight shadow-2xl"
+                        style={{ maxHeight: 'calc(100vh - 60px)', overflowY: 'auto' }}
                     >
                         <nav className="flex flex-col p-4 space-y-2">
                             <Link

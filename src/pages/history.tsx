@@ -106,8 +106,8 @@ export default function HistoryPage() {
                                         <tr className="border-b border-gray-800 text-gray-400 text-sm uppercase tracking-wider">
                                             <th className="py-4 px-4 font-medium">File Name</th>
                                             <th className="py-4 px-4 font-medium">Operation</th>
-                                            <th className="py-4 px-4 font-medium">Size</th>
-                                            <th className="py-4 px-4 font-medium">Date</th>
+                                            <th className="py-4 px-4 font-medium hidden md:table-cell">Size</th>
+                                            <th className="py-4 px-4 font-medium hidden md:table-cell">Date</th>
                                             <th className="py-4 px-4 font-medium text-right">Action</th>
                                         </tr>
                                     </thead>
@@ -115,8 +115,8 @@ export default function HistoryPage() {
                                         {files.map((file) => (
                                             <tr key={file._id} className="hover:bg-white/5 transition-colors">
                                                 <td className="py-4 px-4 flex items-center gap-3">
-                                                    <FileText className="text-blue-400" size={20} />
-                                                    <span className="text-gray-200 truncate max-w-[200px]" title={file.originalName}>
+                                                    <FileText className="text-blue-400 shrink-0" size={20} />
+                                                    <span className="text-gray-200 truncate max-w-[120px] sm:max-w-[200px]" title={file.originalName}>
                                                         {file.originalName}
                                                     </span>
                                                 </td>
@@ -125,10 +125,10 @@ export default function HistoryPage() {
                                                         {file.operation}
                                                     </span>
                                                 </td>
-                                                <td className="py-4 px-4 text-gray-400 text-sm">
+                                                <td className="py-4 px-4 text-gray-400 text-sm hidden md:table-cell">
                                                     {formatBytes(file.size)}
                                                 </td>
-                                                <td className="py-4 px-4 text-gray-400 text-sm">
+                                                <td className="py-4 px-4 text-gray-400 text-sm hidden md:table-cell">
                                                     {new Date(file.createdAt).toLocaleString()}
                                                 </td>
                                                 <td className="py-4 px-4 text-right">
@@ -140,7 +140,7 @@ export default function HistoryPage() {
                                                             className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
                                                         >
                                                             <Download size={16} />
-                                                            Download
+                                                            <span className="hidden sm:inline">Download</span>
                                                         </a>
                                                         <button 
                                                             onClick={() => handleDeleteFile(file._id)}

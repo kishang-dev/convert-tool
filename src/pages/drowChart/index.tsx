@@ -314,7 +314,7 @@ export default function ChartDashboard() {
             <main className="max-w-7xl mx-auto px-4 py-32">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
                     <div>
-                        <h1 className="text-4xl md:text-5xl font-black gradient-text tracking-tighter mb-4">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black gradient-text tracking-tighter mb-4">
                             All Professional Charts
                         </h1>
                         <p className="text-gray-400 text-lg">

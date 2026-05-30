@@ -118,10 +118,10 @@ export default function Base64Tool() {
 
             <div className="max-w-7xl mx-auto px-4 py-24">
                 <div className="text-center mb-10 animate-fadeIn">
-                    <h1 className="text-4xl md:text-5xl font-black mb-3">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">Base64 Encoder & Decoder</span>
                     </h1>
-                    <p className="text-gray-400 text-lg max-w-xl mx-auto">
+                    <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
                         Encode plain text and files to Base64, or decode base64 representations back to string text or downloads.
                     </p>
                 </div>

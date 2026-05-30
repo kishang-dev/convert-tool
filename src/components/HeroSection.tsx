@@ -27,14 +27,14 @@ export default function HeroSection() {
                 </div>
 
                 {/* Main Heading */}
-                <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 animate-fadeIn leading-[1.1] tracking-tight px-2" style={{ animationDelay: '0.1s' }}>
+                <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fadeIn leading-[1.1] tracking-tight px-2" style={{ animationDelay: '0.1s' }}>
                     Transform Your Documents
                     <br />
                     <span className="gradient-text">In Seconds</span>
                 </h1>
 
                 {/* Subheading */}
-                <p className="text-base sm:text-lg md:text-2xl text-gray-400 mb-10 max-w-3xl mx-auto animate-fadeIn leading-relaxed px-4" style={{ animationDelay: '0.2s' }}>
+                <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-gray-400 mb-10 max-w-3xl mx-auto animate-fadeIn leading-relaxed px-4" style={{ animationDelay: '0.2s' }}>
                     All-in-one PDF toolkit with AI-powered features. Convert, edit, merge, split, and more—all in your browser, completely free.
                 </p>
 

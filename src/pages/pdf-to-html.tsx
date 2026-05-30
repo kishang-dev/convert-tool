@@ -68,7 +68,7 @@ export default function PdfToHtml() {
 
             <div className="max-w-4xl mx-auto px-4 py-24">
                 <div className="text-center mb-12 animate-fadeIn">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                         <span className="gradient-text">PDF to HTML</span>
                     </h1>
                     <p className="text-gray-400 text-lg">

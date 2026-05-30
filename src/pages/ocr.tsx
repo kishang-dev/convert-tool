@@ -95,7 +95,7 @@ export default function OcrPage() {
                         <Sparkles className="text-purple-400" size={16} />
                         <span className="text-sm text-gray-300">AI-Powered OCR</span>
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                         <span className="gradient-text">Image OCR</span> Tool
                     </h1>
                     <p className="text-xl text-gray-400">
