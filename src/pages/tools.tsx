@@ -9,6 +9,7 @@ import {
     FileSpreadsheet,
     Image,
     Lock,
+    Unlock,
     RotateCw,
     Loader2,
     Edit,
@@ -360,6 +361,56 @@ export default function Tools() {
             action: () => (window.location.href = "/drowChart"),
             gradient: "from-blue-600 to-indigo-600",
             description: "Create flowcharts, DFDs, BPMN, Swimlanes, and logic maps with expert AI."
+        },
+        // --- Developer Utilities & Document Unlocks ---
+        {
+            icon: Unlock,
+            title: "Unlock PDF / Remove Password",
+            action: () => (window.location.href = "/pdf-unlock"),
+            gradient: "from-yellow-500 to-amber-600",
+            description: "Decrypt password protected PDFs and strip passwords in seconds."
+        },
+        {
+            icon: FileCode,
+            title: "Base64 Encoder/Decoder",
+            action: () => (window.location.href = "/base64"),
+            gradient: "from-indigo-500 to-violet-600",
+            description: "Convert plain text and files to Base64 data strings or decode back."
+        },
+        {
+            icon: Lock,
+            title: "JWT Decoder",
+            action: () => (window.location.href = "/jwt"),
+            gradient: "from-purple-500 to-indigo-600",
+            description: "Inspect and decode JSON Web Tokens (JWT) client-side in real-time."
+        },
+        {
+            icon: FileCode,
+            title: "JSON Formatter",
+            action: () => (window.location.href = "/json-formatter"),
+            gradient: "from-teal-500 to-emerald-600",
+            description: "Pretty print and beautify raw JSON, or minify JSON payloads."
+        },
+        {
+            icon: Sparkles,
+            title: "JSON Validator",
+            action: () => (window.location.href = "/json-validator"),
+            gradient: "from-sky-500 to-blue-600",
+            description: "Check structural syntax validation of JSON documents with line highlights."
+        },
+        {
+            icon: FileCode,
+            title: "YAML ↔ JSON Converter",
+            action: () => (window.location.href = "/yaml-json"),
+            gradient: "from-orange-500 to-amber-600",
+            description: "Convert YAML text files to JSON strings and JSON arrays to YAML format."
+        },
+        {
+            icon: FileSpreadsheet,
+            title: "CSV ↔ JSON Converter",
+            action: () => (window.location.href = "/csv-json"),
+            gradient: "from-cyan-500 to-teal-600",
+            description: "Transform CSV tabular sheets to JSON array of objects and vice versa."
         },
 
     ];

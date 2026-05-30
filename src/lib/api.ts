@@ -197,7 +197,7 @@ export const fileAPI = {
   },
 
   // Protect PDF
-  protectPDF: async (
+    protectPDF: async (
     fileId: string,
     password: string,
   ): Promise<{
@@ -206,6 +206,18 @@ export const fileAPI = {
     file: FileData;
   }> => {
     const response = await api.post("/files/protect", { fileId, password });
+    return response.data;
+  },
+
+  unlockPDF: async (
+    fileId: string,
+    password: string,
+  ): Promise<{
+    success: boolean;
+    message: string;
+    file: FileData;
+  }> => {
+    const response = await api.post("/files/unlock", { fileId, password });
     return response.data;
   },
 
