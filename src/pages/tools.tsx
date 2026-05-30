@@ -412,6 +412,78 @@ export default function Tools() {
             gradient: "from-cyan-500 to-teal-600",
             description: "Transform CSV tabular sheets to JSON array of objects and vice versa."
         },
+        // --- Image Tools ---
+        {
+            icon: Image,
+            title: "Image Resizer",
+            action: () => (window.location.href = "/image-resizer"),
+            gradient: "from-blue-500 to-indigo-600",
+            description: "Scale and compress dimensions of PNG, JPG, and WebP images client-side."
+        },
+        {
+            icon: Scissors,
+            title: "Image Cropper",
+            action: () => (window.location.href = "/image-cropper"),
+            gradient: "from-emerald-500 to-teal-600",
+            description: "Crop and adjust image regions with visual aspect ratio frames."
+        },
+        {
+            icon: Image,
+            title: "Image Converter (HEIC, WEBP, JPG, PNG)",
+            action: () => (window.location.href = "/image-converter"),
+            gradient: "from-teal-500 to-cyan-600",
+            description: "Convert HEIC to JPG, WEBP to JPG, JPG to WEBP, PNG to WEBP, and more."
+        },
+        // --- Developer Utilities ---
+        {
+            icon: Search,
+            title: "Regex Tester",
+            action: () => (window.location.href = "/regex-tester"),
+            gradient: "from-purple-500 to-pink-600",
+            description: "Test regular expressions in real-time with visual match highlighting."
+        },
+        {
+            icon: FileCode,
+            title: "XML Formatter & Validator",
+            action: () => (window.location.href = "/xml-tool"),
+            gradient: "from-orange-500 to-amber-600",
+            description: "Beautify XML nesting nodes and parse syntax validation errors instantly."
+        },
+        {
+            icon: FileCode,
+            title: "SQL Formatter",
+            action: () => (window.location.href = "/sql-formatter"),
+            gradient: "from-sky-500 to-blue-600",
+            description: "Pretty print SQL scripts and capitalize database query statements."
+        },
+        {
+            icon: Edit,
+            title: "Visual SQL Query Builder",
+            action: () => (window.location.href = "/sql-query-builder"),
+            gradient: "from-blue-600 to-indigo-700",
+            description: "Create SQL queries visually for SELECT, INSERT, UPDATE, and DELETE tasks."
+        },
+        {
+            icon: FileText,
+            title: "Markdown Editor & HTML Converter",
+            action: () => (window.location.href = "/markdown-editor"),
+            gradient: "from-pink-500 to-rose-600",
+            description: "Write rich Markdown and compile it into styled visual HTML codes instantly."
+        },
+        {
+            icon: FileCode,
+            title: "Unified Code Minifier",
+            action: () => (window.location.href = "/code-minifier"),
+            gradient: "from-teal-600 to-emerald-700",
+            description: "Compress HTML codes, CSS stylesheets, and Javascript files client-side."
+        },
+        {
+            icon: FileCode,
+            title: "JSON Diff Checker",
+            action: () => (window.location.href = "/json-diff"),
+            gradient: "from-indigo-600 to-violet-700",
+            description: "Compare baseline and modified JSON structures with color highlights."
+        },
 
     ];
 
