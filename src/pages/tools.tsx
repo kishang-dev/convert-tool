@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useRef, useEffect } from "react";
 import {
     Upload,
@@ -410,98 +408,132 @@ export default function Tools() {
 
             <Navbar />
 
-            {/* Main Content */}
+            {/* ── Main Content ── */}
             <div className="max-w-7xl mx-auto px-4 py-24 md:py-32">
-                {/* Page Header */}
-                <div className="text-center mb-12 md:mb-20 space-y-4 md:space-y-6 animate-fadeIn">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-black gradient-text tracking-tighter leading-tight">
-                        Powerful Tools for Every File
+
+                {/* ── Page Header ── */}
+                <div className="text-center mb-10 animate-fadeIn">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-5 text-blue-400 text-[10px] font-black uppercase tracking-[0.2em]">
+                        <Sparkles size={13} />
+                        40+ Tools · All Free · No Sign-up
+                    </div>
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-black gradient-text tracking-tighter leading-tight mb-4">
+                        All Tools
                     </h1>
-                    <p className="text-gray-400 text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed px-4">
-                        Effortlessly edit, convert, and manage your documents with our high-end professional toolset.
-                        From AI-powered resumes to advanced PDF editing.
+                    <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                        Browse every tool by category, or search below. Click any card to open the tool directly.
                     </p>
-                    <div className="flex justify-center pt-8">
-                        <div className="relative w-full max-w-md group">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-500 transition-colors" size={20} />
+
+                    {/* ── Search Bar ── */}
+                    <div className="flex justify-center mt-8">
+                        <div className="relative w-full max-w-lg group">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-400 transition-colors" size={20} />
                             <input
-                                placeholder="Search all tools (Merge, Resize, Resume...)"
+                                placeholder="Search tools… (Merge, Regex, SQL, Resize…)"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full bg-white/5 border border-white/10 p-4 pl-12 rounded-2xl outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-medium text-white"
+                                className="w-full bg-white/5 border border-white/10 p-4 pl-12 pr-4 rounded-2xl outline-none focus:border-blue-500/40 focus:bg-white/8 transition-all font-medium text-white placeholder-gray-600"
                             />
+                            {searchQuery && (
+                                <button
+                                    onClick={() => setSearchQuery('')}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white text-xs font-bold"
+                                >
+                                    ✕ Clear
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
 
-                {/* Upload Area */}
-                <Card
-                    variant="elevated"
-                    className="mb-8 animate-fadeIn"
-                    style={{ animationDelay: '0.1s' } as React.CSSProperties}
-                >
-                    <div
-                        onDragOver={handleDragOver}
-                        onDragLeave={handleDragLeave}
-                        onDrop={handleDrop}
-                        className={`p-8 md:p-12 text-center transition-smooth rounded-xl ${isDragging ? "bg-purple-500/10 border-2 border-purple-500" : ""
-                            }`}
+                {/* ── PDF Quick-Upload Panel ──
+                     Only shown when no search query, so it doesn't clutter search results.
+                     Users upload here to use any of the PDF tools that require a file. ── */}
+                {!searchQuery && (
+                    <Card
+                        variant="elevated"
+                        className="mb-12 animate-fadeIn border border-white/5"
+                        style={{ animationDelay: '0.1s' } as React.CSSProperties}
                     >
-                        <div className="flex flex-col items-center gap-4">
-                            <div className="bg-gradient-to-br from-purple-600 to-blue-600 p-4 md:p-6 rounded-full shadow-lg">
-                                <Upload className="text-white" size={32} md-size={48} />
+                        <div
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDrop}
+                            className={`p-8 md:p-10 text-center transition-all rounded-xl ${isDragging ? "bg-blue-500/10 border-2 border-blue-500" : ""}`}
+                        >
+                            <div className="flex flex-col items-center gap-4">
+                                <div className="bg-gradient-to-br from-blue-600/20 to-indigo-600/20 border border-blue-500/20 p-5 rounded-2xl">
+                                    <Upload className="text-blue-400" size={30} />
+                                </div>
+                                <div>
+                                    <p className="text-base font-semibold text-white mb-1">
+                                        Upload a file to use PDF tools
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                        Drag & drop PDF, Word, Excel, image, audio, or video here — then pick a tool below
+                                    </p>
+                                </div>
+                                <Button
+                                    onClick={() => fileInputRef.current?.click()}
+                                    disabled={loading}
+                                    loading={loading}
+                                    size="lg"
+                                    className="mt-2"
+                                >
+                                    {loading ? "Processing…" : "Choose File"}
+                                </Button>
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    multiple
+                                    accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.jpg,.jpeg,.png,.webp,.svg,.mp3,.mp4,.wav,.avi"
+                                    onChange={handleFileSelect}
+                                    className="hidden"
+                                />
                             </div>
-                            <p className="text-lg md:text-xl text-gray-300 px-4">
-                                Drag & Drop PDF Files Here or
-                            </p>
-                            <Button
-                                onClick={() => fileInputRef.current?.click()}
-                                disabled={loading}
-                                loading={loading}
-                                size="lg"
-                                className="w-full sm:w-auto"
-                            >
-                                {loading ? "Processing..." : "Choose Files"}
-                            </Button>
-                            <input
-                                ref={fileInputRef}
-                                type="file"
-                                multiple
-                                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.jpg,.jpeg,.png,.webp,.svg,.mp3,.mp4,.wav,.avi"
-                                onChange={handleFileSelect}
-                                className="hidden"
-                            />
                         </div>
-                    </div>
-                </Card>
 
-                {/* File List */}
-                <div className="animate-fadeIn" style={{ animationDelay: '0.2s' } as React.CSSProperties}>
-                    <FileList
-                        files={files}
-                        onRemove={handleRemoveFile}
-                        onDownload={handleDownloadFile}
-                    />
-                </div>
-
-                {/* Features Categories */}
-                <div className="space-y-12 mb-12">
-                    {filteredCategories.map((category, catIdx) => (
-                        <div key={catIdx} className="space-y-6 animate-fadeIn" style={{ animationDelay: `${0.2 + catIdx * 0.05}s` } as React.CSSProperties}>
-                            <div>
-                                <h2 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-                                    {category.title}
-                                </h2>
-                                <p className="text-sm text-gray-400 font-light mt-1">
-                                    {category.description}
-                                </p>
+                        {/* Uploaded file list — inline below the upload area */}
+                        {files.length > 0 && (
+                            <div className="border-t border-white/5 px-6 py-4">
+                                <FileList
+                                    files={files}
+                                    onRemove={handleRemoveFile}
+                                    onDownload={handleDownloadFile}
+                                />
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        )}
+                    </Card>
+                )}
+
+                {/* ── Categorised Tool Directory ── */}
+                <div className="space-y-14 mb-12">
+                    {filteredCategories.map((category, catIdx) => (
+                        <div
+                            key={catIdx}
+                            className="animate-fadeIn"
+                            style={{ animationDelay: `${0.15 + catIdx * 0.05}s` } as React.CSSProperties}
+                        >
+                            {/* Category header */}
+                            <div className="flex items-end justify-between mb-5 pb-3 border-b border-white/5">
+                                <div>
+                                    <h2 className="text-xl md:text-2xl font-black text-white tracking-tight">
+                                        {category.title}
+                                    </h2>
+                                    <p className="text-xs text-gray-500 mt-0.5">{category.description}</p>
+                                </div>
+                                <span className="text-[10px] font-black text-gray-600 uppercase tracking-widest shrink-0 ml-4">
+                                    {category.items.length} tool{category.items.length !== 1 ? 's' : ''}
+                                </span>
+                            </div>
+
+                            {/* Tool cards grid */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                 {category.items.map((feature, idx) => (
                                     <div
                                         key={idx}
-                                        className="transition-transform duration-300 hover:-translate-y-1 animate-fadeIn"
-                                        style={{ animationDelay: `${0.3 + idx * 0.02}s` } as React.CSSProperties}
+                                        className="transition-all duration-200 hover:-translate-y-1"
+                                        style={{ animationDelay: `${0.2 + idx * 0.02}s` } as React.CSSProperties}
                                     >
                                         <FeatureCard
                                             icon={feature.icon}
@@ -515,43 +547,45 @@ export default function Tools() {
                             </div>
                         </div>
                     ))}
+
+                    {/* Empty search state */}
                     {filteredCategories.length === 0 && (
-                        <div className="text-center py-16 bg-white/5 border border-white/5 rounded-3xl">
-                            <p className="text-gray-500 font-semibold text-lg">No tools matching "{searchQuery}"</p>
-                            <p className="text-xs text-gray-600 mt-1">Try searching for other terms like 'Merge', 'Resizer', or 'Diff'</p>
+                        <div className="text-center py-20 bg-white/[0.02] border border-white/5 rounded-3xl">
+                            <Search size={40} className="mx-auto mb-4 text-gray-700" />
+                            <p className="text-gray-500 font-semibold text-lg">No tools found for "{searchQuery}"</p>
+                            <p className="text-xs text-gray-600 mt-2">Try: Merge · Resize · SQL · Regex · Markdown</p>
+                            <button onClick={() => setSearchQuery('')} className="mt-5 text-xs text-blue-500 hover:text-blue-400 font-bold underline underline-offset-4">
+                                Clear search
+                            </button>
                         </div>
                     )}
                 </div>
 
-                {/* Info Banner */}
+                {/* ── Footer Banner ── */}
                 <Card
                     variant="elevated"
-                    className="p-6 relative overflow-hidden animate-fadeIn"
+                    className="p-6 relative overflow-hidden animate-fadeIn border border-white/5"
                     style={{ animationDelay: '0.8s' } as React.CSSProperties}
                 >
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20"></div>
-                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600/15 to-indigo-600/15" />
+                    <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <div>
-                            <p className="font-semibold text-white text-lg">🔒 Secure & Private</p>
-                            <p className="text-sm text-gray-300">All files are encrypted and automatically deleted after 1 hour</p>
+                            <p className="font-bold text-white text-base">🔒 Secure & Private</p>
+                            <p className="text-sm text-gray-400 mt-0.5">All files are encrypted in transit and automatically deleted after 1 hour. Nothing is stored permanently.</p>
                         </div>
-                        <Button variant="secondary">
+                        <Button variant="secondary" className="shrink-0">
                             Learn More
                         </Button>
                     </div>
                 </Card>
             </div>
 
-            {/* Password Modal */}
+            {/* ── Protect PDF Password Modal ── */}
             {showPasswordModal && (
                 <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn">
                     <Card variant="elevated" className="p-6 w-96 max-w-[90vw]">
-                        <h3 className="text-xl font-bold text-white mb-4">
-                            Protect PDF
-                        </h3>
-                        <p className="text-gray-400 mb-4">
-                            Enter a password to encrypt this PDF.
-                        </p>
+                        <h3 className="text-xl font-bold text-white mb-4">Protect PDF</h3>
+                        <p className="text-gray-400 mb-4">Enter a password to encrypt this PDF.</p>
                         <input
                             type="password"
                             value={password}
@@ -563,16 +597,11 @@ export default function Tools() {
                         <div className="flex justify-end gap-2">
                             <Button
                                 variant="ghost"
-                                onClick={() => {
-                                    setShowPasswordModal(false);
-                                    setPassword("");
-                                }}
+                                onClick={() => { setShowPasswordModal(false); setPassword(""); }}
                             >
                                 Cancel
                             </Button>
-                            <Button onClick={confirmProtectPDF}>
-                                Protect
-                            </Button>
+                            <Button onClick={confirmProtectPDF}>Protect</Button>
                         </div>
                     </Card>
                 </div>
@@ -580,3 +609,5 @@ export default function Tools() {
         </div>
     );
 }
+
+
