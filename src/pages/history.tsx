@@ -23,11 +23,6 @@ export default function HistoryPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!user) {
-            router.push('/login');
-            return;
-        }
-
         const fetchHistory = async () => {
             try {
                 const res = await api.get('/files');
@@ -64,7 +59,7 @@ export default function HistoryPage() {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     };
 
-    if (!user) return null;
+    // Allow guests to see history
 
     return (
         <div className="min-h-screen bg-[#0a0a0f]">

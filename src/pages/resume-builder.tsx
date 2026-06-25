@@ -9,8 +9,9 @@ import { resumeAPI, ResumeData } from '@/lib/api';
 import {
     Upload, FileText, Download, Save, Palette,
     User, Briefcase, GraduationCap, Code, Globe,
-    Plus, Trash2, Edit3, ChevronRight, CheckCircle, Layout, Eye, X
+    Plus, Trash2, Edit3, ChevronRight, CheckCircle, Layout, Eye, X, Clock
 } from 'lucide-react';
+import { useAuthStore } from '@/store/authStore';
 
 // const INITIAL_DATA: ResumeData = {
 //     personalInfo: { fullName: '', email: '', phone: '', address: '', summary: '', linkedin: '', github: '', website: '' },
@@ -223,11 +224,43 @@ const TEMPLATES = [
 export default function ResumeBuilder() {
     const [step, setStep] = useState(1);
     const [resumeData, setResumeData] = useState<ResumeData>(INITIAL_DATA);
+    const [savedResumes, setSavedResumes] = useState<ResumeData[]>([]);
     const [loading, setLoading] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const resumeRef = useRef<HTMLDivElement>(null);
     const [mobilePreviewOpen, setMobilePreviewOpen] = useState(false);
+    const { user } = useAuthStore();
+
+    useEffect(() => {
+        if (user) {
+            fetchSavedResumes();
+        }
+        
+        // Check if we came from My Resumes with an edit request
+        const editDataStr = sessionStorage.getItem('editResume');
+        if (editDataStr) {
+            try {
+                const parsed = JSON.parse(editDataStr);
+                setResumeData(parsed);
+                setStep(2);
+                sessionStorage.removeItem('editResume');
+            } catch (e) {
+                console.error("Failed to parse edit resume data");
+            }
+        }
+    }, [user]);
+
+    const fetchSavedResumes = async () => {
+        try {
+            const res = await resumeAPI.getUserResumes();
+            if (res.success) {
+                setSavedResumes(res.data);
+            }
+        } catch (error) {
+            console.error("Failed to fetch resumes", error);
+        }
+    };
 
     const showToast = (message: string, type: 'success' | 'error' = 'success') => {
         setToast({ message, type });
@@ -255,16 +288,45 @@ export default function ResumeBuilder() {
     const handleSave = async () => {
         setLoading(true);
         try {
-            const res = await resumeAPI.saveResume(resumeData);
+            let res;
+            if (resumeData._id) {
+                res = await resumeAPI.updateResume(resumeData._id, resumeData);
+            } else {
+                res = await resumeAPI.saveResume(resumeData);
+            }
             if (res.success) {
                 setResumeData(res.data);
                 showToast('Resume saved to your account');
+                fetchSavedResumes();
             }
         } catch (err: any) {
             showToast('Login required to save resumes', 'error');
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleDeleteResume = async (id: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (!confirm('Are you sure you want to delete this resume?')) return;
+        try {
+            const res = await resumeAPI.deleteResume(id);
+            if (res.success) {
+                setSavedResumes(prev => prev.filter(r => r._id !== id));
+                if (resumeData._id === id) {
+                    setResumeData(INITIAL_DATA);
+                    setStep(1);
+                }
+                showToast('Resume deleted successfully');
+            }
+        } catch (error) {
+            showToast('Failed to delete resume', 'error');
+        }
+    };
+
+    const handleEditResume = (resume: ResumeData) => {
+        setResumeData(resume);
+        setStep(2);
     };
 
     const handleExport = async () => {
@@ -426,7 +488,7 @@ export default function ResumeBuilder() {
                             </Card>
 
                             {/* Option 2: Create New */}
-                            <Card variant="elevated" className="p-12 bg-white/5 border border-white/10 relative overflow-hidden group hover:border-purple-500/50 transition-all duration-500 cursor-pointer" onClick={() => setStep(2)}>
+                            <Card variant="elevated" className="p-12 bg-white/5 border border-white/10 relative overflow-hidden group hover:border-purple-500/50 transition-all duration-500 cursor-pointer" onClick={() => { setResumeData(INITIAL_DATA); setStep(2); }}>
                                 <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                 <div className="relative z-10 flex flex-col items-center">
                                     <div className="w-24 h-24 bg-purple-600/10 rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-2xl">
@@ -447,16 +509,71 @@ export default function ResumeBuilder() {
                                 </div>
                             </Card>
                         </div>
+
+                        {/* Saved Resumes Section */}
+                        {user && savedResumes.length > 0 && (
+                            <div className="mt-20 max-w-5xl mx-auto text-left">
+                                <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                                    <Clock className="text-blue-400" />
+                                    Your Saved Resumes
+                                </h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                    {savedResumes.map(resume => (
+                                        <Card key={resume._id} variant="elevated" className="p-6 bg-white/5 border border-white/10 hover:border-blue-500/30 transition-all group cursor-pointer" onClick={() => handleEditResume(resume)}>
+                                            <div className="flex justify-between items-start mb-4">
+                                                <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400">
+                                                    <FileText size={24} />
+                                                </div>
+                                                <button onClick={(e) => handleDeleteResume(resume._id as string, e)} className="text-gray-500 hover:text-red-500 transition-colors p-1 opacity-0 group-hover:opacity-100">
+                                                    <Trash2 size={18} />
+                                                </button>
+                                            </div>
+                                            <h4 className="font-bold text-lg mb-1 truncate">{resume.title || resume.personalInfo.fullName || 'Untitled Resume'}</h4>
+                                            <p className="text-sm text-gray-400 mb-4 truncate">{resume.personalInfo.summary || 'No summary provided.'}</p>
+                                            <Button variant="ghost" size="sm" className="w-full text-blue-400 hover:text-blue-300 bg-blue-500/5 hover:bg-blue-500/10">
+                                                Edit Resume
+                                            </Button>
+                                        </Card>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
 
                 {step === 2 && (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-slideIn">
                         <div className="space-y-6 max-h-[80vh] overflow-y-auto pr-4 scrollbar-hide">
-                            <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
+                            <div className="flex items-center gap-4 mb-2">
+                                <button
+                                    onClick={() => setStep(1)}
+                                    className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 text-sm bg-white/5 hover:bg-white/10 px-3 py-2 rounded-lg"
+                                >
+                                    <ChevronRight size={16} className="rotate-180" />
+                                    My Resumes
+                                </button>
+                                <span className="text-gray-600">/</span>
+                                <span className="text-sm text-gray-300 truncate max-w-[180px]">{resumeData.title || resumeData.personalInfo.fullName || 'New Resume'}</span>
+                            </div>
+
+                            <h2 className="text-3xl font-bold mb-2 flex items-center gap-3">
                                 <Edit3 className="text-blue-500" />
                                 Edit Your Details
                             </h2>
+
+                            {/* Resume Title */}
+                            <Card className="p-4">
+                                <div className="flex items-center gap-3 mb-3 text-gray-400 font-bold border-b border-white/5 pb-2 text-sm">
+                                    <FileText size={16} />
+                                    Resume Title (for your reference)
+                                </div>
+                                <input
+                                    value={resumeData.title || ''}
+                                    onChange={e => setResumeData({ ...resumeData, title: e.target.value })}
+                                    placeholder={`e.g. "Software Engineer — Google 2024"`}
+                                    className="w-full bg-white/5 border border-white/10 p-3 rounded-lg focus:border-blue-500 outline-none text-white placeholder-gray-600"
+                                />
+                            </Card>
 
                             {/* Personal Info */}
                             <Card className="p-6">

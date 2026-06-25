@@ -96,10 +96,14 @@ export const fileAPI = {
     return response.data;
   },
 
-  // Get active files
   getActiveFiles: async (): Promise<{ success: boolean; files: FileData[] }> => {
-    const response = await api.get("/files?activeOnly=true");
-    return response.data;
+    try {
+        const response = await api.get("/files?activeOnly=true");
+        return response.data;
+    } catch (error) {
+        console.error("Failed to fetch active files (offline or unauthorized)", error);
+        return { success: false, files: [] };
+    }
   },
 
   // Hide file
@@ -488,7 +492,24 @@ export const resumeAPI = {
     return response.data;
   },
   getUserResumes: async (): Promise<{ success: boolean; data: ResumeData[] }> => {
-    const response = await api.get("/resumes");
+    try {
+        const response = await api.get("/resumes");
+        return response.data;
+    } catch (error) {
+        console.error("Failed to fetch resumes (offline or unauthorized)", error);
+        return { success: false, data: [] };
+    }
+  },
+  getResumeById: async (id: string): Promise<{ success: boolean; data: ResumeData }> => {
+    const response = await api.get(`/resumes/${id}`);
+    return response.data;
+  },
+  updateResume: async (id: string, data: ResumeData): Promise<{ success: boolean; data: ResumeData }> => {
+    const response = await api.put(`/resumes/${id}`, data);
+    return response.data;
+  },
+  deleteResume: async (id: string): Promise<{ success: boolean; message: string }> => {
+    const response = await api.delete(`/resumes/${id}`);
     return response.data;
   },
   exportResume: async (id: string, html: string, resumeData?: ResumeData): Promise<{ success: boolean; downloadUrl: string }> => {
