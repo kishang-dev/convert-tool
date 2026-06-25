@@ -1,62 +1,42 @@
 import React from 'react';
-import {
-    Merge,
-    Scissors,
-    FileText,
-    Image,
-    Sparkles,
-    Code,
-    ArrowRight,
-    Zap,
-    Shield,
-    Layers,
-} from 'lucide-react';
-import Card from './Card';
+import { Merge, Scissors, FileText, Image, Sparkles, Code, ArrowRight, Layers, Shield, Zap } from 'lucide-react';
 import { useRouter } from 'next/router';
 
-// Only the most iconic / popular tools shown as a teaser on the home page.
-// Full list lives on /tools
 const highlights = [
     {
         icon: Merge,
         title: 'Merge PDF',
         description: 'Combine multiple PDF files into a single polished document in seconds.',
-        color: 'from-blue-500 to-cyan-500',
         tag: 'Most Popular',
     },
     {
         icon: Scissors,
         title: 'Split & Extract PDF',
         description: 'Pull out specific pages or split a PDF into separate files effortlessly.',
-        color: 'from-purple-500 to-pink-500',
         tag: null,
     },
     {
         icon: FileText,
         title: 'PDF ↔ Word / Excel',
         description: 'Instantly convert between PDF, Word, Excel, and PowerPoint formats.',
-        color: 'from-green-500 to-emerald-500',
         tag: null,
     },
     {
         icon: Image,
         title: 'Image Toolkit',
         description: 'Resize, crop, and convert images between HEIC, WEBP, JPG, and PNG.',
-        color: 'from-teal-500 to-cyan-600',
         tag: 'New',
     },
     {
         icon: Sparkles,
         title: 'AI Resume & Charts',
         description: 'Build professional resumes and generate diagrams with AI assistance.',
-        color: 'from-amber-400 to-orange-600',
         tag: 'AI Powered',
     },
     {
         icon: Code,
         title: 'Developer Utilities',
         description: 'Format JSON, test Regex, validate XML, build SQL queries, and minify code.',
-        color: 'from-indigo-500 to-violet-600',
         tag: 'New',
     },
 ];
@@ -72,85 +52,70 @@ export default function FeaturesShowcase() {
     const router = useRouter();
 
     return (
-        <section id="features" className="py-20 md:py-28 px-4 sm:px-6">
-            <div className="max-w-7xl mx-auto">
+        <section id="features" className="py-20 px-4 sm:px-6 border-t border-[#1a1a1a]">
+            <div className="max-w-6xl mx-auto">
 
-                {/* Section Header */}
-                <div className="text-center mb-14 px-4">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full mb-5 text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em]">
-                        <Sparkles size={13} />
-                        40+ Professional Tools
+                {/* Header */}
+                <div className="mb-12">
+                    <p className="text-xs text-[#555] uppercase tracking-widest font-medium mb-2">Features</p>
+                    <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                            Everything you need<br className="sm:hidden" /> to succeed
+                        </h2>
+                        <button
+                            onClick={() => router.push('/tools')}
+                            className="inline-flex items-center gap-1.5 text-sm text-[#888] hover:text-white transition-colors group shrink-0"
+                        >
+                            View all tools
+                            <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
+                        </button>
                     </div>
-                    <h2 className="text-3xl sm:text-5xl md:text-6xl font-black mb-4 text-white leading-[1.1] tracking-tighter uppercase">
-                        Powerful Tools at Your
-                        <span className="gradient-text"> Fingertips</span>
-                    </h2>
-                    <p className="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed opacity-80 font-medium">
-                        Everything you need for documents, images, and developer utilities — all in one place. No installs, no limits.
+                    <p className="text-sm text-[#555] mt-2 max-w-xl">
+                        Powerful tools designed to help you better process, convert, and manage documents from start to finish.
                     </p>
                 </div>
 
                 {/* Stats Strip */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-14">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
                     {stats.map((stat, i) => {
                         const Icon = stat.icon;
                         return (
-                            <div key={i} className="flex flex-col items-center text-center p-5 bg-white/[0.03] border border-white/5 rounded-2xl hover:border-white/10 transition-all">
-                                <Icon size={20} className="text-indigo-400 mb-2" />
-                                <div className="text-2xl font-black text-white tracking-tighter">{stat.value}</div>
-                                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-0.5">{stat.label}</div>
+                            <div key={i} className="bg-[#111] border border-[#1a1a1a] rounded-xl p-4 flex flex-col gap-2">
+                                <Icon size={16} className="text-[#444]" />
+                                <div className="text-xl font-bold text-white">{stat.value}</div>
+                                <div className="text-[11px] text-[#555] uppercase tracking-wider">{stat.label}</div>
                             </div>
                         );
                     })}
                 </div>
 
-                {/* Highlights Grid — 6 curated cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+                {/* Feature Cards Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {highlights.map((feature, index) => {
                         const Icon = feature.icon;
                         return (
-                            <Card
+                            <button
                                 key={index}
-                                variant="elevated"
-                                hover
-                                className="p-6 cursor-pointer group animate-fadeIn relative overflow-hidden"
-                                style={{ animationDelay: `${index * 0.07}s` } as React.CSSProperties}
                                 onClick={() => router.push('/tools')}
+                                className="bg-[#111] border border-[#1a1a1a] rounded-xl p-6 text-left group hover:border-[#2a2a2a] hover:bg-[#161616] transition-all duration-200 relative"
+                                style={{ animationDelay: `${index * 0.05}s` }}
                             >
-                                {/* Tag badge */}
                                 {feature.tag && (
-                                    <span className="absolute top-4 right-4 text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-gray-400">
+                                    <span className="absolute top-4 right-4 text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#1a1a1a] border border-[#2a2a2a] text-[#555]">
                                         {feature.tag}
                                     </span>
                                 )}
 
-                                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                                    <Icon className="text-white" size={22} />
+                                <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-2.5 rounded-lg inline-block mb-4 group-hover:border-[#3a3a3a] transition-colors">
+                                    <Icon className="text-white" size={18} />
                                 </div>
-                                <h3 className="text-base font-bold mb-1.5 text-white tracking-tight">
-                                    {feature.title}
-                                </h3>
-                                <p className="text-gray-400 text-sm leading-relaxed">
-                                    {feature.description}
-                                </p>
-                            </Card>
+                                <h3 className="text-white font-semibold mb-1.5 text-sm">{feature.title}</h3>
+                                <p className="text-[#555] text-xs leading-relaxed">{feature.description}</p>
+                            </button>
                         );
                     })}
                 </div>
 
-                {/* CTA — directs users to the full /tools page */}
-                <div className="text-center">
-                    <button
-                        onClick={() => router.push('/tools')}
-                        className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm rounded-2xl transition-all duration-300 shadow-lg shadow-blue-600/30 hover:shadow-blue-500/40 hover:-translate-y-0.5 group"
-                    >
-                        Explore All 40+ Tools
-                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                    </button>
-                    <p className="text-gray-600 text-[11px] mt-3 uppercase tracking-widest font-bold">
-                        No sign-up required · 100% free
-                    </p>
-                </div>
             </div>
         </section>
     );

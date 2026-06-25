@@ -1,40 +1,77 @@
 import React from 'react';
-import { ArrowRight, Shield, Zap, Heart, Globe, Clock, Users, Sparkles } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Globe, Clock, Users, Check } from 'lucide-react';
 import HeroSection from './HeroSection';
 import FeaturesShowcase from './FeaturesShowcase';
 import HowItWorks from './HowItWorks';
 import FAQ from './FAQ';
 import Button from './Button';
-import Card from './Card';
 import Footer from './Footer';
 import { useRouter } from 'next/router';
+
+const benefits = [
+    {
+        icon: Shield,
+        title: 'Enterprise Security',
+        description: 'Military-grade encryption for all file transfers. Files are auto-deleted from our servers within 24 hours.',
+    },
+    {
+        icon: Zap,
+        title: 'AI Optimizers',
+        description: 'Our AI engines optimize PDF file sizes without losing quality, making your documents web-ready instantly.',
+    },
+    {
+        icon: Globe,
+        title: 'Global Reach',
+        description: 'Supporting 100+ languages for OCR and document conversion, ensuring accuracy across all borders.',
+    },
+    {
+        icon: Clock,
+        title: 'Always Online',
+        description: 'Distributed cloud infrastructure ensures 99.9% availability. Your tools are ready when you are.',
+    },
+    {
+        icon: Users,
+        title: 'No Compromise',
+        description: 'Highest quality output in the industry — whether SVG vectors or OCR text, we deliver precision.',
+    },
+    {
+        icon: Shield,
+        title: 'Intuitive Interface',
+        description: 'A clean, modern interface designed for focus. Custom views to match your workflow preferences.',
+    },
+];
+
+const freeFeatures = [
+    'Unlimited Conversions',
+    'High Precision OCR',
+    'AI Diagram Generator',
+    '24h File Retention',
+    'No Account Required',
+    'All 40+ Tools Included',
+];
 
 export default function LandingPage() {
     const router = useRouter();
 
-    const stats = [
-        { label: "Files Processed", value: "10M+", icon: <Zap size={20} className="text-yellow-400" /> },
-        { label: "OCR Accuracy", value: "99.9%", icon: <Shield size={20} className="text-green-400" /> },
-        { label: "Active Users", value: "2.5M+", icon: <Users size={20} className="text-blue-400" /> },
-        { label: "Uptime", value: "99.99%", icon: <Clock size={20} className="text-purple-400" /> }
-    ];
-
     return (
-        <div className="min-h-screen bg-[#0f172a]">
-            {/* Hero Section */}
+        <div className="min-h-screen bg-[#0a0a0a]">
+
+            {/* Hero */}
             <HeroSection />
 
-            {/* Live Stats Bar */}
-            <div className="border-y border-white/5 bg-white/5 backdrop-blur-sm">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16">
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-4 sm:gap-8">
-                        {stats.map((stat, i) => (
-                            <div key={i} className="flex flex-col items-center text-center group">
-                                <div className="mb-4 p-3 bg-white/5 rounded-2xl group-hover:scale-110 transition-transform">
-                                    {stat.icon}
-                                </div>
-                                <div className="text-2xl sm:text-3xl font-black text-white mb-1 tracking-tighter">{stat.value}</div>
-                                <div className="text-[9px] sm:text-[10px] font-black text-gray-500 uppercase tracking-widest">{stat.label}</div>
+            {/* Stats bar */}
+            <div className="border-y border-[#1a1a1a] bg-[#0d0d0d]">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                        {[
+                            { value: '10M+', label: 'Files Processed' },
+                            { value: '99.9%', label: 'OCR Accuracy' },
+                            { value: '2.5M+', label: 'Active Users' },
+                            { value: '40+', label: 'Free Tools' },
+                        ].map((stat) => (
+                            <div key={stat.label}>
+                                <div className="text-2xl font-bold text-white mb-0.5">{stat.value}</div>
+                                <div className="text-xs text-[#555] uppercase tracking-wider">{stat.label}</div>
                             </div>
                         ))}
                     </div>
@@ -47,199 +84,139 @@ export default function LandingPage() {
             {/* How It Works */}
             <HowItWorks />
 
-            {/* Benefits Section */}
-            <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6">
-                <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-12 md:mb-24 px-4">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6 md:mb-8 transition-all hover:bg-blue-500/20">
-                            <Sparkles size={16} className="text-blue-400" />
-                            <span className="text-[9px] sm:text-[10px] font-black text-blue-400 uppercase tracking-[0.2em]">The Platform Edge</span>
-                        </div>
-                        <h2 className="text-2xl sm:text-5xl md:text-7xl font-black mb-6 md:mb-8 tracking-tighter text-white uppercase leading-[1.1]">
-                            Engineered for <br className="hidden sm:block" /><span className="gradient-text">Precision & Speed</span>
+            {/* Benefits Grid */}
+            <section className="py-20 px-4 sm:px-6 border-t border-[#1a1a1a]">
+                <div className="max-w-5xl mx-auto">
+                    <div className="mb-12">
+                        <p className="text-xs text-[#555] uppercase tracking-widest font-medium mb-2">Why QuickPDF</p>
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                            Built for precision & speed
                         </h2>
-                        <p className="text-sm sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-bold px-2 sm:px-4 opacity-80">
-                            We've built a rock-solid infrastructure to handle your most complex document tasks without breaking a sweat.
+                        <p className="text-sm text-[#555] mt-2 max-w-lg">
+                            A rock-solid infrastructure to handle your most complex document tasks without breaking a sweat.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                        <Card variant="elevated" className="p-8 md:p-10 border-white/5 bg-white/5 group hover:border-blue-500/30 transition-all duration-500">
-                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-3xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-500/30 flex items-center justify-center mb-8 md:mb-10 group-hover:scale-110 transition-transform">
-                                <Shield className="text-green-500" size={28} md-size={32} />
-                            </div>
-                            <h3 className="text-xl md:text-2xl font-black mb-4 text-white uppercase tracking-tight">Enterprise Security</h3>
-                            <p className="text-sm md:text-base text-gray-400 leading-relaxed font-medium">
-                                We utilize military-grade encryption for all file transfers. Your files are automatically purged from our servers within 24 hours.
-                            </p>
-                        </Card>
-
-                        <Card variant="elevated" className="p-8 md:p-10 border-white/5 bg-white/5 group hover:border-yellow-500/30 transition-all duration-500">
-                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-3xl bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border border-yellow-500/30 flex items-center justify-center mb-8 md:mb-10 group-hover:scale-110 transition-transform">
-                                <Zap className="text-yellow-500" size={28} md-size={32} />
-                            </div>
-                            <h3 className="text-xl md:text-2xl font-black mb-4 text-white uppercase tracking-tight">AI Optimizers</h3>
-                            <p className="text-sm md:text-base text-gray-400 leading-relaxed font-medium">
-                                Our proprietary AI engines optimize PDF file sizes without losing quality, making your documents web-ready instantly.
-                            </p>
-                        </Card>
-
-                        <Card variant="elevated" className="p-8 md:p-10 border-white/5 bg-white/5 group hover:border-pink-500/30 transition-all duration-500">
-                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-3xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 border border-pink-500/30 flex items-center justify-center mb-8 md:mb-10 group-hover:scale-110 transition-transform">
-                                <Heart className="text-pink-500" size={28} md-size={32} />
-                            </div>
-                            <h3 className="text-xl md:text-2xl font-black mb-4 text-white uppercase tracking-tight">Intuitive UI</h3>
-                            <p className="text-sm md:text-base text-gray-400 leading-relaxed font-medium">
-                                Design matters. We've crafted a seamless, glassmorphic interface that makes complex tasks feel like a breeze.
-                            </p>
-                        </Card>
-
-                        <Card variant="elevated" className="p-8 md:p-10 border-white/5 bg-white/5 group hover:border-blue-500/30 transition-all duration-500">
-                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-3xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 flex items-center justify-center mb-8 md:mb-10 group-hover:scale-110 transition-transform">
-                                <Globe className="text-blue-500" size={28} md-size={32} />
-                            </div>
-                            <h3 className="text-xl md:text-2xl font-black mb-4 text-white uppercase tracking-tight">Global Reach</h3>
-                            <p className="text-sm md:text-base text-gray-400 leading-relaxed font-medium">
-                                Supporting over 100+ languages for OCR and document conversion, ensuring accuracy across borders.
-                            </p>
-                        </Card>
-
-                        <Card variant="elevated" className="p-8 md:p-10 border-white/5 bg-white/5 group hover:border-purple-500/30 transition-all duration-500">
-                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-3xl bg-gradient-to-br from-purple-500/20 to-violet-500/20 border border-purple-500/30 flex items-center justify-center mb-8 md:mb-10 group-hover:scale-110 transition-transform">
-                                <Clock className="text-purple-500" size={28} md-size={32} />
-                            </div>
-                            <h3 className="text-xl md:text-2xl font-black mb-4 text-white uppercase tracking-tight">Always Online</h3>
-                            <p className="text-sm md:text-base text-gray-400 leading-relaxed font-medium">
-                                Our distributed cloud infrastructure ensures 99.9% availability. Your tools are ready when you are.
-                            </p>
-                        </Card>
-
-                        <Card variant="elevated" className="p-8 md:p-10 border-white/5 bg-white/5 group hover:border-indigo-500/30 transition-all duration-500">
-                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-3xl bg-gradient-to-br from-indigo-500/20 to-blue-500/20 border border-indigo-500/30 flex items-center justify-center mb-8 md:mb-10 group-hover:scale-110 transition-transform">
-                                <Users className="text-indigo-500" size={28} md-size={32} />
-                            </div>
-                            <h3 className="text-xl md:text-2xl font-black mb-4 text-white uppercase tracking-tight">No Compromise</h3>
-                            <p className="text-sm md:text-base text-gray-400 leading-relaxed font-medium">
-                                Highest quality output in the industry. Whether it's SVG vectors or OCR text, we provide precision results.
-                            </p>
-                        </Card>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {benefits.map((b, i) => {
+                            const Icon = b.icon;
+                            return (
+                                <div
+                                    key={i}
+                                    className="bg-[#111] border border-[#1a1a1a] rounded-xl p-6 hover:border-[#2a2a2a] transition-colors"
+                                >
+                                    <div className="bg-[#1a1a1a] border border-[#222] p-2.5 rounded-lg inline-block mb-4">
+                                        <Icon size={17} className="text-[#888]" />
+                                    </div>
+                                    <h3 className="text-white font-semibold text-sm mb-2">{b.title}</h3>
+                                    <p className="text-[#555] text-xs leading-relaxed">{b.description}</p>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
 
-            {/* About QuickPDF Snippet */}
-            <section className="py-16 md:py-24 px-4 sm:px-6 border-t border-white/5 bg-gradient-to-b from-[#0f172a] to-[#1e293b]/20">
-                <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-                    <div className="text-center md:text-left px-4">
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-6 uppercase tracking-tighter leading-none">
-                            The Vision Behind <br className="md:hidden" /><span className="text-blue-500">QuickPDF</span>
+            {/* About section */}
+            <section className="py-20 px-4 sm:px-6 border-t border-[#1a1a1a]">
+                <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <p className="text-xs text-[#555] uppercase tracking-widest font-medium mb-2">About</p>
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-4">
+                            The vision behind QuickPDF
                         </h2>
-                        <p className="text-sm sm:text-lg text-gray-400 leading-relaxed mb-8 font-bold px-2 md:px-0 opacity-80">
-                            Founded in 2024, QuickPDF was born out of a simple need: universal, high-speed document processing without the clutter of traditional tools. We believe that professional-grade tools should be accessible to everyone, anywhere.
+                        <p className="text-sm text-[#555] leading-relaxed mb-6">
+                            Founded in 2024, QuickPDF was born out of a simple need: universal, high-speed document processing without the clutter of traditional tools. We believe professional-grade tools should be accessible to everyone, anywhere.
                         </p>
-                        <div className="flex justify-center md:justify-start gap-4">
-                            <Button variant="secondary" className="w-full sm:w-auto px-8" onClick={() => router.push('/about')}>Read Our Story</Button>
-                        </div>
+                        <Button variant="secondary" onClick={() => router.push('/about')}>
+                            Read Our Story
+                        </Button>
                     </div>
-                    <div className="relative">
-                        <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full animate-pulse"></div>
-                        <div className="relative p-8 bg-white/5 border border-white/10 rounded-[3rem] backdrop-blur-xl">
-                            <div className="space-y-6">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400 font-bold italic">PDF</div>
-                                    <div className="h-2 flex-1 bg-white/5 rounded-full overflow-hidden">
-                                        <div className="w-[90%] h-full bg-blue-500"></div>
-                                    </div>
-                                    <span className="text-xs font-black text-gray-500">90%</span>
+
+                    {/* Accuracy bars */}
+                    <div className="bg-[#111] border border-[#1a1a1a] rounded-xl p-6 space-y-5">
+                        {[
+                            { label: 'PDF Processing', pct: 90 },
+                            { label: 'AI Accuracy', pct: 95 },
+                            { label: 'SVG Vectorization', pct: 85 },
+                        ].map(({ label, pct }) => (
+                            <div key={label}>
+                                <div className="flex justify-between text-xs mb-2">
+                                    <span className="text-[#888]">{label}</span>
+                                    <span className="text-[#555]">{pct}%</span>
                                 </div>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center text-purple-400 font-bold italic">AI</div>
-                                    <div className="h-2 flex-1 bg-white/5 rounded-full overflow-hidden">
-                                        <div className="w-[95%] h-full bg-purple-500"></div>
-                                    </div>
-                                    <span className="text-xs font-black text-gray-500">95%</span>
-                                </div>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center text-pink-400 font-bold italic">SVG</div>
-                                    <div className="h-2 flex-1 bg-white/5 rounded-full overflow-hidden">
-                                        <div className="w-[85%] h-full bg-pink-500"></div>
-                                    </div>
-                                    <span className="text-xs font-black text-gray-500">85%</span>
+                                <div className="h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-white rounded-full"
+                                        style={{ width: `${pct}%` }}
+                                    />
                                 </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            {/* FAQ Section */}
+            {/* FAQ */}
             <FAQ />
 
-            {/* Pricing / Access Section */}
-            <section className="py-16 md:py-32 px-4 sm:px-6">
-                <div className="max-w-7xl mx-auto text-center mb-10 md:mb-16 px-4">
-                    <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-4 uppercase tracking-tighter leading-none">Simple, Transparent <span className="text-blue-500">Access</span></h2>
-                    <p className="text-xs sm:text-base text-gray-400 font-bold uppercase tracking-widest opacity-60">Professional tools should be accessible to everyone.</p>
-                </div>
+            {/* Pricing / Free access */}
+            <section className="py-20 px-4 sm:px-6 border-t border-[#1a1a1a]">
+                <div className="max-w-5xl mx-auto">
+                    <div className="mb-10">
+                        <p className="text-xs text-[#555] uppercase tracking-widest font-medium mb-2">Pricing</p>
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Simple, transparent access</h2>
+                        <p className="text-sm text-[#555] mt-2">Professional tools should be accessible to everyone.</p>
+                    </div>
 
-                <div className="max-w-md mx-auto">
-                    <div className="bg-white/5 border-2 border-blue-500/50 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-12 relative shadow-[0_0_50px_rgba(59,130,246,0.2)]">
-                        <div className="absolute top-0 right-8 md:right-12 -translate-y-1/2 bg-blue-600 px-4 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest text-white">Popular</div>
-                        <h3 className="text-xl md:text-2xl font-black text-white mb-2 uppercase tracking-tight text-center md:text-left">Community Free</h3>
-                        <div className="flex items-baseline justify-center md:justify-start gap-2 mb-8">
-                            <span className="text-4xl md:text-5xl font-black text-white">$0</span>
-                            <span className="text-gray-500 font-bold uppercase text-xs">Forever</span>
+                    <div className="max-w-sm">
+                        <div className="bg-[#111] border border-[#2a2a2a] rounded-xl p-8">
+                            <div className="flex items-center justify-between mb-1">
+                                <h3 className="text-white font-semibold">Community Free</h3>
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-[#555] bg-[#1a1a1a] border border-[#2a2a2a] px-2 py-0.5 rounded-full">Popular</span>
+                            </div>
+                            <div className="flex items-baseline gap-1.5 mb-6 mt-3">
+                                <span className="text-4xl font-bold text-white">$0</span>
+                                <span className="text-xs text-[#555] uppercase">Forever</span>
+                            </div>
+
+                            <ul className="space-y-3 mb-7">
+                                {freeFeatures.map((f) => (
+                                    <li key={f} className="flex items-center gap-3 text-sm text-[#888]">
+                                        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded p-0.5">
+                                            <Check size={12} className="text-white" />
+                                        </div>
+                                        {f}
+                                    </li>
+                                ))}
+                            </ul>
+
+                            <Button className="w-full" onClick={() => router.push('/tools')}>
+                                Start Now
+                                <ArrowRight size={15} />
+                            </Button>
                         </div>
-                        <ul className="space-y-4 mb-10 text-left">
-                            <li className="flex items-center gap-3 text-gray-400 font-medium transition-colors hover:text-white">
-                                <div className="p-1 bg-green-500/20 text-green-500 rounded-lg"><ArrowRight size={14} /></div>
-                                Unlimited Conversions
-                            </li>
-                            <li className="flex items-center gap-3 text-gray-400 font-medium transition-colors hover:text-white">
-                                <div className="p-1 bg-green-500/20 text-green-500 rounded-lg"><ArrowRight size={14} /></div>
-                                High Precision OCR
-                            </li>
-                            <li className="flex items-center gap-3 text-gray-400 font-medium transition-colors hover:text-white">
-                                <div className="p-1 bg-green-500/20 text-green-500 rounded-lg"><ArrowRight size={14} /></div>
-                                AI Diagram Generator
-                            </li>
-                            <li className="flex items-center gap-3 text-gray-400 font-medium transition-colors hover:text-white">
-                                <div className="p-1 bg-green-500/20 text-green-500 rounded-lg"><ArrowRight size={14} /></div>
-                                24h File Retention
-                            </li>
-                        </ul>
-                        <Button className="w-full py-4 text-sm font-black uppercase tracking-widest" onClick={() => router.push('/tools')}>Start Now</Button>
                     </div>
                 </div>
             </section>
 
-            {/* Final CTA Section */}
-            <section className="py-24 md:py-40 px-4 sm:px-6">
-                <div className="max-w-5xl mx-auto">
-                    <Card variant="elevated" className="p-10 sm:p-16 md:p-24 text-center relative overflow-hidden bg-gradient-to-b from-white/5 to-transparent border-white/10 rounded-[3rem] md:rounded-[4rem]">
-                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent shadow-[0_0_20px_rgba(59,130,246,0.5)]"></div>
-
-                        <div className="relative z-10">
-                            <h2 className="text-3xl sm:text-5xl md:text-7xl font-black mb-6 md:mb-8 tracking-tighter text-white uppercase leading-[1.1]">
-                                Start Your <br className="hidden sm:block" /><span className="gradient-text">Journey Now</span>
-                            </h2>
-                            <p className="text-sm sm:text-lg md:text-xl text-gray-400 mb-10 md:mb-12 max-w-2xl mx-auto leading-relaxed font-bold px-4 opacity-80">
-                                Join our ecosystem of millions and experience the future of document processing. Entirely free, remarkably fast.
-                            </p>
-                            <Button
-                                size="lg"
-                                className="w-full sm:w-auto px-10 py-5 sm:px-12 sm:py-6 text-base sm:text-xl rounded-2xl shadow-2xl shadow-blue-500/30 font-black uppercase tracking-widest"
-                                onClick={() => router.push('/tools')}
-                            >
-                                Get Started Free
-                                <ArrowRight size={24} />
-                            </Button>
-                        </div>
-                    </Card>
+            {/* Final CTA */}
+            <section className="py-20 px-4 sm:px-6 border-t border-[#1a1a1a]">
+                <div className="max-w-3xl mx-auto text-center">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                        Start your journey now
+                    </h2>
+                    <p className="text-[#555] text-sm mb-8 max-w-md mx-auto leading-relaxed">
+                        Join millions of users and experience the future of document processing. Entirely free, remarkably fast.
+                    </p>
+                    <Button size="lg" onClick={() => router.push('/tools')} className="inline-flex items-center gap-2">
+                        Get Started Free
+                        <ArrowRight size={18} />
+                    </Button>
+                    <p className="text-[#333] text-xs mt-4 uppercase tracking-widest">No sign-up required · 100% free</p>
                 </div>
             </section>
 
-            {/* Footer */}
             <Footer />
         </div>
     );

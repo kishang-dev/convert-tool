@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useAuthStore } from '@/store/authStore';
-import { FileText, LogOut, User, Sparkles, Menu, X } from 'lucide-react';
+import { FileText, LogOut, User, Menu, X, ChevronDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
@@ -13,83 +13,67 @@ export default function Navbar() {
 
     useEffect(() => {
         setMounted(true);
-
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
-        };
-
+        const handleScroll = () => setScrolled(window.scrollY > 20);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Close mobile menu when route changes
-    useEffect(() => {
-        setMobileMenuOpen(false);
-    }, [router.pathname]);
+    useEffect(() => { setMobileMenuOpen(false); }, [router.pathname]);
 
-    // Prevent body scroll when mobile menu is open
     useEffect(() => {
-        if (mobileMenuOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
+        document.body.style.overflow = mobileMenuOpen ? 'hidden' : 'unset';
+        return () => { document.body.style.overflow = 'unset'; };
     }, [mobileMenuOpen]);
 
     if (!mounted) {
         return (
-            <header className="fixed top-0 left-0 right-0 z-[100] bg-[#0a0a0f]/95 backdrop-blur-xl border-b border-white/10">
-                <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <div className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg p-2">
-                            <FileText className="text-white" size={24} />
+            <header className="fixed top-0 left-0 right-0 z-[100] bg-[#0a0a0a] border-b border-[#1a1a1a]">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                        <div className="bg-white rounded-md p-1.5">
+                            <FileText className="text-black" size={18} />
                         </div>
-                        <span className="text-2xl font-bold gradient-text">
-                            QuickPDF Tools
-                        </span>
+                        <span className="text-white font-semibold text-lg tracking-tight">QuickPDF</span>
                     </div>
                 </div>
             </header>
         );
     }
 
+    const navLink = (href: string, label: string, exact = false) => {
+        const active = exact ? router.pathname === href : router.pathname.startsWith(href);
+        return (
+            <Link
+                href={href}
+                className={`text-sm transition-colors ${active ? 'text-white font-medium' : 'text-[#888] hover:text-white'}`}
+            >
+                {label}
+            </Link>
+        );
+    };
+
     return (
-        <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled
-            ? 'bg-[#0a0a0f]/95 backdrop-blur-xl border-b border-white/10 shadow-2xl py-3'
-            : 'bg-[#0a0a0f]/40 backdrop-blur-md py-4 sm:py-5'
-            }`}>
-            <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
-                <Link href="/" className="flex items-center gap-2 hover-scale transition-smooth">
-                    <div className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg p-2 shadow-lg">
-                        <FileText className="text-white" size={24} />
+        <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled
+            ? 'bg-[#0a0a0a]/98 backdrop-blur-xl border-b border-[#1a1a1a] shadow-xl py-3'
+            : 'bg-[#0a0a0a] border-b border-[#1a1a1a] py-4'}`}
+        >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+
+                {/* Logo */}
+                <Link href="/" className="flex items-center gap-2.5 shrink-0">
+                    <div className="bg-white rounded-md p-1.5">
+                        <FileText className="text-black" size={18} />
                     </div>
-                    <span className="text-lg sm:text-xl md:text-2xl font-bold gradient-text whitespace-nowrap">
-                        QuickPDF Tools
-                    </span>
+                    <span className="text-white font-semibold text-lg tracking-tight">QuickPDF</span>
                 </Link>
 
-                {/* Desktop Navigation */}
-                <nav className="hidden xl:flex items-center gap-6 lg:gap-8">
-                    <Link
-                        href="/"
-                        className={`text-gray-300 hover:text-white transition-smooth ${router.pathname === '/' ? 'text-white font-semibold' : ''
-                            }`}
-                    >
-                        Home
-                    </Link>
-                    <Link
-                        href="/tools"
-                        className={`text-gray-300 hover:text-white transition-smooth ${router.pathname === '/tools' ? 'text-white font-semibold' : ''
-                            }`}
-                    >
-                        Tools
-                    </Link>
+                {/* Desktop Nav */}
+                <nav className="hidden lg:flex items-center gap-7">
+                    {navLink('/', 'Home', true)}
+                    {navLink('/tools', 'Tools')}
                     <a
                         href="#features"
-                        className="text-gray-300 hover:text-white transition-smooth"
+                        className="text-sm text-[#888] hover:text-white transition-colors"
                         onClick={(e) => {
                             if (router.pathname === '/') {
                                 e.preventDefault();
@@ -101,209 +85,136 @@ export default function Navbar() {
                     >
                         Features
                     </a>
-                    <Link
-                        href="/svg"
-                        className={`hover:text-white transition-smooth uppercase text-xs font-black tracking-widest ${router.pathname === '/svg' ? 'text-white' : 'text-gray-400'
-                            }`}
-                    >
-                        Image to SVG
-                    </Link>
-                    <Link
-                        href="/about"
-                        className={`hover:text-white transition-smooth uppercase text-xs font-black tracking-widest ${router.pathname === '/about' ? 'text-white' : 'text-gray-400'
-                            }`}
-                    >
-                        About
-                    </Link>
-                    <Link
-                        href="/contact"
-                        className={`hover:text-white transition-smooth uppercase text-xs font-black tracking-widest ${router.pathname === '/contact' ? 'text-white' : 'text-gray-400'
-                            }`}
-                    >
-                        Contact
-                    </Link>
+                    {navLink('/about', 'About')}
+                    {navLink('/contact', 'Contact')}
+                </nav>
 
+                {/* Desktop Auth */}
+                <div className="hidden lg:flex items-center gap-3">
                     {user ? (
-                        <div className="flex items-center gap-4 group relative">
-                            <div className="flex items-center gap-2 glass px-3 py-2 rounded-lg cursor-pointer">
+                        <div className="flex items-center gap-3 relative group">
+                            <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#222] bg-[#111] hover:border-[#333] transition-colors text-sm">
                                 {user.avatar ? (
-                                    <img src={user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000${user.avatar}`} alt="Avatar" className="w-6 h-6 rounded-full object-cover border border-purple-500/30" />
+                                    <img
+                                        src={user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000${user.avatar}`}
+                                        alt="Avatar"
+                                        className="w-5 h-5 rounded-full object-cover"
+                                    />
                                 ) : (
-                                    <User size={18} className="text-purple-400" />
+                                    <div className="w-5 h-5 rounded-full bg-[#2a2a2a] flex items-center justify-center">
+                                        <User size={12} className="text-[#888]" />
+                                    </div>
                                 )}
-                                <span className="text-white font-medium">{user.name}</span>
-                            </div>
-                            
-                            {/* Dropdown Menu */}
-                            <div className="absolute top-full right-0 mt-2 w-48 bg-[#0a0a0f]/95 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                                <div className="flex flex-col py-2">
-                                    <Link href="/profile" className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
-                                        Profile
-                                    </Link>
-                                    <Link href="/history" className="px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
-                                        History
-                                    </Link>
-                                    <button
-                                        onClick={logout}
-                                        className="px-4 py-2 text-left text-red-400 hover:text-red-300 hover:bg-white/5 transition-colors flex items-center gap-2"
-                                    >
-                                        <LogOut size={16} />
-                                        Logout
-                                    </button>
-                                </div>
+                                <span className="text-white">{user.name}</span>
+                                <ChevronDown size={14} className="text-[#555]" />
+                            </button>
+
+                            {/* Dropdown */}
+                            <div className="absolute top-full right-0 mt-2 w-44 bg-[#111] border border-[#222] rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1">
+                                <Link href="/profile" className="flex px-4 py-2 text-sm text-[#888] hover:text-white hover:bg-[#1a1a1a] transition-colors">
+                                    Profile
+                                </Link>
+                                <Link href="/history" className="flex px-4 py-2 text-sm text-[#888] hover:text-white hover:bg-[#1a1a1a] transition-colors">
+                                    History
+                                </Link>
+                                <Link href="/my-resumes" className="flex px-4 py-2 text-sm text-[#888] hover:text-white hover:bg-[#1a1a1a] transition-colors">
+                                    My Resumes
+                                </Link>
+                                <div className="border-t border-[#1a1a1a] my-1" />
+                                <button
+                                    onClick={logout}
+                                    className="w-full flex px-4 py-2 text-sm text-red-500 hover:text-red-400 hover:bg-[#1a1a1a] transition-colors items-center gap-2"
+                                >
+                                    <LogOut size={14} />
+                                    Logout
+                                </button>
                             </div>
                         </div>
                     ) : (
                         <>
                             <Link
                                 href="/login"
-                                className="text-gray-300 hover:text-white transition-smooth"
+                                className="text-sm text-[#888] hover:text-white transition-colors"
                             >
-                                Login
+                                Sign in
                             </Link>
                             <Link
                                 href="/register"
-                                className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 lg:px-6 py-2 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-smooth shadow-lg hover-lift"
+                                className="text-sm bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors font-medium"
                             >
-                                Register
+                                Get Started
                             </Link>
                         </>
                     )}
+                </div>
 
-                    {!user && (
-                        <button className="bg-gradient-to-r from-pink-600 to-purple-600 text-white px-4 lg:px-6 py-2 rounded-lg hover:from-pink-700 hover:to-purple-700 transition-smooth shadow-lg hover-lift flex items-center gap-2">
-                            <Sparkles size={16} />
-                            <span className="hidden lg:inline">Upgrade to Pro</span>
-                            <span className="lg:hidden">Pro</span>
-                        </button>
-                    )}
-                </nav>
-
-                {/* Mobile Menu Button */}
+                {/* Mobile Toggle */}
                 <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="xl:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-smooth"
+                    className="lg:hidden text-[#888] hover:text-white p-2 rounded-lg hover:bg-[#1a1a1a] transition-colors"
                     aria-label="Toggle menu"
                 >
-                    {mobileMenuOpen ? (
-                        <X className="w-6 h-6" />
-                    ) : (
-                        <Menu className="w-6 h-6" />
-                    )}
+                    {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                 </button>
             </div>
 
             {/* Mobile Menu */}
             {mobileMenuOpen && (
                 <>
-                    {/* Backdrop */}
                     <div
-                        className="absolute top-full left-0 right-0 h-screen bg-black/60 backdrop-blur-sm xl:hidden"
+                        className="fixed inset-0 top-[57px] bg-black/60 backdrop-blur-sm lg:hidden"
                         onClick={() => setMobileMenuOpen(false)}
                     />
+                    <div className="absolute top-full left-0 right-0 bg-[#0a0a0a] border-b border-[#1a1a1a] lg:hidden shadow-2xl animate-slideInRight">
+                        <nav className="flex flex-col p-4 gap-1">
+                            {[
+                                { href: '/', label: 'Home' },
+                                { href: '/tools', label: 'Tools' },
+                                { href: '/about', label: 'About' },
+                                { href: '/contact', label: 'Contact' },
+                            ].map(({ href, label }) => (
+                                <Link
+                                    key={href}
+                                    href={href}
+                                    className={`px-4 py-3 rounded-lg text-sm transition-colors ${router.pathname === href ? 'bg-[#1a1a1a] text-white font-medium' : 'text-[#888] hover:text-white hover:bg-[#111]'}`}
+                                >
+                                    {label}
+                                </Link>
+                            ))}
 
-                    {/* Menu Panel */}
-                    <div
-                        className="absolute top-full left-0 right-0 bg-[#0a0a0f]/95 backdrop-blur-xl border-t border-white/5 xl:hidden animate-slideInRight shadow-2xl"
-                        style={{ maxHeight: 'calc(100vh - 60px)', overflowY: 'auto' }}
-                    >
-                        <nav className="flex flex-col p-4 space-y-2">
-                            <Link
-                                href="/"
-                                className={`px-4 py-3 rounded-lg transition-smooth ${router.pathname === '/'
-                                    ? 'bg-purple-600 text-white font-semibold'
-                                    : 'text-gray-300 hover:bg-white/10 hover:text-white'
-                                    }`}
-                            >
-                                Home
-                            </Link>
-                            <Link
-                                href="/tools"
-                                className={`px-4 py-3 rounded-lg transition-smooth ${router.pathname === '/tools'
-                                    ? 'bg-purple-600 text-white font-semibold'
-                                    : 'text-gray-300 hover:bg-white/10 hover:text-white'
-                                    }`}
-                            >
-                                Tools
-                            </Link>
-                            <a
-                                href="#features"
-                                className="px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-smooth"
-                                onClick={(e) => {
-                                    if (router.pathname === '/') {
-                                        e.preventDefault();
-                                        document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
-                                        setMobileMenuOpen(false);
-                                    } else {
-                                        router.push('/#features');
-                                    }
-                                }}
-                            >
-                                Features
-                            </a>
-                            <Link
-                                href="/svg"
-                                className="px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-smooth font-bold uppercase text-xs tracking-widest"
-                            >
-                                Image to SVG
-                            </Link>
-                            <Link
-                                href="/about"
-                                className="px-4 py-3 rounded-lg text-gray-400 hover:bg-white/10 hover:text-white transition-smooth font-bold uppercase text-xs tracking-widest"
-                            >
-                                About
-                            </Link>
-                            <Link
-                                href="/contact"
-                                className="px-4 py-3 rounded-lg text-gray-400 hover:bg-white/10 hover:text-white transition-smooth font-bold uppercase text-xs tracking-widest"
-                            >
-                                Contact
-                            </Link>
-
-                            <div className="border-t border-gray-700 my-2"></div>
+                            <div className="border-t border-[#1a1a1a] my-2" />
 
                             {user ? (
                                 <>
-                                    <div className="px-4 py-3 glass rounded-lg flex items-center gap-2">
+                                    <div className="px-4 py-3 flex items-center gap-2">
                                         {user.avatar ? (
-                                            <img src={user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000${user.avatar}`} alt="Avatar" className="w-6 h-6 rounded-full object-cover border border-purple-500/30" />
+                                            <img src={user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000${user.avatar}`} alt="Avatar" className="w-7 h-7 rounded-full object-cover" />
                                         ) : (
-                                            <User size={18} className="text-purple-400" />
+                                            <div className="w-7 h-7 rounded-full bg-[#222] flex items-center justify-center">
+                                                <User size={14} className="text-[#888]" />
+                                            </div>
                                         )}
-                                        <span className="text-white font-medium">{user.name}</span>
+                                        <span className="text-white text-sm font-medium">{user.name}</span>
                                     </div>
-                                    <Link href="/profile" className="px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-smooth">
-                                        Profile
-                                    </Link>
-                                    <Link href="/history" className="px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-smooth">
-                                        History
-                                    </Link>
+                                    <Link href="/profile" className="px-4 py-3 rounded-lg text-sm text-[#888] hover:text-white hover:bg-[#111] transition-colors">Profile</Link>
+                                    <Link href="/history" className="px-4 py-3 rounded-lg text-sm text-[#888] hover:text-white hover:bg-[#111] transition-colors">History</Link>
+                                    <Link href="/my-resumes" className="px-4 py-3 rounded-lg text-sm text-[#888] hover:text-white hover:bg-[#111] transition-colors">My Resumes</Link>
                                     <button
                                         onClick={logout}
-                                        className="px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/10 transition-smooth flex items-center gap-2"
+                                        className="px-4 py-3 rounded-lg text-sm text-red-500 hover:bg-[#111] transition-colors flex items-center gap-2"
                                     >
-                                        <LogOut size={18} />
+                                        <LogOut size={15} />
                                         Logout
                                     </button>
                                 </>
                             ) : (
                                 <>
-                                    <Link
-                                        href="/login"
-                                        className="px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-smooth"
-                                    >
-                                        Login
+                                    <Link href="/login" className="px-4 py-3 rounded-lg text-sm text-[#888] hover:text-white hover:bg-[#111] transition-colors">
+                                        Sign in
                                     </Link>
-                                    <Link
-                                        href="/register"
-                                        className="px-4 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold text-center hover:from-purple-700 hover:to-blue-700 transition-smooth shadow-lg"
-                                    >
-                                        Register
+                                    <Link href="/register" className="px-4 py-3 rounded-lg bg-white text-black text-sm font-medium text-center hover:bg-gray-100 transition-colors">
+                                        Get Started
                                     </Link>
-                                    <button className="px-4 py-3 rounded-lg bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold hover:from-pink-700 hover:to-purple-700 transition-smooth shadow-lg flex items-center justify-center gap-2">
-                                        <Sparkles size={16} />
-                                        Upgrade to Pro
-                                    </button>
                                 </>
                             )}
                         </nav>
@@ -313,5 +224,3 @@ export default function Navbar() {
         </header>
     );
 }
-
-

@@ -191,8 +191,8 @@ export default function GenericToolPage({ id }: { id: string }) {
 
     if (!tool) {
         return (
-            <div className="min-h-screen bg-[#0f172a] text-white flex flex-col items-center justify-center p-4">
-                <h1 className="text-3xl font-bold mb-4">Tool Not Found</h1>
+            <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center p-4">
+                <h1 className="text-2xl font-semibold mb-4">Tool Not Found</h1>
                 <Button onClick={() => router.push("/tools")}>Back to Tools</Button>
             </div>
         );
@@ -290,7 +290,7 @@ export default function GenericToolPage({ id }: { id: string }) {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0a0a0a] text-white">
             <Head>
                 <title>{tool.title} | QuickPDF</title>
             </Head>
@@ -298,46 +298,40 @@ export default function GenericToolPage({ id }: { id: string }) {
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 
-            <div className="max-w-4xl mx-auto px-4 py-24 md:py-32">
-                <button 
+            <div className="max-w-3xl mx-auto px-4 py-24 md:py-28">
+                <button
                     onClick={() => router.push("/tools")}
-                    className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8"
+                    className="flex items-center gap-1.5 text-[#666] hover:text-white transition-colors mb-8 text-sm"
                 >
-                    <ArrowLeft size={20} />
-                    Back to All Tools
+                    <ArrowLeft size={16} />
+                    All Tools
                 </button>
 
-                <div className="text-center mb-10 animate-fadeIn">
-                    <h1 className="text-4xl md:text-5xl font-black gradient-text tracking-tight mb-4">
-                        {tool.title}
-                    </h1>
-                    <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                        {tool.description}
-                    </p>
+                <div className="mb-8 animate-fadeIn">
+                    <h1 className="text-3xl font-bold text-white mb-2">{tool.title}</h1>
+                    <p className="text-[#666] text-sm">{tool.description}</p>
                 </div>
 
-                <Card variant="elevated" className="p-8 border border-white/5 animate-fadeIn" style={{ animationDelay: '0.1s' }}>
+                <div className="bg-[#111111] border border-[#222222] rounded-xl overflow-hidden animate-fadeIn" style={{ animationDelay: '0.1s' }}>
                     {/* Upload Section */}
                     {files.length < tool.maxFiles && (
                         <div
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDrop}
-                            className={`p-10 border-2 border-dashed rounded-2xl text-center transition-all cursor-pointer mb-6 ${
-                                isDragging ? "bg-blue-500/10 border-blue-500" : "bg-white/5 border-white/10 hover:border-blue-500/30"
+                            className={`p-12 border-b border-[#222] text-center transition-all cursor-pointer ${
+                                isDragging ? "bg-white/5 border-dashed border-2 border-[#444]" : "hover:bg-[#161616]"
                             }`}
                             onClick={() => !loading && fileInputRef.current?.click()}
                         >
-                            <div className="flex flex-col items-center gap-4">
-                                <div className="bg-gradient-to-br from-blue-600/20 to-indigo-600/20 p-4 rounded-full">
-                                    <Upload className="text-blue-400" size={32} />
+                            <div className="flex flex-col items-center gap-3">
+                                <div className="bg-[#1a1a1a] border border-[#2a2a2a] p-4 rounded-xl inline-block">
+                                    <Upload className="text-white" size={24} />
                                 </div>
                                 <div>
-                                    <p className="text-lg font-bold text-white mb-1">
-                                        Click to upload or drag & drop
-                                    </p>
-                                    <p className="text-sm text-gray-500">
-                                        Accepts {tool.accepts} (Max {tool.maxFiles} file{tool.maxFiles > 1 ? 's' : ''})
+                                    <p className="text-white font-medium mb-1">Click to upload or drag & drop</p>
+                                    <p className="text-[#555] text-sm">
+                                        {tool.accepts.toUpperCase().replace(/\./g, '').replace(/,/g, ', ')} &mdash; Max {tool.maxFiles} file{tool.maxFiles > 1 ? 's' : ''}
                                     </p>
                                 </div>
                             </div>
@@ -353,53 +347,51 @@ export default function GenericToolPage({ id }: { id: string }) {
                     )}
 
                     {loading && (
-                        <div className="text-center py-4">
-                            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-                            <p className="text-sm text-gray-400">Uploading...</p>
+                        <div className="p-6 text-center border-b border-[#222]">
+                            <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                            <p className="text-sm text-[#666]">Uploading...</p>
                         </div>
                     )}
 
                     {/* Uploaded Files */}
                     {files.length > 0 && (
-                        <div className="mb-6">
-                            <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Selected Files ({files.length}/{tool.maxFiles})</h3>
-                            <div className="space-y-2">
-                                <FileList 
-                                    files={files}
-                                    onRemove={handleRemoveFile}
-                                    onDownload={() => {}}
-                                />
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Tool specific options */}
-                    {tool.needsPassword && files.length > 0 && (
-                        <div className="mb-6">
-                            <label className="block text-sm font-bold text-gray-400 mb-2">Password to Protect PDF</label>
-                            <input 
-                                type="password" 
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-xl focus:border-blue-500 outline-none text-white placeholder-gray-600"
-                                placeholder="Enter strong password..."
+                        <div className="border-b border-[#222] p-4">
+                            <p className="text-xs text-[#555] font-medium uppercase tracking-wider mb-3">Selected Files ({files.length}/{tool.maxFiles})</p>
+                            <FileList
+                                files={files}
+                                onRemove={handleRemoveFile}
+                                onDownload={() => {}}
                             />
                         </div>
                     )}
 
-                    {/* Action Button */}
-                    <div className="pt-4 border-t border-white/5 flex justify-end">
-                        <Button 
-                            size="lg" 
+                    {/* Password field for protect-pdf */}
+                    {tool.needsPassword && files.length > 0 && (
+                        <div className="border-b border-[#222] p-4">
+                            <label className="block text-sm text-[#888] mb-2">Password</label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full bg-[#161616] border border-[#2a2a2a] px-4 py-2.5 rounded-lg text-sm text-white placeholder-[#444] focus:border-[#444] outline-none transition-colors"
+                                placeholder="Enter password to protect PDF…"
+                            />
+                        </div>
+                    )}
+
+                    {/* Action */}
+                    <div className="p-4 flex justify-end">
+                        <Button
+                            size="md"
                             onClick={runTool}
                             disabled={files.length < tool.minFiles || loading || processing}
                             loading={processing}
-                            className="w-full sm:w-auto min-w-[200px]"
+                            className="min-w-[160px]"
                         >
-                            {processing ? "Processing..." : tool.title}
+                            {processing ? "Processing…" : tool.title}
                         </Button>
                     </div>
-                </Card>
+                </div>
             </div>
         </div>
     );

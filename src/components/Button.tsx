@@ -17,18 +17,18 @@ export default function Button({
     disabled,
     ...props
 }: ButtonProps) {
-    const baseStyles = 'font-semibold rounded-lg transition-smooth inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed';
+    const baseStyles = 'font-medium rounded-lg transition-smooth inline-flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed';
 
     const variants = {
-        primary: 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 hover-lift shadow-lg',
-        secondary: 'glass border-2 border-purple-500 text-white hover:bg-purple-500/20 hover-glow',
-        ghost: 'text-white hover:bg-white/10 hover-scale',
+        primary:   'bg-white text-black hover:bg-gray-100 shadow-sm',
+        secondary: 'bg-transparent border border-[#333] text-white hover:bg-[#1a1a1a]',
+        ghost:     'bg-transparent text-gray-400 hover:text-white hover:bg-[#1a1a1a]',
     };
 
     const sizes = {
-        sm: 'px-4 py-2 text-sm',
-        md: 'px-6 py-3 text-base',
-        lg: 'px-8 py-4 text-lg',
+        sm: 'px-3 py-1.5 text-sm',
+        md: 'px-5 py-2.5 text-sm',
+        lg: 'px-7 py-3 text-base',
     };
 
     return (
@@ -37,7 +37,7 @@ export default function Button({
             disabled={disabled || loading}
             {...props}
         >
-            {loading && <Loader2 className="animate-spin" size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />}
+            {loading && <Loader2 className="animate-spin" size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16} />}
             {children}
         </button>
     );

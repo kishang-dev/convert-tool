@@ -124,7 +124,7 @@ export default function Tools() {
     }).filter(category => category.items.length > 0);
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0a0a0a] text-white">
             <Navbar />
 
             {/* ── Main Content ── */}
@@ -132,33 +132,33 @@ export default function Tools() {
 
                 {/* ── Page Header ── */}
                 <div className="text-center mb-10 animate-fadeIn">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-5 text-blue-400 text-[10px] font-black uppercase tracking-[0.2em]">
-                        <Sparkles size={13} />
-                        40+ Tools · All Free · No Sign-up
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-full mb-5 text-[#888] text-[10px] font-bold uppercase tracking-[0.15em]">
+                        <Sparkles size={11} />
+                        40+ Tools &middot; All Free &middot; No Sign-up
                     </div>
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-black gradient-text tracking-tighter leading-tight mb-4">
+                    <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
                         All Tools
                     </h1>
-                    <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
-                        Browse every tool by category, or search below. Click any card to open the tool directly.
+                    <p className="text-[#666] text-base max-w-xl mx-auto leading-relaxed">
+                        Browse every tool by category, or search below.
                     </p>
 
-                    {/* ── Search Bar ── */}
-                    <div className="flex justify-center mt-8">
-                        <div className="relative w-full max-w-lg group">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-400 transition-colors" size={20} />
+                    {/* Search Bar */}
+                    <div className="flex justify-center mt-6">
+                        <div className="relative w-full max-w-md">
+                            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#444]" size={17} />
                             <input
-                                placeholder="Search tools… (Merge, Regex, SQL, Resize…)"
+                                placeholder="Search tools…"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full bg-white/5 border border-white/10 p-4 pl-12 pr-4 rounded-2xl outline-none focus:border-blue-500/40 focus:bg-white/8 transition-all font-medium text-white placeholder-gray-600"
+                                className="w-full bg-[#111] border border-[#222] p-3 pl-10 pr-10 rounded-xl outline-none focus:border-[#333] transition-colors text-sm text-white placeholder-[#444]"
                             />
                             {searchQuery && (
                                 <button
                                     onClick={() => setSearchQuery('')}
-                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white text-xs font-bold"
+                                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#555] hover:text-white text-xs"
                                 >
-                                    ✕ Clear
+                                    ✕
                                 </button>
                             )}
                         </div>
@@ -167,23 +167,21 @@ export default function Tools() {
 
                 {/* Removed common file upload panel */}
 
-                {/* ── Categorised Tool Directory ── */}
-                <div className="space-y-14 mb-12">
+                {/* Category Directory */}
+                <div className="space-y-12 mb-12">
                     {filteredCategories.map((category, catIdx) => (
                         <div
                             key={catIdx}
                             className="animate-fadeIn"
-                            style={{ animationDelay: `${0.15 + catIdx * 0.05}s` } as React.CSSProperties}
+                            style={{ animationDelay: `${0.1 + catIdx * 0.04}s` } as React.CSSProperties}
                         >
                             {/* Category header */}
-                            <div className="flex items-end justify-between mb-5 pb-3 border-b border-white/5">
+                            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#1a1a1a]">
                                 <div>
-                                    <h2 className="text-xl md:text-2xl font-black text-white tracking-tight">
-                                        {category.title}
-                                    </h2>
-                                    <p className="text-xs text-gray-500 mt-0.5">{category.description}</p>
+                                    <h2 className="text-base font-semibold text-white">{category.title}</h2>
+                                    <p className="text-xs text-[#555] mt-0.5">{category.description}</p>
                                 </div>
-                                <span className="text-[10px] font-black text-gray-600 uppercase tracking-widest shrink-0 ml-4">
+                                <span className="text-[10px] font-bold text-[#444] uppercase tracking-widest shrink-0 ml-4">
                                     {category.items.length} tool{category.items.length !== 1 ? 's' : ''}
                                 </span>
                             </div>
@@ -211,34 +209,23 @@ export default function Tools() {
 
                     {/* Empty search state */}
                     {filteredCategories.length === 0 && (
-                        <div className="text-center py-20 bg-white/[0.02] border border-white/5 rounded-3xl">
-                            <Search size={40} className="mx-auto mb-4 text-gray-700" />
-                            <p className="text-gray-500 font-semibold text-lg">No tools found for "{searchQuery}"</p>
-                            <p className="text-xs text-gray-600 mt-2">Try: Merge · Resize · SQL · Regex · Markdown</p>
-                            <button onClick={() => setSearchQuery('')} className="mt-5 text-xs text-blue-500 hover:text-blue-400 font-bold underline underline-offset-4">
+                        <div className="text-center py-16 bg-[#111] border border-[#1a1a1a] rounded-xl">
+                            <Search size={32} className="mx-auto mb-3 text-[#333]" />
+                            <p className="text-[#555] font-medium">No tools found for &ldquo;{searchQuery}&rdquo;</p>
+                            <button onClick={() => setSearchQuery('')} className="mt-4 text-xs text-white hover:text-[#aaa] font-medium underline underline-offset-4">
                                 Clear search
                             </button>
                         </div>
                     )}
                 </div>
 
-                {/* ── Footer Banner ── */}
-                <Card
-                    variant="elevated"
-                    className="p-6 relative overflow-hidden animate-fadeIn border border-white/5"
-                    style={{ animationDelay: '0.8s' } as React.CSSProperties}
-                >
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600/15 to-indigo-600/15" />
-                    <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div>
-                            <p className="font-bold text-white text-base">🔒 Secure & Private</p>
-                            <p className="text-sm text-gray-400 mt-0.5">All files are encrypted in transit and automatically deleted after 1 hour. Nothing is stored permanently.</p>
-                        </div>
-                        <Button variant="secondary" className="shrink-0">
-                            Learn More
-                        </Button>
+                {/* Footer Banner */}
+                <div className="bg-[#111] border border-[#1a1a1a] rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 animate-fadeIn">
+                    <div>
+                        <p className="font-semibold text-white text-sm">🔒 Secure & Private</p>
+                        <p className="text-xs text-[#555] mt-0.5">All files are encrypted in transit and auto-deleted after 1 hour. Nothing is stored permanently.</p>
                     </div>
-                </Card>
+                </div>
             </div>
 
                 {/* Modals removed because they moved to specific tool pages */}

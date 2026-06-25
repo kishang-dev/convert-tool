@@ -17,19 +17,17 @@ export default function Card({
     onClick,
     style,
 }: CardProps) {
-    const baseStyles = 'rounded-xl transition-smooth';
-
     const variants = {
-        default: 'glass',
-        elevated: 'glass-strong shadow-xl',
-        outlined: 'border-2 border-purple-500/30 bg-transparent',
+        default:  'bg-[#111111] border border-[#222222] rounded-xl',
+        elevated: 'bg-[#161616] border border-[#2a2a2a] rounded-xl shadow-lg',
+        outlined: 'bg-transparent border border-[#2a2a2a] rounded-xl',
     };
 
-    const hoverStyles = hover ? 'hover-lift hover-glow cursor-pointer' : '';
+    const hoverStyles = hover ? 'cursor-pointer hover:border-[#333] transition-smooth hover:-translate-y-0.5' : '';
 
     return (
         <div
-            className={`${baseStyles} ${variants[variant]} ${hoverStyles} ${className}`}
+            className={`${variants[variant]} ${hoverStyles} ${className}`}
             onClick={onClick}
             style={style}
         >

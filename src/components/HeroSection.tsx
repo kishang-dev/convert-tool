@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Sparkles, Zap, Shield } from 'lucide-react';
+import { ArrowRight, Zap, Shield } from 'lucide-react';
 import Button from './Button';
 import { useRouter } from 'next/router';
 
@@ -7,73 +7,69 @@ export default function HeroSection() {
     const router = useRouter();
 
     return (
-        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-            {/* Animated Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-pink-900/20">
-                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-            </div>
+        <section className="min-h-[88vh] flex items-center justify-center border-b border-[#1a1a1a]">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center py-20">
 
-            {/* Floating Elements */}
-            <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/30 rounded-full blur-3xl animate-float"></div>
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
-            <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-pink-500/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-
-            {/* Content */}
-            <div className="relative z-10 max-w-6xl mx-auto px-4 py-20 text-center">
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-6 animate-fadeIn">
-                    <Sparkles className="text-purple-400" size={16} />
-                    <span className="text-sm text-gray-300">AI-Powered Document Tools</span>
+                <div className="inline-flex items-center gap-2 bg-[#1a1a1a] border border-[#2a2a2a] px-3 py-1.5 rounded-full mb-8 animate-fadeIn">
+                    <span className="text-xs text-[#888] uppercase tracking-widest font-medium">Document Tools Platform</span>
                 </div>
 
-                {/* Main Heading */}
-                <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fadeIn leading-[1.1] tracking-tight px-2" style={{ animationDelay: '0.1s' }}>
-                    Transform Your Documents
-                    <br />
-                    <span className="gradient-text">In Seconds</span>
+                {/* Heading */}
+                <h1
+                    className="text-4xl sm:text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.05] mb-6 animate-fadeIn"
+                    style={{ animationDelay: '0.1s' }}
+                >
+                    Manage Your Documents<br />
+                    <span className="text-[#888]">With Confidence</span>
                 </h1>
 
-                {/* Subheading */}
-                <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-gray-400 mb-10 max-w-3xl mx-auto animate-fadeIn leading-relaxed px-4" style={{ animationDelay: '0.2s' }}>
-                    All-in-one PDF toolkit with AI-powered features. Convert, edit, merge, split, and more—all in your browser, completely free.
+                {/* Sub */}
+                <p
+                    className="text-base sm:text-lg text-[#555] mb-10 max-w-2xl mx-auto leading-relaxed animate-fadeIn"
+                    style={{ animationDelay: '0.2s' }}
+                >
+                    Convert, merge, split, compress, and process your PDF files and images — entirely free, no account needed.
                 </p>
 
-                {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fadeIn" style={{ animationDelay: '0.3s' }}>
+                {/* CTAs */}
+                <div
+                    className="flex flex-col sm:flex-row gap-3 justify-center mb-14 animate-fadeIn"
+                    style={{ animationDelay: '0.3s' }}
+                >
                     <Button
                         size="lg"
                         className="w-full sm:w-auto flex items-center justify-center gap-2"
                         onClick={() => router.push('/tools')}
                     >
-                        Get Started Free
-                        <ArrowRight size={20} />
+                        Start for Free
+                        <ArrowRight size={18} />
                     </Button>
                     <Button
                         variant="secondary"
                         size="lg"
-                        className="w-full sm:w-auto flex items-center justify-center gap-2"
-                        onClick={() => {
-                            document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
-                        }}
+                        className="w-full sm:w-auto"
+                        onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
                     >
-                        Explore Features
+                        View Features
                     </Button>
                 </div>
 
-                {/* Features Pills */}
-                <div className="flex flex-wrap gap-4 justify-center animate-fadeIn" style={{ animationDelay: '0.4s' }}>
-                    <div className="glass px-4 py-2 rounded-full flex items-center gap-2">
-                        <Zap className="text-yellow-400" size={16} />
-                        <span className="text-sm text-gray-300">Lightning Fast</span>
-                    </div>
-                    <div className="glass px-4 py-2 rounded-full flex items-center gap-2">
-                        <Shield className="text-green-400" size={16} />
-                        <span className="text-sm text-gray-300">100% Secure</span>
-                    </div>
-                    <div className="glass px-4 py-2 rounded-full flex items-center gap-2">
-                        <Sparkles className="text-purple-400" size={16} />
-                        <span className="text-sm text-gray-300">No Registration</span>
-                    </div>
+                {/* Trust chips */}
+                <div
+                    className="flex flex-wrap gap-3 justify-center animate-fadeIn"
+                    style={{ animationDelay: '0.4s' }}
+                >
+                    {[
+                        { icon: <Zap size={14} className="text-[#666]" />, label: 'Lightning Fast' },
+                        { icon: <Shield size={14} className="text-[#666]" />, label: '100% Secure' },
+                        { icon: <span className="text-[#666] text-xs">∞</span>, label: 'No Registration' },
+                    ].map(({ icon, label }) => (
+                        <div key={label} className="flex items-center gap-2 bg-[#111] border border-[#222] px-3 py-1.5 rounded-full text-xs text-[#666]">
+                            {icon}
+                            {label}
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
