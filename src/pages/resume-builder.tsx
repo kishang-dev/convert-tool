@@ -236,7 +236,7 @@ export default function ResumeBuilder() {
         if (user) {
             fetchSavedResumes();
         }
-        
+
         // Check if we came from My Resumes with an edit request
         const editDataStr = sessionStorage.getItem('editResume');
         if (editDataStr) {
@@ -384,7 +384,7 @@ export default function ResumeBuilder() {
             if (res.success) {
                 const downloadUrl = res.downloadUrl.startsWith('http')
                     ? res.downloadUrl
-                    : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'}${res.downloadUrl}`;
+                    : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || process.env.NEXT_PUBLIC_BASE_URL}${res.downloadUrl}`;
 
                 // More reliable download trigger
                 const link = document.createElement('a');

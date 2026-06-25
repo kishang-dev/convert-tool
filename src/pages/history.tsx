@@ -128,8 +128,8 @@ export default function HistoryPage() {
                                                 </td>
                                                 <td className="py-4 px-4 text-right">
                                                     <div className="flex items-center justify-end gap-4">
-                                                        <a 
-                                                            href={`http://localhost:5000/outputs/${file.filename}`}
+                                                        <a
+                                                            href={`${process.env.NEXT_PUBLIC_BASE_URL}/outputs/${file.filename}`}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"
@@ -137,7 +137,7 @@ export default function HistoryPage() {
                                                             <Download size={16} />
                                                             <span className="hidden sm:inline">Download</span>
                                                         </a>
-                                                        <button 
+                                                        <button
                                                             onClick={() => handleDeleteFile(file._id)}
                                                             className="inline-flex items-center gap-1 text-red-400 hover:text-red-300 transition-colors text-sm font-medium"
                                                             title="Delete from history"

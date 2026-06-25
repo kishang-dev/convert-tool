@@ -10,14 +10,14 @@ import { User, Phone, Save, Sparkles, Camera } from 'lucide-react';
 export default function ProfilePage() {
     const { user, updateUser } = useAuthStore();
     const router = useRouter();
-    
+
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
     const [avatarPreview, setAvatarPreview] = useState<string>('');
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState({ type: '', text: '' });
-    
+
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function ProfilePage() {
             setName(user.name || '');
             setPhone(user.phone || '');
             if (user.avatar) {
-                setAvatarPreview(user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000${user.avatar}`);
+                setAvatarPreview(user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_BASE_URL}${user.avatar}`);
             }
         }
     }, [user, router]);
@@ -55,10 +55,10 @@ export default function ProfilePage() {
 
             const data = await authApi.updateProfile(formData);
             if (data.success) {
-                updateUser({ 
-                    name: data.data.name, 
-                    phone: data.data.phone, 
-                    avatar: data.data.avatar 
+                updateUser({
+                    name: data.data.name,
+                    phone: data.data.phone,
+                    avatar: data.data.avatar
                 });
                 setMessage({ type: 'success', text: 'Profile updated successfully!' });
             }
@@ -98,10 +98,10 @@ export default function ProfilePage() {
 
                     <Card variant="elevated" className="p-6 sm:p-8">
                         <form onSubmit={handleSubmit} className="space-y-6">
-                            
+
                             {/* Avatar Upload */}
                             <div className="flex flex-col items-center mb-6">
-                                <div 
+                                <div
                                     className="relative w-24 h-24 rounded-full bg-white/5 border-2 border-dashed border-gray-600 flex items-center justify-center cursor-pointer overflow-hidden hover:border-purple-500 transition-colors group"
                                     onClick={() => fileInputRef.current?.click()}
                                 >
@@ -114,12 +114,12 @@ export default function ProfilePage() {
                                         <Camera className="text-white" size={24} />
                                     </div>
                                 </div>
-                                <input 
-                                    type="file" 
-                                    ref={fileInputRef} 
-                                    onChange={handleFileChange} 
-                                    accept="image/*" 
-                                    className="hidden" 
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    onChange={handleFileChange}
+                                    accept="image/*"
+                                    className="hidden"
                                 />
                                 <span className="text-xs text-gray-400 mt-2">Click to change avatar</span>
                             </div>

@@ -58,7 +58,7 @@ export default function pdfEditor() {
                         deleted: false,
                         imageUrl: process.env.NEXT_PUBLIC_API_URL
                             ? `${process.env.NEXT_PUBLIC_API_URL.replace("/api", "")}${url}`
-                            : `http://localhost:5000${url}`,
+                            : `${process.env.NEXT_PUBLIC_BASE_URL}${url}`,
                     }))
                 );
             }
@@ -111,7 +111,7 @@ export default function pdfEditor() {
             // Trigger download
             const downloadUrl = process.env.NEXT_PUBLIC_API_URL
                 ? `${process.env.NEXT_PUBLIC_API_URL.replace("/api", "")}${response.downloadUrl}`
-                : `http://localhost:5000${response.downloadUrl}`;
+                : `${process.env.NEXT_PUBLIC_BASE_URL}${response.downloadUrl}`;
 
             window.open(downloadUrl, "_blank");
 
