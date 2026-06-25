@@ -98,11 +98,11 @@ export const fileAPI = {
 
   getActiveFiles: async (): Promise<{ success: boolean; files: FileData[] }> => {
     try {
-        const response = await api.get("/files?activeOnly=true");
-        return response.data;
+      const response = await api.get("/files?activeOnly=true");
+      return response.data;
     } catch (error) {
-        console.error("Failed to fetch active files (offline or unauthorized)", error);
-        return { success: false, files: [] };
+      console.error("Failed to fetch active files (offline or unauthorized)", error);
+      return { success: false, files: [] };
     }
   },
 
@@ -213,7 +213,7 @@ export const fileAPI = {
   },
 
   // Protect PDF
-    protectPDF: async (
+  protectPDF: async (
     fileId: string,
     password: string,
   ): Promise<{
@@ -271,7 +271,7 @@ export const fileAPI = {
 
   // Get download URL
   getDownloadUrl: (filename: string): string => {
-    return `${API_BASE_URL.replace("/api", "")}/outputs/${filename}`;
+    return `${process.env.NEXT_PUBLIC_ASSETS_URL}/outputs/${filename}`;
   },
 
   // Edit PDF (Rotate, Delete, Reorder pages)
@@ -493,11 +493,11 @@ export const resumeAPI = {
   },
   getUserResumes: async (): Promise<{ success: boolean; data: ResumeData[] }> => {
     try {
-        const response = await api.get("/resumes");
-        return response.data;
+      const response = await api.get("/resumes");
+      return response.data;
     } catch (error) {
-        console.error("Failed to fetch resumes (offline or unauthorized)", error);
-        return { success: false, data: [] };
+      console.error("Failed to fetch resumes (offline or unauthorized)", error);
+      return { success: false, data: [] };
     }
   },
   getResumeById: async (id: string): Promise<{ success: boolean; data: ResumeData }> => {
@@ -522,19 +522,19 @@ export const devToolsAPI = {
   // Base64
   base64Encode: async (text: string) => (await api.post("/devtools/base64/encode", { text })).data,
   base64Decode: async (text: string) => (await api.post("/devtools/base64/decode", { text })).data,
-  
+
   // JSON
   formatJson: async (json: string, indent?: number) => (await api.post("/devtools/json/format", { json, indent })).data,
   minifyJson: async (json: string) => (await api.post("/devtools/json/minify", { json })).data,
   validateJson: async (json: string) => (await api.post("/devtools/json/validate", { json })).data,
-  
+
   // XML
   xmlToJson: async (xml: string) => (await api.post("/devtools/xml/to-json", { xml })).data,
   jsonToXml: async (json: string) => (await api.post("/devtools/xml/from-json", { json })).data,
-  
+
   // SQL
   formatSql: async (sql: string) => (await api.post("/devtools/sql/format", { sql })).data,
-  
+
   // Code Minifier
   minifyCode: async (code: string, type: string) => (await api.post("/devtools/code/minify", { code, type })).data,
 };

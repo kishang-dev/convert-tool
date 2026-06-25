@@ -27,7 +27,7 @@ export default function ProfilePage() {
             setName(user.name || '');
             setPhone(user.phone || '');
             if (user.avatar) {
-                setAvatarPreview(user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_BASE_URL}${user.avatar}`);
+                setAvatarPreview(user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_ASSETS_URL}${user.avatar}`);
             }
         }
     }, [user, router]);

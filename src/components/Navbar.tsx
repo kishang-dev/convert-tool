@@ -96,7 +96,7 @@ export default function Navbar() {
                             <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#222] bg-[#111] hover:border-[#333] transition-colors text-sm">
                                 {user.avatar ? (
                                     <img
-                                        src={user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_BASE_URL}${user.avatar}`}
+                                        src={user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_ASSETS_URL}${user.avatar}`}
                                         alt="Avatar"
                                         className="w-5 h-5 rounded-full object-cover"
                                     />
@@ -188,7 +188,7 @@ export default function Navbar() {
                                 <>
                                     <div className="px-4 py-3 flex items-center gap-2">
                                         {user.avatar ? (
-                                            <img src={user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_BASE_URL}${user.avatar}`} alt="Avatar" className="w-7 h-7 rounded-full object-cover" />
+                                            <img src={user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_ASSETS_URL}${user.avatar}`} alt="Avatar" className="w-7 h-7 rounded-full object-cover" />
                                         ) : (
                                             <div className="w-7 h-7 rounded-full bg-[#222] flex items-center justify-center">
                                                 <User size={14} className="text-[#888]" />
