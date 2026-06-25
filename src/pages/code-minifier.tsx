@@ -4,6 +4,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, FileCode, Sparkles, Zap } from 'lucide-react';
+import { devToolsAPI } from '@/lib/api';
 import Head from 'next/head';
 
 export default function CodeMinifier() {
@@ -33,48 +34,15 @@ export default function CodeMinifier() {
         setMetrics(null);
     };
 
-    // Client-side minifiers engines
-    const minifyHtml = (html: string): string => {
-        return html
-            .replace(/<!--[\s\S]*?-->/g, '') // remove HTML comments
-            .replace(/\s+/g, ' ')            // collapse multiple spaces
-            .replace(/>\s+</g, '><')          // strip whitespace between tags
-            .trim();
-    };
-
-    const minifyCss = (css: string): string => {
-        return css
-            .replace(/\/\*[\s\S]*?\*\//g, '') // remove comments
-            .replace(/\s+/g, ' ')             // collapse spacing
-            .replace(/\s*([\{\}:;,])\s*/g, '$1') // strip whitespace around block tokens
-            .replace(/;\}/g, '}')             // remove last semicolons in blocks
-            .trim();
-    };
-
-    const minifyJs = (js: string): string => {
-        return js
-            .replace(/\/\*[\s\S]*?\*\//g, '') // remove block comments
-            .replace(/\/\/.*/g, '')            // remove single-line comments
-            .replace(/\s+/g, ' ')             // collapse spacing
-            .replace(/\s*([=\{\}\(\)\[\]\+\-\*\/,;:<>!])\s*/g, '$1') // remove whitespace around operators
-            .trim();
-    };
-
-    const handleMinify = () => {
+    const handleMinify = async () => {
         if (!input.trim()) {
             showToast('Please enter some code to compress', 'error');
             return;
         }
 
         try {
-            let result = '';
-            if (tab === 'HTML') {
-                result = minifyHtml(input);
-            } else if (tab === 'CSS') {
-                result = minifyCss(input);
-            } else if (tab === 'JS') {
-                result = minifyJs(input);
-            }
+            const res = await devToolsAPI.minifyCode(input, tab.toLowerCase());
+            const result = res.result;
 
             setOutput(result);
 

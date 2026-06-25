@@ -4,6 +4,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { ArrowLeftRight, Copy, Trash2, Upload, File, Check, Download } from 'lucide-react';
+import { devToolsAPI } from '@/lib/api';
 import Head from 'next/head';
 
 export default function Base64Tool() {
@@ -38,7 +39,7 @@ export default function Base64Tool() {
         setOutput(input);
     };
 
-    const handleProcess = () => {
+    const handleProcess = async () => {
         if (!input.trim()) {
             showToast('Please enter some text first', 'error');
             return;
@@ -46,17 +47,17 @@ export default function Base64Tool() {
 
         try {
             if (mode === 'encode') {
-                const encoded = btoa(unescape(encodeURIComponent(input)));
-                setOutput(encoded);
+                const res = await devToolsAPI.base64Encode(input);
+                setOutput(res.result);
                 showToast('Text encoded to Base64!', 'success');
             } else {
-                const decoded = decodeURIComponent(escape(atob(input.trim())));
-                setOutput(decoded);
+                const res = await devToolsAPI.base64Decode(input.trim());
+                setOutput(res.result);
                 showToast('Base64 decoded successfully!', 'success');
             }
         } catch (error: any) {
             console.error(error);
-            showToast('Failed to process. Check if input is a valid Base64 string.', 'error');
+            showToast(error.response?.data?.error || 'Failed to process. Check if input is a valid Base64 string.', 'error');
         }
     };
 

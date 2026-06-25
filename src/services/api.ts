@@ -197,6 +197,13 @@ export const conversionApi = {
   transcribeFile: async (fileId: string) => (await api.post("/conversion/transcribe-file", { fileId })).data,
   transcribeChunk: async (formData: FormData) => (await api.post("/conversion/transcribe-chunk", formData, { headers: { 'Content-Type': 'multipart/form-data' } })).data,
   imageConvert: async (fileId: string, targetFormat: string) => (await api.post("/conversion/image-convert", { fileId, targetFormat })).data,
+  
+  // Data Converters
+  yamlToJson: async (yaml: string) => (await api.post("/yaml-to-json", { yaml })).data,
+  jsonToYaml: async (json: string) => (await api.post("/json-to-yaml", { json })).data,
+  csvToJson: async (csv: string) => (await api.post("/csv-to-json", { csv })).data,
+  jsonToCsv: async (json: string | any[]) => (await api.post("/json-to-csv", { json })).data,
+  convertHeic: async (fileId: string) => (await api.post("/heic-to-jpg", { fileId })).data,
 };
 
 export default api;

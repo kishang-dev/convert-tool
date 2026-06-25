@@ -4,6 +4,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, FileJson, Sparkles } from 'lucide-react';
+import { devToolsAPI } from '@/lib/api';
 import Head from 'next/head';
 
 export default function JsonFormatter() {
@@ -31,37 +32,35 @@ export default function JsonFormatter() {
         setOutput('');
     };
 
-    const handleFormat = () => {
+    const handleFormat = async () => {
         if (!input.trim()) {
             showToast('Please paste some JSON first', 'error');
             return;
         }
 
         try {
-            const parsed = JSON.parse(input);
-            const formatted = JSON.stringify(parsed, null, indent);
-            setOutput(formatted);
+            const res = await devToolsAPI.formatJson(input, indent);
+            setOutput(res.result);
             showToast('JSON Formatted successfully!', 'success');
         } catch (error: any) {
             console.error(error);
-            showToast(`Invalid JSON: ${error.message}`, 'error');
+            showToast(error.response?.data?.error || `Invalid JSON`, 'error');
         }
     };
 
-    const handleMinify = () => {
+    const handleMinify = async () => {
         if (!input.trim()) {
             showToast('Please paste some JSON first', 'error');
             return;
         }
 
         try {
-            const parsed = JSON.parse(input);
-            const minified = JSON.stringify(parsed);
-            setOutput(minified);
+            const res = await devToolsAPI.minifyJson(input);
+            setOutput(res.result);
             showToast('JSON Minified successfully!', 'success');
         } catch (error: any) {
             console.error(error);
-            showToast(`Invalid JSON: ${error.message}`, 'error');
+            showToast(error.response?.data?.error || `Invalid JSON`, 'error');
         }
     };
 

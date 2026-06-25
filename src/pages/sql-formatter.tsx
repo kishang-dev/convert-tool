@@ -4,6 +4,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, Sparkles } from 'lucide-react';
+import { devToolsAPI } from '@/lib/api';
 import Head from 'next/head';
 
 export default function SqlFormatter() {
@@ -30,75 +31,30 @@ export default function SqlFormatter() {
         setOutput('');
     };
 
-    // Client-side lightweight SQL pretty-printer
-    const formatSql = (sql: string): string => {
-        if (!sql.trim()) return '';
-
-        // Standard SQL Keywords
-        const keywords = [
-            'SELECT', 'FROM', 'WHERE', 'AND', 'OR', 'JOIN', 'LEFT JOIN', 'RIGHT JOIN',
-            'INNER JOIN', 'OUTER JOIN', 'ON', 'GROUP BY', 'ORDER BY', 'HAVING', 'LIMIT',
-            'INSERT INTO', 'VALUES', 'UPDATE', 'SET', 'DELETE FROM', 'CREATE TABLE',
-            'DROP TABLE', 'ALTER TABLE', 'UNION', 'EXISTS', 'IN', 'LIKE', 'AS'
-        ];
-
-        // Clean extra spacing
-        let clean = sql.replace(/\s+/g, ' ').trim();
-
-        // Capitalize keywords (safe regex match with boundary checks)
-        keywords.forEach(kw => {
-            const regex = new RegExp(`\\b${kw}\\b`, 'gi');
-            clean = clean.replace(regex, kw);
-        });
-
-        // Insert newlines and indentation offset rules
-        // Grouping formatting steps
-        const newlineKeywords = [
-            'FROM', 'WHERE', 'GROUP BY', 'ORDER BY', 'HAVING', 'LIMIT', 'JOIN',
-            'LEFT JOIN', 'RIGHT JOIN', 'INNER JOIN', 'OUTER JOIN', 'UNION', 'SET', 'VALUES'
-        ];
-
-        let formatted = clean;
-        
-        // Break lines for major clauses
-        newlineKeywords.forEach(kw => {
-            const regex = new RegExp(`\\s+(${kw})\\b`, 'g');
-            formatted = formatted.replace(regex, `\n$1`);
-        });
-
-        // Break lines for select columns or comma splits if needed (optional)
-        formatted = formatted.replace(/\bSELECT\s+/g, 'SELECT\n  ');
-        formatted = formatted.replace(/,\s+/g, ',\n  ');
-        
-        // Indent items following WHERE clauses slightly for clarity
-        formatted = formatted.replace(/\bWHERE\s+/g, 'WHERE\n  ');
-        formatted = formatted.replace(/\bAND\s+/g, '\n  AND ');
-        formatted = formatted.replace(/\bOR\s+/g, '\n  OR ');
-
-        return formatted;
-    };
-
-    const handleFormat = () => {
+    const handleFormat = async () => {
         if (!input.trim()) {
             showToast('Please paste a SQL query first', 'error');
             return;
         }
 
         try {
-            const result = formatSql(input);
-            setOutput(result);
+            const res = await devToolsAPI.formatSql(input);
+            setOutput(res.result);
             showToast('SQL Formatted successfully!', 'success');
         } catch (e: any) {
-            showToast('Failed to format query', 'error');
+            showToast(e.response?.data?.error || 'Failed to format query', 'error');
         }
     };
 
-    const handleMinify = () => {
+    const handleMinify = async () => {
         if (!input.trim()) {
             showToast('Please paste a SQL query first', 'error');
             return;
         }
 
+        // Minify SQL is just replacing all whitespaces with a single space.
+        // It's simple enough to keep on the client-side or use the backend. 
+        // We will do it here.
         const minified = input.replace(/\s+/g, ' ').trim();
         setOutput(minified);
         showToast('SQL Minified successfully!', 'success');

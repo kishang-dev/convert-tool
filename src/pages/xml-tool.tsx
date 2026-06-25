@@ -4,6 +4,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, ShieldCheck, AlertCircle, FileCode, Sparkles } from 'lucide-react';
+import { devToolsAPI } from '@/lib/api';
 import Head from 'next/head';
 
 export default function XmlTool() {
@@ -87,6 +88,24 @@ export default function XmlTool() {
             showToast('XML minified successfully!', 'success');
         } catch (e) {
             showToast('Minification failed', 'error');
+        }
+    };
+
+    const handleConvertToJSON = async () => {
+        if (!input.trim()) {
+            showToast('Please enter some XML first', 'error');
+            return;
+        }
+
+        const isValid = validateXml(input);
+        if (!isValid) return;
+
+        try {
+            const res = await devToolsAPI.xmlToJson(input);
+            setOutput(res.result);
+            showToast('Converted to JSON successfully!', 'success');
+        } catch (e: any) {
+            showToast(e.response?.data?.error || 'Failed to convert to JSON', 'error');
         }
     };
 
@@ -202,6 +221,14 @@ export default function XmlTool() {
                             className="font-bold border border-white/10"
                         >
                             Minify
+                        </Button>
+                        <Button
+                            onClick={handleConvertToJSON}
+                            variant="secondary"
+                            size="sm"
+                            className="font-bold border border-white/10 text-emerald-400"
+                        >
+                            To JSON
                         </Button>
                         <Button
                             onClick={handleFormat}

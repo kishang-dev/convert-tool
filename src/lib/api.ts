@@ -497,4 +497,25 @@ export const resumeAPI = {
   },
 };
 
+export const devToolsAPI = {
+  // Base64
+  base64Encode: async (text: string) => (await api.post("/devtools/base64/encode", { text })).data,
+  base64Decode: async (text: string) => (await api.post("/devtools/base64/decode", { text })).data,
+  
+  // JSON
+  formatJson: async (json: string, indent?: number) => (await api.post("/devtools/json/format", { json, indent })).data,
+  minifyJson: async (json: string) => (await api.post("/devtools/json/minify", { json })).data,
+  validateJson: async (json: string) => (await api.post("/devtools/json/validate", { json })).data,
+  
+  // XML
+  xmlToJson: async (xml: string) => (await api.post("/devtools/xml/to-json", { xml })).data,
+  jsonToXml: async (json: string) => (await api.post("/devtools/xml/from-json", { json })).data,
+  
+  // SQL
+  formatSql: async (sql: string) => (await api.post("/devtools/sql/format", { sql })).data,
+  
+  // Code Minifier
+  minifyCode: async (code: string, type: string) => (await api.post("/devtools/code/minify", { code, type })).data,
+};
+
 export default api;
