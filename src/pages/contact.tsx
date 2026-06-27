@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Mail, MessageCircle, MapPin, CheckCircle, Send, Loader2 } from "lucide-react";
 import { supportApi } from "@/services/api";
+import Button from "@/components/Button";
 
 export default function ContactPage() {
     const [mounted, setMounted] = React.useState(false);
@@ -38,132 +39,134 @@ export default function ContactPage() {
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white flex flex-col font-sans">
+        <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col font-sans">
             <Navbar />
 
-            <main className="flex-1 pt-24 md:pt-32 pb-16 md:pb-20">
-                <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
-                    {/* Info Section */}
-                    <section className="relative text-center md:text-left">
-                        <div className="absolute top-0 left-1/2 md:left-0 -translate-x-1/2 md:translate-x-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] animate-pulse" />
-                        <h1 className="text-4xl sm:text-5xl md:text-7xl font-black gradient-text tracking-tighter mb-8 leading-[1.1]">
-                            Let's Start a <br className="hidden sm:block" /> Conversation.
-                        </h1>
-                        <p className="text-gray-400 text-lg md:text-xl max-w-md mx-auto md:mx-0 leading-relaxed mb-12">
-                            Have a question or a project in mind? We'd love to hear from you. Our team typically responds within 24 hours.
-                        </p>
+            <main className="flex-1 pt-32 pb-20">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6">
+                    <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-start">
+                        {/* Info Section */}
+                        <section>
+                            <div className="mb-10">
+                                <p className="text-xs text-[#555] uppercase tracking-widest font-medium mb-2">Get in touch</p>
+                                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                                    Let's start a conversation
+                                </h1>
+                                <p className="text-sm text-[#555] leading-relaxed max-w-sm">
+                                    Have a question or a project in mind? We'd love to hear from you. Our team typically responds within 24 hours.
+                                </p>
+                            </div>
 
-                        <div className="space-y-6 md:space-y-8 relative z-10">
-                            {[
-                                { icon: Mail, label: "Email Support", value: "support@convertertool.com", color: "text-blue-500", hover: "hover:bg-blue-600" },
-                                { icon: MessageCircle, label: "Real-time Chat", value: "@converter_support", color: "text-purple-500", hover: "hover:bg-purple-600" },
-                                { icon: MapPin, label: "Office Location", value: "Ahmedabad, Gujarat, IN", color: "text-pink-500", hover: "hover:bg-pink-600" }
-                            ].map((item, idx) => (
-                                <div key={idx} className="flex flex-col sm:flex-row items-center md:items-center gap-4 sm:gap-6 group">
-                                    <div className={`w-14 h-14 bg-white/5 border border-white/10 rounded-[1.25rem] flex items-center justify-center ${item.color} group-hover:text-white group-active:scale-95 transition-all duration-500 shadow-2xl`}>
-                                        <item.icon size={24} />
-                                    </div>
-                                    <div className="text-center sm:text-left">
-                                        <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1">{item.label}</p>
-                                        <p className="text-lg md:text-xl font-bold">{item.value}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    {/* Form Section */}
-                    <section className="relative">
-                        <div className="absolute bottom-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-[100px] animate-pulse delay-1000" />
-                        <div className="bg-[#1e293b]/50 border border-white/10 rounded-[2.5rem] p-8 md:p-12 backdrop-blur-xl shadow-2xl relative overflow-hidden group">
-                            {isSent ? (
-                                <div className="text-center py-10 animate-in fade-in zoom-in duration-500">
-                                    <div className="flex justify-center mb-8">
-                                        <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center border border-green-500/30">
-                                            <CheckCircle className="text-green-500" size={40} />
+                            <div className="space-y-4">
+                                {[
+                                    { icon: Mail, label: "Email Support", value: "support@convertertool.com" },
+                                    { icon: MessageCircle, label: "Real-time Chat", value: "@converter_support" },
+                                    { icon: MapPin, label: "Office Location", value: "Ahmedabad, Gujarat, IN" }
+                                ].map((item, idx) => (
+                                    <div key={idx} className="flex items-center gap-4 bg-[#111] border border-[#1a1a1a] p-4 rounded-xl">
+                                        <div className="bg-[#1a1a1a] border border-[#222] p-2.5 rounded-lg">
+                                            <item.icon size={18} className="text-[#888]" />
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] text-[#555] uppercase tracking-widest mb-0.5 font-medium">{item.label}</p>
+                                            <p className="text-sm font-semibold text-white">{item.value}</p>
                                         </div>
                                     </div>
-                                    <h3 className="text-3xl font-black mb-4">Message Sent!</h3>
-                                    <p className="text-gray-400 mb-8 leading-relaxed font-medium">
-                                        Thank you for reaching out. We've received your inquiry and will get back to you shortly.
-                                    </p>
-                                    <button
-                                        onClick={() => setIsSent(false)}
-                                        className="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-2xl font-black text-sm uppercase tracking-widest transition-all"
-                                    >
-                                        Send Another message
-                                    </button>
-                                </div>
-                            ) : (
-                                <form onSubmit={handleSubmit} className="space-y-6 relative">
-                                    <div className="grid sm:grid-cols-2 gap-6">
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* Form Section */}
+                        <section>
+                            <div className="bg-[#111] border border-[#1a1a1a] rounded-xl p-6 sm:p-8">
+                                {isSent ? (
+                                    <div className="text-center py-10">
+                                        <div className="bg-[#1a1a1a] border border-[#222] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                                            <CheckCircle className="text-white" size={24} />
+                                        </div>
+                                        <h3 className="text-xl font-bold mb-2">Message Sent!</h3>
+                                        <p className="text-[#555] text-sm mb-8">
+                                            Thank you for reaching out. We've received your inquiry and will get back to you shortly.
+                                        </p>
+                                        <Button
+                                            variant="secondary"
+                                            className="w-full"
+                                            onClick={() => setIsSent(false)}
+                                        >
+                                            Send Another Message
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <form onSubmit={handleSubmit} className="space-y-4">
+                                        <div className="grid sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-xs text-[#555] uppercase tracking-widest font-medium mb-2">Full Name</label>
+                                                <input
+                                                    required
+                                                    value={formData.name}
+                                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                                    className="w-full bg-[#0a0a0a] border border-[#222] rounded-lg px-4 py-2.5 text-white text-sm outline-none focus:border-[#444] transition-colors"
+                                                    placeholder="John Doe"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs text-[#555] uppercase tracking-widest font-medium mb-2">Email Address</label>
+                                                <input
+                                                    required
+                                                    type="email"
+                                                    value={formData.email}
+                                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                                    className="w-full bg-[#0a0a0a] border border-[#222] rounded-lg px-4 py-2.5 text-white text-sm outline-none focus:border-[#444] transition-colors"
+                                                    placeholder="john@example.com"
+                                                />
+                                            </div>
+                                        </div>
                                         <div>
-                                            <label className="block text-xs font-black text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Full Name</label>
+                                            <label className="block text-xs text-[#555] uppercase tracking-widest font-medium mb-2">Subject</label>
                                             <input
                                                 required
-                                                value={formData.name}
-                                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                                className="w-full bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-bold placeholder:text-gray-600"
-                                                placeholder="John Doe"
+                                                value={formData.subject}
+                                                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                                                className="w-full bg-[#0a0a0a] border border-[#222] rounded-lg px-4 py-2.5 text-white text-sm outline-none focus:border-[#444] transition-colors"
+                                                placeholder="How can we help?"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-black text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Email Address</label>
-                                            <input
+                                            <label className="block text-xs text-[#555] uppercase tracking-widest font-medium mb-2">Message</label>
+                                            <textarea
                                                 required
-                                                type="email"
-                                                value={formData.email}
-                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                                className="w-full bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-bold placeholder:text-gray-600"
-                                                placeholder="john@example.com"
+                                                value={formData.message}
+                                                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                                className="w-full bg-[#0a0a0a] border border-[#222] rounded-lg px-4 py-2.5 text-white text-sm outline-none focus:border-[#444] transition-colors h-32 resize-none"
+                                                placeholder="Tell us more about your inquiry..."
                                             />
                                         </div>
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-black text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Subject</label>
-                                        <input
-                                            required
-                                            value={formData.subject}
-                                            onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                                            className="w-full bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-bold placeholder:text-gray-600"
-                                            placeholder="How can we help?"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-black text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Message Detail</label>
-                                        <textarea
-                                            required
-                                            value={formData.message}
-                                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                            className="w-full bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all h-40 resize-none font-bold placeholder:text-gray-600"
-                                            placeholder="Tell us more about your inquiry..."
-                                        />
-                                    </div>
 
-                                    {error && (
-                                        <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-500 rounded-xl text-xs font-bold text-center">
-                                            {error}
-                                        </div>
-                                    )}
-
-                                    <button
-                                        disabled={isLoading}
-                                        type="submit"
-                                        className="w-full py-5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-[1.5rem] font-black text-lg transition-all shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 active:scale-[0.98] group/btn flex items-center justify-center gap-3"
-                                    >
-                                        {isLoading ? (
-                                            <Loader2 size={24} className="animate-spin" />
-                                        ) : (
-                                            <>
-                                                <Send size={22} className="group-hover/btn:-translate-y-1 group-hover/btn:translate-x-1 transition-transform" />
-                                                <span>DISPATCH MESSAGE</span>
-                                            </>
+                                        {error && (
+                                            <div className="p-3 bg-[#1a1a1a] border border-red-900/30 text-red-400 rounded-lg text-xs text-center">
+                                                {error}
+                                            </div>
                                         )}
-                                    </button>
-                                </form>
-                            )}
-                        </div>
-                    </section>
+
+                                        <Button
+                                            type="submit"
+                                            disabled={isLoading}
+                                            className="w-full mt-2"
+                                        >
+                                            {isLoading ? (
+                                                <Loader2 size={16} className="animate-spin mx-auto" />
+                                            ) : (
+                                                <span className="flex items-center justify-center gap-2">
+                                                    Dispatch Message
+                                                    <Send size={14} />
+                                                </span>
+                                            )}
+                                        </Button>
+                                    </form>
+                                )}
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </main>
 
