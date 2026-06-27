@@ -9,7 +9,16 @@ import FileList from "@/components/FileList";
 import Toast from "@/components/Toast";
 import { Upload, ArrowLeft } from "lucide-react";
 
-const TOOL_CONFIGS: Record<string, { title: string, description: string, minFiles: number, maxFiles: number, run: (files: FileData[], password?: string) => Promise<any>, needsPassword?: boolean, accepts: string }> = {
+const TOOL_CONFIGS: Record<string, { title: string, description: string, minFiles: number, maxFiles: number, run: (files: FileData[], password?: string) => Promise<any>, needsPassword?: boolean, accepts: string, openEditor?: boolean }> = {
+    "editor": {
+        title: "Advanced PDF Editor",
+        description: "Annotate, draw, rotate, delete, and modify text on your PDF pages visually.",
+        minFiles: 1,
+        maxFiles: 1,
+        accepts: ".pdf",
+        openEditor: true,
+        run: async (files) => ({ file: files[0] })
+    },
     "merge-pdf": {
         title: "Merge PDF",
         description: "Combine multiple PDF documents into a single file.",
@@ -270,6 +279,11 @@ export default function GenericToolPage({ id }: { id: string }) {
         try {
             const response = await tool.run(files, password);
             showToast("Operation completed successfully!", "success");
+
+            if (tool.openEditor && response.file?._id) {
+                router.push(`/editor/${response.file._id}`);
+                return;
+            }
             
             // Automatically download the result
             if (response.file) {
