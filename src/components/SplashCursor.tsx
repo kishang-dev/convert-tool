@@ -1,13 +1,29 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+
+const MOBILE_QUERY = '(max-width: 767px), (pointer: coarse)';
 
 const SplashCursor: React.FC = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
+        const mediaQuery = window.matchMedia(MOBILE_QUERY);
+        const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+
+        updateIsMobile();
+        mediaQuery.addEventListener('change', updateIsMobile);
+
+        return () => mediaQuery.removeEventListener('change', updateIsMobile);
+    }, []);
+
+    useEffect(() => {
+        if (isMobile) return;
+
+        const canvas = document.createElement('canvas');
+        canvas.className = 'fixed inset-0 pointer-events-none z-[9999]';
+        canvas.style.mixBlendMode = 'screen';
+        document.body.appendChild(canvas);
 
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
@@ -102,16 +118,11 @@ const SplashCursor: React.FC = () => {
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('resize', handleResize);
+            canvas.remove();
         };
-    }, []);
+    }, [isMobile]);
 
-    return (
-        <canvas
-            ref={canvasRef}
-            className="fixed inset-0 pointer-events-none z-[9999]"
-            style={{ mixBlendMode: 'screen' }}
-        />
-    );
+    return null;
 };
 
 export default SplashCursor;
