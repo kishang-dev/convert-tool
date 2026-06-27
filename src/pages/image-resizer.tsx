@@ -160,7 +160,7 @@ export default function ImageResizer() {
                             {previewUrl ? (
                                 <div className="w-full flex flex-col items-center gap-4 flex-grow justify-center">
                                     <div className="relative border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden max-h-[380px] bg-slate-950/60 p-2 flex items-center justify-center">
-                                        <img src={previewUrl} alt="Preview" className="max-h-[350px] object-contain rounded-lg" />
+                                        <img src={previewUrl} alt="Preview" loading="lazy" className="max-h-[350px] object-contain rounded-lg" />
                                     </div>
                                     <div className="text-center">
                                         <p className="text-sm font-semibold truncate max-w-xs">{file?.name}</p>

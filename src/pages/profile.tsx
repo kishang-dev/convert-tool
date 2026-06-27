@@ -106,7 +106,7 @@ export default function ProfilePage() {
                                     onClick={() => fileInputRef.current?.click()}
                                 >
                                     {avatarPreview ? (
-                                        <img src={avatarPreview} alt="Avatar Preview" className="w-full h-full object-cover" />
+                                        <img src={avatarPreview} alt="Avatar Preview" loading="lazy" className="w-full h-full object-cover" />
                                     ) : (
                                         <User className="text-gray-500 dark:text-gray-500" size={40} />
                                     )}

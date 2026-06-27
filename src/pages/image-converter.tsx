@@ -172,7 +172,7 @@ export default function ImageConverter() {
 
                                         {previewUrl && (
                                             <div className="flex justify-center p-2 bg-slate-950/40 border border-white/5 rounded-xl max-h-[200px] overflow-hidden">
-                                                <img src={previewUrl} alt="Thumbnail" className="max-h-[180px] object-contain rounded-lg" />
+                                                <img src={previewUrl} alt="Thumbnail" loading="lazy" className="max-h-[180px] object-contain rounded-lg" />
                                             </div>
                                         )}
 

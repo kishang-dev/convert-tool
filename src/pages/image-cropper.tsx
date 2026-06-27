@@ -274,6 +274,7 @@ export default function ImageCropper() {
                                         ref={imageRef} 
                                         src={previewUrl} 
                                         alt="Crop Source" 
+                                        loading="lazy"
                                         className="max-h-[400px] object-contain block"
                                         draggable="false"
                                     />

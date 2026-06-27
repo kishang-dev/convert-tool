@@ -526,7 +526,7 @@ function FullDocMode({
             <div className="w-56 flex-shrink-0 bg-[#0d0f18] border-r border-gray-200 dark:border-white/10 overflow-y-auto flex flex-col items-center py-6 gap-3">
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">PDF Preview</p>
                 <div className="w-44 shadow-xl rounded overflow-hidden border border-gray-200 dark:border-white/10">
-                    <img src={imageUrl} alt="PDF" className="w-full h-auto block" />
+                    <img src={imageUrl} alt="PDF" loading="lazy" className="w-full h-auto block" />
                 </div>
                 <div className="mt-2 px-4 w-full space-y-2">
                     <div className="flex justify-between text-[10px] text-slate-500">
@@ -607,7 +607,7 @@ function SplitViewMode({
                     <Eye size={11} /> Original PDF
                 </div>
                 <div className="shadow-2xl rounded overflow-hidden border border-gray-200 dark:border-white/10" style={{ width: pdfDims ? pdfDims.width * scale * 0.8 : "auto" }}>
-                    <img ref={imageRef} src={imageUrl} alt="PDF" className="w-full h-auto block" />
+                    <img ref={imageRef} src={imageUrl} alt="PDF" loading="lazy" className="w-full h-auto block" />
                 </div>
             </div>
 
@@ -683,7 +683,7 @@ function ParagraphMode({
                 ref={containerRef}
                 style={{ width: pdfDims ? pdfDims.width * scale : "auto" }}
             >
-                <img ref={imageRef} src={imageUrl} alt="PDF" className="block w-full h-auto select-none pointer-events-none" />
+                <img ref={imageRef} src={imageUrl} alt="PDF" loading="lazy" className="block w-full h-auto select-none pointer-events-none" />
 
                 {/* Paragraph overlays */}
                 {pdfDims && paragraphs.map((para: Paragraph) => {
@@ -885,7 +885,7 @@ function LineMode({
                 className="relative shadow-2xl bg-white rounded overflow-hidden border border-gray-200 dark:border-white/10"
                 style={{ width: pdfDims ? pdfDims.width * scale : "auto" }}
             >
-                <img ref={imageRef} src={imageUrl} alt="PDF" className="block w-full h-auto select-none pointer-events-none" />
+                <img ref={imageRef} src={imageUrl} alt="PDF" loading="lazy" className="block w-full h-auto select-none pointer-events-none" />
 
                 {pdfDims && (
                     <div className="absolute inset-0 z-30">

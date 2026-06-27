@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { useAuthStore } from '@/store/authStore';
 import { FileText, LogOut, User, Menu, X, ChevronDown, Sun, Moon } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -105,9 +106,12 @@ export default function Navbar() {
                         <div className="flex items-center gap-3 relative group">
                             <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-300 dark:border-[#222] bg-white dark:bg-gray-100 dark:bg-[#111] hover:border-gray-400 dark:hover:border-gray-400 dark:border-[#333] transition-colors text-sm">
                                 {user.avatar ? (
-                                    <img
+                                    <Image
                                         src={user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_ASSETS_URL}${user.avatar}`}
                                         alt="Avatar"
+                                        width={20}
+                                        height={20}
+                                        loading="lazy"
                                         className="w-5 h-5 rounded-full object-cover"
                                     />
                                 ) : (
@@ -208,7 +212,7 @@ export default function Navbar() {
                                 <>
                                     <div className="px-4 py-3 flex items-center gap-2">
                                         {user.avatar ? (
-                                            <img src={user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_ASSETS_URL}${user.avatar}`} alt="Avatar" className="w-7 h-7 rounded-full object-cover" />
+                                            <Image src={user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_ASSETS_URL}${user.avatar}`} alt="Avatar" width={28} height={28} loading="lazy" className="w-7 h-7 rounded-full object-cover" />
                                         ) : (
                                             <div className="w-7 h-7 rounded-full bg-gray-300 dark:bg-[#222] flex items-center justify-center">
                                                 <User size={14} className="text-gray-500 dark:text-gray-500 dark:text-[#888]" />

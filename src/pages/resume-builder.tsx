@@ -606,7 +606,7 @@ export default function ResumeBuilder() {
                                         <div className="flex items-center gap-4 mt-2">
                                             {resumeData.personalInfo.photo && (
                                                 <div className="relative group">
-                                                    <img src={resumeData.personalInfo.photo} className="w-16 h-16 rounded-xl object-cover border-2 border-gray-200 dark:border-white/10" alt="Avatar" />
+                                                    <img src={resumeData.personalInfo.photo} loading="lazy" className="w-16 h-16 rounded-xl object-cover border-2 border-gray-200 dark:border-white/10" alt="Avatar" />
                                                     <button
                                                         onClick={() => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, photo: '' } })}
                                                         className="absolute -top-2 -right-2 bg-red-500 text-gray-900 dark:text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
