@@ -144,7 +144,7 @@ export default function Navbar() {
                         <>
                             <Link
                                 href="/login"
-                                className="text-sm text-gray-600 dark:text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:hover:text-gray-900 dark:text-white transition-colors"
+                                className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                             >
                                 Sign in
                             </Link>

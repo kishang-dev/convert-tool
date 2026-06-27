@@ -35,17 +35,8 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a0a0f]">
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
             <Navbar />
-
-            {/* Background */}
-            <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-pink-900/20 -z-10">
-                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-            </div>
-
-            {/* Floating Elements */}
-            <div className="fixed top-20 left-10 w-72 h-72 bg-purple-500/30 rounded-full blur-3xl animate-float -z-10"></div>
-            <div className="fixed bottom-20 right-10 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1s' }}></div>
 
             {/* Main Content */}
             <div className="flex items-center justify-center min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8">
