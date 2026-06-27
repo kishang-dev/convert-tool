@@ -19,7 +19,7 @@ export default function Document() {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
         {/* Global site verification (add your actual codes here) */}
-        {/* <meta name="google-site-verification" content="YOUR_CODE_HERE" /> */}
+        <meta name="google-site-verification" content="iNd_jJnkjOmSB-Al-BEjoMnfRz4q_Zsp7zr5HVSmAeM" />
       </Head>
       <body className="antialiased bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
         <Main />
