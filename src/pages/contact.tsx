@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { Mail, MessageCircle, MapPin, CheckCircle, Send, Loader2 } from "lucide-react";
 import { supportApi } from "@/services/api";
 import Button from "@/components/Button";
+import SEO from "@/components/SEO";
 
 export default function ContactPage() {
     const [mounted, setMounted] = React.useState(false);

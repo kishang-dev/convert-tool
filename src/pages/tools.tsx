@@ -30,6 +30,8 @@ import FileList from "@/components/FileList";
 import Navbar from "@/components/Navbar";
 import Card from "@/components/Card";
 import Button from "@/components/Button";
+import SEO from "@/components/SEO";
+
 
 export default function Tools() {
     const router = useRouter();
@@ -125,6 +127,19 @@ export default function Tools() {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
+            <SEO
+                title="All Free Online Tools"
+                description="Browse 40+ free online tools — PDF converter, image resizer, JSON formatter, resume builder, OCR, and more. No sign-up, no watermarks. Instant processing in your browser."
+                canonical="/tools"
+                keywords="free PDF tools, PDF converter online, image resizer, JSON formatter, resume builder, OCR online, merge PDF, compress PDF, ToolBasket tools"
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'CollectionPage',
+                    name: 'All Free Online Tools — ToolBasket',
+                    url: 'https://toolbasketai.com/tools',
+                    description: '40+ free online document and PDF tools with no sign-up required.',
+                }}
+            />
             <Navbar />
 
             {/* ── Main Content ── */}

@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import { Mail, Lock, LogIn, Sparkles } from 'lucide-react';
+import SEO from '@/components/SEO';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -36,6 +37,12 @@ export default function LoginPage() {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
+            <SEO
+                title="Sign In"
+                description="Sign in to your ToolBasket account to access your saved files, history, and premium tools. Free to use, no commitment required."
+                canonical="/login"
+                noIndex={true}
+            />
             <Navbar />
 
             {/* Main Content */}

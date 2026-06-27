@@ -2,6 +2,8 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Users, Shield, Zap, Globe, Heart } from "lucide-react";
+import SEO from "@/components/SEO";
+
 
 export default function AboutPage() {
     const [mounted, setMounted] = React.useState(false);
@@ -14,6 +16,19 @@ export default function AboutPage() {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white flex flex-col font-sans">
+            <SEO
+                title="About Us"
+                description="Learn about ToolBasket — the team building the world's most powerful free online toolkit for PDFs, images, and documents. Our mission is fast, private, and beautiful tools for everyone."
+                canonical="/about"
+                keywords="about ToolBasket, online PDF tools team, free document converter, ToolBasket mission"
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'AboutPage',
+                    name: 'About ToolBasket',
+                    url: 'https://toolbasketai.com/about',
+                    description: 'The team behind ToolBasket and our mission to revolutionize modern workflows.',
+                }}
+            />
             <Navbar />
 
             <main className="flex-1 pt-32 pb-20">

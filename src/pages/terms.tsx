@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Scale, FileCheck, Info, AlertTriangle, HelpCircle } from "lucide-react";
+import SEO from "@/components/SEO";
 
 export default function TermsPage() {
     const [mounted, setMounted] = React.useState(false);
@@ -14,6 +15,12 @@ export default function TermsPage() {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white flex flex-col font-sans">
+            <SEO
+                title="Terms of Service"
+                description="Read ToolBasket's Terms of Service. Understand the rules, rights, and responsibilities when using our free online PDF and document tools."
+                canonical="/terms"
+                keywords="ToolBasket terms of service, terms and conditions, online tool usage policy"
+            />
             <Navbar />
 
             <main className="flex-1 pt-32 pb-20">

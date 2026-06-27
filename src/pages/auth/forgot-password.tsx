@@ -6,6 +6,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import Card from '@/components/Card';
 import Button from '@/components/Button';
+import SEO from '@/components/SEO';
 
 export default function ForgotPassword() {
     const [mounted, setMounted] = React.useState(false);
@@ -36,6 +37,12 @@ export default function ForgotPassword() {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
+            <SEO
+                title="Forgot Password"
+                description="Reset your ToolBasket account password. Enter your email to receive a secure magic reset link."
+                canonical="/auth/forgot-password"
+                noIndex={true}
+            />
             <Navbar />
 
             {/* Main Content */}

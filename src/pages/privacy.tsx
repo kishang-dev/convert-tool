@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Shield, Lock, Eye, FileText } from "lucide-react";
+import SEO from "@/components/SEO";
 
 export default function PrivacyPage() {
     const [mounted, setMounted] = React.useState(false);
@@ -14,6 +15,12 @@ export default function PrivacyPage() {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white flex flex-col font-sans">
+            <SEO
+                title="Privacy Policy"
+                description="ToolBasket processes all files client-side. Read our Privacy Policy to understand how we protect your data and ensure your documents never leave your device."
+                canonical="/privacy"
+                keywords="ToolBasket privacy policy, data protection, client-side processing, no data stored"
+            />
             <Navbar />
 
             <main className="flex-1 pt-32 pb-20">

@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Head from 'next/head';
 import Navbar from '@/components/Navbar';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
 import Toast from '@/components/Toast';
+import SEO from '@/components/SEO';
 import ResumeTemplate from '@/components/ResumeTemplate';
 import { resumeAPI, ResumeData } from '@/lib/api';
 import {
@@ -420,10 +420,21 @@ export default function ResumeBuilder() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>AI Resume Builder | ToolBasket</title>
-            </Head>
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
+            <SEO
+                title="Free Resume Builder — 50+ Professional Templates"
+                description="Build a professional resume in minutes with ToolBasket's free AI-powered resume builder. Choose from 50+ templates, export to PDF instantly. No sign-up needed."
+                canonical="/resume-builder"
+                keywords="free resume builder, resume maker online, AI resume builder, resume templates, CV builder, PDF resume download, professional resume"
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'SoftwareApplication',
+                    name: 'Resume Builder — ToolBasket',
+                    applicationCategory: 'BusinessApplication',
+                    operatingSystem: 'Web',
+                    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+                }}
+            />
 
             <Navbar />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}

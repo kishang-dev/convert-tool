@@ -5,7 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, FileJson, Sparkles } from 'lucide-react';
 import { devToolsAPI } from '@/lib/api';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 
 export default function JsonFormatter() {
     const [input, setInput] = useState('');
@@ -81,12 +81,13 @@ export default function JsonFormatter() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>JSON Formatter & Minifier | ToolBasket Tools</title>
-                <meta name="description" content="Format, beautify, validate, and minify your JSON payloads instantly in real-time." />
-            </Head>
-
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
+            <SEO
+                title="JSON Formatter & Minifier Online — Free Tool"
+                description="Format, beautify, validate, and minify JSON instantly online. Free JSON formatter with syntax highlighting, indent control, and clipboard copy. No sign-up."
+                canonical="/json-formatter"
+                keywords="JSON formatter, JSON beautifier, JSON minifier, format JSON online, JSON validator, pretty print JSON, JSON tool"
+            />
             <Navbar />
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}

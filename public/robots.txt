@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Disallow private/account-only pages
+Disallow: /profile
+Disallow: /history
+Disallow: /my-resumes
+Disallow: /auth/reset-password/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://toolbasketai.com/sitemap.xml

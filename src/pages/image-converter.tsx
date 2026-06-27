@@ -5,7 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Upload, Download, ArrowRight, CheckCircle, FileImage, Settings, RefreshCw } from 'lucide-react';
 import api, { fileAPI, FileData } from '@/lib/api';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 
 export default function ImageConverter() {
     const [file, setFile] = useState<File | null>(null);
@@ -130,12 +130,13 @@ export default function ImageConverter() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>Multi-Format Image Converter | ToolBasket Tools</title>
-                <meta name="description" content="Convert HEIC to JPG, WEBP to JPG, JPG to WEBP, and PNG to WEBP in real-time." />
-            </Head>
-
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
+            <SEO
+                title="Image Converter — HEIC to JPG, WEBP, PNG Online Free"
+                description="Convert images instantly online. HEIC to JPG, WEBP to PNG, PNG to WEBP and more. Free image format converter with no watermarks or sign-up required."
+                canonical="/image-converter"
+                keywords="HEIC to JPG, image converter online, WEBP to JPG, PNG to WEBP, free image format converter, convert image online"
+            />
             <Navbar />
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
