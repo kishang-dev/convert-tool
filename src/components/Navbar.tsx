@@ -104,7 +104,13 @@ export default function Navbar() {
 
                     {user ? (
                         <div className="flex items-center gap-3 relative group">
-                            <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-300 dark:border-[#222] bg-white dark:bg-gray-100 dark:bg-[#111] hover:border-gray-400 dark:hover:border-gray-400 dark:border-[#333] transition-colors text-sm">
+                            <button
+                                className="flex items-center gap-2 px-3 py-1.5 rounded-2xl border border-gray-200 dark:border-[#333] 
+                       bg-white dark:bg-[#1a1a1a] 
+                       hover:border-gray-300 dark:hover:border-[#444] 
+                       transition-all duration-200 text-sm"
+
+                            >
                                 {user.avatar ? (
                                     <Image
                                         src={user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_ASSETS_URL}${user.avatar}`}
@@ -124,20 +130,36 @@ export default function Navbar() {
                             </button>
 
                             {/* Dropdown */}
-                            <div className="absolute top-full right-0 mt-2 w-44 bg-white dark:bg-gray-100 dark:bg-[#111] border border-gray-300 dark:border-gray-300 dark:border-[#222] rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1">
-                                <Link href="/profile" className="flex px-4 py-2 text-sm text-gray-900 dark:text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-200 dark:bg-[#1a1a1a] transition-colors">
+
+                            {/* Dropdown */}
+                            <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-[#111] border border-gray-200 dark:border-[#222] rounded-2xl shadow-2xl py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+
+                                <Link
+                                    href="/profile"
+                                    className="flex px-4 py-2.5 text-sm text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors"
+                                >
                                     Profile
                                 </Link>
-                                <Link href="/history" className="flex px-4 py-2 text-sm text-gray-900 dark:text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-200 dark:bg-[#1a1a1a] transition-colors">
+
+                                <Link
+                                    href="/history"
+                                    className="flex px-4 py-2.5 text-sm text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors"
+                                >
                                     History
                                 </Link>
-                                <Link href="/my-resumes" className="flex px-4 py-2 text-sm text-gray-900 dark:text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-200 dark:bg-[#1a1a1a] transition-colors">
+
+                                <Link
+                                    href="/my-resumes"
+                                    className="flex px-4 py-2.5 text-sm text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors"
+                                >
                                     My Resumes
                                 </Link>
-                                <div className="border-t border-gray-300 dark:border-gray-200 dark:border-[#1a1a1a] my-1" />
+
+                                <div className="border-t border-gray-200 dark:border-[#222] my-1" />
+
                                 <button
                                     onClick={logout}
-                                    className="w-full flex px-4 py-2 text-sm text-red-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-200 dark:bg-[#1a1a1a] transition-colors items-center gap-2"
+                                    className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors"
                                 >
                                     <LogOut size={14} />
                                     Logout
