@@ -139,13 +139,13 @@ export default function JsonDiffChecker() {
 
     const handleLoadSample = () => {
         const sampleA = {
-            appName: "QuickPDF Tools",
+            appName: "ToolBasket Tools",
             version: "1.2.0",
             active: true,
             features: ["pdf-unlock", "base64", "jwt-decoder"]
         };
         const sampleB = {
-            appName: "QuickPDF Tools",
+            appName: "ToolBasket Tools",
             version: "1.3.0",
             active: false,
             features: ["pdf-unlock", "base64", "jwt-decoder", "json-diff"],
@@ -158,9 +158,9 @@ export default function JsonDiffChecker() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>JSON Diff Checker | QuickPDF Tools</title>
+                <title>JSON Diff Checker | ToolBasket Tools</title>
                 <meta name="description" content="Compare two JSON objects side-by-side in real-time. Detect insertions, deletions, and updates instantly." />
             </Head>
 
@@ -173,19 +173,19 @@ export default function JsonDiffChecker() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">JSON Diff Checker</span>
                     </h1>
-                    <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
                         Compare two JSON files line-by-line. Identify additions, modifications, and deletions instantly.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-white/5 border border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
                     <div className="flex items-center gap-3">
                         <Button
                             onClick={handleLoadSample}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-300 hover:text-white"
+                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
                         >
                             <Sparkles size={16} className="mr-1.5" />
                             Load Sample JSONs
@@ -221,7 +221,7 @@ export default function JsonDiffChecker() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
                         {/* JSON A */}
                         <Card variant="elevated" className="flex flex-col p-6 min-h-[400px]">
-                            <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase mb-3 block">
+                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase mb-3 block">
                                 JSON Original (A)
                             </span>
                             <textarea
@@ -234,7 +234,7 @@ export default function JsonDiffChecker() {
 
                         {/* JSON B */}
                         <Card variant="elevated" className="flex flex-col p-6 min-h-[400px]">
-                            <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase mb-3 block">
+                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase mb-3 block">
                                 JSON Modified (B)
                             </span>
                             <textarea
@@ -249,7 +249,7 @@ export default function JsonDiffChecker() {
                     /* Visual Difference Result */
                     <Card variant="elevated" className="p-6">
                         <div className="flex justify-between items-center mb-4 border-b border-white/5 pb-2">
-                            <span className="text-sm font-semibold text-gray-400 tracking-wider uppercase flex items-center gap-2">
+                            <span className="text-sm font-semibold text-gray-600 dark:text-gray-400 tracking-wider uppercase flex items-center gap-2">
                                 <Layers size={16} className="text-indigo-400" />
                                 Visual Differences
                             </span>
@@ -264,7 +264,7 @@ export default function JsonDiffChecker() {
                             {diffResult.map((line, idx) => (
                                 <div 
                                     key={idx} 
-                                    className={`flex py-0.5 px-2 rounded ${line.type === 'added' ? 'bg-green-500/10 text-green-300' : line.type === 'removed' ? 'bg-red-500/10 text-red-300' : 'text-gray-400'}`}
+                                    className={`flex py-0.5 px-2 rounded ${line.type === 'added' ? 'bg-green-500/10 text-green-300' : line.type === 'removed' ? 'bg-red-500/10 text-red-300' : 'text-gray-600 dark:text-gray-400'}`}
                                 >
                                     {/* Line indexes */}
                                     <span className="w-8 shrink-0 select-none text-[10px] text-gray-600 pr-1 text-right">{line.lineNumA || ''}</span>

@@ -72,7 +72,7 @@ export default function ProfilePage() {
     if (!user) return null;
 
     return (
-        <div className="min-h-screen bg-[#0a0a0f]">
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0f]">
             <Navbar />
 
             {/* Background */}
@@ -87,9 +87,9 @@ export default function ProfilePage() {
             <div className="flex items-center justify-center min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full animate-fadeIn">
                     <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-4">
+                        <div className="inline-flex items-center gap-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-4 py-2 rounded-full mb-4">
                             <Sparkles className="text-purple-400" size={16} />
-                            <span className="text-sm text-gray-300">Your Profile</span>
+                            <span className="text-sm text-gray-700 dark:text-gray-300">Your Profile</span>
                         </div>
                         <h2 className="text-3xl sm:text-4xl font-bold mb-2">
                             <span className="gradient-text">Edit Profile</span>
@@ -102,16 +102,16 @@ export default function ProfilePage() {
                             {/* Avatar Upload */}
                             <div className="flex flex-col items-center mb-6">
                                 <div
-                                    className="relative w-24 h-24 rounded-full bg-white/5 border-2 border-dashed border-gray-600 flex items-center justify-center cursor-pointer overflow-hidden hover:border-purple-500 transition-colors group"
+                                    className="relative w-24 h-24 rounded-full bg-gray-100 dark:bg-white/5 border-2 border-dashed border-gray-600 flex items-center justify-center cursor-pointer overflow-hidden hover:border-purple-500 transition-colors group"
                                     onClick={() => fileInputRef.current?.click()}
                                 >
                                     {avatarPreview ? (
                                         <img src={avatarPreview} alt="Avatar Preview" className="w-full h-full object-cover" />
                                     ) : (
-                                        <User className="text-gray-500" size={40} />
+                                        <User className="text-gray-500 dark:text-gray-500" size={40} />
                                     )}
                                     <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <Camera className="text-white" size={24} />
+                                        <Camera className="text-gray-900 dark:text-white" size={24} />
                                     </div>
                                 </div>
                                 <input
@@ -121,21 +121,21 @@ export default function ProfilePage() {
                                     accept="image/*"
                                     className="hidden"
                                 />
-                                <span className="text-xs text-gray-400 mt-2">Click to change avatar</span>
+                                <span className="text-xs text-gray-600 dark:text-gray-400 mt-2">Click to change avatar</span>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Name
                                 </label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <User className="text-gray-500" size={20} />
+                                        <User className="text-gray-500 dark:text-gray-500" size={20} />
                                     </div>
                                     <input
                                         type="text"
                                         required
-                                        className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500 transition-smooth"
+                                        className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white placeholder-gray-500 transition-smooth"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                     />
@@ -143,16 +143,16 @@ export default function ProfilePage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     Phone Number
                                 </label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <Phone className="text-gray-500" size={20} />
+                                        <Phone className="text-gray-500 dark:text-gray-500" size={20} />
                                     </div>
                                     <input
                                         type="tel"
-                                        className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-500 transition-smooth"
+                                        className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white placeholder-gray-500 transition-smooth"
                                         placeholder="+1 234 567 8900"
                                         value={phone}
                                         onChange={(e) => setPhone(e.target.value)}

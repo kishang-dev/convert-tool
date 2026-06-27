@@ -15,7 +15,7 @@ import { ChevronDown, FileJson, FileText, Image as ImageIcon } from "lucide-reac
 
 const PrimaryButton = ({ className, onClick, isLoading, children }: any) => (
   <button
-    className={`bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg transition-all disabled:opacity-50 ${className}`}
+    className={`bg-blue-600 hover:bg-blue-700 text-gray-900 dark:text-white rounded-xl shadow-lg transition-all disabled:opacity-50 ${className}`}
     onClick={onClick}
     disabled={isLoading}
   >
@@ -178,20 +178,20 @@ export const ChartEditor = ({ id }: { id?: string }) => {
         <div className="flex items-center gap-6">
           <button
             onClick={() => router.back()}
-            className="p-3 hover:bg-gray-100 dark:hover:bg-white/5 rounded-2xl transition-all border border-transparent hover:border-gray-200 dark:hover:border-white/10 group"
+            className="p-3 hover:bg-gray-100 dark:hover:bg-gray-100 dark:bg-white/5 rounded-2xl transition-all border border-transparent hover:border-gray-200 dark:hover:border-gray-200 dark:border-white/10 group"
           >
-            <ArrowLeft className="w-5 h-5 text-gray-500 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="w-5 h-5 text-gray-500 dark:text-gray-500 group-hover:-translate-x-1 transition-transform" />
           </button>
 
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 transform -rotate-3 group-hover:rotate-0 transition-transform">
-              <Layers className="text-white w-6 h-6" />
+              <Layers className="text-gray-900 dark:text-white w-6 h-6" />
             </div>
             <div>
               {isEditingTitle ? (
                 <input
                   autoFocus
-                  className="text-xl font-black tracking-tight bg-transparent border-b-2 border-blue-500 outline-none text-white w-64"
+                  className="text-xl font-black tracking-tight bg-transparent border-b-2 border-blue-500 outline-none text-gray-900 dark:text-white w-64"
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
                   onBlur={handleTitleSave}
@@ -209,7 +209,7 @@ export const ChartEditor = ({ id }: { id?: string }) => {
               <div className="flex items-center gap-2 mt-1">
                 <span className="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em]">{currentChart?.chartType || "FLOWCHART"}</span>
                 <div className="w-1 h-1 rounded-full bg-gray-300 dark:bg-white/20" />
-                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">PROJECT ASSET</span>
+                <span className="text-[10px] text-gray-600 dark:text-gray-400 font-bold uppercase tracking-wider">PROJECT ASSET</span>
               </div>
             </div>
           </div>
@@ -220,17 +220,17 @@ export const ChartEditor = ({ id }: { id?: string }) => {
             <button className="px-6 py-2 text-xs font-bold rounded-xl bg-white dark:bg-white/10 text-blue-600 dark:text-blue-400 shadow-sm transition-all">
               Canvas
             </button>
-            <button className="px-6 py-2 text-xs font-bold rounded-xl text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all">
+            <button className="px-6 py-2 text-xs font-bold rounded-xl text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-900 dark:text-white transition-all">
               Elements
             </button>
-            <button className="px-6 py-2 text-xs font-bold rounded-xl text-gray-500 hover:text-gray-900 dark:hover:text-white transition-all">
+            <button className="px-6 py-2 text-xs font-bold rounded-xl text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-900 dark:text-white transition-all">
               Settings
             </button>
           </nav>
 
           <div className="h-8 w-px bg-gray-200 dark:bg-white/10 mx-2" />
 
-          <button className="hidden sm:flex items-center gap-2 px-6 py-2.5 hover:bg-gray-100 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300 rounded-2xl text-sm font-bold transition-all border border-transparent hover:border-gray-200 dark:hover:border-white/10">
+          <button className="hidden sm:flex items-center gap-2 px-6 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 rounded-2xl text-sm font-bold transition-all border border-transparent hover:border-gray-200 dark:hover:border-gray-200 dark:border-white/10">
             <Share2 className="w-4 h-4" />
             <span>Collaboration</span>
           </button>
@@ -299,7 +299,7 @@ export const ChartEditor = ({ id }: { id?: string }) => {
 
       {/* Minimal Status Bar */}
       <footer className="h-10 border-t border-gray-200 dark:border-white/5 bg-white dark:bg-[#0B0F1A] flex items-center justify-between px-8 z-[30] shadow-inner">
-        <div className="flex items-center gap-6 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">
+        <div className="flex items-center gap-6 text-[10px] font-black text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500 uppercase tracking-widest">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)] animate-pulse" />
             <span className="text-gray-600 dark:text-gray-300">Live Sync Active</span>
@@ -310,7 +310,7 @@ export const ChartEditor = ({ id }: { id?: string }) => {
             <span>Core v1.02</span>
           </div>
         </div>
-        <div className="text-[10px] font-bold text-gray-400 dark:text-gray-500 flex items-center gap-2">
+        <div className="text-[10px] font-bold text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500 flex items-center gap-2">
           WORKSPACE: <span className="text-gray-900 dark:text-gray-200 bg-gray-100 dark:bg-white/5 px-2 py-0.5 rounded-md uppercase tracking-tighter">DESIGN-CORE</span>
         </div>
       </footer>

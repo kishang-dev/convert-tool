@@ -130,9 +130,9 @@ export default function ImageConverter() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>Multi-Format Image Converter | QuickPDF Tools</title>
+                <title>Multi-Format Image Converter | ToolBasket Tools</title>
                 <meta name="description" content="Convert HEIC to JPG, WEBP to JPG, JPG to WEBP, and PNG to WEBP in real-time." />
             </Head>
 
@@ -145,7 +145,7 @@ export default function ImageConverter() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4">
                         <span className="gradient-text">Image Converter</span>
                     </h1>
-                    <p className="text-gray-400 text-lg">
+                    <p className="text-gray-600 dark:text-gray-400 text-lg">
                         Convert HEIC to JPG, WEBP to JPG, JPG to WEBP, PNG to WEBP, and more.
                     </p>
                 </div>
@@ -166,7 +166,7 @@ export default function ImageConverter() {
                                     <div className="w-full max-w-md text-center space-y-6">
                                         <div>
                                             <p className="text-xl font-semibold mb-1 truncate">{file.name}</p>
-                                            <p className="text-xs text-gray-400">{(file.size / 1024).toFixed(1)} KB • Detected: {file.name.split('.').pop()?.toUpperCase()}</p>
+                                            <p className="text-xs text-gray-600 dark:text-gray-400">{(file.size / 1024).toFixed(1)} KB • Detected: {file.name.split('.').pop()?.toUpperCase()}</p>
                                         </div>
 
                                         {previewUrl && (
@@ -177,14 +177,14 @@ export default function ImageConverter() {
 
                                         {/* Format selector */}
                                         <div className="space-y-2 text-left">
-                                            <label className="text-sm font-semibold text-gray-300 flex items-center gap-1.5">
+                                            <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
                                                 <Settings size={16} className="text-indigo-400" />
                                                 Convert To:
                                             </label>
                                             <select
                                                 value={outFormat}
                                                 onChange={(e) => setOutFormat(e.target.value)}
-                                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-indigo-500/50 outline-none text-white text-sm"
+                                                className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl focus:border-indigo-500/50 outline-none text-gray-900 dark:text-white text-sm"
                                             >
                                                 {file.name.toLowerCase().endsWith('.heic') ? (
                                                     <option value="image/jpeg" className="bg-[#0f172a]">JPEG / JPG</option>
@@ -215,7 +215,7 @@ export default function ImageConverter() {
                                 ) : (
                                     <div className="text-center">
                                         <p className="text-xl font-semibold mb-2">Upload Image File</p>
-                                        <p className="text-sm text-gray-400 mb-6 max-w-sm mx-auto">
+                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 max-w-sm mx-auto">
                                             Choose an image file (JPG, PNG, WEBP, or HEIC) to transform format instantly.
                                         </p>
                                         <Button onClick={() => fileInputRef.current?.click()} size="lg">
@@ -239,7 +239,7 @@ export default function ImageConverter() {
                                 </div>
                                 <div className="text-center">
                                     <p className="text-2xl font-bold mb-2">Conversion Complete!</p>
-                                    <p className="text-sm text-gray-400 mb-8 truncate max-w-md">"{convertedFile.filename}" is ready to download.</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-8 truncate max-w-md">"{convertedFile.filename}" is ready to download.</p>
                                     <div className="flex gap-4 justify-center">
                                         <Button variant="ghost" onClick={() => { setFile(null); setConvertedFile(null); }}>
                                             Convert Another

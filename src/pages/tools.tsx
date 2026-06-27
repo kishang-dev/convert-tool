@@ -124,7 +124,7 @@ export default function Tools() {
     }).filter(category => category.items.length > 0);
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-white">
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
             <Navbar />
 
             {/* ── Main Content ── */}
@@ -132,11 +132,11 @@ export default function Tools() {
 
                 {/* ── Page Header ── */}
                 <div className="text-center mb-10 animate-fadeIn">
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#1a1a1a] border border-[#2a2a2a] rounded-full mb-5 text-[#888] text-[10px] font-bold uppercase tracking-[0.15em]">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-200 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2a2a2a] rounded-full mb-5 text-gray-500 dark:text-gray-500 dark:text-[#888] text-[10px] font-bold uppercase tracking-[0.15em]">
                         <Sparkles size={11} />
                         40+ Tools &middot; All Free &middot; No Sign-up
                     </div>
-                    <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-4">
+                    <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-tight leading-tight mb-4">
                         All Tools
                     </h1>
                     <p className="text-[#666] text-base max-w-xl mx-auto leading-relaxed">
@@ -146,17 +146,17 @@ export default function Tools() {
                     {/* Search Bar */}
                     <div className="flex justify-center mt-6">
                         <div className="relative w-full max-w-md">
-                            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#444]" size={17} />
+                            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-500 dark:text-[#444]" size={17} />
                             <input
                                 placeholder="Search tools…"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full bg-[#111] border border-[#222] p-3 pl-10 pr-10 rounded-xl outline-none focus:border-[#333] transition-colors text-sm text-white placeholder-[#444]"
+                                className="w-full bg-gray-100 dark:bg-[#111] border border-gray-300 dark:border-[#222] p-3 pl-10 pr-10 rounded-xl outline-none focus:border-gray-400 dark:border-[#333] transition-colors text-sm text-gray-900 dark:text-white placeholder-[#444]"
                             />
                             {searchQuery && (
                                 <button
                                     onClick={() => setSearchQuery('')}
-                                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#555] hover:text-white text-xs"
+                                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-600 dark:text-[#555] hover:text-gray-900 dark:text-white text-xs"
                                 >
                                     ✕
                                 </button>
@@ -176,12 +176,12 @@ export default function Tools() {
                             style={{ animationDelay: `${0.1 + catIdx * 0.04}s` } as React.CSSProperties}
                         >
                             {/* Category header */}
-                            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#1a1a1a]">
+                            <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-200 dark:border-[#1a1a1a]">
                                 <div>
-                                    <h2 className="text-base font-semibold text-white">{category.title}</h2>
-                                    <p className="text-xs text-[#555] mt-0.5">{category.description}</p>
+                                    <h2 className="text-base font-semibold text-gray-900 dark:text-white">{category.title}</h2>
+                                    <p className="text-xs text-gray-600 dark:text-[#555] mt-0.5">{category.description}</p>
                                 </div>
-                                <span className="text-[10px] font-bold text-[#444] uppercase tracking-widest shrink-0 ml-4">
+                                <span className="text-[10px] font-bold text-gray-500 dark:text-gray-500 dark:text-[#444] uppercase tracking-widest shrink-0 ml-4">
                                     {category.items.length} tool{category.items.length !== 1 ? 's' : ''}
                                 </span>
                             </div>
@@ -209,10 +209,10 @@ export default function Tools() {
 
                     {/* Empty search state */}
                     {filteredCategories.length === 0 && (
-                        <div className="text-center py-16 bg-[#111] border border-[#1a1a1a] rounded-xl">
+                        <div className="text-center py-16 bg-gray-100 dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] rounded-xl">
                             <Search size={32} className="mx-auto mb-3 text-[#333]" />
-                            <p className="text-[#555] font-medium">No tools found for &ldquo;{searchQuery}&rdquo;</p>
-                            <button onClick={() => setSearchQuery('')} className="mt-4 text-xs text-white hover:text-[#aaa] font-medium underline underline-offset-4">
+                            <p className="text-gray-600 dark:text-[#555] font-medium">No tools found for &ldquo;{searchQuery}&rdquo;</p>
+                            <button onClick={() => setSearchQuery('')} className="mt-4 text-xs text-gray-900 dark:text-white hover:text-gray-600 dark:text-[#aaa] font-medium underline underline-offset-4">
                                 Clear search
                             </button>
                         </div>
@@ -220,10 +220,10 @@ export default function Tools() {
                 </div>
 
                 {/* Footer Banner */}
-                <div className="bg-[#111] border border-[#1a1a1a] rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 animate-fadeIn">
+                <div className="bg-gray-100 dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 animate-fadeIn">
                     <div>
-                        <p className="font-semibold text-white text-sm">🔒 Secure & Private</p>
-                        <p className="text-xs text-[#555] mt-0.5">All files are encrypted in transit and auto-deleted after 1 hour. Nothing is stored permanently.</p>
+                        <p className="font-semibold text-gray-900 dark:text-white text-sm">🔒 Secure & Private</p>
+                        <p className="text-xs text-gray-600 dark:text-[#555] mt-0.5">All files are encrypted in transit and auto-deleted after 1 hour. Nothing is stored permanently.</p>
                     </div>
                 </div>
             </div>

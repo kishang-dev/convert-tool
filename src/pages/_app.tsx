@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useAuthStore } from "@/store/authStore";
 import SplashCursor from "@/components/SplashCursor";
 import Head from "next/head";
+import { ThemeProvider } from "next-themes";
 
 export default function App({ Component, pageProps }: AppProps) {
   const initGuestId = useAuthStore((state) => state.initGuestId);
@@ -13,12 +14,12 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [initGuestId]);
 
   return (
-    <>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </Head>
       <SplashCursor />
       <Component {...pageProps} />
-    </>
+    </ThemeProvider>
   );
 }

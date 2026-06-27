@@ -104,9 +104,9 @@ function computeDouble( number ) {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>HTML, CSS, & JS Code Minifier | QuickPDF Tools</title>
+                <title>HTML, CSS, & JS Code Minifier | ToolBasket Tools</title>
                 <meta name="description" content="Compress and minify HTML documents, CSS stylesheets, and Javascript codes client-side in real-time." />
             </Head>
 
@@ -119,19 +119,19 @@ function computeDouble( number ) {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">Unified Code Minifier</span>
                     </h1>
-                    <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
                         Compress HTML, CSS, and JS. Strip comments, whitespace, and empty lines instantly.
                     </p>
                 </div>
 
                 {/* Tab Selector & Controls */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-white/5 border border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
                     <div className="flex gap-2">
                         {(['HTML', 'CSS', 'JS'] as const).map(t => (
                             <button
                                 key={t}
                                 onClick={() => { setTab(t); setInput(''); setOutput(''); setMetrics(null); }}
-                                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${tab === t ? 'bg-indigo-600 text-white' : 'bg-white/5 text-gray-400 hover:text-white'}`}
+                                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${tab === t ? 'bg-indigo-600 text-gray-900 dark:text-white' : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white'}`}
                             >
                                 {t} Minifier
                             </button>
@@ -142,7 +142,7 @@ function computeDouble( number ) {
                             onClick={handleLoadSample}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-300 hover:text-white"
+                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
                         >
                             <Sparkles size={16} className="mr-1.5" />
                             Load Sample
@@ -171,7 +171,7 @@ function computeDouble( number ) {
                     {/* Left: Input */}
                     <div className="lg:col-span-8 flex flex-col gap-4">
                         <Card variant="elevated" className="flex flex-col p-6 min-h-[480px] h-full">
-                            <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase mb-3 block">
+                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase mb-3 block">
                                 Raw {tab} Code Input
                             </span>
                             <textarea
@@ -190,8 +190,8 @@ function computeDouble( number ) {
                                 <Zap className="text-indigo-400 shrink-0" size={24} />
                                 <div>
                                     <h4 className="text-sm font-bold text-indigo-400">Minified Successfully</h4>
-                                    <p className="text-xs text-gray-400 mt-1">
-                                        Bytes saved: <span className="font-bold text-white font-mono">{metrics.original - metrics.compressed} B</span> ({metrics.ratio}% compression)
+                                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                                        Bytes saved: <span className="font-bold text-gray-900 dark:text-white font-mono">{metrics.original - metrics.compressed} B</span> ({metrics.ratio}% compression)
                                     </p>
                                 </div>
                             </Card>
@@ -199,7 +199,7 @@ function computeDouble( number ) {
 
                         <Card variant="elevated" className="p-6 flex-grow flex flex-col min-h-[350px]">
                             <div className="flex items-center justify-between mb-3">
-                                <span className="text-xs font-bold text-gray-400 uppercase">Minified Output</span>
+                                <span className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Minified Output</span>
                                 {output && (
                                     <button
                                         onClick={handleCopy}

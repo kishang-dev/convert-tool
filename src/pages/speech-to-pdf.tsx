@@ -543,10 +543,10 @@ export default function SpeechToPdf() {
                 <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
                     <div className="flex items-center gap-3">
                         <div className="w-11 h-11 bg-gradient-to-tr from-indigo-500 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/30 rotate-3">
-                            <Mic className="w-5 h-5 text-white" />
+                            <Mic className="w-5 h-5 text-gray-900 dark:text-white" />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold tracking-tight text-white">VoicePDF</h1>
+                            <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">VoicePDF</h1>
                             <p className="text-slate-400 text-xs">Real-time speech → formatted document</p>
                         </div>
                     </div>
@@ -730,7 +730,7 @@ export default function SpeechToPdf() {
                                             'w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl font-semibold text-sm transition-all duration-200 select-none',
                                             isListening
                                                 ? 'bg-red-500/10 text-red-400 border border-red-500/25 hover:bg-red-500/20 active:scale-95'
-                                                : 'bg-gradient-to-r from-indigo-600 to-cyan-500 text-white shadow-lg shadow-indigo-500/20 hover:brightness-110 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed'
+                                                : 'bg-gradient-to-r from-indigo-600 to-cyan-500 text-gray-900 dark:text-white shadow-lg shadow-indigo-500/20 hover:brightness-110 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed'
                                         )}
                                     >
                                         {isListening ? (
@@ -782,7 +782,7 @@ export default function SpeechToPdf() {
                         {error && (
                             <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex items-start gap-2.5 animate-in fade-in slide-in-from-top-4 duration-300">
                                 <div className="shrink-0 bg-red-500 rounded-full p-0.5 mt-0.5">
-                                    <Trash2 className="w-3 h-3 text-white" />
+                                    <Trash2 className="w-3 h-3 text-gray-900 dark:text-white" />
                                 </div>
                                 <p className="text-xs text-red-400 leading-relaxed">{error}</p>
                             </div>
@@ -821,7 +821,7 @@ export default function SpeechToPdf() {
                                 <span className="flex items-center gap-2 text-sm text-slate-400 font-medium">
                                     <FileText className="w-4 h-4 text-indigo-400" /> Live Transcript
                                     {isListening && (
-                                        <span className="text-[10px] bg-red-500 text-white px-2 py-0.5 rounded-full uppercase font-black tracking-tight animate-pulse">
+                                        <span className="text-[10px] bg-red-500 text-gray-900 dark:text-white px-2 py-0.5 rounded-full uppercase font-black tracking-tight animate-pulse">
                                             Live
                                         </span>
                                     )}

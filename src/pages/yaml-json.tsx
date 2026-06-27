@@ -86,9 +86,9 @@ export default function YamlJsonConverter() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>YAML ↔ JSON Converter | QuickPDF Tools</title>
+                <title>YAML ↔ JSON Converter | ToolBasket Tools</title>
                 <meta name="description" content="Convert YAML documents to JSON format and JSON to YAML format in real-time." />
             </Head>
 
@@ -101,13 +101,13 @@ export default function YamlJsonConverter() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">YAML ↔ JSON Converter</span>
                     </h1>
-                    <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
                         Quickly and securely convert YAML files to standard JSON format, and JSON keys back to YAML format.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-white/5 border border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
                     <div className="flex items-center gap-3">
                         <Button 
                             onClick={handleToggleDirection} 
@@ -122,7 +122,7 @@ export default function YamlJsonConverter() {
                             onClick={() => fileInputRef.current?.click()}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-300 hover:text-white"
+                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
                         >
                             <Upload size={16} className="mr-2" />
                             Upload File
@@ -161,7 +161,7 @@ export default function YamlJsonConverter() {
                     {/* Input Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
                                 Input {direction === 'yaml-to-json' ? 'YAML' : 'JSON'}
                             </span>
                         </div>
@@ -193,7 +193,7 @@ database:
                     {/* Output Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
                                 Output {direction === 'yaml-to-json' ? 'JSON' : 'YAML'}
                             </span>
                             {output && (

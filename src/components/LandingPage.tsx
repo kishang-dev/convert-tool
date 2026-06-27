@@ -54,13 +54,13 @@ export default function LandingPage() {
     const router = useRouter();
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a]">
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
 
             {/* Hero */}
             <HeroSection />
 
             {/* Stats bar */}
-            <div className="border-y border-[#1a1a1a] bg-[#0d0d0d]">
+            <div className="border-y border-gray-200 dark:border-[#1a1a1a] bg-gray-50 dark:bg-[#0d0d0d]">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                         {[
@@ -70,8 +70,8 @@ export default function LandingPage() {
                             { value: '40+', label: 'Free Tools' },
                         ].map((stat) => (
                             <div key={stat.label}>
-                                <div className="text-2xl font-bold text-white mb-0.5">{stat.value}</div>
-                                <div className="text-xs text-[#555] uppercase tracking-wider">{stat.label}</div>
+                                <div className="text-2xl font-bold text-gray-900 dark:text-white mb-0.5">{stat.value}</div>
+                                <div className="text-xs text-gray-600 dark:text-[#555] uppercase tracking-wider">{stat.label}</div>
                             </div>
                         ))}
                     </div>
@@ -85,14 +85,14 @@ export default function LandingPage() {
             <HowItWorks />
 
             {/* Benefits Grid */}
-            <section className="py-20 px-4 sm:px-6 border-t border-[#1a1a1a]">
+            <section className="py-20 px-4 sm:px-6 border-t border-gray-200 dark:border-[#1a1a1a]">
                 <div className="max-w-5xl mx-auto">
                     <div className="mb-12">
-                        <p className="text-xs text-[#555] uppercase tracking-widest font-medium mb-2">Why QuickPDF</p>
-                        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                        <p className="text-xs text-gray-600 dark:text-[#555] uppercase tracking-widest font-medium mb-2">Why ToolBasket</p>
+                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
                             Built for precision & speed
                         </h2>
-                        <p className="text-sm text-[#555] mt-2 max-w-lg">
+                        <p className="text-sm text-gray-600 dark:text-[#555] mt-2 max-w-lg">
                             A rock-solid infrastructure to handle your most complex document tasks without breaking a sweat.
                         </p>
                     </div>
@@ -103,13 +103,13 @@ export default function LandingPage() {
                             return (
                                 <div
                                     key={i}
-                                    className="bg-[#111] border border-[#1a1a1a] rounded-xl p-6 hover:border-[#2a2a2a] transition-colors"
+                                    className="bg-gray-100 dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] rounded-xl p-6 hover:border-gray-300 dark:border-[#2a2a2a] transition-colors"
                                 >
-                                    <div className="bg-[#1a1a1a] border border-[#222] p-2.5 rounded-lg inline-block mb-4">
-                                        <Icon size={17} className="text-[#888]" />
+                                    <div className="bg-gray-200 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#222] p-2.5 rounded-lg inline-block mb-4">
+                                        <Icon size={17} className="text-gray-500 dark:text-gray-500 dark:text-[#888]" />
                                     </div>
-                                    <h3 className="text-white font-semibold text-sm mb-2">{b.title}</h3>
-                                    <p className="text-[#555] text-xs leading-relaxed">{b.description}</p>
+                                    <h3 className="text-gray-900 dark:text-white font-semibold text-sm mb-2">{b.title}</h3>
+                                    <p className="text-gray-600 dark:text-[#555] text-xs leading-relaxed">{b.description}</p>
                                 </div>
                             );
                         })}
@@ -118,15 +118,15 @@ export default function LandingPage() {
             </section>
 
             {/* About section */}
-            <section className="py-20 px-4 sm:px-6 border-t border-[#1a1a1a]">
+            <section className="py-20 px-4 sm:px-6 border-t border-gray-200 dark:border-[#1a1a1a]">
                 <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
                     <div>
-                        <p className="text-xs text-[#555] uppercase tracking-widest font-medium mb-2">About</p>
-                        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-4">
-                            The vision behind QuickPDF
+                        <p className="text-xs text-gray-600 dark:text-[#555] uppercase tracking-widest font-medium mb-2">About</p>
+                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white tracking-tight mb-4">
+                            The vision behind ToolBasket
                         </h2>
-                        <p className="text-sm text-[#555] leading-relaxed mb-6">
-                            Founded in 2024, QuickPDF was born out of a simple need: universal, high-speed document processing without the clutter of traditional tools. We believe professional-grade tools should be accessible to everyone, anywhere.
+                        <p className="text-sm text-gray-600 dark:text-[#555] leading-relaxed mb-6">
+                            Founded in 2024, ToolBasket was born out of a simple need: universal, high-speed document processing without the clutter of traditional tools. We believe professional-grade tools should be accessible to everyone, anywhere.
                         </p>
                         <Button variant="secondary" onClick={() => router.push('/about')}>
                             Read Our Story
@@ -134,7 +134,7 @@ export default function LandingPage() {
                     </div>
 
                     {/* Accuracy bars */}
-                    <div className="bg-[#111] border border-[#1a1a1a] rounded-xl p-6 space-y-5">
+                    <div className="bg-gray-100 dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] rounded-xl p-6 space-y-5">
                         {[
                             { label: 'PDF Processing', pct: 90 },
                             { label: 'AI Accuracy', pct: 95 },
@@ -142,10 +142,10 @@ export default function LandingPage() {
                         ].map(({ label, pct }) => (
                             <div key={label}>
                                 <div className="flex justify-between text-xs mb-2">
-                                    <span className="text-[#888]">{label}</span>
-                                    <span className="text-[#555]">{pct}%</span>
+                                    <span className="text-gray-500 dark:text-gray-500 dark:text-[#888]">{label}</span>
+                                    <span className="text-gray-600 dark:text-[#555]">{pct}%</span>
                                 </div>
-                                <div className="h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden">
+                                <div className="h-1.5 bg-gray-200 dark:bg-[#1a1a1a] rounded-full overflow-hidden">
                                     <div
                                         className="h-full bg-white rounded-full"
                                         style={{ width: `${pct}%` }}
@@ -161,30 +161,30 @@ export default function LandingPage() {
             <FAQ />
 
             {/* Pricing / Free access */}
-            <section className="py-20 px-4 sm:px-6 border-t border-[#1a1a1a]">
+            <section className="py-20 px-4 sm:px-6 border-t border-gray-200 dark:border-[#1a1a1a]">
                 <div className="max-w-5xl mx-auto">
                     <div className="mb-10">
-                        <p className="text-xs text-[#555] uppercase tracking-widest font-medium mb-2">Pricing</p>
-                        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Simple, transparent access</h2>
-                        <p className="text-sm text-[#555] mt-2">Professional tools should be accessible to everyone.</p>
+                        <p className="text-xs text-gray-600 dark:text-[#555] uppercase tracking-widest font-medium mb-2">Pricing</p>
+                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Simple, transparent access</h2>
+                        <p className="text-sm text-gray-600 dark:text-[#555] mt-2">Professional tools should be accessible to everyone.</p>
                     </div>
 
                     <div className="max-w-sm">
-                        <div className="bg-[#111] border border-[#2a2a2a] rounded-xl p-8">
+                        <div className="bg-gray-100 dark:bg-[#111] border border-gray-300 dark:border-[#2a2a2a] rounded-xl p-8">
                             <div className="flex items-center justify-between mb-1">
-                                <h3 className="text-white font-semibold">Community Free</h3>
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-[#555] bg-[#1a1a1a] border border-[#2a2a2a] px-2 py-0.5 rounded-full">Popular</span>
+                                <h3 className="text-gray-900 dark:text-white font-semibold">Community Free</h3>
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-gray-600 dark:text-[#555] bg-gray-200 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2a2a2a] px-2 py-0.5 rounded-full">Popular</span>
                             </div>
                             <div className="flex items-baseline gap-1.5 mb-6 mt-3">
-                                <span className="text-4xl font-bold text-white">$0</span>
-                                <span className="text-xs text-[#555] uppercase">Forever</span>
+                                <span className="text-4xl font-bold text-gray-900 dark:text-white">$0</span>
+                                <span className="text-xs text-gray-600 dark:text-[#555] uppercase">Forever</span>
                             </div>
 
                             <ul className="space-y-3 mb-7">
                                 {freeFeatures.map((f) => (
-                                    <li key={f} className="flex items-center gap-3 text-sm text-[#888]">
-                                        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded p-0.5">
-                                            <Check size={12} className="text-white" />
+                                    <li key={f} className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-500 dark:text-[#888]">
+                                        <div className="bg-gray-200 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2a2a2a] rounded p-0.5">
+                                            <Check size={12} className="text-gray-900 dark:text-white" />
                                         </div>
                                         {f}
                                     </li>
@@ -201,12 +201,12 @@ export default function LandingPage() {
             </section>
 
             {/* Final CTA */}
-            <section className="py-20 px-4 sm:px-6 border-t border-[#1a1a1a]">
+            <section className="py-20 px-4 sm:px-6 border-t border-gray-200 dark:border-[#1a1a1a]">
                 <div className="max-w-3xl mx-auto text-center">
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-4">
                         Start your journey now
                     </h2>
-                    <p className="text-[#555] text-sm mb-8 max-w-md mx-auto leading-relaxed">
+                    <p className="text-gray-600 dark:text-[#555] text-sm mb-8 max-w-md mx-auto leading-relaxed">
                         Join millions of users and experience the future of document processing. Entirely free, remarkably fast.
                     </p>
                     <Button size="lg" onClick={() => router.push('/tools')} className="inline-flex items-center gap-2">

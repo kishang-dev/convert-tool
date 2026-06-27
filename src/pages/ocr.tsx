@@ -93,12 +93,12 @@ export default function OcrPage() {
                 <div className="text-center mb-16 animate-fadeIn">
                     <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-4">
                         <Sparkles className="text-purple-400" size={16} />
-                        <span className="text-sm text-gray-300">AI-Powered OCR</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">AI-Powered OCR</span>
                     </div>
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                         <span className="gradient-text">Image OCR</span> Tool
                     </h1>
-                    <p className="text-xl text-gray-400">
+                    <p className="text-xl text-gray-600 dark:text-gray-400">
                         Extract text from images (English, Hindi, Gujarati)
                     </p>
                 </div>
@@ -116,9 +116,9 @@ export default function OcrPage() {
                     >
                         <div className="flex flex-col items-center gap-4">
                             <div className="bg-gradient-to-br from-blue-600 to-cyan-600 p-6 rounded-full shadow-lg">
-                                <ImageIcon className="text-white" size={48} />
+                                <ImageIcon className="text-gray-900 dark:text-white" size={48} />
                             </div>
-                            <p className="text-xl text-gray-300">
+                            <p className="text-xl text-gray-700 dark:text-gray-300">
                                 Drag & Drop Image Here or
                             </p>
                             <Button
@@ -152,21 +152,21 @@ export default function OcrPage() {
                     <div className="grid md:grid-cols-2 gap-6 animate-fadeIn" style={{ animationDelay: '0.2s' }}>
                         {/* Image Preview */}
                         <Card variant="elevated" className="p-6">
-                            <h3 className="text-lg font-semibold mb-4 text-white flex items-center gap-2">
+                            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
                                 <ImageIcon size={20} className="text-purple-400" />
                                 Image Preview
                             </h3>
                             <img
                                 src={preview}
                                 alt="Preview"
-                                className="w-full rounded-lg border border-gray-700"
+                                className="w-full rounded-lg border border-gray-200 dark:border-gray-700"
                             />
                         </Card>
 
                         {/* OCR Results */}
                         {ocrResult && (
                             <Card variant="elevated" className="p-6">
-                                <h3 className="text-lg font-semibold mb-4 text-white flex items-center gap-2">
+                                <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
                                     <FileText size={20} className="text-purple-400" />
                                     Extracted Text
                                 </h3>
@@ -174,13 +174,13 @@ export default function OcrPage() {
                                 {/* Stats */}
                                 <div className="grid grid-cols-2 gap-4 mb-4">
                                     <div className="glass p-4 rounded-lg">
-                                        <p className="text-sm text-gray-400">Confidence</p>
+                                        <p className="text-sm text-gray-600 dark:text-gray-400">Confidence</p>
                                         <p className="text-2xl font-bold gradient-text">
                                             {ocrResult.stats.confidence}%
                                         </p>
                                     </div>
                                     <div className="glass p-4 rounded-lg">
-                                        <p className="text-sm text-gray-400">Words Found</p>
+                                        <p className="text-sm text-gray-600 dark:text-gray-400">Words Found</p>
                                         <p className="text-2xl font-bold gradient-text">
                                             {ocrResult.stats.wordCount}
                                         </p>
@@ -189,8 +189,8 @@ export default function OcrPage() {
 
                                 {/* Full Text */}
                                 <div className="glass-strong p-4 rounded-lg max-h-96 overflow-y-auto custom-scrollbar">
-                                    <p className="text-sm text-gray-400 mb-2">Full Text:</p>
-                                    <p className="whitespace-pre-wrap text-white">
+                                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Full Text:</p>
+                                    <p className="whitespace-pre-wrap text-gray-900 dark:text-white">
                                         {ocrResult.data.fullText || "No text detected"}
                                     </p>
                                 </div>

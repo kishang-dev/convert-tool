@@ -56,9 +56,9 @@ export default function ExcelToPdf() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>Excel to PDF Converter | QuickPDF Tools</title>
+                <title>Excel to PDF Converter | ToolBasket Tools</title>
                 <meta name="description" content="Convert Excel spreadsheets to PDF documents." />
             </Head>
 
@@ -71,7 +71,7 @@ export default function ExcelToPdf() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                         <span className="gradient-text">Excel to PDF</span>
                     </h1>
-                    <p className="text-gray-400 text-lg">
+                    <p className="text-gray-600 dark:text-gray-400 text-lg">
                         Convert your Excel spreadsheets to professional PDF documents.
                     </p>
                 </div>
@@ -104,7 +104,7 @@ export default function ExcelToPdf() {
                                 ) : (
                                     <div className="text-center">
                                         <p className="text-xl font-medium mb-2">Upload Excel File</p>
-                                        <p className="text-sm text-gray-400 mb-6">
+                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
                                             Select an .xlsx or .xls file to convert
                                         </p>
                                         <Button onClick={() => fileInputRef.current?.click()} size="lg">

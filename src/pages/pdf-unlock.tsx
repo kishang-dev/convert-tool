@@ -65,9 +65,9 @@ export default function PdfUnlock() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>PDF Unlock & Password Remover | QuickPDF Tools</title>
+                <title>PDF Unlock & Password Remover | ToolBasket Tools</title>
                 <meta name="description" content="Unlock password protected PDFs and permanently remove passwords and restrictions." />
             </Head>
 
@@ -80,7 +80,7 @@ export default function PdfUnlock() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4">
                         <span className="gradient-text">PDF Unlock & Password Remover</span>
                     </h1>
-                    <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                    <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
                         Remove encryption, restrictions, and passwords from protected PDF files in seconds.
                     </p>
                 </div>
@@ -88,7 +88,7 @@ export default function PdfUnlock() {
                 <div className="grid gap-8">
                     <Card variant="elevated" className="p-8 md:p-12 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-4 opacity-5">
-                            <Unlock size={120} className="text-white" />
+                            <Unlock size={120} className="text-gray-900 dark:text-white" />
                         </div>
                         
                         {!unlockedFile ? (
@@ -105,11 +105,11 @@ export default function PdfUnlock() {
                                     <div className="w-full max-w-md text-center space-y-6">
                                         <div>
                                             <p className="text-xl font-semibold mb-1 truncate">{file.name}</p>
-                                            <p className="text-xs text-gray-400">{(file.size / 1024 / 1024).toFixed(2)} MB • Protected PDF</p>
+                                            <p className="text-xs text-gray-600 dark:text-gray-400">{(file.size / 1024 / 1024).toFixed(2)} MB • Protected PDF</p>
                                         </div>
 
                                         <div className="space-y-2 text-left">
-                                            <label className="text-sm font-semibold text-gray-300 flex items-center gap-1.5">
+                                            <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
                                                 <ShieldAlert size={16} className="text-yellow-500" />
                                                 Enter PDF Password
                                             </label>
@@ -118,7 +118,7 @@ export default function PdfUnlock() {
                                                 value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
                                                 placeholder="Enter document open password"
-                                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-yellow-500/50 focus:bg-white/10 outline-none transition-all text-white placeholder-gray-500"
+                                                className="w-full px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl focus:border-yellow-500/50 focus:bg-white/10 outline-none transition-all text-gray-900 dark:text-white placeholder-gray-500"
                                                 autoFocus
                                             />
                                         </div>
@@ -140,7 +140,7 @@ export default function PdfUnlock() {
                                 ) : (
                                     <div className="text-center">
                                         <p className="text-xl font-semibold mb-2">Upload Protected PDF</p>
-                                        <p className="text-sm text-gray-400 mb-6 max-w-sm mx-auto">
+                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 max-w-sm mx-auto">
                                             Choose an encrypted PDF file to remove its protection and passwords
                                         </p>
                                         <Button onClick={() => fileInputRef.current?.click()} size="lg">
@@ -164,7 +164,7 @@ export default function PdfUnlock() {
                                 </div>
                                 <div className="text-center">
                                     <p className="text-2xl font-bold mb-2">PDF Unlocked successfully!</p>
-                                    <p className="text-sm text-gray-400 mb-8">All password protection and editing restrictions have been permanently removed.</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-8">All password protection and editing restrictions have been permanently removed.</p>
                                     <div className="flex gap-4 justify-center">
                                         <Button variant="ghost" onClick={() => { setFile(null); setUnlockedFile(null); setPassword(''); }}>
                                             Unlock Another

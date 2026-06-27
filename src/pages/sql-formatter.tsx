@@ -67,9 +67,9 @@ export default function SqlFormatter() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>SQL Query Formatter | QuickPDF Tools</title>
+                <title>SQL Query Formatter | ToolBasket Tools</title>
                 <meta name="description" content="Beautify, indent, format, and minify SQL queries client-side instantly for MySQL, PostgreSQL, Oracle, or SQL Server." />
             </Head>
 
@@ -82,19 +82,19 @@ export default function SqlFormatter() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">SQL Query Formatter</span>
                     </h1>
-                    <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
                         Pretty print database query clauses. Capitalize commands and minify raw strings.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-white/5 border border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
                     <div className="flex items-center gap-3">
                         <Button
                             onClick={handleLoadSample}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-300 hover:text-white"
+                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
                         >
                             <Sparkles size={16} className="mr-1.5" />
                             Load Sample Query
@@ -114,7 +114,7 @@ export default function SqlFormatter() {
                             onClick={handleMinify}
                             variant="secondary"
                             size="sm"
-                            className="font-bold border border-white/10"
+                            className="font-bold border border-gray-200 dark:border-white/10"
                         >
                             Minify SQL
                         </Button>
@@ -132,7 +132,7 @@ export default function SqlFormatter() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
                     {/* Input Pane */}
                     <Card variant="elevated" className="flex flex-col p-6 min-h-[480px]">
-                        <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase mb-3 block">
+                        <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase mb-3 block">
                             Raw SQL Query Input
                         </span>
                         <textarea
@@ -146,7 +146,7 @@ export default function SqlFormatter() {
                     {/* Output Pane */}
                     <Card variant="elevated" className="flex flex-col p-6 min-h-[480px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
                                 Beautified SQL Output
                             </span>
                             {output && (

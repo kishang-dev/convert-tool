@@ -92,7 +92,7 @@ export const SvgPreview: React.FC = () => {
 
         <button
           onClick={handleDownload}
-          className="w-full sm:w-auto px-10 py-4 bg-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 flex items-center justify-center space-x-3"
+          className="w-full sm:w-auto px-10 py-4 bg-blue-600 text-gray-900 dark:text-white rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 flex items-center justify-center space-x-3"
         >
           <Download className="w-6 h-6" />
           <span>Download SVG</span>

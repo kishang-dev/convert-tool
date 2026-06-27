@@ -161,7 +161,7 @@ export const Sidebar = () => {
     // Create custom drag image
     const dragIcon = document.createElement("div");
     dragIcon.className =
-      "px-3 py-1 bg-blue-600 text-white rounded shadow-lg text-xs font-bold pointer-events-none";
+      "px-3 py-1 bg-blue-600 text-gray-900 dark:text-white rounded shadow-lg text-xs font-bold pointer-events-none";
     dragIcon.innerText = nodeType.toUpperCase();
     document.body.appendChild(dragIcon);
     event.dataTransfer.setDragImage(dragIcon, 0, 0);
@@ -176,15 +176,15 @@ export const Sidebar = () => {
           <div key={category.name} className="space-y-2">
             <button
               onClick={() => toggleCategory(category.name)}
-              className="flex items-center justify-between w-full p-3 rounded-2xl hover:bg-white dark:hover:bg-white/5 hover:shadow-md transition-all group border border-transparent hover:border-gray-100 dark:hover:border-white/10"
+              className="flex items-center justify-between w-full p-3 rounded-2xl hover:bg-white dark:hover:bg-gray-100 dark:bg-white/5 hover:shadow-md transition-all group border border-transparent hover:border-gray-100 dark:hover:border-gray-200 dark:border-white/10"
             >
-              <span className="text-[11px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest group-hover:text-blue-500 transition-colors">
+              <span className="text-[11px] font-black text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500 uppercase tracking-widest group-hover:text-blue-500 transition-colors">
                 {category.name}
               </span>
               {expandedCategories.includes(category.name) ? (
-                <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-blue-500 transition-colors" />
               ) : (
-                <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-blue-500 transition-colors" />
               )}
             </button>
 
@@ -198,9 +198,9 @@ export const Sidebar = () => {
                     draggable
                   >
                     <div className="p-3 bg-gray-50 dark:bg-white/5 rounded-2xl group-hover:bg-white dark:group-hover:bg-blue-600 group-hover:shadow-lg transition-all mb-2 transform group-hover:rotate-6 group-hover:scale-110">
-                      <shape.icon className="w-6 h-6 text-gray-600 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors" />
+                      <shape.icon className="w-6 h-6 text-gray-600 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-gray-900 dark:text-white transition-colors" />
                     </div>
-                    <span className="text-[9px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-wider group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors text-center truncate w-full">
+                    <span className="text-[9px] font-black text-gray-500 dark:text-gray-500 dark:text-gray-400 uppercase tracking-wider group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors text-center truncate w-full">
                       {shape.label}
                     </span>
                   </div>

@@ -117,7 +117,7 @@ export const FileUpload: React.FC = () => {
                   "px-6 py-2.5 rounded-xl font-semibold transition-all duration-300",
                   uploading
                     ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                    : "bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-200 active:scale-95"
+                    : "bg-blue-600 text-gray-900 dark:text-white hover:bg-blue-700 shadow-lg shadow-blue-200 active:scale-95"
                 )}
               >
                 {uploading ? (

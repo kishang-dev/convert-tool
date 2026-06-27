@@ -20,9 +20,9 @@ export default function Button({
     const baseStyles = 'font-medium rounded-lg transition-smooth inline-flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed';
 
     const variants = {
-        primary:   'bg-white text-black hover:bg-gray-100 shadow-sm',
-        secondary: 'bg-transparent border border-[#333] text-white hover:bg-[#1a1a1a]',
-        ghost:     'bg-transparent text-gray-400 hover:text-white hover:bg-[#1a1a1a]',
+        primary:   'bg-gray-900 text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-100 shadow-sm',
+        secondary: 'bg-transparent border border-gray-300 dark:border-[#333] text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]',
+        ghost:     'bg-transparent text-gray-500 dark:text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]',
     };
 
     const sizes = {

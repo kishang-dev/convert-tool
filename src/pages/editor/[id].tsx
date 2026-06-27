@@ -154,7 +154,7 @@ export default function pdfEditor() {
     if (!file) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <p className="text-xl text-gray-500">File not found.</p>
+                <p className="text-xl text-gray-500 dark:text-gray-500">File not found.</p>
             </div>
         );
     }
@@ -175,13 +175,13 @@ export default function pdfEditor() {
                         </button>
                         <div>
                             <h1 className="text-xl font-bold text-gray-800">Edit PDF</h1>
-                            <p className="text-sm text-gray-500">{file.originalName}</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-500">{file.originalName}</p>
                         </div>
                     </div>
                     <button
                         onClick={handleSave}
                         disabled={saving}
-                        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-70"
+                        className="bg-blue-600 text-gray-900 dark:text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-70"
                     >
                         {saving ? (
                             <Loader2 className="animate-spin" size={20} />
@@ -210,7 +210,7 @@ export default function pdfEditor() {
                                 {/* Image Container with Overlay */}
                                 <div className="relative p-4 bg-gray-100 min-h-[200px] flex items-center justify-center border-b">
                                     {/* Page Number */}
-                                    <div className="absolute top-2 left-2 bg-black/50 text-white px-2 py-0.5 rounded text-xs z-10">
+                                    <div className="absolute top-2 left-2 bg-black/50 text-gray-900 dark:text-white px-2 py-0.5 rounded text-xs z-10">
                                         Page {page.originalIndex + 1}
                                     </div>
 

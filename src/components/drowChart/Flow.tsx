@@ -151,7 +151,7 @@ const FlowContent = ({ id }: { id?: string }) => {
           className="dark:opacity-20"
         />
         <Controls
-          className="bg-white dark:bg-gray-800 border-none shadow-xl rounded-xl overflow-hidden p-1 m-4 [&_button]:bg-white dark:[&_button]:bg-gray-800 [&_button]:border-gray-100 dark:[&_button]:border-gray-700 [&_svg]:fill-gray-600 dark:[&_svg]:fill-gray-300"
+          className="bg-white dark:bg-gray-800 border-none shadow-xl rounded-xl overflow-hidden p-1 m-4 [&_button]:bg-white dark:[&_button]:bg-gray-800 [&_button]:border-gray-100 dark:[&_button]:border-gray-200 dark:border-gray-700 [&_svg]:fill-gray-600 dark:[&_svg]:fill-gray-300"
         />
 
         {/* Floating Control Panel */}
@@ -162,7 +162,7 @@ const FlowContent = ({ id }: { id?: string }) => {
           <button
             onClick={() => fitView({ duration: 800 })}
             title="Focus Canvas"
-            className="p-2.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-600/10 rounded-xl transition-all"
+            className="p-2.5 text-gray-500 dark:text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-600/10 rounded-xl transition-all"
           >
             <Maximize size={18} />
           </button>
@@ -177,13 +177,13 @@ const FlowContent = ({ id }: { id?: string }) => {
               }
             }}
             title="Clear Canvas"
-            className="p-2.5 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-all"
+            className="p-2.5 text-gray-600 dark:text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-all"
           >
             <Trash2 size={18} />
           </button>
 
           <button
-            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-black transition-all shadow-lg shadow-blue-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-gray-900 dark:text-white rounded-xl text-xs font-black transition-all shadow-lg shadow-blue-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleSave}
             disabled={isUpdating}
           >
@@ -198,9 +198,9 @@ const FlowContent = ({ id }: { id?: string }) => {
 
         {/* Helpful Hint Panel */}
         <Panel position="bottom-center" className="mb-4">
-          <div className="bg-gray-900/80 dark:bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 flex items-center gap-3 shadow-2xl">
+          <div className="bg-gray-900/80 dark:bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-gray-200 dark:border-white/10 flex items-center gap-3 shadow-2xl">
             <Info size={14} className="text-blue-400" />
-            <p className="text-[10px] font-bold text-white uppercase tracking-widest opacity-80">
+            <p className="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest opacity-80">
               Drag from handles to connect components &bull; Right-click to edit labels
             </p>
           </div>

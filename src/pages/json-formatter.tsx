@@ -66,7 +66,7 @@ export default function JsonFormatter() {
 
     const handleLoadSample = () => {
         const sample = {
-            appName: "QuickPDF Tools",
+            appName: "ToolBasket Tools",
             version: "1.2.0",
             active: true,
             features: ["pdf-unlock", "base64", "jwt-decoder", "json-formatter"],
@@ -81,9 +81,9 @@ export default function JsonFormatter() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>JSON Formatter & Minifier | QuickPDF Tools</title>
+                <title>JSON Formatter & Minifier | ToolBasket Tools</title>
                 <meta name="description" content="Format, beautify, validate, and minify your JSON payloads instantly in real-time." />
             </Head>
 
@@ -96,20 +96,20 @@ export default function JsonFormatter() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">JSON Formatter & Minifier</span>
                     </h1>
-                    <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
                         Beautify, inspect, and compress your JSON codes. Align structures instantly and securely.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-white/5 border border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-2">
-                            <span className="text-xs text-gray-400 font-semibold uppercase">Indent Size:</span>
+                            <span className="text-xs text-gray-600 dark:text-gray-400 font-semibold uppercase">Indent Size:</span>
                             <select 
                                 value={indent}
                                 onChange={(e) => setIndent(Number(e.target.value))}
-                                className="bg-white/5 border border-white/10 px-2 py-1.5 rounded-lg text-sm text-gray-200 outline-none"
+                                className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-2 py-1.5 rounded-lg text-sm text-gray-200 outline-none"
                             >
                                 <option value={2} className="bg-[#0f172a]">2 Spaces</option>
                                 <option value={4} className="bg-[#0f172a]">4 Spaces</option>
@@ -120,7 +120,7 @@ export default function JsonFormatter() {
                             onClick={handleLoadSample}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-300 hover:text-white"
+                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
                         >
                             <Sparkles size={16} className="mr-1.5" />
                             Load Sample
@@ -140,7 +140,7 @@ export default function JsonFormatter() {
                             onClick={handleMinify}
                             variant="secondary"
                             size="sm"
-                            className="font-bold border border-white/10"
+                            className="font-bold border border-gray-200 dark:border-white/10"
                         >
                             Minify
                         </Button>
@@ -159,7 +159,7 @@ export default function JsonFormatter() {
                     {/* Input Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
                                 Raw JSON Input
                             </span>
                         </div>
@@ -174,7 +174,7 @@ export default function JsonFormatter() {
                     {/* Output Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
                                 Formatted Output
                             </span>
                             {output && (

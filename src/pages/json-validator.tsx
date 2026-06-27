@@ -126,9 +126,9 @@ export default function JsonValidator() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>JSON Validator & Syntax Debugger | QuickPDF Tools</title>
+                <title>JSON Validator & Syntax Debugger | ToolBasket Tools</title>
                 <meta name="description" content="Validate your JSON codes instantly, analyze object depth, and discover exact syntax error lines." />
             </Head>
 
@@ -141,7 +141,7 @@ export default function JsonValidator() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">JSON Validator & Debugger</span>
                     </h1>
-                    <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
                         Validate JSON structure, detect syntax formatting anomalies, and find line-by-line debugging indices.
                     </p>
                 </div>
@@ -174,7 +174,7 @@ export default function JsonValidator() {
                                 <Button 
                                     onClick={() => setInput('')} 
                                     variant="ghost"
-                                    className="text-gray-400 hover:text-white"
+                                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white"
                                 >
                                     Clear
                                 </Button>
@@ -191,7 +191,7 @@ export default function JsonValidator() {
                     {/* Right: Validation Panel */}
                     <div className="lg:col-span-5 flex flex-col gap-6">
                         {status === 'idle' && (
-                            <Card variant="elevated" className="p-8 flex flex-col items-center justify-center text-center h-full text-gray-500">
+                            <Card variant="elevated" className="p-8 flex flex-col items-center justify-center text-center h-full text-gray-500 dark:text-gray-500">
                                 <ShieldCheck size={48} className="opacity-10 mb-3" />
                                 <p className="text-base font-semibold">Ready for validation</p>
                                 <p className="text-xs text-gray-600 mt-1">Paste JSON on the left and click "Validate JSON" to run tests.</p>
@@ -206,27 +206,27 @@ export default function JsonValidator() {
                                         <CheckCircle2 size={36} className="text-green-400" />
                                     </div>
                                     <h3 className="text-xl font-bold text-green-400 mb-1">Valid JSON Structure</h3>
-                                    <p className="text-xs text-gray-400">All characters align cleanly to the JSON standard specs.</p>
+                                    <p className="text-xs text-gray-600 dark:text-gray-400">All characters align cleanly to the JSON standard specs.</p>
                                 </Card>
 
                                 {/* Object Metrics */}
                                 <Card variant="elevated" className="p-6 flex-grow">
-                                    <h4 className="text-sm font-bold tracking-wider text-gray-400 uppercase mb-4">Document Metrics</h4>
+                                    <h4 className="text-sm font-bold tracking-wider text-gray-600 dark:text-gray-400 uppercase mb-4">Document Metrics</h4>
                                     <div className="space-y-4">
                                         <div className="flex items-center justify-between border-b border-white/5 pb-2.5">
-                                            <span className="text-sm text-gray-400">Root Type</span>
+                                            <span className="text-sm text-gray-600 dark:text-gray-400">Root Type</span>
                                             <span className="font-mono text-sm font-bold text-indigo-400">{metrics.type}</span>
                                         </div>
                                         <div className="flex items-center justify-between border-b border-white/5 pb-2.5">
-                                            <span className="text-sm text-gray-400">Payload Size</span>
+                                            <span className="text-sm text-gray-600 dark:text-gray-400">Payload Size</span>
                                             <span className="font-mono text-sm font-semibold">{metrics.sizeBytes} bytes</span>
                                         </div>
                                         <div className="flex items-center justify-between border-b border-white/5 pb-2.5">
-                                            <span className="text-sm text-gray-400">Maximum Nesting Depth</span>
+                                            <span className="text-sm text-gray-600 dark:text-gray-400">Maximum Nesting Depth</span>
                                             <span className="font-mono text-sm font-semibold text-emerald-400">{metrics.maxDepth}</span>
                                         </div>
                                         <div className="flex items-center justify-between">
-                                            <span className="text-sm text-gray-400">Total Keys/Elements</span>
+                                            <span className="text-sm text-gray-600 dark:text-gray-400">Total Keys/Elements</span>
                                             <span className="font-mono text-sm font-semibold text-indigo-400">{metrics.keysCount}</span>
                                         </div>
                                     </div>
@@ -244,14 +244,14 @@ export default function JsonValidator() {
                                         </div>
                                         <div>
                                             <h3 className="font-bold text-red-400 text-lg mb-1">Invalid JSON Structure</h3>
-                                            <p className="text-xs text-gray-400 leading-relaxed">A parsing syntax error was detected in the document schema.</p>
+                                            <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">A parsing syntax error was detected in the document schema.</p>
                                         </div>
                                     </div>
                                 </Card>
 
                                 {/* Syntax Details */}
                                 <Card variant="elevated" className="p-6 flex-grow">
-                                    <h4 className="text-sm font-bold tracking-wider text-gray-400 uppercase mb-4">Error Details</h4>
+                                    <h4 className="text-sm font-bold tracking-wider text-gray-600 dark:text-gray-400 uppercase mb-4">Error Details</h4>
                                     <div className="space-y-4">
                                         <div className="p-3 bg-[#090d16] border border-white/5 rounded-xl font-mono text-xs text-red-400 leading-relaxed">
                                             {errorMsg}
@@ -259,20 +259,20 @@ export default function JsonValidator() {
                                         
                                         {(errorPos.line !== undefined || errorPos.column !== undefined) && (
                                             <div className="grid grid-cols-2 gap-4 mt-2">
-                                                <div className="p-3 bg-white/5 border border-white/5 rounded-xl">
-                                                    <span className="text-xs text-gray-400 block mb-0.5">LINE NUMBER</span>
+                                                <div className="p-3 bg-gray-100 dark:bg-white/5 border border-white/5 rounded-xl">
+                                                    <span className="text-xs text-gray-600 dark:text-gray-400 block mb-0.5">LINE NUMBER</span>
                                                     <span className="font-mono text-lg font-bold text-red-400">{errorPos.line}</span>
                                                 </div>
-                                                <div className="p-3 bg-white/5 border border-white/5 rounded-xl">
-                                                    <span className="text-xs text-gray-400 block mb-0.5">COLUMN INDEX</span>
+                                                <div className="p-3 bg-gray-100 dark:bg-white/5 border border-white/5 rounded-xl">
+                                                    <span className="text-xs text-gray-600 dark:text-gray-400 block mb-0.5">COLUMN INDEX</span>
                                                     <span className="font-mono text-lg font-bold text-red-400">{errorPos.column}</span>
                                                 </div>
                                             </div>
                                         )}
 
                                         {errorPos.char && (
-                                            <div className="p-3.5 bg-white/5 border border-white/5 rounded-xl flex items-center justify-between">
-                                                <span className="text-xs text-gray-400">FAILLING CHARACTER</span>
+                                            <div className="p-3.5 bg-gray-100 dark:bg-white/5 border border-white/5 rounded-xl flex items-center justify-between">
+                                                <span className="text-xs text-gray-600 dark:text-gray-400">FAILLING CHARACTER</span>
                                                 <span className="font-mono text-base font-bold bg-red-500/10 text-red-400 px-2 py-0.5 rounded border border-red-500/20">"{errorPos.char}"</span>
                                             </div>
                                         )}

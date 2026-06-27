@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>QuickPDF — All-in-One Document & PDF Tools, Free</title>
+        <title>ToolBasket — All-in-One Document & PDF Tools, Free</title>
         <meta name="description" content="Convert, merge, split, compress, and process PDFs, images, and documents instantly. 40+ free tools, no sign-up required." />
       </Head>
       <Navbar />

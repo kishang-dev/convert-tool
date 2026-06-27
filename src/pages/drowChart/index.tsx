@@ -115,7 +115,7 @@ export default function ChartDashboard() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <style jsx>{`
                 .custom-scrollbar::-webkit-scrollbar {
                     width: 6px;
@@ -145,31 +145,31 @@ export default function ChartDashboard() {
             {/* Manual Creation Modal */}
             {isManualModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-                    <div className="bg-[#1e293b] border border-white/10 rounded-3xl p-6 md:p-8 w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar overflow-x-hidden shadow-2xl relative">
+                    <div className="bg-[#1e293b] border border-gray-200 dark:border-white/10 rounded-3xl p-6 md:p-8 w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar overflow-x-hidden shadow-2xl relative">
                         <button
                             onClick={() => setIsManualModalOpen(false)}
-                            className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors"
+                            className="absolute top-6 right-6 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white transition-colors"
                         >
                             <X size={24} />
                         </button>
-                        <h2 className="text-2xl font-black text-white mb-6 uppercase tracking-tight">Select Diagram Type</h2>
+                        <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-6 uppercase tracking-tight">Select Diagram Type</h2>
                         <div className="relative">
                             <select
                                 value={manualType}
                                 onChange={(e) => setManualType(e.target.value)}
-                                className="w-full bg-white/5 border-2 border-white/10 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-[#1e293b] transition-all font-black text-lg appearance-none cursor-pointer"
+                                className="w-full bg-gray-100 dark:bg-white/5 border-2 border-gray-200 dark:border-white/10 rounded-2xl px-6 py-4 text-gray-900 dark:text-white outline-none focus:border-blue-500/50 focus:bg-[#1e293b] transition-all font-black text-lg appearance-none cursor-pointer"
                             >
                                 {chartTypes.map(t => (
-                                    <option key={t} value={t} className="bg-[#1e293b] text-white py-2">{t}</option>
+                                    <option key={t} value={t} className="bg-[#1e293b] text-gray-900 dark:text-white py-2">{t}</option>
                                 ))}
                             </select>
-                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 dark:text-gray-400">
                                 <LayoutGrid size={20} />
                             </div>
                         </div>
                         <button
                             onClick={handleCreateNew}
-                            className="w-full mt-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-black text-lg transition-all shadow-xl hover:shadow-blue-500/30 active:scale-95"
+                            className="w-full mt-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-gray-900 dark:text-white rounded-2xl font-black text-lg transition-all shadow-xl hover:shadow-blue-500/30 active:scale-95"
                         >
                             CREATE {manualType.split(' ')[0].toUpperCase()}
                         </button>
@@ -180,7 +180,7 @@ export default function ChartDashboard() {
             {/* AI Modal */}
             {isAIModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-all duration-500">
-                    <div className="bg-[#1e293b] border border-white/10 rounded-[2.5rem] p-6 md:p-10 w-full max-w-2xl max-h-[95vh] overflow-y-auto no-scrollbar overflow-x-hidden shadow-[0_0_100px_rgba(59,130,246,0.1)] relative group">
+                    <div className="bg-[#1e293b] border border-gray-200 dark:border-white/10 rounded-[2.5rem] p-6 md:p-10 w-full max-w-2xl max-h-[95vh] overflow-y-auto no-scrollbar overflow-x-hidden shadow-[0_0_100px_rgba(59,130,246,0.1)] relative group">
 
                         {/* Decorative background effects */}
                         <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] group-hover:bg-blue-500/20 transition-all duration-1000" />
@@ -191,14 +191,14 @@ export default function ChartDashboard() {
                                 <div className="relative mb-12">
                                     <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-2xl animate-pulse" />
                                     <div className="relative w-32 h-32 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center shadow-2xl shadow-blue-500/40 border-4 border-white/20">
-                                        <Sparkles size={64} className="text-white animate-bounce" />
+                                        <Sparkles size={64} className="text-gray-900 dark:text-white animate-bounce" />
                                     </div>
                                     <div className="absolute -top-4 -right-4 w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center animate-spin-slow">
-                                        <Loader2 size={24} className="text-white" />
+                                        <Loader2 size={24} className="text-gray-900 dark:text-white" />
                                     </div>
                                 </div>
                                 <h2 className="text-4xl font-black gradient-text mb-4 animate-pulse uppercase tracking-tighter">Designing Brilliance</h2>
-                                <p className="text-gray-400 text-lg max-w-sm mx-auto leading-relaxed font-medium">
+                                <p className="text-gray-600 dark:text-gray-400 text-lg max-w-sm mx-auto leading-relaxed font-medium">
                                     Our AI architect is mapping out your ${aiForm.chartType} with precision and style...
                                 </p>
                             </div>
@@ -206,18 +206,18 @@ export default function ChartDashboard() {
                             <>
                                 <button
                                     onClick={() => setIsAIModalOpen(false)}
-                                    className="absolute top-8 right-8 text-gray-400 hover:text-white transition-all transform hover:rotate-90"
+                                    className="absolute top-8 right-8 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white transition-all transform hover:rotate-90"
                                 >
                                     <X size={28} />
                                 </button>
 
                                 <div className="flex items-center gap-4 mb-6 relative">
                                     <div className="p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-[1.5rem] shadow-xl shadow-blue-500/20">
-                                        <Sparkles className="text-white" size={32} />
+                                        <Sparkles className="text-gray-900 dark:text-white" size={32} />
                                     </div>
                                     <div>
-                                        <h2 className="text-3xl font-black text-white tracking-tight uppercase">AI Chart Architect</h2>
-                                        <p className="text-gray-400 font-bold uppercase text-[10px] tracking-[0.2em] opacity-70 mt-1">Generate professional diagrams in seconds</p>
+                                        <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight uppercase">AI Chart Architect</h2>
+                                        <p className="text-gray-600 dark:text-gray-400 font-bold uppercase text-[10px] tracking-[0.2em] opacity-70 mt-1">Generate professional diagrams in seconds</p>
                                     </div>
                                 </div>
 
@@ -225,43 +225,43 @@ export default function ChartDashboard() {
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <div className="space-y-6">
                                             <div>
-                                                <label className="block text-xs font-black text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Project Identity</label>
+                                                <label className="block text-xs font-black text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Project Identity</label>
                                                 <input
                                                     required
                                                     value={aiForm.title}
                                                     onChange={(e) => setAiForm({ ...aiForm, title: e.target.value })}
-                                                    className="w-full bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-black text-lg placeholder:text-gray-600"
+                                                    className="w-full bg-gray-100 dark:bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-gray-900 dark:text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-black text-lg placeholder:text-gray-600"
                                                     placeholder="e.g. Master Auth Flow"
                                                 />
                                             </div>
 
                                             <div>
-                                                <label className="block text-xs font-black text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Diagram Type</label>
+                                                <label className="block text-xs font-black text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Diagram Type</label>
                                                 <div className="relative">
                                                     <select
                                                         value={aiForm.chartType}
                                                         onChange={(e) => setAiForm({ ...aiForm, chartType: e.target.value })}
-                                                        className="w-full bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-[#1e293b] transition-all font-black text-lg appearance-none cursor-pointer"
+                                                        className="w-full bg-gray-100 dark:bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-gray-900 dark:text-white outline-none focus:border-blue-500/50 focus:bg-[#1e293b] transition-all font-black text-lg appearance-none cursor-pointer"
                                                     >
                                                         {chartTypes.map(t => (
-                                                            <option key={t} value={t} className="bg-[#1e293b] text-white py-2">{t}</option>
+                                                            <option key={t} value={t} className="bg-[#1e293b] text-gray-900 dark:text-white py-2">{t}</option>
                                                         ))}
                                                     </select>
-                                                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                                                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 dark:text-gray-400">
                                                         <LayoutGrid size={20} />
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div>
-                                                <label className="block text-xs font-black text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">AI Engine</label>
+                                                <label className="block text-xs font-black text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">AI Engine</label>
                                                 <div className="grid grid-cols-2 gap-3">
                                                     {["openai", "groq", "grok", "claude"].map((p) => (
                                                         <button
                                                             key={p}
                                                             type="button"
                                                             onClick={() => setAiForm({ ...aiForm, platform: p })}
-                                                            className={`py-3 px-4 rounded-xl border-2 transition-all font-black text-xs uppercase tracking-widest ${aiForm.platform === p ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10'}`}
+                                                            className={`py-3 px-4 rounded-xl border-2 transition-all font-black text-xs uppercase tracking-widest ${aiForm.platform === p ? 'bg-blue-600 border-blue-500 text-gray-900 dark:text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 border-white/5 text-gray-600 dark:text-gray-400 hover:bg-white/10'}`}
                                                         >
                                                             {p}
                                                         </button>
@@ -272,12 +272,12 @@ export default function ChartDashboard() {
 
                                         <div className="space-y-6">
                                             <div>
-                                                <label className="block text-xs font-black text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Logic Blueprints</label>
+                                                <label className="block text-xs font-black text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Logic Blueprints</label>
                                                 <textarea
                                                     required
                                                     value={aiForm.prompt}
                                                     onChange={(e) => setAiForm({ ...aiForm, prompt: e.target.value })}
-                                                    className="w-full bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all h-[13.5rem] resize-none font-bold placeholder:text-gray-600"
+                                                    className="w-full bg-gray-100 dark:bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-gray-900 dark:text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all h-[13.5rem] resize-none font-bold placeholder:text-gray-600"
                                                     placeholder="Describe the logic you want to map out..."
                                                 />
                                             </div>
@@ -286,19 +286,19 @@ export default function ChartDashboard() {
 
                                     <div className="flex flex-col md:flex-row gap-8 items-end">
                                         <div className="flex-1">
-                                            <label className="block text-xs font-black text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Authentication Key</label>
+                                            <label className="block text-xs font-black text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Authentication Key</label>
                                             <input
                                                 required
                                                 type="password"
                                                 value={aiForm.apiKey}
                                                 onChange={(e) => setAiForm({ ...aiForm, apiKey: e.target.value })}
-                                                className="w-full bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-mono placeholder:text-gray-600"
+                                                className="w-full bg-gray-100 dark:bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-gray-900 dark:text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-mono placeholder:text-gray-600"
                                                 placeholder="••••••••••••••••"
                                             />
                                         </div>
                                         <button
                                             type="submit"
-                                            className="w-full md:w-auto px-10 flex items-center justify-center gap-3 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-[1.5rem] font-black text-lg transition-all shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 active:scale-[0.98] group/btn whitespace-nowrap"
+                                            className="w-full md:w-auto px-10 flex items-center justify-center gap-3 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-gray-900 dark:text-white rounded-[1.5rem] font-black text-lg transition-all shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 active:scale-[0.98] group/btn whitespace-nowrap"
                                         >
                                             <Sparkles size={22} className="group-hover/btn:rotate-12 transition-transform" />
                                             <span>GENERATE DIAGRAM</span>
@@ -317,7 +317,7 @@ export default function ChartDashboard() {
                         <h1 className="text-3xl sm:text-4xl md:text-5xl font-black gradient-text tracking-tighter mb-4">
                             All Professional Charts
                         </h1>
-                        <p className="text-gray-400 text-lg">
+                        <p className="text-gray-600 dark:text-gray-400 text-lg">
                             Manage your logic flows, architecture diagrams, DFDs, and business processes.
                         </p>
                     </div>
@@ -332,7 +332,7 @@ export default function ChartDashboard() {
                         <button
                             onClick={() => setIsManualModalOpen(true)}
                             disabled={loading && charts.length === 0}
-                            className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-95"
+                            className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-gray-900 dark:text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-95"
                         >
                             <Plus size={20} />
                             <span>Manual Chart</span>
@@ -345,16 +345,16 @@ export default function ChartDashboard() {
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
                     </div>
                 ) : charts.length === 0 ? (
-                    <div className="text-center py-20 bg-white/5 border border-white/10 rounded-3xl">
-                        <LayoutGrid className="mx-auto h-16 w-16 text-gray-400 mb-6" />
-                        <h3 className="text-2xl font-bold text-white mb-2">No Diagrams Yet</h3>
-                        <p className="text-gray-400 mb-8 max-w-sm mx-auto">
+                    <div className="text-center py-20 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-3xl">
+                        <LayoutGrid className="mx-auto h-16 w-16 text-gray-600 dark:text-gray-400 mb-6" />
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">No Diagrams Yet</h3>
+                        <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-sm mx-auto">
                             Create your first diagram to start mapping out your brilliant ideas.
                         </p>
                         <div className="flex justify-center gap-4">
                             <button
                                 onClick={() => setIsAIModalOpen(true)}
-                                className="px-8 py-3 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 transition-colors flex items-center gap-2"
+                                className="px-8 py-3 bg-indigo-600 text-gray-900 dark:text-white rounded-xl font-bold hover:bg-indigo-700 transition-colors flex items-center gap-2"
                             >
                                 <Sparkles size={18} />
                                 Start with AI
@@ -373,13 +373,13 @@ export default function ChartDashboard() {
                             <div
                                 key={chart._id}
                                 onClick={() => editingId !== chart._id && router.push(`/drowChart/${chart._id}`)}
-                                className={`group relative bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all overflow-hidden ${editingId !== chart._id ? 'hover:border-blue-500/50 cursor-pointer' : ''}`}
+                                className={`group relative bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all overflow-hidden ${editingId !== chart._id ? 'hover:border-blue-500/50 cursor-pointer' : ''}`}
                             >
                                 {/* Decorative background blurs */}
                                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl group-hover:bg-blue-500/30 transition-all pointer-events-none" />
 
                                 <div className="relative z-10 flex flex-col h-full">
-                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center border border-white/10 mb-2 group-hover:scale-110 transition-transform">
+                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center border border-gray-200 dark:border-white/10 mb-2 group-hover:scale-110 transition-transform">
                                         <LayoutGrid className="text-blue-400" size={24} />
                                     </div>
 
@@ -391,36 +391,36 @@ export default function ChartDashboard() {
                                                 value={editTitle}
                                                 onChange={(e) => setEditTitle(e.target.value)}
                                                 onKeyDown={(e) => e.key === 'Enter' && saveEdit(e, chart._id)}
-                                                className="w-full bg-white/10 border border-blue-500/50 rounded-lg px-2 py-1 text-white text-lg font-bold outline-none"
+                                                className="w-full bg-white/10 border border-blue-500/50 rounded-lg px-2 py-1 text-gray-900 dark:text-white text-lg font-bold outline-none"
                                                 autoFocus
                                             />
-                                            <button onClick={(e) => saveEdit(e, chart._id)} className="p-1.5 bg-blue-600 hover:bg-blue-700 rounded-lg text-white">
+                                            <button onClick={(e) => saveEdit(e, chart._id)} className="p-1.5 bg-blue-600 hover:bg-blue-700 rounded-lg text-gray-900 dark:text-white">
                                                 <Check size={16} />
                                             </button>
-                                            <button onClick={(e) => { e.stopPropagation(); setEditingId(null); }} className="p-1.5 bg-gray-600 hover:bg-gray-700 rounded-lg text-white">
+                                            <button onClick={(e) => { e.stopPropagation(); setEditingId(null); }} className="p-1.5 bg-gray-600 hover:bg-gray-700 rounded-lg text-gray-900 dark:text-white">
                                                 <X size={16} />
                                             </button>
                                         </div>
                                     ) : (
-                                        <h3 className="text-xl font-bold text-white mb-2 truncate group-hover:text-blue-200 transition-colors">
+                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 truncate group-hover:text-blue-200 transition-colors">
                                             {chart.title || "Untitled Diagram"}
                                         </h3>
                                     )}
 
                                     <div className="flex items-center justify-between mt-auto pt-6">
-                                        <span className="text-xs font-medium text-gray-400 group-hover:text-blue-400 transition-colors">
+                                        <span className="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-blue-400 transition-colors">
                                             {new Date(chart.updatedAt).toLocaleDateString()}
                                         </span>
                                         <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <button
                                                 onClick={(e) => startEditing(e, chart._id, chart.title || "Untitled Diagram")}
-                                                className="p-2 bg-white/10 hover:bg-blue-500 text-white rounded-lg transition-colors"
+                                                className="p-2 bg-white/10 hover:bg-blue-500 text-gray-900 dark:text-white rounded-lg transition-colors"
                                             >
                                                 <Edit size={16} />
                                             </button>
                                             <button
                                                 onClick={(e) => handleDelete(e, chart._id)}
-                                                className="p-2 bg-white/10 hover:bg-red-500 text-white rounded-lg transition-colors"
+                                                className="p-2 bg-white/10 hover:bg-red-500 text-gray-900 dark:text-white rounded-lg transition-colors"
                                             >
                                                 <Trash2 size={16} />
                                             </button>

@@ -62,7 +62,7 @@ export default function HistoryPage() {
     // Allow guests to see history
 
     return (
-        <div className="min-h-screen bg-[#0a0a0f]">
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0f]">
             <Navbar />
 
             {/* Background */}
@@ -73,15 +73,15 @@ export default function HistoryPage() {
             <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 <div className="animate-fadeIn">
                     <div className="mb-8">
-                        <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-4">
+                        <div className="inline-flex items-center gap-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-4 py-2 rounded-full mb-4">
                             <Sparkles className="text-purple-400" size={16} />
-                            <span className="text-sm text-gray-300">Activity Log</span>
+                            <span className="text-sm text-gray-700 dark:text-gray-300">Activity Log</span>
                         </div>
                         <h2 className="text-3xl sm:text-4xl font-bold mb-2 flex items-center gap-3">
                             <Clock className="text-purple-400" size={32} />
                             <span className="gradient-text">Your History</span>
                         </h2>
-                        <p className="text-gray-400 text-sm sm:text-base">View your past conversions and file edits.</p>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">View your past conversions and file edits.</p>
                     </div>
 
                     <Card variant="elevated" className="p-6">
@@ -92,13 +92,13 @@ export default function HistoryPage() {
                         ) : files.length === 0 ? (
                             <div className="text-center py-10">
                                 <FileText className="mx-auto text-gray-600 mb-4" size={48} />
-                                <p className="text-gray-400">No activity history found.</p>
+                                <p className="text-gray-600 dark:text-gray-400">No activity history found.</p>
                             </div>
                         ) : (
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left border-collapse">
                                     <thead>
-                                        <tr className="border-b border-gray-800 text-gray-400 text-sm uppercase tracking-wider">
+                                        <tr className="border-b border-gray-800 text-gray-600 dark:text-gray-400 text-sm uppercase tracking-wider">
                                             <th className="py-4 px-4 font-medium">File Name</th>
                                             <th className="py-4 px-4 font-medium">Operation</th>
                                             <th className="py-4 px-4 font-medium hidden md:table-cell">Size</th>
@@ -108,7 +108,7 @@ export default function HistoryPage() {
                                     </thead>
                                     <tbody className="divide-y divide-gray-800">
                                         {files.map((file) => (
-                                            <tr key={file._id} className="hover:bg-white/5 transition-colors">
+                                            <tr key={file._id} className="hover:bg-gray-100 dark:bg-white/5 transition-colors">
                                                 <td className="py-4 px-4 flex items-center gap-3">
                                                     <FileText className="text-blue-400 shrink-0" size={20} />
                                                     <span className="text-gray-200 truncate max-w-[120px] sm:max-w-[200px]" title={file.originalName}>
@@ -120,10 +120,10 @@ export default function HistoryPage() {
                                                         {file.operation}
                                                     </span>
                                                 </td>
-                                                <td className="py-4 px-4 text-gray-400 text-sm hidden md:table-cell">
+                                                <td className="py-4 px-4 text-gray-600 dark:text-gray-400 text-sm hidden md:table-cell">
                                                     {formatBytes(file.size)}
                                                 </td>
-                                                <td className="py-4 px-4 text-gray-400 text-sm hidden md:table-cell">
+                                                <td className="py-4 px-4 text-gray-600 dark:text-gray-400 text-sm hidden md:table-cell">
                                                     {new Date(file.createdAt).toLocaleString()}
                                                 </td>
                                                 <td className="py-4 px-4 text-right">

@@ -14,8 +14,6 @@ html {
 }
 
 body {
-  background: #0a0a0a;
-  color: #ffffff;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -34,6 +32,18 @@ button, a, [role="button"] {
 
 /* ── Design Tokens ── */
 :root {
+  --bg-base:     #ffffff;
+  --bg-surface:  #f3f4f6;
+  --bg-elevated: #e5e7eb;
+  --bg-hover:    #d1d5db;
+  --border:      #d1d5db;
+  --border-sub:  #e5e7eb;
+  --text-primary:#111827;
+  --text-muted:  #4b5563;
+  --text-subtle: #6b7280;
+}
+
+.dark {
   --bg-base:     #0a0a0a;
   --bg-surface:  #111111;
   --bg-elevated: #161616;
@@ -45,8 +55,15 @@ button, a, [role="button"] {
   --text-subtle: #555555;
 }
 
-/* ── Gradient text (neutral white shimmer) ── */
+/* ── Gradient text ── */
 .gradient-text {
+  background: linear-gradient(135deg, #111827 0%, #6b7280 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .gradient-text {
   background: linear-gradient(135deg, #ffffff 0%, #999999 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -55,13 +72,17 @@ button, a, [role="button"] {
 
 /* ── Surfaces ── */
 .glass {
-  background: #111111;
-  border: 1px solid #222222;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
 }
 
 .glass-strong {
-  background: #161616;
-  border: 1px solid #2a2a2a;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-sub);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass-strong {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
 }
 

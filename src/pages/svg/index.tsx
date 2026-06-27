@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <Head>
-        <title>Image to SVG Converter | QuickPDF Tools</title>
+        <title>Image to SVG Converter | ToolBasket Tools</title>
         <meta
           name="description"
           content="Convert your PNG, JPG and WEBP images to high-quality SVG vectors instantly with AI-powered technology."
@@ -35,12 +35,12 @@ export default function Home() {
         <div className="text-center space-y-6 mb-16 animate-fadeIn">
           <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-4">
             <Sparkles className="text-purple-400" size={16} />
-            <span className="text-sm text-gray-300">AI-Powered Vectorization</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">AI-Powered Vectorization</span>
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight">
             <span className="gradient-text">Vectorize</span> Instantly
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Transform your raster images into clean, scalable SVG vectors.
             Perfect for designers, developers, and creators.
           </p>
@@ -60,10 +60,10 @@ export default function Home() {
                   style={{ animationDelay: '0.1s' }}
                 >
                   <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mx-auto mb-4">
-                    <Zap className="text-white" size={28} />
+                    <Zap className="text-gray-900 dark:text-white" size={28} />
                   </div>
-                  <h3 className="font-bold text-lg text-white mb-2">Lightning Fast</h3>
-                  <p className="text-gray-400 text-sm">
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2">Lightning Fast</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">
                     Convert complex images to SVGs in under 2 seconds with our
                     optimized engine.
                   </p>
@@ -75,10 +75,10 @@ export default function Home() {
                   style={{ animationDelay: '0.2s' }}
                 >
                   <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center mx-auto mb-4">
-                    <Shield className="text-white" size={28} />
+                    <Shield className="text-gray-900 dark:text-white" size={28} />
                   </div>
-                  <h3 className="font-bold text-lg text-white mb-2">Privacy First</h3>
-                  <p className="text-gray-400 text-sm">
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2">Privacy First</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">
                     Images are processed securely and deleted immediately after
                     conversion.
                   </p>
@@ -90,10 +90,10 @@ export default function Home() {
                   style={{ animationDelay: '0.3s' }}
                 >
                   <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center mx-auto mb-4">
-                    <MousePointer2 className="text-white" size={28} />
+                    <MousePointer2 className="text-gray-900 dark:text-white" size={28} />
                   </div>
-                  <h3 className="font-bold text-lg text-white mb-2">Layer Support</h3>
-                  <p className="text-gray-400 text-sm">
+                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2">Layer Support</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">
                     Automatically detects shapes and creates clean, editable SVG
                     layers.
                   </p>
@@ -115,8 +115,8 @@ export default function Home() {
       </main>
 
       <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-800 text-center">
-        <p className="text-gray-500 text-sm font-medium">
-          &copy; {new Date().getFullYear()} QuickPDF Tools. Built with Next.js
+        <p className="text-gray-500 dark:text-gray-500 text-sm font-medium">
+          &copy; {new Date().getFullYear()} ToolBasket Tools. Built with Next.js
           and Lucide Icons.
         </p>
       </footer>

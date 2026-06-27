@@ -107,9 +107,9 @@ export default function Base64Tool() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>Base64 Encoder & Decoder | QuickPDF Tools</title>
+                <title>Base64 Encoder & Decoder | ToolBasket Tools</title>
                 <meta name="description" content="Encode strings/files to Base64 or decode Base64 strings back to text instantly." />
             </Head>
 
@@ -122,13 +122,13 @@ export default function Base64Tool() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">Base64 Encoder & Decoder</span>
                     </h1>
-                    <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
                         Encode plain text and files to Base64, or decode base64 representations back to string text or downloads.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-white/5 border border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
                     <div className="flex items-center gap-3">
                         <Button 
                             onClick={handleToggleMode} 
@@ -143,7 +143,7 @@ export default function Base64Tool() {
                             onClick={() => fileInputRef.current?.click()}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-300 hover:text-white"
+                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
                         >
                             <Upload size={16} className="mr-2" />
                             File to Base64
@@ -180,7 +180,7 @@ export default function Base64Tool() {
                     {/* Input Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
                                 Input {mode === 'encode' ? 'Text' : 'Base64'}
                             </span>
                         </div>
@@ -197,7 +197,7 @@ export default function Base64Tool() {
                     {/* Output Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
                                 Result
                             </span>
                             {output && (

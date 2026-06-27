@@ -129,9 +129,9 @@ export default function SqlQueryBuilder() {
     }, [action, tableName, columns, whereConditions, joins, orderBy, orderDir, limit, insertData]);
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>Visual SQL Query Builder | QuickPDF Tools</title>
+                <title>Visual SQL Query Builder | ToolBasket Tools</title>
                 <meta name="description" content="Build SQL SELECT, INSERT, UPDATE, and DELETE queries visually. Enter tables, fields, wheres, and joins with instant code generation." />
             </Head>
 
@@ -144,7 +144,7 @@ export default function SqlQueryBuilder() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">SQL Query Builder</span>
                     </h1>
-                    <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
                         Construct query statements visually using form panels. Support SELECT, INSERT, and joins.
                     </p>
                 </div>
@@ -159,7 +159,7 @@ export default function SqlQueryBuilder() {
                                     <button
                                         key={act}
                                         onClick={() => setAction(act)}
-                                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${action === act ? 'bg-indigo-600 text-white' : 'bg-white/5 text-gray-400 hover:text-white'}`}
+                                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${action === act ? 'bg-indigo-600 text-gray-900 dark:text-white' : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white'}`}
                                     >
                                         {act}
                                     </button>
@@ -170,22 +170,22 @@ export default function SqlQueryBuilder() {
                             <div className="mt-6 space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold text-gray-400 uppercase">Table Name</label>
+                                        <label className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Table Name</label>
                                         <input
                                             type="text"
                                             value={tableName}
                                             onChange={(e) => setTableName(e.target.value)}
-                                            className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl outline-none focus:border-indigo-500/50"
+                                            className="w-full px-4 py-2.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl outline-none focus:border-indigo-500/50"
                                         />
                                     </div>
                                     {action === 'SELECT' && (
                                         <div className="space-y-2">
-                                            <label className="text-xs font-bold text-gray-400 uppercase">Columns</label>
+                                            <label className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Columns</label>
                                             <input
                                                 type="text"
                                                 value={columns}
                                                 onChange={(e) => setColumns(e.target.value)}
-                                                className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl outline-none focus:border-indigo-500/50 font-mono text-sm"
+                                                className="w-full px-4 py-2.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl outline-none focus:border-indigo-500/50 font-mono text-sm"
                                             />
                                         </div>
                                     )}
@@ -195,7 +195,7 @@ export default function SqlQueryBuilder() {
                                 {(action === 'INSERT' || action === 'UPDATE') && (
                                     <div className="space-y-3 pt-2">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-xs font-bold text-gray-400 uppercase">Fields & Values</span>
+                                            <span className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Fields & Values</span>
                                             <button onClick={addInsertData} className="text-xs text-indigo-400 font-bold flex items-center gap-1">
                                                 <Plus size={14} /> Add Field
                                             </button>
@@ -211,7 +211,7 @@ export default function SqlQueryBuilder() {
                                                         setInsertData(copy);
                                                     }}
                                                     placeholder="Column Name"
-                                                    className="w-1/2 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm"
+                                                    className="w-1/2 px-3 py-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-sm"
                                                 />
                                                 <input
                                                     type="text"
@@ -222,7 +222,7 @@ export default function SqlQueryBuilder() {
                                                         setInsertData(copy);
                                                     }}
                                                     placeholder="Value (e.g. 'john' or 25)"
-                                                    className="w-1/2 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm"
+                                                    className="w-1/2 px-3 py-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-sm"
                                                 />
                                                 <button onClick={() => removeInsertData(i)} className="text-red-400 hover:text-red-300 px-1">
                                                     <Trash2 size={16} />
@@ -236,7 +236,7 @@ export default function SqlQueryBuilder() {
                                 {action === 'SELECT' && (
                                     <div className="space-y-3 pt-2 border-t border-white/5 mt-4">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-xs font-bold text-gray-400 uppercase">JOINS</span>
+                                            <span className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">JOINS</span>
                                             <button onClick={addJoin} className="text-xs text-indigo-400 font-bold flex items-center gap-1">
                                                 <Plus size={14} /> Add Join
                                             </button>
@@ -250,7 +250,7 @@ export default function SqlQueryBuilder() {
                                                         copy[i].type = e.target.value;
                                                         setJoins(copy);
                                                     }}
-                                                    className="bg-[#0f172a] border border-white/10 p-2 rounded-lg text-xs"
+                                                    className="bg-[#0f172a] border border-gray-200 dark:border-white/10 p-2 rounded-lg text-xs"
                                                 >
                                                     <option>INNER JOIN</option>
                                                     <option>LEFT JOIN</option>
@@ -266,7 +266,7 @@ export default function SqlQueryBuilder() {
                                                         setJoins(copy);
                                                     }}
                                                     placeholder="Join Table"
-                                                    className="w-1/3 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-xs"
+                                                    className="w-1/3 px-3 py-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-xs"
                                                 />
                                                 <input
                                                     type="text"
@@ -277,7 +277,7 @@ export default function SqlQueryBuilder() {
                                                         setJoins(copy);
                                                     }}
                                                     placeholder="ON condition (e.g. users.id = profiles.user_id)"
-                                                    className="flex-grow px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-xs"
+                                                    className="flex-grow px-3 py-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-xs"
                                                 />
                                                 <button onClick={() => removeJoin(i)} className="text-red-400 hover:text-red-300 px-1">
                                                     <Trash2 size={16} />
@@ -291,7 +291,7 @@ export default function SqlQueryBuilder() {
                                 {action !== 'INSERT' && (
                                     <div className="space-y-3 pt-4 border-t border-white/5 mt-4">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-xs font-bold text-gray-400 uppercase">WHERE CONDITIONS</span>
+                                            <span className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">WHERE CONDITIONS</span>
                                             <button onClick={addWhereCondition} className="text-xs text-indigo-400 font-bold flex items-center gap-1">
                                                 <Plus size={14} /> Add Condition
                                             </button>
@@ -307,7 +307,7 @@ export default function SqlQueryBuilder() {
                                                         setWhereConditions(copy);
                                                     }}
                                                     placeholder="Column"
-                                                    className="w-1/3 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-xs"
+                                                    className="w-1/3 px-3 py-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-xs"
                                                 />
                                                 <select
                                                     value={w.op}
@@ -316,7 +316,7 @@ export default function SqlQueryBuilder() {
                                                         copy[i].op = e.target.value;
                                                         setWhereConditions(copy);
                                                     }}
-                                                    className="bg-[#0f172a] border border-white/10 p-2 rounded-lg text-xs"
+                                                    className="bg-[#0f172a] border border-gray-200 dark:border-white/10 p-2 rounded-lg text-xs"
                                                 >
                                                     <option>=</option>
                                                     <option>!=</option>
@@ -335,7 +335,7 @@ export default function SqlQueryBuilder() {
                                                         setWhereConditions(copy);
                                                     }}
                                                     placeholder="Value"
-                                                    className="flex-grow px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-xs"
+                                                    className="flex-grow px-3 py-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-xs"
                                                 />
                                                 <button onClick={() => removeWhereCondition(i)} className="text-red-400 hover:text-red-300 px-1">
                                                     <Trash2 size={16} />
@@ -349,32 +349,32 @@ export default function SqlQueryBuilder() {
                                 {action === 'SELECT' && (
                                     <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white/5 mt-4">
                                         <div className="space-y-2">
-                                            <label className="text-xs font-bold text-gray-400 uppercase">Order By</label>
+                                            <label className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Order By</label>
                                             <input
                                                 type="text"
                                                 value={orderBy}
                                                 onChange={(e) => setOrderBy(e.target.value)}
-                                                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-xs"
+                                                className="w-full px-3 py-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-xs"
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-xs font-bold text-gray-400 uppercase">Sort Dir</label>
+                                            <label className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Sort Dir</label>
                                             <select
                                                 value={orderDir}
                                                 onChange={(e) => setOrderDir(e.target.value as any)}
-                                                className="w-full px-3 py-2 bg-[#0f172a] border border-white/10 rounded-lg text-xs"
+                                                className="w-full px-3 py-2 bg-[#0f172a] border border-gray-200 dark:border-white/10 rounded-lg text-xs"
                                             >
                                                 <option>ASC</option>
                                                 <option>DESC</option>
                                             </select>
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-xs font-bold text-gray-400 uppercase">Limit</label>
+                                            <label className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Limit</label>
                                             <input
                                                 type="text"
                                                 value={limit}
                                                 onChange={(e) => setLimit(e.target.value)}
-                                                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-xs font-mono"
+                                                className="w-full px-3 py-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg text-xs font-mono"
                                             />
                                         </div>
                                     </div>
@@ -387,7 +387,7 @@ export default function SqlQueryBuilder() {
                     <div className="lg:col-span-5 flex flex-col gap-6">
                         <Card variant="elevated" className="p-6 flex flex-col flex-grow min-h-[400px]">
                             <div className="flex justify-between items-center mb-3">
-                                <h3 className="text-sm font-bold tracking-wider text-gray-400 uppercase flex items-center gap-1.5">
+                                <h3 className="text-sm font-bold tracking-wider text-gray-600 dark:text-gray-400 uppercase flex items-center gap-1.5">
                                     <Database size={16} className="text-indigo-400" />
                                     Generated SQL Query
                                 </h3>

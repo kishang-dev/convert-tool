@@ -22,7 +22,7 @@ const FileList: React.FC<FileListProps> = ({ files, onRemove, onDownload }) => {
 
   return (
     <Card variant="elevated" className="p-6 mb-8">
-      <h3 className="text-lg font-semibold mb-4 text-white">
+      <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
         Uploaded Files ({files.length})
       </h3>
       <div className="space-y-3">
@@ -33,11 +33,11 @@ const FileList: React.FC<FileListProps> = ({ files, onRemove, onDownload }) => {
           >
             <div className="flex items-center gap-3 flex-1">
               <div className="bg-gradient-to-br from-purple-600 to-blue-600 p-2 rounded-lg">
-                <FileText className="text-white flex-shrink-0" size={20} />
+                <FileText className="text-gray-900 dark:text-white flex-shrink-0" size={20} />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="font-medium truncate text-white">{file.originalName}</p>
-                <p className="text-sm text-gray-400">
+                <p className="font-medium truncate text-gray-900 dark:text-white">{file.originalName}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   {formatSize(file.size)} •{" "}
                   {new Date(file.createdAt).toLocaleDateString()}
                 </p>

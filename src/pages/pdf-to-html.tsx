@@ -56,9 +56,9 @@ export default function PdfToHtml() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>PDF to HTML Converter | QuickPDF Tools</title>
+                <title>PDF to HTML Converter | ToolBasket Tools</title>
                 <meta name="description" content="Convert PDF documents to HTML format." />
             </Head>
 
@@ -71,7 +71,7 @@ export default function PdfToHtml() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                         <span className="gradient-text">PDF to HTML</span>
                     </h1>
-                    <p className="text-gray-400 text-lg">
+                    <p className="text-gray-600 dark:text-gray-400 text-lg">
                         Convert your PDF documents to web-ready HTML.
                     </p>
                 </div>
@@ -104,7 +104,7 @@ export default function PdfToHtml() {
                                 ) : (
                                     <div className="text-center">
                                         <p className="text-xl font-medium mb-2">Upload PDF File</p>
-                                        <p className="text-sm text-gray-400 mb-6">
+                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
                                             Select a PDF file to convert to HTML
                                         </p>
                                         <Button onClick={() => fileInputRef.current?.click()} size="lg">

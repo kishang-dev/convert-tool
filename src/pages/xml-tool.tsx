@@ -163,9 +163,9 @@ export default function XmlTool() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>XML Formatter & Validator | QuickPDF Tools</title>
+                <title>XML Formatter & Validator | ToolBasket Tools</title>
                 <meta name="description" content="Format, beautify, validate, and minify your XML documents instantly client-side with full error details." />
             </Head>
 
@@ -178,19 +178,19 @@ export default function XmlTool() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">XML Formatter & Validator</span>
                     </h1>
-                    <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
                         Beautify, minify, and inspect XML tag nesting structures instantly. Catch exact syntax lines.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-white/5 border border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
                     <div className="flex items-center gap-3">
                         <Button
                             onClick={handleLoadSample}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-300 hover:text-white"
+                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
                         >
                             <Sparkles size={16} className="mr-1.5" />
                             Load Sample
@@ -210,7 +210,7 @@ export default function XmlTool() {
                             onClick={() => validateXml(input)}
                             variant="secondary"
                             size="sm"
-                            className="font-bold border border-white/10"
+                            className="font-bold border border-gray-200 dark:border-white/10"
                         >
                             Validate
                         </Button>
@@ -218,7 +218,7 @@ export default function XmlTool() {
                             onClick={handleMinify}
                             variant="secondary"
                             size="sm"
-                            className="font-bold border border-white/10"
+                            className="font-bold border border-gray-200 dark:border-white/10"
                         >
                             Minify
                         </Button>
@@ -226,7 +226,7 @@ export default function XmlTool() {
                             onClick={handleConvertToJSON}
                             variant="secondary"
                             size="sm"
-                            className="font-bold border border-white/10 text-emerald-400"
+                            className="font-bold border border-gray-200 dark:border-white/10 text-emerald-400"
                         >
                             To JSON
                         </Button>
@@ -245,7 +245,7 @@ export default function XmlTool() {
                     {/* Left: Input Editor */}
                     <div className="lg:col-span-8 flex flex-col gap-4">
                         <Card variant="elevated" className="flex flex-col p-6 min-h-[480px] h-full">
-                            <span className="text-sm font-semibold tracking-wider text-gray-400 uppercase mb-3 block">
+                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase mb-3 block">
                                 Raw XML Input
                             </span>
                             <textarea
@@ -260,7 +260,7 @@ export default function XmlTool() {
                     {/* Right: Results / Output */}
                     <div className="lg:col-span-4 flex flex-col gap-4">
                         {status === 'idle' && (
-                            <Card variant="elevated" className="p-6 flex flex-col items-center justify-center text-center h-full text-gray-500 min-h-[200px]">
+                            <Card variant="elevated" className="p-6 flex flex-col items-center justify-center text-center h-full text-gray-500 dark:text-gray-500 min-h-[200px]">
                                 <ShieldCheck size={40} className="opacity-10 mb-2" />
                                 <p className="text-sm font-semibold">Parser is idle</p>
                                 <p className="text-[11px] text-gray-600 mt-1">Nesting validator and formatted results will display after checking.</p>
@@ -273,14 +273,14 @@ export default function XmlTool() {
                                     <ShieldCheck className="text-green-400 shrink-0" size={24} />
                                     <div>
                                         <h4 className="text-sm font-bold text-green-400">Valid XML Document</h4>
-                                        <p className="text-[10px] text-gray-400">Root Node: <span className="font-mono text-indigo-400 font-bold">{rootElement}</span></p>
+                                        <p className="text-[10px] text-gray-600 dark:text-gray-400">Root Node: <span className="font-mono text-indigo-400 font-bold">{rootElement}</span></p>
                                     </div>
                                 </Card>
 
                                 {output && (
                                     <Card variant="elevated" className="p-4 flex flex-col">
                                         <div className="flex items-center justify-between mb-2">
-                                            <span className="text-xs font-bold text-gray-400 uppercase">Beautified Output</span>
+                                            <span className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Beautified Output</span>
                                             <button
                                                 onClick={handleCopy}
                                                 className="flex items-center gap-1 text-xs text-indigo-400 hover:text-indigo-300 font-medium px-2 py-0.5 rounded bg-indigo-500/10"
@@ -305,20 +305,20 @@ export default function XmlTool() {
                                     <AlertCircle className="text-red-400 shrink-0 mt-0.5" size={24} />
                                     <div>
                                         <h4 className="text-sm font-bold text-red-400">XML Syntax Error</h4>
-                                        <p className="text-xs text-gray-400 leading-relaxed mt-1 font-mono text-[11px] max-h-[150px] overflow-y-auto break-words">{errorMsg}</p>
+                                        <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed mt-1 font-mono text-[11px] max-h-[150px] overflow-y-auto break-words">{errorMsg}</p>
                                     </div>
                                 </Card>
 
                                 {(errorPos.line !== undefined || errorPos.column !== undefined) && (
                                     <Card variant="elevated" className="p-4">
-                                        <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-2">Error Position</span>
+                                        <span className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider block mb-2">Error Position</span>
                                         <div className="grid grid-cols-2 gap-4">
-                                            <div className="p-3 bg-white/5 border border-white/5 rounded-xl">
-                                                <span className="text-[10px] text-gray-400 block">LINE</span>
+                                            <div className="p-3 bg-gray-100 dark:bg-white/5 border border-white/5 rounded-xl">
+                                                <span className="text-[10px] text-gray-600 dark:text-gray-400 block">LINE</span>
                                                 <span className="font-mono text-base font-bold text-red-400">{errorPos.line}</span>
                                             </div>
-                                            <div className="p-3 bg-white/5 border border-white/5 rounded-xl">
-                                                <span className="text-[10px] text-gray-400 block">COLUMN</span>
+                                            <div className="p-3 bg-gray-100 dark:bg-white/5 border border-white/5 rounded-xl">
+                                                <span className="text-[10px] text-gray-600 dark:text-gray-400 block">COLUMN</span>
                                                 <span className="font-mono text-base font-bold text-red-400">{errorPos.column}</span>
                                             </div>
                                         </div>

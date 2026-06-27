@@ -240,9 +240,9 @@ export default function ImageCropper() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-white">
+        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
             <Head>
-                <title>Image Cropper | QuickPDF Tools</title>
+                <title>Image Cropper | ToolBasket Tools</title>
                 <meta name="description" content="Crop and cut your images online client-side. Aspect ratio templates, fully adjustable crop boxes with visual handles." />
             </Head>
 
@@ -255,7 +255,7 @@ export default function ImageCropper() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">Image Cropper</span>
                     </h1>
-                    <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
                         Drag, adjust, and crop your images instantly. 100% private execution inside your browser.
                     </p>
                 </div>
@@ -267,7 +267,7 @@ export default function ImageCropper() {
                             {previewUrl ? (
                                 <div 
                                     ref={containerRef}
-                                    className="relative max-h-[420px] max-w-full border border-white/10 rounded-xl overflow-hidden bg-slate-950/40 cursor-crosshair"
+                                    className="relative max-h-[420px] max-w-full border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden bg-slate-950/40 cursor-crosshair"
                                     style={{ display: 'inline-block' }}
                                 >
                                     <img 
@@ -326,7 +326,7 @@ export default function ImageCropper() {
                                         <Crop size={40} className="text-emerald-400" />
                                     </div>
                                     <p className="text-xl font-semibold mb-2">Upload Photo to Crop</p>
-                                    <p className="text-sm text-gray-400 mb-6 max-w-sm">
+                                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 max-w-sm">
                                         Support JPG, PNG, and WEBP formats. Crop instantly with visual dimensions.
                                     </p>
                                     <Button onClick={() => fileInputRef.current?.click()} size="lg">
@@ -365,17 +365,17 @@ export default function ImageCropper() {
                                             <button
                                                 key={preset.key}
                                                 onClick={() => setAspectPreset(preset.key as any)}
-                                                className={`p-3 rounded-xl border text-left transition-all ${aspectPreset === preset.key ? 'border-emerald-500 bg-emerald-500/5 text-white' : 'border-white/10 hover:border-white/20 bg-white/5 text-gray-300'}`}
+                                                className={`p-3 rounded-xl border text-left transition-all ${aspectPreset === preset.key ? 'border-emerald-500 bg-emerald-500/5 text-gray-900 dark:text-white' : 'border-gray-200 dark:border-white/10 hover:border-white/20 bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300'}`}
                                             >
                                                 <span className="text-xs font-bold font-mono block">{preset.label}</span>
-                                                <span className="text-[10px] text-gray-400 block mt-0.5">{preset.desc}</span>
+                                                <span className="text-[10px] text-gray-600 dark:text-gray-400 block mt-0.5">{preset.desc}</span>
                                             </button>
                                         ))}
                                     </div>
 
                                     {/* Interactive instruction box */}
-                                    <div className="p-3 bg-white/5 border border-white/5 rounded-xl text-xs text-gray-400 leading-relaxed">
-                                        <p className="font-semibold text-gray-300 mb-1">How to Crop:</p>
+                                    <div className="p-3 bg-gray-100 dark:bg-white/5 border border-white/5 rounded-xl text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                                        <p className="font-semibold text-gray-700 dark:text-gray-300 mb-1">How to Crop:</p>
                                         1. Click and drag the <span className="font-bold text-emerald-400">Center Compass icon</span> to reposition the crop window.<br />
                                         2. Drag the <span className="font-bold text-emerald-400">corner circle handles</span> to scale boundaries.
                                     </div>
@@ -396,7 +396,7 @@ export default function ImageCropper() {
                                 </div>
                             </Card>
                         ) : (
-                            <Card variant="elevated" className="p-8 flex flex-col items-center justify-center text-center h-full text-gray-500">
+                            <Card variant="elevated" className="p-8 flex flex-col items-center justify-center text-center h-full text-gray-500 dark:text-gray-500">
                                 <Crop size={48} className="opacity-10 mb-3" />
                                 <p className="text-base font-semibold">Cropping Presets</p>
                                 <p className="text-xs text-gray-600 mt-1">Aspect ratio configurations, square sizing, and action crop buttons will show up here.</p>
