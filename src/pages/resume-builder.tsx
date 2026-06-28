@@ -12,6 +12,7 @@ import {
     Plus, Trash2, Edit3, ChevronRight, CheckCircle, Layout, Eye, X, Clock
 } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
+import * as gtag from '@/lib/gtag';
 
 // const INITIAL_DATA: ResumeData = {
 //     personalInfo: { fullName: '', email: '', phone: '', address: '', summary: '', linkedin: '', github: '', website: '' },
@@ -395,6 +396,13 @@ export default function ResumeBuilder() {
                 document.body.removeChild(link);
 
                 showToast('Export successful!');
+
+                // Track tool usage event
+                gtag.event({
+                    action: "use_tool",
+                    category: "Tool",
+                    label: "resume-builder",
+                });
             }
         } catch (err) {
             showToast('Failed to export PDF', 'error');

@@ -8,6 +8,7 @@ import Button from "@/components/Button";
 import FileList from "@/components/FileList";
 import Toast from "@/components/Toast";
 import { Upload, ArrowLeft } from "lucide-react";
+import * as gtag from "@/lib/gtag";
 
 const TOOL_CONFIGS: Record<string, { title: string, description: string, minFiles: number, maxFiles: number, run: (files: FileData[], password?: string) => Promise<any>, needsPassword?: boolean, accepts: string, openEditor?: boolean }> = {
     "editor": {
@@ -279,6 +280,13 @@ export default function GenericToolPage({ id }: { id: string }) {
         try {
             const response = await tool.run(files, password);
             showToast("Operation completed successfully!", "success");
+
+            // Track tool usage event
+            gtag.event({
+                action: "use_tool",
+                category: "Tool",
+                label: id as string,
+            });
 
             if (tool.openEditor && response.file?._id) {
                 router.push(`/editor/${response.file._id}`);

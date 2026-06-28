@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { ArrowLeftRight, Copy, Trash2, Upload, File, Check, Download } from 'lucide-react';
 import { devToolsAPI } from '@/lib/api';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function Base64Tool() {
     const [input, setInput] = useState('');
@@ -55,6 +56,13 @@ export default function Base64Tool() {
                 setOutput(res.result);
                 showToast('Base64 decoded successfully!', 'success');
             }
+
+            // Track tool usage event
+            gtag.event({
+                action: "use_tool",
+                category: "Tool",
+                label: `base64-${mode}`,
+            });
         } catch (error: any) {
             console.error(error);
             showToast(error.response?.data?.error || 'Failed to process. Check if input is a valid Base64 string.', 'error');

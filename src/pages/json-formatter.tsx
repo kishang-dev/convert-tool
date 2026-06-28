@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, FileJson, Sparkles } from 'lucide-react';
 import { devToolsAPI } from '@/lib/api';
 import SEO from '@/components/SEO';
+import * as gtag from '@/lib/gtag';
 
 export default function JsonFormatter() {
     const [input, setInput] = useState('');
@@ -42,6 +43,13 @@ export default function JsonFormatter() {
             const res = await devToolsAPI.formatJson(input, indent);
             setOutput(res.result);
             showToast('JSON Formatted successfully!', 'success');
+
+            // Track tool usage event
+            gtag.event({
+                action: "use_tool",
+                category: "Tool",
+                label: "json-formatter",
+            });
         } catch (error: any) {
             console.error(error);
             showToast(error.response?.data?.error || `Invalid JSON`, 'error');
@@ -58,6 +66,13 @@ export default function JsonFormatter() {
             const res = await devToolsAPI.minifyJson(input);
             setOutput(res.result);
             showToast('JSON Minified successfully!', 'success');
+
+            // Track tool usage event
+            gtag.event({
+                action: "use_tool",
+                category: "Tool",
+                label: "json-minifier",
+            });
         } catch (error: any) {
             console.error(error);
             showToast(error.response?.data?.error || `Invalid JSON`, 'error');
