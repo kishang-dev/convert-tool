@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Upload, Download, ArrowRight, CheckCircle, FileImage, Settings, RefreshCw } from 'lucide-react';
 import api, { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
+import * as gtag from '@/lib/gtag';
 
 export default function ImageConverter() {
     const [file, setFile] = useState<File | null>(null);
@@ -65,6 +66,11 @@ export default function ImageConverter() {
     };
 
     const handleConvert = async () => {
+        gtag.event({
+            action: 'use_tool',
+            category: 'Tool',
+            label: 'image-converter'
+        });
         if (!file) return;
 
         setLoading(true);

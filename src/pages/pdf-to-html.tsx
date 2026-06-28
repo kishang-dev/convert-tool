@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Upload, FileCode, Download, ArrowRight, CheckCircle } from 'lucide-react';
 import { fileAPI, FileData } from '@/lib/api';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function PdfToHtml() {
     const [file, setFile] = useState<File | null>(null);
@@ -32,6 +33,11 @@ export default function PdfToHtml() {
     };
 
     const handleConvert = async () => {
+        gtag.event({
+            action: 'use_tool',
+            category: 'Tool',
+            label: 'pdf-to-html'
+        });
         if (!file) return;
 
         setLoading(true);

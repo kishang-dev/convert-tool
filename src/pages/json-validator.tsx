@@ -5,6 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { ShieldCheck, AlertCircle, Sparkles, CheckCircle2, ChevronRight } from 'lucide-react';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function JsonValidator() {
     const [input, setInput] = useState('');
@@ -53,6 +54,11 @@ export default function JsonValidator() {
     };
 
     const handleValidate = () => {
+        gtag.event({
+            action: 'use_tool',
+            category: 'Tool',
+            label: 'json-validator'
+        });
         if (!input.trim()) {
             showToast('Please enter some JSON to validate', 'error');
             return;

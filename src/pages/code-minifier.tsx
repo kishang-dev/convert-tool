@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, FileCode, Sparkles, Zap } from 'lucide-react';
 import { devToolsAPI } from '@/lib/api';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function CodeMinifier() {
     const [tab, setTab] = useState<'HTML' | 'CSS' | 'JS'>('HTML');
@@ -35,6 +36,11 @@ export default function CodeMinifier() {
     };
 
     const handleMinify = async () => {
+        gtag.event({
+            action: 'use_tool',
+            category: 'Tool',
+            label: 'code-minifier'
+        });
         if (!input.trim()) {
             showToast('Please enter some code to compress', 'error');
             return;

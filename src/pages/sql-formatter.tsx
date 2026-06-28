@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, Sparkles } from 'lucide-react';
 import { devToolsAPI } from '@/lib/api';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function SqlFormatter() {
     const [input, setInput] = useState('');
@@ -47,6 +48,11 @@ export default function SqlFormatter() {
     };
 
     const handleMinify = async () => {
+        gtag.event({
+            action: 'use_tool',
+            category: 'Tool',
+            label: 'sql-formatter'
+        });
         if (!input.trim()) {
             showToast('Please paste a SQL query first', 'error');
             return;

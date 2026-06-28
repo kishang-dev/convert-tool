@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { ArrowLeftRight, Copy, Trash2, Upload, FileJson, Check, ArrowRightLeft } from 'lucide-react';
 import api from '@/lib/api';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function YamlJsonConverter() {
     const [input, setInput] = useState('');
@@ -41,6 +42,11 @@ export default function YamlJsonConverter() {
     };
 
     const handleConvert = async () => {
+        gtag.event({
+            action: 'use_tool',
+            category: 'Tool',
+            label: 'yaml-json'
+        });
         if (!input.trim()) {
             showToast('Please enter some content to convert', 'error');
             return;

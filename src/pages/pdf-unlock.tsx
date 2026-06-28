@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Upload, Unlock, Download, ArrowRight, CheckCircle, ShieldAlert } from 'lucide-react';
 import { fileAPI, FileData } from '@/lib/api';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function PdfUnlock() {
     const [file, setFile] = useState<File | null>(null);

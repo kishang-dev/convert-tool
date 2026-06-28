@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Card from "@/components/Card";
 import Button from "@/components/Button";
 import SEO from "@/components/SEO";
+import * as gtag from '@/lib/gtag';
 
 export default function OcrPage() {
     const [loading, setLoading] = useState(false);

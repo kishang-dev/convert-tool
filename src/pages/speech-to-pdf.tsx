@@ -9,6 +9,7 @@ import api from '@/services/api';
 import RichTextEditor from '@/components/RichTextEditor';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import * as gtag from '@/lib/gtag';
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));

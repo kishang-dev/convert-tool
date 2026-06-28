@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Upload, FileText, Download, ArrowRight, CheckCircle } from 'lucide-react';
 import { fileAPI, FileData } from '@/lib/api';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function PdfToPptx() {
     const [file, setFile] = useState<File | null>(null);
@@ -32,6 +33,11 @@ export default function PdfToPptx() {
     };
 
     const handleConvert = async () => {
+        gtag.event({
+            action: 'use_tool',
+            category: 'Tool',
+            label: 'pdf-to-pptx'
+        });
         if (!file) return;
 
         setLoading(true);

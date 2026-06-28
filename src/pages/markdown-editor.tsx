@@ -5,6 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Copy, Check, FileText, Code, Eye, Sparkles, BookOpen } from 'lucide-react';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function MarkdownEditor() {
     const [markdown, setMarkdown] = useState(`# ToolBasket Markdown Document

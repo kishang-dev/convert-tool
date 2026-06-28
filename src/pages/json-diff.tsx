@@ -5,6 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { ShieldCheck, AlertCircle, Sparkles, RefreshCw, Layers } from 'lucide-react';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 interface DiffLine {
     type: 'equal' | 'added' | 'removed';

@@ -5,6 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { ShieldCheck, Calendar, Clock, AlertTriangle, KeyRound } from 'lucide-react';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function JwtDecoder() {
     const [token, setToken] = useState('');

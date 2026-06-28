@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Upload, FileSpreadsheet, Download, ArrowRight, CheckCircle } from 'lucide-react';
 import { fileAPI, FileData } from '@/lib/api';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function ExcelToPdf() {
     const [file, setFile] = useState<File | null>(null);
@@ -32,6 +33,11 @@ export default function ExcelToPdf() {
     };
 
     const handleConvert = async () => {
+        gtag.event({
+            action: 'use_tool',
+            category: 'Tool',
+            label: 'excel-to-pdf'
+        });
         if (!file) return;
 
         setLoading(true);

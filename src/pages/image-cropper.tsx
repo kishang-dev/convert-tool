@@ -5,6 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Upload, Crop, Download, ArrowRight, RefreshCw, Ratio, Maximize, Move } from 'lucide-react';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function ImageCropper() {
     const [file, setFile] = useState<File | null>(null);
@@ -193,6 +194,11 @@ export default function ImageCropper() {
     }, [cropBox, aspectPreset]);
 
     const handleCrop = () => {
+        gtag.event({
+            action: 'use_tool',
+            category: 'Tool',
+            label: 'image-cropper'
+        });
         if (!file || !previewUrl || !imageRef.current) return;
 
         setLoading(true);

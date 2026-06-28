@@ -5,6 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Upload, ImageIcon, Download, ArrowRight, RefreshCw, Sparkles, Check, Ratio } from 'lucide-react';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function ImageResizer() {
     const [file, setFile] = useState<File | null>(null);
@@ -89,6 +90,11 @@ export default function ImageResizer() {
     };
 
     const handleResize = () => {
+        gtag.event({
+            action: 'use_tool',
+            category: 'Tool',
+            label: 'image-resizer'
+        });
         if (!file || !previewUrl) return;
 
         setLoading(true);

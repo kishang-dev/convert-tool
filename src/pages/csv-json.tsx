@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { ArrowLeftRight, Copy, Trash2, Upload, FileJson, Check } from 'lucide-react';
 import api from '@/lib/api';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function CsvJsonConverter() {
     const [input, setInput] = useState('');
@@ -41,6 +42,11 @@ export default function CsvJsonConverter() {
     };
 
     const handleConvert = async () => {
+        gtag.event({
+            action: 'use_tool',
+            category: 'Tool',
+            label: 'csv-json'
+        });
         if (!input.trim()) {
             showToast('Please enter some content to convert', 'error');
             return;

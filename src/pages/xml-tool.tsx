@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, ShieldCheck, AlertCircle, FileCode, Sparkles } from 'lucide-react';
 import { devToolsAPI } from '@/lib/api';
 import Head from 'next/head';
+import * as gtag from '@/lib/gtag';
 
 export default function XmlTool() {
     const [input, setInput] = useState('');
@@ -74,6 +75,11 @@ export default function XmlTool() {
     };
 
     const handleMinify = () => {
+        gtag.event({
+            action: 'use_tool',
+            category: 'Tool',
+            label: 'xml-tool'
+        });
         if (!input.trim()) {
             showToast('Please enter some XML first', 'error');
             return;
