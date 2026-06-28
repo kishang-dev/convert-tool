@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useAuthStore } from '@/store/authStore';
 import api from '@/services/api';
@@ -15,7 +15,13 @@ export default function RegisterPage() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const login = useAuthStore((state) => state.login);
+    const { login, user, _hasHydrated } = useAuthStore();
+
+    useEffect(() => {
+        if (_hasHydrated && user) {
+            router.push('/tools');
+        }
+    }, [user, _hasHydrated, router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

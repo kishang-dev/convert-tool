@@ -8,7 +8,7 @@ import Button from '@/components/Button';
 import { User, Phone, Save, Sparkles, Camera } from 'lucide-react';
 
 export default function ProfilePage() {
-    const { user, updateUser } = useAuthStore();
+    const { user, updateUser, _hasHydrated } = useAuthStore();
     const router = useRouter();
 
     const [name, setName] = useState('');
@@ -21,6 +21,8 @@ export default function ProfilePage() {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
+        if (!_hasHydrated) return; // Wait for hydration before checking auth state
+
         if (!user) {
             router.push('/login');
         } else {
@@ -30,7 +32,7 @@ export default function ProfilePage() {
                 setAvatarPreview(user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_ASSETS_URL}${user.avatar}`);
             }
         }
-    }, [user, router]);
+    }, [user, router, _hasHydrated]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -69,7 +71,7 @@ export default function ProfilePage() {
         }
     };
 
-    if (!user) return null;
+    if (!_hasHydrated || !user) return null;
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0f]">

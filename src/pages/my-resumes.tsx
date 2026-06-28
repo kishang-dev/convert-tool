@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 export default function MyResumesPage() {
-    const { user } = useAuthStore();
+    const { user, _hasHydrated } = useAuthStore();
     const router = useRouter();
     const [resumes, setResumes] = useState<ResumeData[]>([]);
     const [loading, setLoading] = useState(true);
@@ -20,12 +20,14 @@ export default function MyResumesPage() {
     const [deletingId, setDeletingId] = useState<string | null>(null);
 
     useEffect(() => {
+        if (!_hasHydrated) return; // Wait for hydration before checking auth state
+
         if (!user) {
             router.push('/login?redirect=/my-resumes');
             return;
         }
         fetchResumes();
-    }, [user, router]);
+    }, [user, router, _hasHydrated]);
 
     const fetchResumes = async () => {
         setLoading(true);
@@ -75,7 +77,7 @@ export default function MyResumesPage() {
         });
     };
 
-    if (!user) return null;
+    if (!_hasHydrated || !user) return null;
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0f] text-gray-900 dark:text-white">

@@ -14,10 +14,12 @@ interface User {
 interface AuthState {
     user: User | null;
     guestId: string;
+    _hasHydrated: boolean;
     login: (userData: User) => void;
     logout: () => void;
     initGuestId: () => void;
     updateUser: (userData: Partial<User>) => void;
+    setHasHydrated: (state: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -25,6 +27,7 @@ export const useAuthStore = create<AuthState>()(
         (set, get) => ({
             user: null,
             guestId: '',
+            _hasHydrated: false,
 
             login: (userData) => set({ user: userData }),
 
@@ -43,10 +46,15 @@ export const useAuthStore = create<AuthState>()(
             updateUser: (userData) => set((state) => ({ 
                 user: state.user ? { ...state.user, ...userData } : null 
             })),
+
+            setHasHydrated: (state) => set({ _hasHydrated: state }),
         }),
         {
             name: 'auth-storage', // name of the item in the storage (must be unique)
             partialize: (state) => ({ user: state.user, guestId: state.guestId }), // Persist both user and guestId
+            onRehydrateStorage: () => (state) => {
+                if (state) state.setHasHydrated(true);
+            },
         }
     )
 );
