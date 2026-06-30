@@ -5,7 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Upload, Unlock, Download, ArrowRight, CheckCircle, ShieldAlert } from 'lucide-react';
 import { fileAPI, FileData } from '@/lib/api';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function PdfUnlock() {
@@ -65,12 +65,30 @@ export default function PdfUnlock() {
         }
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PDF Unlock & Password Remover Tools",
+        "description": "Unlock password protected PDFs and permanently remove passwords and restrictions.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/pdf-unlock`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>PDF Unlock & Password Remover | ToolBasket Tools</title>
-                <meta name="description" content="Unlock password protected PDFs and permanently remove passwords and restrictions." />
-            </Head>
+            <SEO 
+                title="PDF Unlock & Password Remover Tools" 
+                description="Unlock password protected PDFs and permanently remove passwords and restrictions." 
+                canonical="/pdf-unlock"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

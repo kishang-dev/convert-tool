@@ -4,7 +4,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { ShieldCheck, AlertCircle, Sparkles, RefreshCw, Layers } from 'lucide-react';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 interface DiffLine {
@@ -158,12 +158,30 @@ export default function JsonDiffChecker() {
         setErrorMsg('');
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "JSON Diff Checker Tools",
+        "description": "Compare two JSON objects side-by-side in real-time. Detect insertions, deletions, and updates instantly.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/json-diff`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>JSON Diff Checker | ToolBasket Tools</title>
-                <meta name="description" content="Compare two JSON objects side-by-side in real-time. Detect insertions, deletions, and updates instantly." />
-            </Head>
+            <SEO 
+                title="JSON Diff Checker Tools" 
+                description="Compare two JSON objects side-by-side in real-time. Detect insertions, deletions, and updates instantly." 
+                canonical="/json-diff"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

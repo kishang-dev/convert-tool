@@ -4,7 +4,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Copy, Check, FileText, Code, Eye, Sparkles, BookOpen } from 'lucide-react';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function MarkdownEditor() {
@@ -140,12 +140,30 @@ Feel free to paste your own *.md* files here!`);
         setMarkdown(prev => prev + '\n' + mdSnippet);
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Markdown Editor & HTML Converter Tools",
+        "description": "Write, edit, and convert Markdown to HTML cleanly client-side. Side-by-side panels, tables support, and instant copying.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/markdown-editor`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>Markdown Editor & HTML Converter | ToolBasket Tools</title>
-                <meta name="description" content="Write, edit, and convert Markdown to HTML cleanly client-side. Side-by-side panels, tables support, and instant copying." />
-            </Head>
+            <SEO 
+                title="Markdown Editor & HTML Converter Tools" 
+                description="Write, edit, and convert Markdown to HTML cleanly client-side. Side-by-side panels, tables support, and instant copying." 
+                canonical="/markdown-editor"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

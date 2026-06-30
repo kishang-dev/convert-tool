@@ -5,7 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Upload, FileSpreadsheet, Download, ArrowRight, CheckCircle } from 'lucide-react';
 import { fileAPI, FileData } from '@/lib/api';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function ExcelToPdf() {
@@ -61,12 +61,30 @@ export default function ExcelToPdf() {
         }
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Excel to PDF Converter Tools",
+        "description": "Convert Excel spreadsheets to PDF documents.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/excel-to-pdf`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>Excel to PDF Converter | ToolBasket Tools</title>
-                <meta name="description" content="Convert Excel spreadsheets to PDF documents." />
-            </Head>
+            <SEO 
+                title="Excel to PDF Converter Tools" 
+                description="Convert Excel spreadsheets to PDF documents." 
+                canonical="/excel-to-pdf"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

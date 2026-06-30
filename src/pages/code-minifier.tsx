@@ -5,7 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, FileCode, Sparkles, Zap } from 'lucide-react';
 import { devToolsAPI } from '@/lib/api';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function CodeMinifier() {
@@ -107,6 +107,22 @@ function computeDouble( number ) {
         setInput(sample);
         setOutput('');
         setMetrics(null);
+    };
+
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "My web page",
+        "description": "Compress and minify HTML documents, CSS stylesheets, and Javascript codes client-side in real-time.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/code-minifier`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
     };
 
     return (

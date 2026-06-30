@@ -4,7 +4,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { ShieldCheck, Calendar, Clock, AlertTriangle, KeyRound } from 'lucide-react';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function JwtDecoder() {
@@ -118,12 +118,30 @@ export default function JwtDecoder() {
         }
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "JWT Decoder & Parser Tools",
+        "description": "Decode JSON Web Tokens (JWT) client-side in real-time. View header, payload, and expiration details.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/jwt`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>JWT Decoder & Parser | ToolBasket Tools</title>
-                <meta name="description" content="Decode JSON Web Tokens (JWT) client-side in real-time. View header, payload, and expiration details." />
-            </Head>
+            <SEO 
+                title="JWT Decoder & Parser Tools" 
+                description="Decode JSON Web Tokens (JWT) client-side in real-time. View header, payload, and expiration details." 
+                canonical="/jwt"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

@@ -5,7 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { ArrowLeftRight, Copy, Trash2, Upload, File, Check, Download } from 'lucide-react';
 import { devToolsAPI } from '@/lib/api';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function Base64Tool() {
@@ -114,12 +114,30 @@ export default function Base64Tool() {
         }
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Base64 Encoder & Decoder Tools",
+        "description": "Encode strings/files to Base64 or decode Base64 strings back to text instantly.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/base64`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>Base64 Encoder & Decoder | ToolBasket Tools</title>
-                <meta name="description" content="Encode strings/files to Base64 or decode Base64 strings back to text instantly." />
-            </Head>
+            <SEO 
+                title="Base64 Encoder & Decoder Tools" 
+                description="Encode strings/files to Base64 or decode Base64 strings back to text instantly." 
+                canonical="/base64"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

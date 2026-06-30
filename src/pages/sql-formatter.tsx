@@ -5,7 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, Sparkles } from 'lucide-react';
 import { devToolsAPI } from '@/lib/api';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function SqlFormatter() {
@@ -72,12 +72,30 @@ export default function SqlFormatter() {
         setOutput('');
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "SQL Query Formatter Tools",
+        "description": "Beautify, indent, format, and minify SQL queries client-side instantly for MySQL, PostgreSQL, Oracle, or SQL Server.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/sql-formatter`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>SQL Query Formatter | ToolBasket Tools</title>
-                <meta name="description" content="Beautify, indent, format, and minify SQL queries client-side instantly for MySQL, PostgreSQL, Oracle, or SQL Server." />
-            </Head>
+            <SEO 
+                title="SQL Query Formatter Tools" 
+                description="Beautify, indent, format, and minify SQL queries client-side instantly for MySQL, PostgreSQL, Oracle, or SQL Server." 
+                canonical="/sql-formatter"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

@@ -95,6 +95,21 @@ export default function JsonFormatter() {
         setOutput('');
     };
 
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "JSON Formatter & Minifier",
+        "description": "Format, beautify, validate, and minify JSON instantly online. Free JSON formatter with syntax highlighting, indent control, and clipboard copy. No sign-up.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/json-formatter`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
             <SEO
@@ -102,6 +117,7 @@ export default function JsonFormatter() {
                 description="Format, beautify, validate, and minify JSON instantly online. Free JSON formatter with syntax highlighting, indent control, and clipboard copy. No sign-up."
                 canonical="/json-formatter"
                 keywords="JSON formatter, JSON beautifier, JSON minifier, format JSON online, JSON validator, pretty print JSON, JSON tool"
+                structuredData={structuredData}
             />
             <Navbar />
 

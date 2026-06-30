@@ -4,7 +4,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, Plus, Database, Sparkles } from 'lucide-react';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function SqlQueryBuilder() {
@@ -129,12 +129,30 @@ export default function SqlQueryBuilder() {
 
     }, [action, tableName, columns, whereConditions, joins, orderBy, orderDir, limit, insertData]);
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Visual SQL Query Builder Tools",
+        "description": "Build SQL SELECT, INSERT, UPDATE, and DELETE queries visually. Enter tables, fields, wheres, and joins with instant code generation.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/sql-query-builder`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>Visual SQL Query Builder | ToolBasket Tools</title>
-                <meta name="description" content="Build SQL SELECT, INSERT, UPDATE, and DELETE queries visually. Enter tables, fields, wheres, and joins with instant code generation." />
-            </Head>
+            <SEO 
+                title="Visual SQL Query Builder Tools" 
+                description="Build SQL SELECT, INSERT, UPDATE, and DELETE queries visually. Enter tables, fields, wheres, and joins with instant code generation." 
+                canonical="/sql-query-builder"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

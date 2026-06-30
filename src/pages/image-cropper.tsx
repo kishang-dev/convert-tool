@@ -4,7 +4,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Upload, Crop, Download, ArrowRight, RefreshCw, Ratio, Maximize, Move } from 'lucide-react';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function ImageCropper() {
@@ -245,12 +245,30 @@ export default function ImageCropper() {
         }
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Image Cropper Tools",
+        "description": "Crop and cut your images online client-side. Aspect ratio templates, fully adjustable crop boxes with visual handles.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/image-cropper`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>Image Cropper | ToolBasket Tools</title>
-                <meta name="description" content="Crop and cut your images online client-side. Aspect ratio templates, fully adjustable crop boxes with visual handles." />
-            </Head>
+            <SEO 
+                title="Image Cropper Tools" 
+                description="Crop and cut your images online client-side. Aspect ratio templates, fully adjustable crop boxes with visual handles." 
+                canonical="/image-cropper"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

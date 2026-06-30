@@ -5,7 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Upload, FileCode, Download, ArrowRight, CheckCircle } from 'lucide-react';
 import { fileAPI, FileData } from '@/lib/api';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function HtmlToPdf() {
@@ -61,12 +61,30 @@ export default function HtmlToPdf() {
         }
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "HTML to PDF Converter Tools",
+        "description": "Convert HTML files to PDF documents.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/html-to-pdf`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>HTML to PDF Converter | ToolBasket Tools</title>
-                <meta name="description" content="Convert HTML files to PDF documents." />
-            </Head>
+            <SEO 
+                title="HTML to PDF Converter Tools" 
+                description="Convert HTML files to PDF documents." 
+                canonical="/html-to-pdf"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

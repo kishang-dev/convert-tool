@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import {
     Mic, Download, FileText, Trash2, Settings, CheckCircle2,
     Copy, Languages, BarChart2, AlignLeft, Save, Undo2, Type,
@@ -517,12 +517,30 @@ export default function SpeechToPdf() {
     const wordCount = countWords(transcript);
     const charCount = countChars(transcript);
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "VoicePDF | Speech to Professional PDF",
+        "description": "Convert your speech to properly formatted PDF documents.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/speech-to-pdf`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#080c14] text-slate-100 font-sans selection:bg-indigo-500/30">
-            <Head>
-                <title>VoicePDF | Speech to Professional PDF</title>
-                <meta name="description" content="Convert your speech to properly formatted PDF documents." />
-            </Head>
+            <SEO 
+                title="VoicePDF | Speech to Professional PDF" 
+                description="Convert your speech to properly formatted PDF documents." 
+                canonical="/speech-to-pdf"
+                structuredData={structuredData}
+            />
 
             {/* Background blobs */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none select-none">

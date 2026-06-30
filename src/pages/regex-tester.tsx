@@ -4,7 +4,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Settings, Sparkles, CheckCircle2, AlertCircle, HelpCircle } from 'lucide-react';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function RegexTester() {
@@ -110,12 +110,30 @@ export default function RegexTester() {
             .replace(/\n/g, '<br/>');
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Regex Tester & Match Debugger Tools",
+        "description": "Test regular expressions in real-time. Match parsing, capturing groups, visual highlights, and regex flags.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/regex-tester`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>Regex Tester & Match Debugger | ToolBasket Tools</title>
-                <meta name="description" content="Test regular expressions in real-time. Match parsing, capturing groups, visual highlights, and regex flags." />
-            </Head>
+            <SEO 
+                title="Regex Tester & Match Debugger Tools" 
+                description="Test regular expressions in real-time. Match parsing, capturing groups, visual highlights, and regex flags." 
+                canonical="/regex-tester"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

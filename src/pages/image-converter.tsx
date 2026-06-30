@@ -135,6 +135,21 @@ export default function ImageConverter() {
         }
     };
 
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Image Converter",
+        "description": "Convert images instantly online. HEIC to JPG, WEBP to PNG, PNG to WEBP and more. Free image format converter with no watermarks or sign-up required.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/image-converter`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
             <SEO
@@ -142,6 +157,7 @@ export default function ImageConverter() {
                 description="Convert images instantly online. HEIC to JPG, WEBP to PNG, PNG to WEBP and more. Free image format converter with no watermarks or sign-up required."
                 canonical="/image-converter"
                 keywords="HEIC to JPG, image converter online, WEBP to JPG, PNG to WEBP, free image format converter, convert image online"
+                structuredData={structuredData}
             />
             <Navbar />
 

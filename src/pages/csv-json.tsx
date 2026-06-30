@@ -5,7 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { ArrowLeftRight, Copy, Trash2, Upload, FileJson, Check } from 'lucide-react';
 import api from '@/lib/api';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function CsvJsonConverter() {
@@ -91,12 +91,30 @@ export default function CsvJsonConverter() {
         }
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "CSV ↔ JSON Converter Tools",
+        "description": "Convert CSV spreadsheets to JSON format and JSON arrays back to CSV tables instantly.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/csv-json`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>CSV ↔ JSON Converter | ToolBasket Tools</title>
-                <meta name="description" content="Convert CSV spreadsheets to JSON format and JSON arrays back to CSV tables instantly." />
-            </Head>
+            <SEO 
+                title="CSV ↔ JSON Converter Tools" 
+                description="Convert CSV spreadsheets to JSON format and JSON arrays back to CSV tables instantly." 
+                canonical="/csv-json"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

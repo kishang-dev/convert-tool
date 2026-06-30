@@ -5,7 +5,7 @@ import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { Upload, FileText, Download, ArrowRight, CheckCircle, Copy } from 'lucide-react';
 import { fileAPI, FileData } from '@/lib/api';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function PdfToText() {
@@ -71,12 +71,30 @@ export default function PdfToText() {
         }
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PDF to Text Converter Tools",
+        "description": "Extract plain text from PDF documents.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/pdf-to-text`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>PDF to Text Converter | ToolBasket Tools</title>
-                <meta name="description" content="Extract plain text from PDF documents." />
-            </Head>
+            <SEO 
+                title="PDF to Text Converter Tools" 
+                description="Extract plain text from PDF documents." 
+                canonical="/pdf-to-text"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 

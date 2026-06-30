@@ -9,6 +9,7 @@ import FileList from "@/components/FileList";
 import Toast from "@/components/Toast";
 import { Upload, ArrowLeft } from "lucide-react";
 import * as gtag from "@/lib/gtag";
+import SEO from "@/components/SEO";
 
 const TOOL_CONFIGS: Record<string, { title: string, description: string, minFiles: number, maxFiles: number, run: (files: FileData[], password?: string) => Promise<any>, needsPassword?: boolean, accepts: string, openEditor?: boolean }> = {
     "editor": {
@@ -311,11 +312,29 @@ export default function GenericToolPage({ id }: { id: string }) {
         }
     };
 
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": tool.title,
+        "description": tool.description,
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/${id}`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
-            <Head>
-                <title>{tool.title} | ToolBasket</title>
-            </Head>
+            <SEO 
+                title={tool.title} 
+                description={tool.description}
+                canonical={`/${id}`}
+                structuredData={structuredData}
+            />
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />

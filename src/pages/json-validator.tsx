@@ -4,7 +4,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
 import { ShieldCheck, AlertCircle, Sparkles, CheckCircle2, ChevronRight } from 'lucide-react';
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 
 export default function JsonValidator() {
@@ -131,12 +131,30 @@ export default function JsonValidator() {
         setMetrics(null);
     };
 
+    
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "JSON Validator & Syntax Debugger Tools",
+        "description": "Validate your JSON codes instantly, analyze object depth, and discover exact syntax error lines.",
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "All",
+        "url": `https://toolbasketai.com/json-validator`,
+        "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "USD"
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>JSON Validator & Syntax Debugger | ToolBasket Tools</title>
-                <meta name="description" content="Validate your JSON codes instantly, analyze object depth, and discover exact syntax error lines." />
-            </Head>
+            <SEO 
+                title="JSON Validator & Syntax Debugger Tools" 
+                description="Validate your JSON codes instantly, analyze object depth, and discover exact syntax error lines." 
+                canonical="/json-validator"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 
