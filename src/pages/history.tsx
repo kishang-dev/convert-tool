@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useAuthStore } from '@/store/authStore';
 import api from '@/services/api';
 import Navbar from '@/components/Navbar';
+import SEO from '@/components/SEO';
 import Card from '@/components/Card';
 import { Clock, FileText, Download, Sparkles, Trash2 } from 'lucide-react';
 
@@ -63,6 +64,11 @@ export default function HistoryPage() {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0f]">
+            <SEO
+                title="File History — Your Conversion Activity"
+                description="View and download all your previously converted and processed files on ToolBasket."
+                canonical="/history"
+            />
             <Navbar />
 
             {/* Background */}

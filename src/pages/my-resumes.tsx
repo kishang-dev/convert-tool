@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useAuthStore } from '@/store/authStore';
 import { resumeAPI, ResumeData } from '@/lib/api';
 import Navbar from '@/components/Navbar';
+import SEO from '@/components/SEO';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import {
@@ -81,10 +81,12 @@ export default function MyResumesPage() {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0f] text-gray-900 dark:text-white">
-            <Head>
-                <title>My Resumes | ToolBasket</title>
-                <meta name="description" content="Manage, edit, and export all your saved resumes in one place." />
-            </Head>
+            <SEO
+                title="My Resumes — Manage Your Saved Resumes"
+                description="Manage, edit, download, and export all your saved resumes in one place. Built with ToolBasket's free AI-powered resume builder."
+                canonical="/my-resumes"
+                keywords="my resumes, saved resumes, resume manager, edit resume online, download resume PDF"
+            />
 
             <Navbar />
 

@@ -4,6 +4,7 @@ import { useAuthStore } from '@/store/authStore';
 import api from '@/services/api';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import SEO from '@/components/SEO';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import { Mail, Lock, User, UserPlus, Sparkles } from 'lucide-react';
@@ -43,6 +44,12 @@ export default function RegisterPage() {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
+            <SEO
+                title="Create Free Account — ToolBasket"
+                description="Sign up for a free ToolBasket account to save your work, access resume builder, and track your file conversion history."
+                canonical="/register"
+                keywords="sign up ToolBasket, create account, free PDF tools account, register online tools"
+            />
             <Navbar />
 
             {/* Main Content */}

@@ -114,7 +114,7 @@ function computeDouble( number ) {
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "My web page",
+        "name": "HTML, CSS & JS Code Minifier",
         "description": "Compress and minify HTML documents, CSS stylesheets, and Javascript codes client-side in real-time.",
         "applicationCategory": "BrowserApplication",
         "operatingSystem": "All",
@@ -128,10 +128,13 @@ function computeDouble( number ) {
 
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <Head>
-                <title>HTML, CSS, & JS Code Minifier | ToolBasket Tools</title>
-                <meta name="description" content="Compress and minify HTML documents, CSS stylesheets, and Javascript codes client-side in real-time." />
-            </Head>
+            <SEO
+                title="HTML, CSS & JS Code Minifier — Free Online Tool"
+                description="Compress and minify HTML documents, CSS stylesheets, and JavaScript code client-side in real-time. No upload needed, instant results."
+                canonical="/code-minifier"
+                keywords="code minifier, HTML minifier, CSS minifier, JS minifier, compress HTML, minify CSS online, minify JavaScript"
+                structuredData={structuredData}
+            />
 
             <Navbar />
 
@@ -244,7 +247,7 @@ function computeDouble( number ) {
                 </div>
             </div>
         
-            <ToolSEOContent toolName="code-minifier" toolDescription="" />
+            <ToolSEOContent toolName="HTML, CSS & JS Code Minifier" toolDescription="Compress and minify HTML, CSS, and JavaScript code instantly. Strip comments, whitespace, and reduce file size for faster websites." />
         </div>
     );
 }

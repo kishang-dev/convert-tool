@@ -41,6 +41,12 @@ export default function ContactPage() {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white flex flex-col font-sans">
+            <SEO
+                title="Contact Us — ToolBasket Support"
+                description="Get in touch with the ToolBasket team. We respond within 24 hours to all questions, feedback, and business inquiries."
+                canonical="/contact"
+                keywords="contact ToolBasket, support, help, feedback"
+            />
             <Navbar />
 
             <main className="flex-1 pt-32 pb-20">

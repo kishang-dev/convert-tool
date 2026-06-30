@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useAuthStore } from '@/store/authStore';
 import { authApi } from '@/services/api';
 import Navbar from '@/components/Navbar';
+import SEO from '@/components/SEO';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import { User, Phone, Save, Sparkles, Camera } from 'lucide-react';
@@ -75,6 +76,11 @@ export default function ProfilePage() {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0f]">
+            <SEO
+                title="My Profile — Account Settings"
+                description="Update your ToolBasket account details, profile photo, and contact information."
+                canonical="/profile"
+            />
             <Navbar />
 
             {/* Background */}
