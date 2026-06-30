@@ -7,6 +7,7 @@ import { Upload, FileText, Download, ArrowRight, CheckCircle, AlertTriangle } fr
 import { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function PptToPdf() {
     const [file, setFile] = useState<File | null>(null);
@@ -171,6 +172,8 @@ export default function PptToPdf() {
                     </Card>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="PowerPoint to PDF Converter Tools" toolDescription="Convert PowerPoint presentations to PDF documents." />
         </div>
     );
 }

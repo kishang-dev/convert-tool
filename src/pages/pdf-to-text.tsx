@@ -7,6 +7,7 @@ import { Upload, FileText, Download, ArrowRight, CheckCircle, Copy } from 'lucid
 import { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function PdfToText() {
     const [file, setFile] = useState<File | null>(null);
@@ -191,6 +192,8 @@ export default function PdfToText() {
                     </Card>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="PDF to Text Converter Tools" toolDescription="Extract plain text from PDF documents." />
         </div>
     );
 }

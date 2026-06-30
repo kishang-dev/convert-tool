@@ -7,6 +7,7 @@ import { ArrowLeftRight, Copy, Trash2, Upload, File, Check, Download } from 'luc
 import { devToolsAPI } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function Base64Tool() {
     const [input, setInput] = useState('');
@@ -256,6 +257,8 @@ export default function Base64Tool() {
                     </Card>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="Base64 Encoder & Decoder Tools" toolDescription="Encode strings/files to Base64 or decode Base64 strings back to text instantly." />
         </div>
     );
 }

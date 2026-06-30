@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Settings, Sparkles, CheckCircle2, AlertCircle, HelpCircle } from 'lucide-react';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function RegexTester() {
     const [pattern, setPattern] = useState('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}');
@@ -263,6 +264,8 @@ export default function RegexTester() {
                     </div>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="Regex Tester & Match Debugger Tools" toolDescription="Test regular expressions in real-time. Match parsing, capturing groups, visual highlights, and regex flags." />
         </div>
     );
 }

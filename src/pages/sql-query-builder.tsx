@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Copy, Trash2, Check, Plus, Database, Sparkles } from 'lucide-react';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function SqlQueryBuilder() {
     const [action, setAction] = useState<'SELECT' | 'INSERT' | 'UPDATE' | 'DELETE'>('SELECT');
@@ -425,6 +426,8 @@ export default function SqlQueryBuilder() {
                     </div>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="Visual SQL Query Builder Tools" toolDescription="Build SQL SELECT, INSERT, UPDATE, and DELETE queries visually. Enter tables, fields, wheres, and joins with instant code generation." />
         </div>
     );
 }

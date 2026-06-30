@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Copy, Check, FileText, Code, Eye, Sparkles, BookOpen } from 'lucide-react';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function MarkdownEditor() {
     const [markdown, setMarkdown] = useState(`# ToolBasket Markdown Document
@@ -268,6 +269,8 @@ Feel free to paste your own *.md* files here!`);
                     </Card>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="Markdown Editor & HTML Converter Tools" toolDescription="Write, edit, and convert Markdown to HTML cleanly client-side. Side-by-side panels, tables support, and instant copying." />
         </div>
     );
 }

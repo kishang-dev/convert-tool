@@ -10,6 +10,7 @@ import RichTextEditor from '@/components/RichTextEditor';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -966,6 +967,8 @@ export default function SpeechToPdf() {
             <style jsx global>{`
         @keyframes shine { 100% { transform: translateX(100%); } }
       `}</style>
+        
+            <ToolSEOContent toolName="VoicePDF | Speech to Professional PDF" toolDescription="Convert your speech to properly formatted PDF documents." />
         </div>
     );
 }

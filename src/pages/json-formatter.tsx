@@ -7,6 +7,7 @@ import { Copy, Trash2, Check, FileJson, Sparkles } from 'lucide-react';
 import { devToolsAPI } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function JsonFormatter() {
     const [input, setInput] = useState('');
@@ -228,6 +229,8 @@ export default function JsonFormatter() {
                     </Card>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="JSON Formatter & Minifier Online" toolDescription="Format, beautify, validate, and minify JSON instantly online. Free JSON formatter with syntax highlighting, indent control, and clipboard copy. No sign-up." />
         </div>
     );
 }

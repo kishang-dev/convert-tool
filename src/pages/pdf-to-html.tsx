@@ -7,6 +7,7 @@ import { Upload, FileCode, Download, ArrowRight, CheckCircle } from 'lucide-reac
 import { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function PdfToHtml() {
     const [file, setFile] = useState<File | null>(null);
@@ -167,6 +168,8 @@ export default function PdfToHtml() {
                     </Card>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="PDF to HTML Converter Tools" toolDescription="Convert PDF documents to HTML format." />
         </div>
     );
 }

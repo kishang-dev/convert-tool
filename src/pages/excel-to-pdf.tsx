@@ -7,6 +7,7 @@ import { Upload, FileSpreadsheet, Download, ArrowRight, CheckCircle } from 'luci
 import { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function ExcelToPdf() {
     const [file, setFile] = useState<File | null>(null);
@@ -167,6 +168,8 @@ export default function ExcelToPdf() {
                     </Card>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="Excel to PDF Converter Tools" toolDescription="Convert Excel spreadsheets to PDF documents." />
         </div>
     );
 }

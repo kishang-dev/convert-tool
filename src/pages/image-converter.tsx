@@ -7,6 +7,7 @@ import { Upload, Download, ArrowRight, CheckCircle, FileImage, Settings, Refresh
 import api, { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function ImageConverter() {
     const [file, setFile] = useState<File | null>(null);
@@ -278,6 +279,8 @@ export default function ImageConverter() {
                     </Card>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="Image Converter — HEIC to JPG, WEBP, PNG" toolDescription="Convert images instantly online. HEIC to JPG, WEBP to PNG, PNG to WEBP and more. Free image format converter with no watermarks or sign-up required." />
         </div>
     );
 }

@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Upload, ImageIcon, Download, ArrowRight, RefreshCw, Sparkles, Check, Ratio } from 'lucide-react';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function ImageResizer() {
     const [file, setFile] = useState<File | null>(null);
@@ -332,6 +333,8 @@ export default function ImageResizer() {
                     </div>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="Image Resizer Tools" toolDescription="Resize JPG, PNG, and WEBP images in seconds client-side. Lock aspect ratio, select quality, and compress dimensions." />
         </div>
     );
 }

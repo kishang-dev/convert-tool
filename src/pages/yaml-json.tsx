@@ -7,6 +7,7 @@ import { ArrowLeftRight, Copy, Trash2, Upload, FileJson, Check, ArrowRightLeft }
 import api from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function YamlJsonConverter() {
     const [input, setInput] = useState('');
@@ -239,6 +240,8 @@ database:
                     </Card>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="YAML ↔ JSON Converter Tools" toolDescription="Convert YAML documents to JSON format and JSON to YAML format in real-time." />
         </div>
     );
 }

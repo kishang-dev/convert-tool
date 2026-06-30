@@ -7,6 +7,7 @@ import { Copy, Trash2, Check, Sparkles } from 'lucide-react';
 import { devToolsAPI } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function SqlFormatter() {
     const [input, setInput] = useState('');
@@ -192,6 +193,8 @@ export default function SqlFormatter() {
                     </Card>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="SQL Query Formatter Tools" toolDescription="Beautify, indent, format, and minify SQL queries client-side instantly for MySQL, PostgreSQL, Oracle, or SQL Server." />
         </div>
     );
 }

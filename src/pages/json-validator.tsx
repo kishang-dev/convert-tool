@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { ShieldCheck, AlertCircle, Sparkles, CheckCircle2, ChevronRight } from 'lucide-react';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function JsonValidator() {
     const [input, setInput] = useState('');
@@ -307,6 +308,8 @@ export default function JsonValidator() {
                     </div>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="JSON Validator & Syntax Debugger Tools" toolDescription="Validate your JSON codes instantly, analyze object depth, and discover exact syntax error lines." />
         </div>
     );
 }

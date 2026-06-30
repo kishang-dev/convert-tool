@@ -7,6 +7,7 @@ import { Upload, Unlock, Download, ArrowRight, CheckCircle, ShieldAlert } from '
 import { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function PdfUnlock() {
     const [file, setFile] = useState<File | null>(null);
@@ -199,6 +200,8 @@ export default function PdfUnlock() {
                     </Card>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="PDF Unlock & Password Remover Tools" toolDescription="Unlock password protected PDFs and permanently remove passwords and restrictions." />
         </div>
     );
 }

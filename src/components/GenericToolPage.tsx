@@ -6,10 +6,11 @@ import Navbar from "@/components/Navbar";
 import Card from "@/components/Card";
 import Button from "@/components/Button";
 import FileList from "@/components/FileList";
-import Toast from "@/components/Toast";
 import { Upload, ArrowLeft } from "lucide-react";
 import * as gtag from "@/lib/gtag";
 import SEO from "@/components/SEO";
+import ToolSEOContent from "@/components/ToolSEOContent";
+import Toast from "./Toast";
 
 const TOOL_CONFIGS: Record<string, { title: string, description: string, minFiles: number, maxFiles: number, run: (files: FileData[], password?: string) => Promise<any>, needsPassword?: boolean, accepts: string, openEditor?: boolean }> = {
     "editor": {
@@ -182,13 +183,13 @@ const TOOL_CONFIGS: Record<string, { title: string, description: string, minFile
 
 export default function GenericToolPage({ id }: { id: string }) {
     const router = useRouter();
-    
+
     const [files, setFiles] = useState<FileData[]>([]);
     const [loading, setLoading] = useState(false);
     const [processing, setProcessing] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
     const [password, setPassword] = useState("");
-    
+
     const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -293,7 +294,7 @@ export default function GenericToolPage({ id }: { id: string }) {
                 router.push(`/editor/${response.file._id}`);
                 return;
             }
-            
+
             // Automatically download the result
             if (response.file) {
                 window.open(fileAPI.getDownloadUrl(response.file.filename), "_blank");
@@ -301,7 +302,7 @@ export default function GenericToolPage({ id }: { id: string }) {
                 // If it returns multiple files, just download the first one or prompt
                 window.open(fileAPI.getDownloadUrl(response.files[0].filename), "_blank");
             }
-            
+
             // Optionally clear files after success
             setFiles([]);
             setPassword("");
@@ -329,8 +330,8 @@ export default function GenericToolPage({ id }: { id: string }) {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
-            <SEO 
-                title={tool.title} 
+            <SEO
+                title={tool.title}
                 description={tool.description}
                 canonical={`/${id}`}
                 structuredData={structuredData}
@@ -360,9 +361,8 @@ export default function GenericToolPage({ id }: { id: string }) {
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDrop}
-                            className={`p-12 border-b border-gray-300 dark:border-[#222] text-center transition-all cursor-pointer ${
-                                isDragging ? "bg-gray-100 dark:bg-white/5 border-dashed border-2 border-[#444]" : "hover:bg-gray-100 dark:bg-[#161616]"
-                            }`}
+                            className={`p-12 border-b border-gray-300 dark:border-[#222] text-center transition-all cursor-pointer ${isDragging ? "bg-gray-100 dark:bg-white/5 border-dashed border-2 border-[#444]" : "hover:bg-gray-100 dark:bg-[#161616]"
+                                }`}
                             onClick={() => !loading && fileInputRef.current?.click()}
                         >
                             <div className="flex flex-col items-center gap-3">
@@ -401,7 +401,7 @@ export default function GenericToolPage({ id }: { id: string }) {
                             <FileList
                                 files={files}
                                 onRemove={handleRemoveFile}
-                                onDownload={() => {}}
+                                onDownload={() => { }}
                             />
                         </div>
                     )}
@@ -433,6 +433,8 @@ export default function GenericToolPage({ id }: { id: string }) {
                         </Button>
                     </div>
                 </div>
+
+                <ToolSEOContent toolName={tool.title} toolDescription={tool.description} />
             </div>
         </div>
     );

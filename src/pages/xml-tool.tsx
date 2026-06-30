@@ -7,6 +7,7 @@ import { Copy, Trash2, Check, ShieldCheck, AlertCircle, FileCode, Sparkles } fro
 import { devToolsAPI } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function XmlTool() {
     const [input, setInput] = useState('');
@@ -353,6 +354,8 @@ export default function XmlTool() {
                     </div>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="XML Formatter & Validator Tools" toolDescription="Format, beautify, validate, and minify your XML documents instantly client-side with full error details." />
         </div>
     );
 }

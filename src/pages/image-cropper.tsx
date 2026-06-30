@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { Upload, Crop, Download, ArrowRight, RefreshCw, Ratio, Maximize, Move } from 'lucide-react';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function ImageCropper() {
     const [file, setFile] = useState<File | null>(null);
@@ -430,6 +431,8 @@ export default function ImageCropper() {
                     </div>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="Image Cropper Tools" toolDescription="Crop and cut your images online client-side. Aspect ratio templates, fully adjustable crop boxes with visual handles." />
         </div>
     );
 }

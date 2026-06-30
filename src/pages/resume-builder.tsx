@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 // const INITIAL_DATA: ResumeData = {
 //     personalInfo: { fullName: '', email: '', phone: '', address: '', summary: '', linkedin: '', github: '', website: '' },
@@ -1302,7 +1303,9 @@ export default function ResumeBuilder() {
                         </button>
                     </div>
                 )}
-            </div>
+            
+            <ToolSEOContent toolName="Free Resume Builder — 50+ Professional Templates" toolDescription="Build a professional resume in minutes with ToolBasket" />
+        </div>
         </div >
     );
 }

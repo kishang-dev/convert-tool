@@ -7,6 +7,7 @@ import { Copy, Trash2, Check, FileCode, Sparkles, Zap } from 'lucide-react';
 import { devToolsAPI } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function CodeMinifier() {
     const [tab, setTab] = useState<'HTML' | 'CSS' | 'JS'>('HTML');
@@ -242,6 +243,8 @@ function computeDouble( number ) {
                     </div>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="code-minifier" toolDescription="" />
         </div>
     );
 }

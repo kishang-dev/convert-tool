@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { ShieldCheck, AlertCircle, Sparkles, RefreshCw, Layers } from 'lucide-react';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 interface DiffLine {
     type: 'equal' | 'added' | 'removed';
@@ -297,6 +298,8 @@ export default function JsonDiffChecker() {
                     </Card>
                 )}
             </div>
+        
+            <ToolSEOContent toolName="JSON Diff Checker Tools" toolDescription="Compare two JSON objects side-by-side in real-time. Detect insertions, deletions, and updates instantly." />
         </div>
     );
 }

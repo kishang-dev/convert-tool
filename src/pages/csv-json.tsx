@@ -7,6 +7,7 @@ import { ArrowLeftRight, Copy, Trash2, Upload, FileJson, Check } from 'lucide-re
 import api from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function CsvJsonConverter() {
     const [input, setInput] = useState('');
@@ -240,6 +241,8 @@ export default function CsvJsonConverter() {
                     </Card>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="CSV ↔ JSON Converter Tools" toolDescription="Convert CSV spreadsheets to JSON format and JSON arrays back to CSV tables instantly." />
         </div>
     );
 }

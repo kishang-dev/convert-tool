@@ -8,6 +8,7 @@ import Card from "@/components/Card";
 import Button from "@/components/Button";
 import SEO from "@/components/SEO";
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function OcrPage() {
     const [loading, setLoading] = useState(false);
@@ -230,6 +231,8 @@ export default function OcrPage() {
                     background: linear-gradient(to bottom, #7c3aed, #2563eb);
                 }
             `}</style>
+        
+            <ToolSEOContent toolName="Free OCR Tool — Extract Text from Images" toolDescription="Extract text from images instantly using ToolBasket" />
         </div>
     );
 }

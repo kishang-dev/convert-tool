@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import { ShieldCheck, Calendar, Clock, AlertTriangle, KeyRound } from 'lucide-react';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
+import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function JwtDecoder() {
     const [token, setToken] = useState('');
@@ -241,6 +242,8 @@ export default function JwtDecoder() {
                     </div>
                 </div>
             </div>
+        
+            <ToolSEOContent toolName="JWT Decoder & Parser Tools" toolDescription="Decode JSON Web Tokens (JWT) client-side in real-time. View header, payload, and expiration details." />
         </div>
     );
 }
