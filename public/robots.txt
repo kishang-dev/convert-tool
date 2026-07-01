@@ -8,5 +8,13 @@ Disallow: /my-resumes
 Disallow: /auth/reset-password/
 Disallow: /api/
 
+User-agent: GPTBot 
+User-agent: ChatGPT-User 
+User-agent: OAI-SearchBot 
+User-agent: PerplexityBot 
+User-agent: ClaudeBot 
+User-agent: Google-Extended 
+User-agent: Gemini 
+
 # Sitemap
 Sitemap: https://toolbasketai.com/sitemap.xml
