@@ -270,8 +270,13 @@ export const fileAPI = {
   },
 
   // Get download URL
-  getDownloadUrl: (filename: string): string => {
-    return `${process.env.NEXT_PUBLIC_ASSETS_URL}/outputs/${filename}`;
+  getDownloadUrl: (fileOrFilename: string | FileData | { filename: string, operation?: string }): string => {
+    if (typeof fileOrFilename === 'string') {
+        return `${process.env.NEXT_PUBLIC_ASSETS_URL}/outputs/${fileOrFilename}`;
+    }
+    const isUpload = fileOrFilename.operation === 'upload' || fileOrFilename.operation === 'UPLOAD';
+    const folder = isUpload ? 'uploads' : 'outputs';
+    return `${process.env.NEXT_PUBLIC_ASSETS_URL}/${folder}/${fileOrFilename.filename}`;
   },
 
   // Edit PDF (Rotate, Delete, Reorder pages)

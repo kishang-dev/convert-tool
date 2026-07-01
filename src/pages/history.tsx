@@ -135,7 +135,7 @@ export default function HistoryPage() {
                                                 <td className="py-4 px-4 text-right">
                                                     <div className="flex items-center justify-end gap-4">
                                                         <a
-                                                            href={`${process.env.NEXT_PUBLIC_ASSETS_URL}/outputs/${file.filename}`}
+                                                            href={`${process.env.NEXT_PUBLIC_ASSETS_URL}/${file.operation.toLowerCase() === 'upload' ? 'uploads' : 'outputs'}/${file.filename}`}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium"

@@ -297,10 +297,10 @@ export default function GenericToolPage({ id }: { id: string }) {
 
             // Automatically download the result
             if (response.file) {
-                window.open(fileAPI.getDownloadUrl(response.file.filename), "_blank");
+                window.open(fileAPI.getDownloadUrl(response.file), "_blank");
             } else if (response.files && response.files.length > 0) {
                 // If it returns multiple files, just download the first one or prompt
-                window.open(fileAPI.getDownloadUrl(response.files[0].filename), "_blank");
+                window.open(fileAPI.getDownloadUrl(response.files[0]), "_blank");
             }
 
             // Optionally clear files after success
@@ -401,7 +401,7 @@ export default function GenericToolPage({ id }: { id: string }) {
                             <FileList
                                 files={files}
                                 onRemove={handleRemoveFile}
-                                onDownload={() => { }}
+                                onDownload={(file) => window.open(fileAPI.getDownloadUrl(file), "_blank")}
                             />
                         </div>
                     )}
