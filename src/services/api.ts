@@ -169,6 +169,10 @@ export const authApi = {
     });
     return response.data;
   },
+  googleLogin: async (credential: string) => {
+    const response = await api.post("/auth/google", { credential });
+    return response.data;
+  },
 };
 
 export const supportApi = {
