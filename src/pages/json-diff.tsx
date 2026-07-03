@@ -141,13 +141,13 @@ export default function JsonDiffChecker() {
 
     const handleLoadSample = () => {
         const sampleA = {
-            appName: "ToolBasket Tools",
+            appName: "ToolBasketAI Tools",
             version: "1.2.0",
             active: true,
             features: ["pdf-unlock", "base64", "jwt-decoder"]
         };
         const sampleB = {
-            appName: "ToolBasket Tools",
+            appName: "ToolBasketAI Tools",
             version: "1.3.0",
             active: false,
             features: ["pdf-unlock", "base64", "jwt-decoder", "json-diff"],
@@ -159,7 +159,7 @@ export default function JsonDiffChecker() {
         setErrorMsg('');
     };
 
-    
+
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
@@ -177,9 +177,9 @@ export default function JsonDiffChecker() {
 
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <SEO 
-                title="JSON Diff Checker Tools" 
-                description="Compare two JSON objects side-by-side in real-time. Detect insertions, deletions, and updates instantly." 
+            <SEO
+                title="JSON Diff Checker Tools"
+                description="Compare two JSON objects side-by-side in real-time. Detect insertions, deletions, and updates instantly."
                 canonical="/json-diff"
                 structuredData={structuredData}
             />
@@ -282,8 +282,8 @@ export default function JsonDiffChecker() {
                         </div>
                         <div className="bg-[#090d16] border border-white/5 rounded-xl overflow-x-auto p-4 font-mono text-xs leading-relaxed max-h-[500px]">
                             {diffResult.map((line, idx) => (
-                                <div 
-                                    key={idx} 
+                                <div
+                                    key={idx}
                                     className={`flex py-0.5 px-2 rounded ${line.type === 'added' ? 'bg-green-500/10 text-green-300' : line.type === 'removed' ? 'bg-red-500/10 text-red-300' : 'text-gray-600 dark:text-gray-400'}`}
                                 >
                                     {/* Line indexes */}
@@ -298,7 +298,7 @@ export default function JsonDiffChecker() {
                     </Card>
                 )}
             </div>
-        
+
             <ToolSEOContent toolName="JSON Diff Checker Tools" toolDescription="Compare two JSON objects side-by-side in real-time. Detect insertions, deletions, and updates instantly." />
         </div>
     );

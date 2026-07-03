@@ -39,7 +39,7 @@ export default function ForgotPassword() {
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
             <SEO
                 title="Forgot Password"
-                description="Reset your ToolBasket account password. Enter your email to receive a secure magic reset link."
+                description="Reset your ToolBasketAI account password. Enter your email to receive a secure magic reset link."
                 canonical="/auth/forgot-password"
                 noIndex={true}
             />

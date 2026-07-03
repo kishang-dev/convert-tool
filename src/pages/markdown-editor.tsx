@@ -9,7 +9,7 @@ import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 
 export default function MarkdownEditor() {
-    const [markdown, setMarkdown] = useState(`# ToolBasket Markdown Document
+    const [markdown, setMarkdown] = useState(`# ToolBasketAI Markdown Document
 
 Welcome! You can write standard Markdown on the left, and preview the **formatted visual output** or copy the **compiled HTML code** instantly on the right.
 
@@ -141,7 +141,7 @@ Feel free to paste your own *.md* files here!`);
         setMarkdown(prev => prev + '\n' + mdSnippet);
     };
 
-    
+
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
@@ -159,9 +159,9 @@ Feel free to paste your own *.md* files here!`);
 
     return (
         <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <SEO 
-                title="Markdown Editor & HTML Converter Tools" 
-                description="Write, edit, and convert Markdown to HTML cleanly client-side. Side-by-side panels, tables support, and instant copying." 
+            <SEO
+                title="Markdown Editor & HTML Converter Tools"
+                description="Write, edit, and convert Markdown to HTML cleanly client-side. Side-by-side panels, tables support, and instant copying."
                 canonical="/markdown-editor"
                 structuredData={structuredData}
             />
@@ -192,9 +192,9 @@ Feel free to paste your own *.md* files here!`);
                         <button onClick={() => insertTemplate('- Bullet Item 1\n- Bullet Item 2')} className="px-2.5 py-1 bg-gray-100 dark:bg-white/5 hover:bg-white/10 text-xs rounded font-semibold border border-white/5">List</button>
                     </div>
                     <div className="flex gap-2">
-                        <Button 
-                            onClick={() => setMarkdown('')} 
-                            variant="ghost" 
+                        <Button
+                            onClick={() => setMarkdown('')}
+                            variant="ghost"
                             size="sm"
                             className="text-red-400 hover:text-red-300"
                         >
@@ -241,7 +241,7 @@ Feel free to paste your own *.md* files here!`);
                                     HTML Code Output
                                 </button>
                             </div>
-                            
+
                             {previewTab === 'html' && (
                                 <button
                                     onClick={handleCopy}
@@ -255,7 +255,7 @@ Feel free to paste your own *.md* files here!`);
 
                         {/* Tab Content */}
                         {previewTab === 'visual' ? (
-                            <div 
+                            <div
                                 dangerouslySetInnerHTML={{ __html: htmlOutput }}
                                 className="flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl overflow-y-auto max-h-[400px] text-gray-700 dark:text-gray-300 leading-relaxed font-sans"
                             />
@@ -269,7 +269,7 @@ Feel free to paste your own *.md* files here!`);
                     </Card>
                 </div>
             </div>
-        
+
             <ToolSEOContent toolName="Markdown Editor & HTML Converter Tools" toolDescription="Write, edit, and convert Markdown to HTML cleanly client-side. Side-by-side panels, tables support, and instant copying." />
         </div>
     );

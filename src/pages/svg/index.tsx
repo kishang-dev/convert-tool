@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <Head>
-        <title>Image to SVG Converter | ToolBasket Tools</title>
+        <title>Image to SVG Converter | ToolBasketAI Tools</title>
         <meta
           name="description"
           content="Convert your PNG, JPG and WEBP images to high-quality SVG vectors instantly with AI-powered technology."
@@ -116,7 +116,7 @@ export default function Home() {
 
       <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-800 text-center">
         <p className="text-gray-500 dark:text-gray-500 text-sm font-medium">
-          &copy; {new Date().getFullYear()} ToolBasket Tools. Built with Next.js
+          &copy; {new Date().getFullYear()} ToolBasketAI Tools. Built with Next.js
           and Lucide Icons.
         </p>
       </footer>

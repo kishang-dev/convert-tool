@@ -83,7 +83,7 @@ export default function MyResumesPage() {
         <div className="min-h-screen bg-white dark:bg-[#0a0a0f] text-gray-900 dark:text-white">
             <SEO
                 title="My Resumes — Manage Your Saved Resumes"
-                description="Manage, edit, download, and export all your saved resumes in one place. Built with ToolBasket's free AI-powered resume builder."
+                description="Manage, edit, download, and export all your saved resumes in one place. Built with ToolBasketAI's free AI-powered resume builder."
                 canonical="/my-resumes"
                 keywords="my resumes, saved resumes, resume manager, edit resume online, download resume PDF"
             />

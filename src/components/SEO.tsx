@@ -11,13 +11,13 @@ interface SEOProps {
   structuredData?: object;
 }
 
-const SITE_NAME = 'ToolBasket';
+const SITE_NAME = 'ToolBasketAI';
 const BASE_URL = 'https://toolbasketai.com';
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.png`;
 const DEFAULT_DESCRIPTION =
-  'ToolBasket is your all-in-one online toolkit. Convert PDFs, resize images, format JSON, build resumes, and 40+ more free tools — no sign-up required.';
+  'ToolBasketAI is your all-in-one online toolkit. Convert PDFs, resize images, format JSON, build resumes, and 40+ more free tools — no sign-up required.';
 const DEFAULT_KEYWORDS =
-  'PDF converter, image resizer, JSON formatter, free online tools, PDF to Word, Word to PDF, image converter, resume builder, merge PDF, compress PDF, OCR tool, ToolBasket';
+  'PDF converter, image resizer, JSON formatter, free online tools, PDF to Word, Word to PDF, image converter, resume builder, merge PDF, compress PDF, OCR tool, ToolBasketAI';
 
 export default function SEO({
   title,
@@ -39,7 +39,7 @@ export default function SEO({
       <meta name="title" content={fullTitle} />
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
-      <meta name="author" content="ToolBasket" />
+      <meta name="author" content="ToolBasketAI" />
       <link rel="canonical" href={canonicalUrl} />
       {noIndex && <meta name="robots" content="noindex, nofollow" />}
       {!noIndex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}

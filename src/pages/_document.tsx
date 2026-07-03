@@ -9,8 +9,8 @@ export default function Document() {
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-        <meta name="application-name" content="ToolBasket" />
-        <meta name="apple-mobile-web-app-title" content="ToolBasket" />
+        <meta name="application-name" content="ToolBasketAI" />
+        <meta name="apple-mobile-web-app-title" content="ToolBasketAI" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 

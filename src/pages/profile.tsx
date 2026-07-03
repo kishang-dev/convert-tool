@@ -78,7 +78,7 @@ export default function ProfilePage() {
         <div className="min-h-screen bg-white dark:bg-[#0a0a0f]">
             <SEO
                 title="My Profile — Account Settings"
-                description="Update your ToolBasket account details, profile photo, and contact information."
+                description="Update your ToolBasketAI account details, profile photo, and contact information."
                 canonical="/profile"
             />
             <Navbar />

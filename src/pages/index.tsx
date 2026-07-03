@@ -10,7 +10,7 @@ const homeStructuredData = {
       '@type': 'WebSite',
       '@id': 'https://toolbasketai.com/#website',
       url: 'https://toolbasketai.com/',
-      name: 'ToolBasket',
+      name: 'ToolBasketAI',
       description: 'All-in-One Document & PDF Tools — Free Online Toolkit',
       potentialAction: {
         '@type': 'SearchAction',
@@ -21,7 +21,7 @@ const homeStructuredData = {
     {
       '@type': 'Organization',
       '@id': 'https://toolbasketai.com/#organization',
-      name: 'ToolBasket',
+      name: 'ToolBasketAI',
       url: 'https://toolbasketai.com/',
       logo: { '@type': 'ImageObject', url: 'https://toolbasketai.com/favicon.ico' },
       sameAs: [],

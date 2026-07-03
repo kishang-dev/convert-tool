@@ -118,8 +118,8 @@ export default function Tools() {
     ];
 
     const filteredCategories = categories.map(category => {
-        const items = category.items.filter(item => 
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        const items = category.items.filter(item =>
+            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()))
         );
         return { ...category, items };
@@ -131,11 +131,11 @@ export default function Tools() {
                 title="All Free Online Tools"
                 description="Browse 40+ free online tools — PDF converter, image resizer, JSON formatter, resume builder, OCR, and more. No sign-up, no watermarks. Instant processing in your browser."
                 canonical="/tools"
-                keywords="free PDF tools, PDF converter online, image resizer, JSON formatter, resume builder, OCR online, merge PDF, compress PDF, ToolBasket tools"
+                keywords="free PDF tools, PDF converter online, image resizer, JSON formatter, resume builder, OCR online, merge PDF, compress PDF, ToolBasketAI tools"
                 structuredData={{
                     '@context': 'https://schema.org',
                     '@type': 'CollectionPage',
-                    name: 'All Free Online Tools — ToolBasket',
+                    name: 'All Free Online Tools — ToolBasketAI',
                     url: 'https://toolbasketai.com/tools',
                     description: '40+ free online document and PDF tools with no sign-up required.',
                 }}
@@ -243,7 +243,7 @@ export default function Tools() {
                 </div>
             </div>
 
-                {/* Modals removed because they moved to specific tool pages */}
+            {/* Modals removed because they moved to specific tool pages */}
         </div>
     );
 }

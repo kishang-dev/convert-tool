@@ -36,7 +36,7 @@ export default function Navbar() {
                         <div className="bg-white rounded-md p-1.5">
                             <FileText className="text-black" size={18} />
                         </div>
-                        <span className="text-gray-900 dark:text-white font-semibold text-lg tracking-tight">ToolBasket</span>
+                        <span className="text-gray-900 dark:text-white font-semibold text-lg tracking-tight">ToolBasketAI</span>
                     </div>
                 </div>
             </header>
@@ -67,7 +67,7 @@ export default function Navbar() {
                     <div className="bg-white rounded-md p-1.5">
                         <FileText className="text-black" size={18} />
                     </div>
-                    <span className="text-gray-900 dark:text-white font-semibold text-lg tracking-tight">ToolBasket</span>
+                    <span className="text-gray-900 dark:text-white font-semibold text-lg tracking-tight">ToolBasketAI</span>
                 </Link>
 
                 {/* Desktop Nav */}

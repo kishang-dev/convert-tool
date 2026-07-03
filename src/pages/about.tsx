@@ -18,15 +18,15 @@ export default function AboutPage() {
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white flex flex-col font-sans">
             <SEO
                 title="About Us"
-                description="Learn about ToolBasket — the team building the world's most powerful free online toolkit for PDFs, images, and documents. Our mission is fast, private, and beautiful tools for everyone."
+                description="Learn about ToolBasketAI — the team building the world's most powerful free online toolkit for PDFs, images, and documents. Our mission is fast, private, and beautiful tools for everyone."
                 canonical="/about"
-                keywords="about ToolBasket, online PDF tools team, free document converter, ToolBasket mission"
+                keywords="about ToolBasketAI, online PDF tools team, free document converter, ToolBasketAI mission"
                 structuredData={{
                     '@context': 'https://schema.org',
                     '@type': 'AboutPage',
-                    name: 'About ToolBasket',
+                    name: 'About ToolBasketAI',
                     url: 'https://toolbasketai.com/about',
-                    description: 'The team behind ToolBasket and our mission to revolutionize modern workflows.',
+                    description: 'The team behind ToolBasketAI and our mission to revolutionize modern workflows.',
                 }}
             />
             <Navbar />
@@ -76,13 +76,13 @@ export default function AboutPage() {
                                     Our Story
                                 </h2>
                                 <p className="text-gray-600 dark:text-[#555] text-sm leading-relaxed mb-6">
-                                    Founded in 2024, ToolBasket started with a simple belief: file conversion shouldn't be a chore. Most tools on the market are slow, filled with intrusive ads, and look like they belong in the early 2000s. We decided to change that.
+                                    Founded in 2024, ToolBasketAI started with a simple belief: file conversion shouldn't be a chore. Most tools on the market are slow, filled with intrusive ads, and look like they belong in the early 2000s. We decided to change that.
                                 </p>
                                 <p className="text-gray-600 dark:text-[#555] text-sm leading-relaxed">
                                     Today, we provide a comprehensive suite of tools ranging from simple PDF conversions to advanced AI-powered Flowchart generation and CV building. Our team consists of passionate developers and designers dedicated to pushing the boundaries of what's possible in a browser.
                                 </p>
                             </div>
-                            
+
                             <div className="grid sm:grid-cols-2 gap-4">
                                 <div className="bg-gray-100 dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] rounded-xl p-6">
                                     <div className="flex items-center gap-3 mb-2">

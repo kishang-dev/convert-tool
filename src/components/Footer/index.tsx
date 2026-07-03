@@ -13,7 +13,7 @@ export default function Footer() {
                             <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg group-hover:rotate-12 transition-transform shadow-lg shadow-blue-500/20">
                                 <Sparkles className="text-gray-900 dark:text-white" size={20} />
                             </div>
-                            <span className="text-xl font-black text-gray-900 dark:text-white tracking-tight uppercase">ToolBasket</span>
+                            <span className="text-xl font-black text-gray-900 dark:text-white tracking-tight uppercase">ToolBasketAI</span>
                         </Link>
                         <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed font-medium mx-auto md:mx-0 max-w-sm md:max-w-none">
                             The world's most advanced AI-powered conversion platform. Transforming how you handle documents, one file at a time.
@@ -72,7 +72,7 @@ export default function Footer() {
                 {/* Bottom Bar */}
                 <div className="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
                     <p className="text-xs font-black text-gray-500 dark:text-gray-500 uppercase tracking-[0.2em]">
-                        &copy; 2026 ToolBasket Tools. Crafted for Performance.
+                        &copy; 2026 ToolBasketAI Tools. Crafted for Performance.
                     </p>
                     <div className="flex items-center gap-8">
                         <Link href="/privacy" className="text-[10px] font-black text-gray-600 hover:text-gray-900 dark:text-white uppercase tracking-widest transition-colors">Security</Link>

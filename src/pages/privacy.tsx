@@ -17,9 +17,9 @@ export default function PrivacyPage() {
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white flex flex-col font-sans">
             <SEO
                 title="Privacy Policy"
-                description="ToolBasket processes all files client-side. Read our Privacy Policy to understand how we protect your data and ensure your documents never leave your device."
+                description="ToolBasketAI processes all files client-side. Read our Privacy Policy to understand how we protect your data and ensure your documents never leave your device."
                 canonical="/privacy"
-                keywords="ToolBasket privacy policy, data protection, client-side processing, no data stored"
+                keywords="ToolBasketAI privacy policy, data protection, client-side processing, no data stored"
             />
             <Navbar />
 
@@ -37,7 +37,7 @@ export default function PrivacyPage() {
                         <section>
                             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">1. Introduction</h2>
                             <p className="text-gray-600 dark:text-[#555] text-sm leading-relaxed">
-                                Welcome to ToolBasket. Your privacy is paramount. This policy details how we handle the information you provide when using our suite of data conversion and processing tools. By using our services, you agree to the collection and use of information in accordance with this policy.
+                                Welcome to ToolBasketAI. Your privacy is paramount. This policy details how we handle the information you provide when using our suite of data conversion and processing tools. By using our services, you agree to the collection and use of information in accordance with this policy.
                             </p>
                         </section>
 

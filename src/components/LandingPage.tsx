@@ -88,7 +88,7 @@ export default function LandingPage() {
             <section className="py-20 px-4 sm:px-6 border-t border-gray-200 dark:border-[#1a1a1a]">
                 <div className="max-w-5xl mx-auto">
                     <div className="mb-12">
-                        <p className="text-xs text-gray-600 dark:text-[#555] uppercase tracking-widest font-medium mb-2">Why ToolBasket</p>
+                        <p className="text-xs text-gray-600 dark:text-[#555] uppercase tracking-widest font-medium mb-2">Why ToolBasketAI</p>
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
                             Built for precision & speed
                         </h2>
@@ -123,10 +123,10 @@ export default function LandingPage() {
                     <div>
                         <p className="text-xs text-gray-600 dark:text-[#555] uppercase tracking-widest font-medium mb-2">About</p>
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white tracking-tight mb-4">
-                            The vision behind ToolBasket
+                            The vision behind ToolBasketAI
                         </h2>
                         <p className="text-sm text-gray-600 dark:text-[#555] leading-relaxed mb-6">
-                            Founded in 2024, ToolBasket was born out of a simple need: universal, high-speed document processing without the clutter of traditional tools. We believe professional-grade tools should be accessible to everyone, anywhere.
+                            Founded in 2024, ToolBasketAI was born out of a simple need: universal, high-speed document processing without the clutter of traditional tools. We believe professional-grade tools should be accessible to everyone, anywhere.
                         </p>
                         <Button variant="secondary" onClick={() => router.push('/about')}>
                             Read Our Story

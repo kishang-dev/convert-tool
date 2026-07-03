@@ -82,7 +82,7 @@ export default function JsonFormatter() {
 
     const handleLoadSample = () => {
         const sample = {
-            appName: "ToolBasket Tools",
+            appName: "ToolBasketAI Tools",
             version: "1.2.0",
             active: true,
             features: ["pdf-unlock", "base64", "jwt-decoder", "json-formatter"],
@@ -139,7 +139,7 @@ export default function JsonFormatter() {
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-2">
                             <span className="text-xs text-gray-600 dark:text-gray-400 font-semibold uppercase">Indent Size:</span>
-                            <select 
+                            <select
                                 value={indent}
                                 onChange={(e) => setIndent(Number(e.target.value))}
                                 className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-2 py-1.5 rounded-lg text-sm text-gray-200 outline-none"
@@ -229,7 +229,7 @@ export default function JsonFormatter() {
                     </Card>
                 </div>
             </div>
-        
+
             <ToolSEOContent toolName="JSON Formatter & Minifier Online" toolDescription="Format, beautify, validate, and minify JSON instantly online. Free JSON formatter with syntax highlighting, indent control, and clipboard copy. No sign-up." />
         </div>
     );

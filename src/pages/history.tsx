@@ -66,7 +66,7 @@ export default function HistoryPage() {
         <div className="min-h-screen bg-white dark:bg-[#0a0a0f]">
             <SEO
                 title="File History — Your Conversion Activity"
-                description="View and download all your previously converted and processed files on ToolBasket."
+                description="View and download all your previously converted and processed files on ToolBasketAI."
                 canonical="/history"
             />
             <Navbar />

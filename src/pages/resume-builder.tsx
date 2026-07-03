@@ -432,13 +432,13 @@ export default function ResumeBuilder() {
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
             <SEO
                 title="Free Resume Builder — 50+ Professional Templates"
-                description="Build a professional resume in minutes with ToolBasket's free AI-powered resume builder. Choose from 50+ templates, export to PDF instantly. No sign-up needed."
+                description="Build a professional resume in minutes with ToolBasketAI's free AI-powered resume builder. Choose from 50+ templates, export to PDF instantly. No sign-up needed."
                 canonical="/resume-builder"
                 keywords="free resume builder, resume maker online, AI resume builder, resume templates, CV builder, PDF resume download, professional resume"
                 structuredData={{
                     '@context': 'https://schema.org',
                     '@type': 'SoftwareApplication',
-                    name: 'Resume Builder — ToolBasket',
+                    name: 'Resume Builder — ToolBasketAI',
                     applicationCategory: 'BusinessApplication',
                     operatingSystem: 'Web',
                     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -1303,9 +1303,9 @@ export default function ResumeBuilder() {
                         </button>
                     </div>
                 )}
-            
-            <ToolSEOContent toolName="Free Resume Builder — 50+ Professional Templates" toolDescription="Build a professional resume in minutes with ToolBasket" />
-        </div>
+
+                <ToolSEOContent toolName="Free Resume Builder — 50+ Professional Templates" toolDescription="Build a professional resume in minutes with ToolBasketAI" />
+            </div>
         </div >
     );
 }

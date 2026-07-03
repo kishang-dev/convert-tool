@@ -17,9 +17,9 @@ export default function TermsPage() {
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white flex flex-col font-sans">
             <SEO
                 title="Terms of Service"
-                description="Read ToolBasket's Terms of Service. Understand the rules, rights, and responsibilities when using our free online PDF and document tools."
+                description="Read ToolBasketAI's Terms of Service. Understand the rules, rights, and responsibilities when using our free online PDF and document tools."
                 canonical="/terms"
-                keywords="ToolBasket terms of service, terms and conditions, online tool usage policy"
+                keywords="ToolBasketAI terms of service, terms and conditions, online tool usage policy"
             />
             <Navbar />
 
@@ -37,7 +37,7 @@ export default function TermsPage() {
                         <section>
                             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">1. Acceptance of Terms</h2>
                             <p className="text-gray-600 dark:text-[#555] text-sm leading-relaxed">
-                                By accessing or using ToolBasket, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site.
+                                By accessing or using ToolBasketAI, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site.
                             </p>
                         </section>
 
@@ -77,7 +77,7 @@ export default function TermsPage() {
                                     <span className="font-semibold text-gray-900 dark:text-white text-sm">No Warranties</span>
                                 </div>
                                 <p className="text-gray-600 dark:text-[#555] text-sm leading-relaxed">
-                                    The materials on ToolBasket are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability.
+                                    The materials on ToolBasketAI are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability.
                                 </p>
                             </div>
                         </section>
@@ -87,7 +87,7 @@ export default function TermsPage() {
                             <div className="flex items-start gap-3">
                                 <HelpCircle size={16} className="text-gray-500 dark:text-gray-500 dark:text-[#888] mt-0.5" />
                                 <p className="text-gray-600 dark:text-[#555] text-sm leading-relaxed">
-                                    Any claim relating to ToolBasket shall be governed by the laws of India without regard to its conflict of law provisions. For support, please reach out via our contact page.
+                                    Any claim relating to ToolBasketAI shall be governed by the laws of India without regard to its conflict of law provisions. For support, please reach out via our contact page.
                                 </p>
                             </div>
                         </section>
