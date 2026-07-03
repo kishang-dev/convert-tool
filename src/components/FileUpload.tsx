@@ -50,7 +50,7 @@ export const FileUpload: React.FC = () => {
           onDragLeave={onDragLeave}
           onDrop={onDrop}
           className={cn(
-            "relative group cursor-pointer border-2 border-dashed rounded-2xl p-12 transition-all duration-300 flex flex-col items-center justify-center space-y-4",
+            "relative group cursor-pointer border-2 border-dashed rounded p-12 transition-all duration-300 flex flex-col items-center justify-center space-y-4",
             isDragging
               ? "border-blue-500 bg-blue-50/50 scale-[1.02]"
               : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
@@ -73,18 +73,18 @@ export const FileUpload: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-white group shadow-xl transition-all duration-500 animate-in fade-in zoom-in slide-in-from-bottom-4">
+        <div className="relative rounded overflow-hidden border border-slate-200 bg-[var(--surface)] group shadow-xl transition-all duration-500 animate-in fade-in zoom-in slide-in-from-bottom-4">
           <div className="aspect-video w-full bg-slate-50 flex items-center justify-center p-4">
             <img
               src={originalPreview}
               alt="Original preview"
-              className="max-w-full max-h-full object-contain rounded-lg shadow-sm"
+              className="max-w-full max-h-full object-contain rounded shadow-sm"
             />
           </div>
 
-          <div className="p-6 bg-white border-t border-slate-100 flex items-center justify-between">
+          <div className="p-6 bg-[var(--surface)] border-t border-slate-100 flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600">
+              <div className="w-10 h-10 rounded bg-slate-100 flex items-center justify-center text-slate-600">
                 <ImageIcon className="w-5 h-5" />
               </div>
               <div>
@@ -105,7 +105,7 @@ export const FileUpload: React.FC = () => {
             <div className="flex items-center space-x-2">
               <button
                 onClick={reset}
-                className="p-2.5 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all duration-200"
+                className="p-2.5 rounded text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all duration-200"
                 disabled={uploading}
               >
                 <X className="w-5 h-5" />
@@ -114,10 +114,10 @@ export const FileUpload: React.FC = () => {
                 onClick={convertImage}
                 disabled={uploading}
                 className={cn(
-                  "px-6 py-2.5 rounded-xl font-semibold transition-all duration-300",
+                  "px-6 py-2.5 rounded font-semibold transition-all duration-300",
                   uploading
                     ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                    : "bg-blue-600 text-gray-900 dark:text-white hover:bg-blue-700 shadow-lg shadow-blue-200 active:scale-95"
+                    : "bg-[var(--accent)] text-[var(--text)] dark:text-[var(--text)] hover:bg-blue-700 shadow-lg shadow-blue-200 active:scale-95"
                 )}
               >
                 {uploading ? (

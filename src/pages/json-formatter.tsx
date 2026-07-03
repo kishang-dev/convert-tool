@@ -112,7 +112,7 @@ export default function JsonFormatter() {
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] dark:text-[var(--text)]">
             <SEO
                 title="JSON Formatter & Minifier Online — Free Tool"
                 description="Format, beautify, validate, and minify JSON instantly online. Free JSON formatter with syntax highlighting, indent control, and clipboard copy. No sign-up."
@@ -129,20 +129,20 @@ export default function JsonFormatter() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">JSON Formatter & Minifier</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Beautify, inspect, and compress your JSON codes. Align structures instantly and securely.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] p-4 rounded">
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-2">
-                            <span className="text-xs text-gray-600 dark:text-gray-400 font-semibold uppercase">Indent Size:</span>
+                            <span className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] font-semibold uppercase">Indent Size:</span>
                             <select
                                 value={indent}
                                 onChange={(e) => setIndent(Number(e.target.value))}
-                                className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-2 py-1.5 rounded-lg text-sm text-gray-200 outline-none"
+                                className="bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] px-2 py-1.5 rounded text-sm text-[var(--text)] outline-none"
                             >
                                 <option value={2} className="bg-[#0f172a]">2 Spaces</option>
                                 <option value={4} className="bg-[#0f172a]">4 Spaces</option>
@@ -153,7 +153,7 @@ export default function JsonFormatter() {
                             onClick={handleLoadSample}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
+                            className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)]"
                         >
                             <Sparkles size={16} className="mr-1.5" />
                             Load Sample
@@ -173,14 +173,14 @@ export default function JsonFormatter() {
                             onClick={handleMinify}
                             variant="secondary"
                             size="sm"
-                            className="font-bold border border-gray-200 dark:border-white/10"
+                            className="font-bold border border-[var(--border)] dark:border-[var(--border)]"
                         >
                             Minify
                         </Button>
                         <Button
                             onClick={handleFormat}
                             size="sm"
-                            className="bg-indigo-600 hover:bg-indigo-500 font-bold"
+                            className="bg-[var(--accent)] hover:bg-[var(--accent)] font-bold"
                         >
                             Format JSON
                         </Button>
@@ -192,7 +192,7 @@ export default function JsonFormatter() {
                     {/* Input Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">
                                 Raw JSON Input
                             </span>
                         </div>
@@ -200,20 +200,20 @@ export default function JsonFormatter() {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder='Paste raw, unformatted JSON here...'
-                            className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-gray-200 focus:outline-none focus:border-indigo-500/40 resize-none min-h-[400px] leading-relaxed"
+                            className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[400px] leading-relaxed"
                         />
                     </Card>
 
                     {/* Output Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">
                                 Formatted Output
                             </span>
                             {output && (
                                 <button
                                     onClick={handleCopy}
-                                    className="flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-medium px-2 py-1 rounded bg-indigo-500/10 transition-all"
+                                    className="flex items-center gap-1.5 text-xs text-[var(--accent)] hover:text-indigo-300 font-medium px-2 py-1 rounded bg-[var(--accent)]/10 transition-all"
                                 >
                                     {copied ? <Check size={14} /> : <Copy size={14} />}
                                     {copied ? 'Copied' : 'Copy'}
@@ -224,7 +224,7 @@ export default function JsonFormatter() {
                             readOnly
                             value={output}
                             placeholder="Resulting formatted JSON will appear here..."
-                            className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-indigo-400 focus:outline-none resize-none min-h-[400px] leading-relaxed"
+                            className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--accent)] focus:outline-none resize-none min-h-[400px] leading-relaxed"
                         />
                     </Card>
                 </div>

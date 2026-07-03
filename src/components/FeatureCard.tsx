@@ -20,15 +20,29 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   return (
     <button
       onClick={onClick}
-      className="bg-gray-100 dark:bg-[#111111] border border-[#222222] rounded-xl p-5 text-left w-full group hover:border-[#333333] hover:bg-gray-100 dark:bg-[#161616] transition-all duration-200 flex items-start gap-4"
+      className="
+        bg-[var(--surface)] border border-[var(--border)] rounded p-5
+        text-left w-full group
+        hover:border-[var(--accent)] hover:shadow-[0_0_0_1px_var(--accent-ring)]
+        hover:bg-[var(--surface-hover)]
+        transition-all duration-200 flex items-start gap-4
+      "
     >
-      <div className="bg-gray-200 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2a2a2a] p-2.5 rounded-lg flex-shrink-0 group-hover:border-[#3a3a3a] transition-colors">
-        <Icon className="text-gray-900 dark:text-white" size={20} />
+      <div className="
+        bg-[var(--accent-soft)] border border-[var(--border)]
+        p-2.5 rounded flex-shrink-0
+        group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)]
+        transition-all duration-200
+      ">
+        <Icon
+          className="text-[var(--accent)] group-hover:text-white transition-colors duration-200"
+          size={20}
+        />
       </div>
       <div className="min-w-0">
-        <div className="text-gray-900 dark:text-white font-medium text-sm leading-snug truncate">{title}</div>
+        <div className="text-[var(--text)] font-medium text-sm leading-snug truncate">{title}</div>
         {description && (
-          <div className="text-[#666666] text-xs mt-1 leading-relaxed line-clamp-2">{description}</div>
+          <div className="text-[var(--text-faint)] text-xs mt-1 leading-relaxed line-clamp-2">{description}</div>
         )}
       </div>
     </button>

@@ -535,7 +535,7 @@ export default function SpeechToPdf() {
     };
 
     return (
-        <div className="min-h-screen bg-[#080c14] text-slate-100 font-sans selection:bg-indigo-500/30">
+        <div className="min-h-screen bg-[#080c14] text-slate-100 font-sans selection:bg-[var(--accent)]/30">
             <SEO 
                 title="VoicePDF | Speech to Professional PDF" 
                 description="Convert your speech to properly formatted PDF documents." 
@@ -562,11 +562,11 @@ export default function SpeechToPdf() {
                 {/* ── Header ── */}
                 <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
                     <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 bg-gradient-to-tr from-indigo-500 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/30 rotate-3">
-                            <Mic className="w-5 h-5 text-gray-900 dark:text-white" />
+                        <div className="w-11 h-11 bg-gradient-to-tr from-indigo-500 to-cyan-400 rounded flex items-center justify-center shadow-lg shadow-[var(--accent-ring)] rotate-3">
+                            <Mic className="w-5 h-5 text-[var(--text)] dark:text-[var(--text)]" />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">VoicePDF</h1>
+                            <h1 className="text-2xl font-bold tracking-tight text-[var(--text)] dark:text-[var(--text)]">VoicePDF</h1>
                             <p className="text-slate-400 text-xs">Real-time speech → formatted document</p>
                         </div>
                     </div>
@@ -592,9 +592,9 @@ export default function SpeechToPdf() {
                     <aside className="lg:col-span-1 space-y-4">
 
                         {/* Settings Card */}
-                        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl p-5 shadow-xl">
+                        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded p-5 shadow-xl">
                             <h2 className="text-sm font-semibold mb-4 flex items-center gap-2 text-slate-300">
-                                <Settings className="w-4 h-4 text-indigo-400" /> Settings
+                                <Settings className="w-4 h-4 text-[var(--accent)]" /> Settings
                             </h2>
 
                             <div className="space-y-4">
@@ -608,9 +608,9 @@ export default function SpeechToPdf() {
                                             onClick={() => setRecordMode('audio')}
                                             disabled={isListening}
                                             className={cn(
-                                                'py-2 px-3 rounded-lg text-xs font-medium flex items-center justify-center gap-2 transition-all border',
+                                                'py-2 px-3 rounded text-xs font-medium flex items-center justify-center gap-2 transition-all border',
                                                 recordMode === 'audio' 
-                                                    ? 'bg-indigo-500/10 border-indigo-500/50 text-indigo-400' 
+                                                    ? 'bg-[var(--accent)]/10 border-[var(--accent)]/50 text-[var(--accent)]' 
                                                     : 'bg-slate-900/50 border-slate-800 text-slate-400 hover:text-slate-300 disabled:opacity-50'
                                             )}
                                         >
@@ -620,7 +620,7 @@ export default function SpeechToPdf() {
                                             onClick={() => setRecordMode('meeting')}
                                             disabled={isListening}
                                             className={cn(
-                                                'py-2 px-3 rounded-lg text-xs font-medium flex items-center justify-center gap-2 transition-all border',
+                                                'py-2 px-3 rounded text-xs font-medium flex items-center justify-center gap-2 transition-all border',
                                                 recordMode === 'meeting' 
                                                     ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400' 
                                                     : 'bg-slate-900/50 border-slate-800 text-slate-400 hover:text-slate-300 disabled:opacity-50'
@@ -641,7 +641,7 @@ export default function SpeechToPdf() {
                                         value={title}
                                         onChange={e => setTitle(e.target.value)}
                                         placeholder="Enter PDF title…"
-                                        className="w-full bg-slate-950/50 border border-slate-700/60 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/50 transition-all placeholder-slate-600"
+                                        className="w-full bg-slate-950/50 border border-slate-700/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)]/40 focus:border-[var(--accent-ring)] transition-all placeholder-slate-600"
                                     />
                                 </div>
 
@@ -652,7 +652,7 @@ export default function SpeechToPdf() {
                                         <button 
                                             onClick={() => autoGenerateDescription(transcript)}
                                             disabled={!transcript.trim()}
-                                            className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1 normal-case tracking-normal disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="text-[var(--accent)] hover:text-indigo-300 flex items-center gap-1 normal-case tracking-normal disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
                                             <Wand2 className="w-3 h-3" /> Auto-write
                                         </button>
@@ -662,7 +662,7 @@ export default function SpeechToPdf() {
                                         onChange={e => setDescription(e.target.value)}
                                         placeholder="Meeting summary will generate here automatically or you can type it..."
                                         rows={3}
-                                        className="w-full bg-slate-950/50 border border-slate-700/60 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/50 transition-all placeholder-slate-600 resize-none"
+                                        className="w-full bg-slate-950/50 border border-slate-700/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)]/40 focus:border-[var(--accent-ring)] transition-all placeholder-slate-600 resize-none"
                                     />
                                 </div>
 
@@ -681,16 +681,16 @@ export default function SpeechToPdf() {
                                     <button
                                         onClick={() => fileInputRef.current?.click()}
                                         disabled={isListening || isUploadingFile || isProcessing}
-                                        className="w-full py-2.5 rounded-xl border border-dashed border-slate-700 bg-slate-900/30 hover:bg-slate-800/50 text-slate-400 hover:text-slate-200 transition-all text-xs font-medium flex justify-center items-center gap-2 group disabled:opacity-50"
+                                        className="w-full py-2.5 rounded border border-dashed border-slate-700 bg-slate-900/30 hover:bg-slate-800/50 text-slate-400 hover:text-slate-200 transition-all text-xs font-medium flex justify-center items-center gap-2 group disabled:opacity-50"
                                     >
                                         {isUploadingFile ? (
-                                            <span className="flex items-center gap-2 animate-pulse text-indigo-400">
-                                                <div className="w-3.5 h-3.5 border-2 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin" />
+                                            <span className="flex items-center gap-2 animate-pulse text-[var(--accent)]">
+                                                <div className="w-3.5 h-3.5 border-2 border-[var(--accent)]/30 border-t-indigo-500 rounded-full animate-spin" />
                                                 Processing with Whisper AI...
                                             </span>
                                         ) : (
                                             <>
-                                                <UploadCloud className="w-4 h-4 text-slate-500 group-hover:text-indigo-400 transition-colors" />
+                                                <UploadCloud className="w-4 h-4 text-slate-500 group-hover:text-[var(--accent)] transition-colors" />
                                                 Upload Audio/Video File
                                             </>
                                         )}
@@ -708,7 +708,7 @@ export default function SpeechToPdf() {
                                             if (isListening) stopListening();
                                             setSelectedLang(e.target.value);
                                         }}
-                                        className="w-full bg-slate-950/50 border border-slate-700/60 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/50 transition-all text-slate-200"
+                                        className="w-full bg-slate-950/50 border border-slate-700/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)]/40 focus:border-[var(--accent-ring)] transition-all text-slate-200"
                                     >
                                         {LANGUAGES.map(l => (
                                             <option key={l.code} value={l.code}>{l.label}</option>
@@ -747,10 +747,10 @@ export default function SpeechToPdf() {
                                         onClick={toggleListening}
                                         disabled={!speechSupported}
                                         className={cn(
-                                            'w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl font-semibold text-sm transition-all duration-200 select-none',
+                                            'w-full flex items-center justify-center gap-2.5 py-3.5 rounded font-semibold text-sm transition-all duration-200 select-none',
                                             isListening
                                                 ? 'bg-red-500/10 text-red-400 border border-red-500/25 hover:bg-red-500/20 active:scale-95'
-                                                : 'bg-gradient-to-r from-indigo-600 to-cyan-500 text-gray-900 dark:text-white shadow-lg shadow-indigo-500/20 hover:brightness-110 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed'
+                                                : 'bg-gradient-to-r from-indigo-600 to-cyan-500 text-[var(--text)] dark:text-[var(--text)] shadow-lg shadow-[var(--accent-soft)] hover:brightness-110 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed'
                                         )}
                                     >
                                         {isListening ? (
@@ -773,22 +773,22 @@ export default function SpeechToPdf() {
                         </div>
 
                         {/* Stats Card */}
-                        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl p-5 shadow-xl">
+                        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded p-5 shadow-xl">
                             <h2 className="text-sm font-semibold mb-4 flex items-center gap-2 text-slate-300">
-                                <BarChart2 className="w-4 h-4 text-indigo-400" /> Stats
+                                <BarChart2 className="w-4 h-4 text-[var(--accent)]" /> Stats
                             </h2>
                             <div className="grid grid-cols-2 gap-3">
                                 {[
                                     { icon: <Type className="w-3.5 h-3.5" />, label: 'Words', value: wordCount.toLocaleString() },
                                     { icon: <AlignLeft className="w-3.5 h-3.5" />, label: 'Characters', value: charCount.toLocaleString() },
                                 ].map(stat => (
-                                    <div key={stat.label} className="bg-slate-800/50 rounded-xl p-3 border border-slate-700/30">
+                                    <div key={stat.label} className="bg-slate-800/50 rounded p-3 border border-slate-700/30">
                                         <div className="flex items-center gap-1.5 text-slate-500 text-xs mb-1">{stat.icon}{stat.label}</div>
                                         <p className="text-xl font-bold text-slate-100 tabular-nums">{stat.value}</p>
                                     </div>
                                 ))}
                             </div>
-                            <div className="mt-3 bg-slate-800/50 rounded-xl p-3 border border-slate-700/30">
+                            <div className="mt-3 bg-slate-800/50 rounded p-3 border border-slate-700/30">
                                 <div className="flex items-center gap-1.5 text-slate-500 text-xs mb-1">
                                     <FileText className="w-3.5 h-3.5" /> Est. Reading Time
                                 </div>
@@ -800,23 +800,23 @@ export default function SpeechToPdf() {
 
                         {/* Errors / success */}
                         {error && (
-                            <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex items-start gap-2.5 animate-in fade-in slide-in-from-top-4 duration-300">
+                            <div className="bg-red-500/10 border border-red-500/20 rounded p-4 flex items-start gap-2.5 animate-in fade-in slide-in-from-top-4 duration-300">
                                 <div className="shrink-0 bg-red-500 rounded-full p-0.5 mt-0.5">
-                                    <Trash2 className="w-3 h-3 text-gray-900 dark:text-white" />
+                                    <Trash2 className="w-3 h-3 text-[var(--text)] dark:text-[var(--text)]" />
                                 </div>
                                 <p className="text-xs text-red-400 leading-relaxed">{error}</p>
                             </div>
                         )}
 
                         {recordingUrl && !isListening && recordMode === 'meeting' && (
-                            <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-2xl p-4 flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-4 duration-300">
+                            <div className="bg-cyan-500/10 border border-cyan-500/20 rounded p-4 flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-4 duration-300">
                                 <div className="flex items-center gap-2 text-sm font-medium text-cyan-400">
                                     <PlaySquare className="w-4 h-4" /> Meeting Recorded Details
                                 </div>
                                 <a
                                     href={recordingUrl}
                                     download={`Meeting_Recording_${new Date().getTime()}.webm`}
-                                    className="flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-cyan-500/20 text-cyan-300 text-xs font-semibold hover:bg-cyan-500/30 transition-colors"
+                                    className="flex items-center justify-center gap-2 py-2 px-4 rounded bg-cyan-500/20 text-cyan-300 text-xs font-semibold hover:bg-cyan-500/30 transition-colors"
                                 >
                                     <Video className="w-4 h-4" /> Download Video (.webm)
                                 </a>
@@ -824,7 +824,7 @@ export default function SpeechToPdf() {
                         )}
 
                         {status === 'success' && (
-                            <div className="bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-start gap-2.5 animate-in fade-in slide-in-from-top-4 duration-300">
+                            <div className="bg-green-500/10 border border-green-500/20 rounded p-4 flex items-start gap-2.5 animate-in fade-in slide-in-from-top-4 duration-300">
                                 <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
                                 <p className="text-xs text-green-400 font-medium">PDF generated and downloaded!</p>
                             </div>
@@ -833,15 +833,15 @@ export default function SpeechToPdf() {
 
                     {/* ── Right Panel: Transcript ── */}
                     <section className="lg:col-span-2 flex flex-col gap-4">
-                        <div className="relative bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl shadow-2xl flex flex-col"
+                        <div className="relative bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded shadow-2xl flex flex-col"
                             style={{ minHeight: '620px', maxHeight: '780px' }}>
 
                             {/* Panel header */}
                             <div className="px-5 py-3.5 border-b border-slate-800/60 flex justify-between items-center gap-3 shrink-0">
                                 <span className="flex items-center gap-2 text-sm text-slate-400 font-medium">
-                                    <FileText className="w-4 h-4 text-indigo-400" /> Live Transcript
+                                    <FileText className="w-4 h-4 text-[var(--accent)]" /> Live Transcript
                                     {isListening && (
-                                        <span className="text-[10px] bg-red-500 text-gray-900 dark:text-white px-2 py-0.5 rounded-full uppercase font-black tracking-tight animate-pulse">
+                                        <span className="text-[10px] bg-red-500 text-[var(--text)] dark:text-[var(--text)] px-2 py-0.5 rounded-full uppercase font-black tracking-tight animate-pulse">
                                             Live
                                         </span>
                                     )}
@@ -853,7 +853,7 @@ export default function SpeechToPdf() {
                                         onClick={handleUndo}
                                         disabled={history.length === 0}
                                         title="Undo last speech"
-                                        className="p-2 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-slate-700/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                        className="p-2 rounded text-slate-500 hover:text-slate-200 hover:bg-slate-700/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                                     >
                                         <Undo2 className="w-4 h-4" />
                                     </button>
@@ -863,7 +863,7 @@ export default function SpeechToPdf() {
                                         onClick={handleCopy}
                                         disabled={!transcript}
                                         title="Copy as plain text"
-                                        className="p-2 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-slate-700/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                        className="p-2 rounded text-slate-500 hover:text-slate-200 hover:bg-slate-700/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                                     >
                                         {copyStatus
                                             ? <CheckCircle2 className="w-4 h-4 text-green-400" />
@@ -875,7 +875,7 @@ export default function SpeechToPdf() {
                                     <button
                                         onClick={clearTranscript}
                                         title="Clear transcript"
-                                        className="p-2 rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                                        className="p-2 rounded text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </button>
@@ -901,9 +901,9 @@ export default function SpeechToPdf() {
                                         <div className="flex items-center gap-2 mb-1">
                                             <span className="relative flex h-2 w-2">
                                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
-                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
+                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent)]" />
                                             </span>
-                                            <span className="text-[10px] font-semibold text-indigo-400 uppercase tracking-widest">Recognizing…</span>
+                                            <span className="text-[10px] font-semibold text-[var(--accent)] uppercase tracking-widest">Recognizing…</span>
                                         </div>
                                         <p className="text-slate-400 italic text-sm min-h-[1.25rem] leading-relaxed line-clamp-2">
                                             {interimText || 'Waiting for speech…'}
@@ -920,7 +920,7 @@ export default function SpeechToPdf() {
                                     disabled={!transcript}
                                     title="Export as plain text"
                                     className={cn(
-                                        'flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all border',
+                                        'flex items-center justify-center gap-2 px-4 py-3 rounded text-sm font-medium transition-all border',
                                         !transcript
                                             ? 'bg-slate-800/50 text-slate-600 border-slate-700/30 cursor-not-allowed'
                                             : 'bg-slate-800 text-slate-200 border-slate-700/50 hover:bg-slate-700 active:scale-95'
@@ -934,10 +934,10 @@ export default function SpeechToPdf() {
                                     onClick={handleDownloadPdf}
                                     disabled={!transcript || isProcessing}
                                     className={cn(
-                                        'flex-1 group relative flex items-center justify-center gap-2.5 py-3 rounded-xl font-semibold text-sm transition-all overflow-hidden',
+                                        'flex-1 group relative flex items-center justify-center gap-2.5 py-3 rounded font-semibold text-sm transition-all overflow-hidden',
                                         !transcript || isProcessing
                                             ? 'bg-slate-800 text-slate-600 cursor-not-allowed'
-                                            : 'bg-white text-slate-950 hover:-translate-y-0.5 hover:shadow-2xl shadow-white/10 active:scale-95'
+                                            : 'bg-[var(--surface)] text-slate-950 hover:-translate-y-0.5 hover:shadow-2xl shadow-white/10 active:scale-95'
                                     )}
                                 >
                                     {isProcessing ? (

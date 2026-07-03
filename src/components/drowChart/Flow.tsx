@@ -151,23 +151,23 @@ const FlowContent = ({ id }: { id?: string }) => {
           className="dark:opacity-20"
         />
         <Controls
-          className="bg-white dark:bg-gray-800 border-none shadow-xl rounded-xl overflow-hidden p-1 m-4 [&_button]:bg-white dark:[&_button]:bg-gray-800 [&_button]:border-gray-100 dark:[&_button]:border-gray-200 dark:border-gray-700 [&_svg]:fill-gray-600 dark:[&_svg]:fill-gray-300"
+          className="bg-[var(--surface)] dark:bg-gray-800 border-none shadow-xl rounded overflow-hidden p-1 m-4 [&_button]:bg-[var(--surface)] dark:[&_button]:bg-gray-800 [&_button]:border-[var(--border)] dark:[&_button]:border-[var(--border)] dark:border-[var(--border)] [&_svg]:fill-gray-600 dark:[&_svg]:fill-gray-300"
         />
 
         {/* Floating Control Panel */}
         <Panel
           position="top-right"
-          className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl p-2 rounded-2xl border border-gray-100 dark:border-white/5 shadow-2xl flex gap-1 m-4"
+          className="bg-[var(--surface-hover)] dark:bg-[var(--text)]/90 backdrop-blur-xl p-2 rounded border border-[var(--border)] dark:border-[var(--border)] shadow-2xl flex gap-1 m-4"
         >
           <button
             onClick={() => fitView({ duration: 800 })}
             title="Focus Canvas"
-            className="p-2.5 text-gray-500 dark:text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-600/10 rounded-xl transition-all"
+            className="p-2.5 text-[var(--text-faint)] dark:text-[var(--text-faint)] hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-[var(--accent)]/10 rounded transition-all"
           >
             <Maximize size={18} />
           </button>
 
-          <div className="w-px h-6 bg-gray-200 dark:bg-white/5 self-center mx-1" />
+          <div className="w-px h-6 bg-[var(--surface-hover)] dark:bg-[var(--accent-soft)] self-center mx-1" />
 
           <button
             onClick={() => {
@@ -177,18 +177,18 @@ const FlowContent = ({ id }: { id?: string }) => {
               }
             }}
             title="Clear Canvas"
-            className="p-2.5 text-gray-600 dark:text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-all"
+            className="p-2.5 text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded transition-all"
           >
             <Trash2 size={18} />
           </button>
 
           <button
-            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-gray-900 dark:text-white rounded-xl text-xs font-black transition-all shadow-lg shadow-blue-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-5 py-2.5 bg-[var(--accent)] hover:bg-blue-700 text-[var(--text)] dark:text-[var(--text)] rounded text-xs font-black transition-all shadow-lg shadow-blue-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleSave}
             disabled={isUpdating}
           >
             {isUpdating ? (
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-[var(--border)] border-t-white rounded-full animate-spin" />
             ) : (
               <Save size={16} strokeWidth={3} />
             )}
@@ -198,9 +198,9 @@ const FlowContent = ({ id }: { id?: string }) => {
 
         {/* Helpful Hint Panel */}
         <Panel position="bottom-center" className="mb-4">
-          <div className="bg-gray-900/80 dark:bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-gray-200 dark:border-white/10 flex items-center gap-3 shadow-2xl">
+          <div className="bg-[var(--text)]/80 dark:bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-[var(--border)] dark:border-[var(--border)] flex items-center gap-3 shadow-2xl">
             <Info size={14} className="text-blue-400" />
-            <p className="text-[10px] font-bold text-gray-900 dark:text-white uppercase tracking-widest opacity-80">
+            <p className="text-[10px] font-bold text-[var(--text)] dark:text-[var(--text)] uppercase tracking-widest opacity-80">
               Drag from handles to connect components &bull; Right-click to edit labels
             </p>
           </div>

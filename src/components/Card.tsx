@@ -18,12 +18,14 @@ export default function Card({
     style,
 }: CardProps) {
     const variants = {
-        default:  'bg-white dark:bg-[#111111] border border-gray-300 dark:border-[#222222] rounded-xl',
-        elevated: 'bg-white dark:bg-[#161616] border border-gray-300 dark:border-[#2a2a2a] rounded-xl shadow-lg',
-        outlined: 'bg-transparent border border-gray-300 dark:border-[#2a2a2a] rounded-xl',
+        default:  'bg-[var(--surface)] border border-[var(--border)] rounded',
+        elevated: 'bg-[var(--surface)] border border-[var(--border-strong)] rounded shadow-[var(--shadow-md)]',
+        outlined: 'bg-transparent border border-[var(--border-strong)] rounded',
     };
 
-    const hoverStyles = hover ? 'cursor-pointer hover:border-gray-400 dark:border-[#333] transition-smooth hover:-translate-y-0.5' : '';
+    const hoverStyles = hover
+        ? 'cursor-pointer hover:border-[var(--accent)] hover:shadow-[0_0_0_1px_var(--accent-ring)] transition-smooth hover:-translate-y-0.5'
+        : '';
 
     return (
         <div

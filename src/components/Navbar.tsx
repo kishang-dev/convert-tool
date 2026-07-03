@@ -30,13 +30,13 @@ export default function Navbar() {
 
     if (!mounted) {
         return (
-            <header className="fixed top-0 left-0 right-0 z-[100] bg-white dark:bg-[#0a0a0a] border-b border-gray-200 dark:border-[#1a1a1a]">
+            <header className="fixed top-0 left-0 right-0 z-[100] bg-[var(--surface)] border-b border-[var(--border)]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
-                        <div className="bg-white rounded-md p-1.5">
-                            <FileText className="text-black" size={18} />
+                        <div className="bg-[var(--accent)] rounded p-1.5">
+                            <FileText className="text-white" size={16} />
                         </div>
-                        <span className="text-gray-900 dark:text-white font-semibold text-lg tracking-tight">ToolBasketAI</span>
+                        <span className="text-[var(--text)] font-semibold text-lg tracking-tight">ToolBasketAI</span>
                     </div>
                 </div>
             </header>
@@ -48,7 +48,10 @@ export default function Navbar() {
         return (
             <Link
                 href={href}
-                className={`text-sm transition-colors ${active ? 'text-gray-900 dark:text-white font-medium' : 'text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:text-white'}`}
+                className={`text-sm transition-colors ${active
+                    ? 'text-[var(--text)] font-semibold'
+                    : 'text-[var(--text-muted)] hover:text-[var(--text)]'
+                }`}
             >
                 {label}
             </Link>
@@ -56,27 +59,27 @@ export default function Navbar() {
     };
 
     return (
-        <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled
-            ? 'bg-white/95 dark:bg-[#0a0a0a] dark:bg-opacity-95 backdrop-blur-xl border-b border-gray-200 dark:border-[#1a1a1a] shadow-xl py-3'
-            : 'bg-white dark:bg-[#0a0a0a] border-b border-gray-200 dark:border-[#1a1a1a] py-4'}`}
-        >
+        <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 border-b border-[var(--border)] ${scrolled
+            ? 'bg-[var(--glass-bg)] backdrop-blur-xl shadow-sm py-3'
+            : 'bg-[var(--surface)] py-4'
+        }`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
 
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2.5 shrink-0">
-                    <div className="bg-white rounded-md p-1.5">
-                        <FileText className="text-black" size={18} />
+                    <div className="bg-[var(--accent)] rounded p-1.5">
+                        <FileText className="text-white" size={16} />
                     </div>
-                    <span className="text-gray-900 dark:text-white font-semibold text-lg tracking-tight">ToolBasketAI</span>
+                    <span className="text-[var(--text)] font-semibold text-lg tracking-tight">ToolBasketAI</span>
                 </Link>
 
                 {/* Desktop Nav */}
-                <nav className="hidden lg:flex items-center gap-7">
+                <nav className="hidden lg:flex items-center gap-7" aria-label="Main navigation">
                     {navLink('/', 'Home', true)}
                     {navLink('/tools', 'Tools')}
                     <a
                         href="#features"
-                        className="text-sm text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:text-white transition-colors"
+                        className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
                         onClick={(e) => {
                             if (router.pathname === '/') {
                                 e.preventDefault();
@@ -96,7 +99,7 @@ export default function Navbar() {
                 <div className="hidden lg:flex items-center gap-3">
                     <button
                         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                        className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-200 dark:bg-[#1a1a1a] transition-colors text-gray-900 dark:text-gray-500 dark:text-gray-500 dark:text-[#888]"
+                        className="p-2 rounded hover:bg-[var(--surface-hover)] transition-colors text-[var(--text-muted)] hover:text-[var(--text)]"
                         aria-label="Toggle theme"
                     >
                         {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
@@ -105,11 +108,7 @@ export default function Navbar() {
                     {user ? (
                         <div className="flex items-center gap-3 relative group">
                             <button
-                                className="flex items-center gap-2 px-3 py-1.5 rounded-2xl border border-gray-200 dark:border-[#333] 
-                       bg-white dark:bg-[#1a1a1a] 
-                       hover:border-gray-300 dark:hover:border-[#444] 
-                       transition-all duration-200 text-sm"
-
+                                className="flex items-center gap-2 px-3 py-1.5 rounded border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-hover)] transition-all duration-200 text-sm"
                             >
                                 {user.avatar ? (
                                     <Image
@@ -121,45 +120,29 @@ export default function Navbar() {
                                         className="w-5 h-5 rounded-full object-cover"
                                     />
                                 ) : (
-                                    <div className="w-5 h-5 rounded-full bg-gray-200 dark:bg-[#2a2a2a] flex items-center justify-center">
-                                        <User size={12} className="text-gray-900 dark:text-gray-500 dark:text-gray-500 dark:text-[#888]" />
+                                    <div className="w-5 h-5 rounded-full bg-[var(--accent-soft)] border border-[var(--border)] flex items-center justify-center">
+                                        <User size={11} className="text-[var(--accent)]" />
                                     </div>
                                 )}
-                                <span className="text-gray-900 dark:text-white">{user.name}</span>
-                                <ChevronDown size={14} className="text-gray-600 dark:text-gray-600 dark:text-[#555]" />
+                                <span className="text-[var(--text)]">{user.name}</span>
+                                <ChevronDown size={14} className="text-[var(--text-faint)]" />
                             </button>
 
                             {/* Dropdown */}
-
-                            {/* Dropdown */}
-                            <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-[#111] border border-gray-200 dark:border-[#222] rounded-2xl shadow-2xl py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-
-                                <Link
-                                    href="/profile"
-                                    className="flex px-4 py-2.5 text-sm text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors"
-                                >
+                            <div className="absolute top-full right-0 mt-2 w-48 bg-[var(--surface)] border border-[var(--border)] rounded shadow-[var(--shadow-lift)] py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <Link href="/profile" className="flex px-4 py-2.5 text-sm text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-hover)] transition-colors">
                                     Profile
                                 </Link>
-
-                                <Link
-                                    href="/history"
-                                    className="flex px-4 py-2.5 text-sm text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors"
-                                >
+                                <Link href="/history" className="flex px-4 py-2.5 text-sm text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-hover)] transition-colors">
                                     History
                                 </Link>
-
-                                <Link
-                                    href="/my-resumes"
-                                    className="flex px-4 py-2.5 text-sm text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors"
-                                >
+                                <Link href="/my-resumes" className="flex px-4 py-2.5 text-sm text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-hover)] transition-colors">
                                     My Resumes
                                 </Link>
-
-                                <div className="border-t border-gray-200 dark:border-[#222] my-1" />
-
+                                <div className="border-t border-[var(--border)] my-1" />
                                 <button
                                     onClick={logout}
-                                    className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors"
+                                    className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-500 hover:bg-[var(--surface-hover)] transition-colors"
                                 >
                                     <LogOut size={14} />
                                     Logout
@@ -170,13 +153,13 @@ export default function Navbar() {
                         <>
                             <Link
                                 href="/login"
-                                className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                                className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
                             >
                                 Sign in
                             </Link>
                             <Link
                                 href="/register"
-                                className="text-sm bg-gray-900 text-white dark:bg-white dark:text-black px-4 py-2 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors font-medium"
+                                className="text-sm bg-[var(--accent)] text-white px-4 py-2 rounded hover:bg-[var(--accent-hover)] transition-colors font-medium"
                             >
                                 Get Started
                             </Link>
@@ -187,7 +170,7 @@ export default function Navbar() {
                 {/* Mobile Toggle */}
                 <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="lg:hidden text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:text-white p-2 rounded-lg hover:bg-gray-200 dark:bg-[#1a1a1a] transition-colors"
+                    className="lg:hidden text-[var(--text-muted)] hover:text-[var(--text)] p-2 rounded hover:bg-[var(--surface-hover)] transition-colors"
                     aria-label="Toggle menu"
                 >
                     {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -198,11 +181,11 @@ export default function Navbar() {
             {mobileMenuOpen && (
                 <>
                     <div
-                        className="fixed inset-0 top-[57px] bg-black/60 backdrop-blur-sm lg:hidden"
+                        className="fixed inset-0 top-[57px] bg-black/40 backdrop-blur-sm lg:hidden"
                         onClick={() => setMobileMenuOpen(false)}
                     />
-                    <div className="absolute top-full left-0 right-0 bg-white dark:bg-[#0a0a0a] border-b border-gray-200 dark:border-[#1a1a1a] lg:hidden shadow-2xl animate-slideInRight">
-                        <nav className="flex flex-col p-4 gap-1">
+                    <div className="absolute top-full left-0 right-0 bg-[var(--surface)] border-b border-[var(--border)] lg:hidden shadow-[var(--shadow-lift)] animate-slideInRight">
+                        <nav className="flex flex-col p-4 gap-1" aria-label="Mobile navigation">
                             {[
                                 { href: '/', label: 'Home' },
                                 { href: '/tools', label: 'Tools' },
@@ -212,23 +195,26 @@ export default function Navbar() {
                                 <Link
                                     key={href}
                                     href={href}
-                                    className={`px-4 py-3 rounded-lg text-sm transition-colors ${router.pathname === href ? 'bg-gray-200 dark:bg-[#1a1a1a] text-gray-900 dark:text-white font-medium' : 'text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:bg-[#111]'}`}
+                                    className={`px-4 py-3 rounded text-sm transition-colors ${router.pathname === href
+                                        ? 'bg-[var(--accent-soft)] text-[var(--accent)] font-medium'
+                                        : 'text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-hover)]'
+                                    }`}
                                 >
                                     {label}
                                 </Link>
                             ))}
 
-                            <div className="border-t border-gray-200 dark:border-[#1a1a1a] my-2" />
+                            <div className="border-t border-[var(--border)] my-2" />
 
                             <button
                                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                                className="px-4 py-3 rounded-lg text-sm text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:bg-[#111] transition-colors flex items-center justify-between w-full"
+                                className="px-4 py-3 rounded text-sm text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-hover)] transition-colors flex items-center justify-between w-full"
                             >
                                 <span>Theme</span>
                                 {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
                             </button>
 
-                            <div className="border-t border-gray-200 dark:border-[#1a1a1a] my-2" />
+                            <div className="border-t border-[var(--border)] my-2" />
 
                             {user ? (
                                 <>
@@ -236,18 +222,18 @@ export default function Navbar() {
                                         {user.avatar ? (
                                             <Image src={user.avatar.startsWith('http') ? user.avatar : `${process.env.NEXT_PUBLIC_ASSETS_URL}${user.avatar}`} alt="Avatar" width={28} height={28} loading="lazy" className="w-7 h-7 rounded-full object-cover" />
                                         ) : (
-                                            <div className="w-7 h-7 rounded-full bg-gray-300 dark:bg-[#222] flex items-center justify-center">
-                                                <User size={14} className="text-gray-500 dark:text-gray-500 dark:text-[#888]" />
+                                            <div className="w-7 h-7 rounded-full bg-[var(--accent-soft)] border border-[var(--border)] flex items-center justify-center">
+                                                <User size={13} className="text-[var(--accent)]" />
                                             </div>
                                         )}
-                                        <span className="text-gray-900 dark:text-white text-sm font-medium">{user.name}</span>
+                                        <span className="text-[var(--text)] text-sm font-medium">{user.name}</span>
                                     </div>
-                                    <Link href="/profile" className="px-4 py-3 rounded-lg text-sm text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:bg-[#111] transition-colors">Profile</Link>
-                                    <Link href="/history" className="px-4 py-3 rounded-lg text-sm text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:bg-[#111] transition-colors">History</Link>
-                                    <Link href="/my-resumes" className="px-4 py-3 rounded-lg text-sm text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:bg-[#111] transition-colors">My Resumes</Link>
+                                    <Link href="/profile" className="px-4 py-3 rounded text-sm text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-hover)] transition-colors">Profile</Link>
+                                    <Link href="/history" className="px-4 py-3 rounded text-sm text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-hover)] transition-colors">History</Link>
+                                    <Link href="/my-resumes" className="px-4 py-3 rounded text-sm text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-hover)] transition-colors">My Resumes</Link>
                                     <button
                                         onClick={logout}
-                                        className="px-4 py-3 rounded-lg text-sm text-red-500 hover:bg-gray-100 dark:bg-[#111] transition-colors flex items-center gap-2"
+                                        className="px-4 py-3 rounded text-sm text-red-500 hover:bg-[var(--surface-hover)] transition-colors flex items-center gap-2"
                                     >
                                         <LogOut size={15} />
                                         Logout
@@ -255,10 +241,10 @@ export default function Navbar() {
                                 </>
                             ) : (
                                 <>
-                                    <Link href="/login" className="px-4 py-3 rounded-lg text-sm text-gray-500 dark:text-gray-500 dark:text-[#888] hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:bg-[#111] transition-colors">
+                                    <Link href="/login" className="px-4 py-3 rounded text-sm text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-hover)] transition-colors">
                                         Sign in
                                     </Link>
-                                    <Link href="/register" className="px-4 py-3 rounded-lg bg-white text-black text-sm font-medium text-center hover:bg-gray-100 transition-colors">
+                                    <Link href="/register" className="px-4 py-3 rounded bg-[var(--accent)] text-white text-sm font-medium text-center hover:bg-[var(--accent-hover)] transition-colors">
                                         Get Started
                                     </Link>
                                 </>

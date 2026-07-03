@@ -124,7 +124,7 @@ const RichTextEditor = forwardRef<RichTextEditorRef, RichTextEditorProps>(
     if (!isReady || !ReactQuill) {
       return (
         <div className={`rich-text-editor ${className} flex flex-col flex-1 h-full`}>
-          <div className="h-full w-full bg-slate-900/30 animate-pulse rounded-xl border border-slate-700/40 flex items-center justify-center text-slate-600 text-sm">
+          <div className="h-full w-full bg-slate-900/30 animate-pulse rounded border border-slate-700/40 flex items-center justify-center text-slate-600 text-sm">
             Loading editor…
           </div>
         </div>

@@ -1790,7 +1790,7 @@ const T_Compact = ({ data, primaryColor: c }: any) => (
 const T_Bold = ({ data, primaryColor: c }: any) => (
     <div className="bg-gray-950 w-[794px] min-h-[1123px] resume-page" style={{ fontFamily: 'Outfit, sans-serif' }}>
         <header className="px-12 pt-10 pb-8 relative overflow-hidden">
-            <div className="absolute top-4 right-0 text-[120px] font-black text-gray-900 dark:text-white/3 leading-none select-none pointer-events-none uppercase tracking-tighter">
+            <div className="absolute top-4 right-0 max-w-full overflow-hidden text-[80px] font-black text-gray-100 dark:text-white/5 leading-none select-none pointer-events-none uppercase tracking-tighter opacity-50">
                 {data.personalInfo.fullName.split(' ')[0]}
             </div>
             <div className="relative z-10">

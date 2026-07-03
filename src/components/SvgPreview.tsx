@@ -33,7 +33,7 @@ export const SvgPreview: React.FC = () => {
     <div className="w-full max-w-5xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Original Image Card */}
-        <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+        <div className="bg-[var(--surface)] rounded border border-slate-200 overflow-hidden shadow-sm">
           <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
             <h3 className="font-semibold text-slate-900 flex items-center space-x-2">
               <span className="w-2 h-2 rounded-full bg-slate-400" />
@@ -44,13 +44,13 @@ export const SvgPreview: React.FC = () => {
             <img
               src={originalPreview!}
               alt="Original"
-              className="max-w-full max-h-full object-contain rounded-lg"
+              className="max-w-full max-h-full object-contain rounded"
             />
           </div>
         </div>
 
         {/* SVG Result Card */}
-        <div className="bg-white rounded-3xl border border-blue-100 overflow-hidden shadow-xl shadow-blue-50">
+        <div className="bg-[var(--surface)] rounded border border-blue-100 overflow-hidden shadow-xl shadow-blue-50">
           <div className="px-6 py-4 border-b border-blue-50 flex items-center justify-between bg-blue-50/30">
             <h3 className="font-semibold text-blue-900 flex items-center space-x-2">
               <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
@@ -84,7 +84,7 @@ export const SvgPreview: React.FC = () => {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
         <button
           onClick={reset}
-          className="w-full sm:w-auto px-8 py-4 rounded-2xl font-semibold border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all duration-300 flex items-center justify-center space-x-2"
+          className="w-full sm:w-auto px-8 py-4 rounded font-semibold border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all duration-300 flex items-center justify-center space-x-2"
         >
           <RefreshCw className="w-5 h-5" />
           <span>Convert Another</span>
@@ -92,7 +92,7 @@ export const SvgPreview: React.FC = () => {
 
         <button
           onClick={handleDownload}
-          className="w-full sm:w-auto px-10 py-4 bg-blue-600 text-gray-900 dark:text-white rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 flex items-center justify-center space-x-3"
+          className="w-full sm:w-auto px-10 py-4 bg-[var(--accent)] text-[var(--text)] dark:text-[var(--text)] rounded font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 flex items-center justify-center space-x-3"
         >
           <Download className="w-6 h-6" />
           <span>Download SVG</span>

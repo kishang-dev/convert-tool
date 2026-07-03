@@ -15,11 +15,11 @@ import { ChevronDown, FileJson, FileText, Image as ImageIcon } from "lucide-reac
 
 const PrimaryButton = ({ className, onClick, isLoading, children }: any) => (
   <button
-    className={`bg-blue-600 hover:bg-blue-700 text-gray-900 dark:text-white rounded-xl shadow-lg transition-all disabled:opacity-50 ${className}`}
+    className={`bg-[var(--accent)] hover:bg-blue-700 text-[var(--text)] dark:text-[var(--text)] rounded shadow-lg transition-all disabled:opacity-50 ${className}`}
     onClick={onClick}
     disabled={isLoading}
   >
-    {isLoading ? <span className="animate-spin w-4 h-4 border-2 border-white/30 border-t-white rounded-full"></span> : null}
+    {isLoading ? <span className="animate-spin w-4 h-4 border-2 border-[var(--border)] border-t-white rounded-full"></span> : null}
     {children}
   </button>
 );
@@ -172,26 +172,26 @@ export const ChartEditor = ({ id }: { id?: string }) => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full bg-gray-50 dark:bg-[#0B0F1A] text-slate-900 dark:text-gray-100 font-sans overflow-hidden">
+    <div className="flex flex-col h-screen w-full bg-[var(--bg)] dark:bg-[#0B0F1A] text-slate-900 dark:text-[var(--text)] font-sans overflow-hidden">
       {/* Premium Header */}
-      <header className="h-20 border-b border-gray-200 dark:border-white/5 flex items-center justify-between px-8 bg-white/80 dark:bg-[#0B0F1A]/80 backdrop-blur-xl z-[30] sticky top-0 shadow-sm">
+      <header className="h-20 border-b border-[var(--border)] dark:border-[var(--border)] flex items-center justify-between px-8 bg-[var(--surface-hover)] dark:bg-[#0B0F1A]/80 backdrop-blur-xl z-[30] sticky top-0 shadow-sm">
         <div className="flex items-center gap-6">
           <button
             onClick={() => router.back()}
-            className="p-3 hover:bg-gray-100 dark:hover:bg-gray-100 dark:bg-white/5 rounded-2xl transition-all border border-transparent hover:border-gray-200 dark:hover:border-gray-200 dark:border-white/10 group"
+            className="p-3 hover:bg-[var(--surface)] dark:hover:bg-[var(--surface)] dark:bg-[var(--accent-soft)] rounded transition-all border border-transparent hover:border-[var(--border)] dark:hover:border-[var(--border)] dark:border-[var(--border)] group"
           >
-            <ArrowLeft className="w-5 h-5 text-gray-500 dark:text-gray-500 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="w-5 h-5 text-[var(--text-faint)] dark:text-[var(--text-faint)] group-hover:-translate-x-1 transition-transform" />
           </button>
 
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 transform -rotate-3 group-hover:rotate-0 transition-transform">
-              <Layers className="text-gray-900 dark:text-white w-6 h-6" />
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-700 rounded flex items-center justify-center shadow-lg shadow-[0_0_0_1px_var(--accent-ring)] transform -rotate-3 group-hover:rotate-0 transition-transform">
+              <Layers className="text-[var(--text)] dark:text-[var(--text)] w-6 h-6" />
             </div>
             <div>
               {isEditingTitle ? (
                 <input
                   autoFocus
-                  className="text-xl font-black tracking-tight bg-transparent border-b-2 border-blue-500 outline-none text-gray-900 dark:text-white w-64"
+                  className="text-xl font-black tracking-tight bg-transparent border-b-2 border-blue-500 outline-none text-[var(--text)] dark:text-[var(--text)] w-64"
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
                   onBlur={handleTitleSave}
@@ -208,29 +208,29 @@ export const ChartEditor = ({ id }: { id?: string }) => {
               )}
               <div className="flex items-center gap-2 mt-1">
                 <span className="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em]">{currentChart?.chartType || "FLOWCHART"}</span>
-                <div className="w-1 h-1 rounded-full bg-gray-300 dark:bg-white/20" />
-                <span className="text-[10px] text-gray-600 dark:text-gray-400 font-bold uppercase tracking-wider">PROJECT ASSET</span>
+                <div className="w-1 h-1 rounded-full bg-gray-300 dark:bg-[var(--surface-hover)]" />
+                <span className="text-[10px] text-[var(--text-muted)] dark:text-[var(--text-muted)] font-bold uppercase tracking-wider">PROJECT ASSET</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
-          <nav className="hidden lg:flex items-center gap-1 bg-gray-100 dark:bg-white/5 p-1 rounded-2xl mr-4 border border-gray-200 dark:border-white/5">
-            <button className="px-6 py-2 text-xs font-bold rounded-xl bg-white dark:bg-white/10 text-blue-600 dark:text-blue-400 shadow-sm transition-all">
+          <nav className="hidden lg:flex items-center gap-1 bg-[var(--surface)] dark:bg-[var(--accent-soft)] p-1 rounded mr-4 border border-[var(--border)] dark:border-[var(--border)]">
+            <button className="px-6 py-2 text-xs font-bold rounded bg-[var(--surface)] dark:bg-[var(--surface-hover)] text-blue-600 dark:text-blue-400 shadow-sm transition-all">
               Canvas
             </button>
-            <button className="px-6 py-2 text-xs font-bold rounded-xl text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-900 dark:text-white transition-all">
+            <button className="px-6 py-2 text-xs font-bold rounded text-[var(--text-faint)] dark:text-[var(--text-faint)] hover:text-[var(--text)] dark:hover:text-[var(--text)] dark:text-[var(--text)] transition-all">
               Elements
             </button>
-            <button className="px-6 py-2 text-xs font-bold rounded-xl text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-900 dark:text-white transition-all">
+            <button className="px-6 py-2 text-xs font-bold rounded text-[var(--text-faint)] dark:text-[var(--text-faint)] hover:text-[var(--text)] dark:hover:text-[var(--text)] dark:text-[var(--text)] transition-all">
               Settings
             </button>
           </nav>
 
-          <div className="h-8 w-px bg-gray-200 dark:bg-white/10 mx-2" />
+          <div className="h-8 w-px bg-[var(--surface-hover)] dark:bg-[var(--surface-hover)] mx-2" />
 
-          <button className="hidden sm:flex items-center gap-2 px-6 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 rounded-2xl text-sm font-bold transition-all border border-transparent hover:border-gray-200 dark:hover:border-gray-200 dark:border-white/10">
+          <button className="hidden sm:flex items-center gap-2 px-6 py-2.5 hover:bg-[var(--surface)] dark:hover:bg-[var(--surface)] dark:bg-[var(--accent-soft)] text-[var(--text-muted)] dark:text-[var(--text-muted)] rounded text-sm font-bold transition-all border border-transparent hover:border-[var(--border)] dark:hover:border-[var(--border)] dark:border-[var(--border)]">
             <Share2 className="w-4 h-4" />
             <span>Collaboration</span>
           </button>
@@ -247,13 +247,13 @@ export const ChartEditor = ({ id }: { id?: string }) => {
             </PrimaryButton>
 
             {showExportOptions && (
-              <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#1A1F2E] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in duration-200">
+              <div className="absolute right-0 mt-2 w-56 bg-[var(--surface)] dark:bg-[#1A1F2E] border border-[var(--border)] dark:border-[var(--border)] rounded shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in duration-200">
                 <div className="p-2 space-y-1">
                   <button
                     onClick={handleExportPDF}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-xl transition-all group"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[var(--text-muted)] dark:text-[var(--text)] hover:bg-blue-50 dark:hover:bg-[var(--accent)]/10 rounded transition-all group"
                   >
-                    <div className="w-8 h-8 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="w-8 h-8 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 rounded flex items-center justify-center group-hover:scale-110 transition-transform">
                       <FileText size={18} />
                     </div>
                     <span>Export as PDF</span>
@@ -261,21 +261,21 @@ export const ChartEditor = ({ id }: { id?: string }) => {
 
                   <button
                     onClick={handleExportImage}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-xl transition-all group"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[var(--text-muted)] dark:text-[var(--text)] hover:bg-blue-50 dark:hover:bg-[var(--accent)]/10 rounded transition-all group"
                   >
-                    <div className="w-8 h-8 bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="w-8 h-8 bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 rounded flex items-center justify-center group-hover:scale-110 transition-transform">
                       <ImageIcon size={18} />
                     </div>
                     <span>Export as PNG</span>
                   </button>
 
-                  <div className="h-px bg-gray-100 dark:bg-white/5 my-1 mx-2" />
+                  <div className="h-px bg-[var(--surface)] dark:bg-[var(--accent-soft)] my-1 mx-2" />
 
                   <button
                     onClick={handleExportJSON}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-xl transition-all group"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[var(--text-muted)] dark:text-[var(--text)] hover:bg-blue-50 dark:hover:bg-[var(--accent)]/10 rounded transition-all group"
                   >
-                    <div className="w-8 h-8 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="w-8 h-8 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded flex items-center justify-center group-hover:scale-110 transition-transform">
                       <FileJson size={18} />
                     </div>
                     <span>Raw Data (JSON)</span>
@@ -298,20 +298,20 @@ export const ChartEditor = ({ id }: { id?: string }) => {
       </div>
 
       {/* Minimal Status Bar */}
-      <footer className="h-10 border-t border-gray-200 dark:border-white/5 bg-white dark:bg-[#0B0F1A] flex items-center justify-between px-8 z-[30] shadow-inner">
-        <div className="flex items-center gap-6 text-[10px] font-black text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500 uppercase tracking-widest">
+      <footer className="h-10 border-t border-[var(--border)] dark:border-[var(--border)] bg-[var(--surface)] dark:bg-[#0B0F1A] flex items-center justify-between px-8 z-[30] shadow-inner">
+        <div className="flex items-center gap-6 text-[10px] font-black text-[var(--text-muted)] dark:text-[var(--text-muted)] dark:text-[var(--text-faint)] dark:text-[var(--text-faint)] uppercase tracking-widest">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)] animate-pulse" />
-            <span className="text-gray-600 dark:text-gray-300">Live Sync Active</span>
+            <span className="text-[var(--text-muted)] dark:text-[var(--text-muted)]">Live Sync Active</span>
           </div>
-          <div className="h-3 w-px bg-gray-200 dark:bg-white/10" />
+          <div className="h-3 w-px bg-[var(--surface-hover)] dark:bg-[var(--surface-hover)]" />
           <div className="flex items-center gap-2 hover:text-blue-500 cursor-help transition-colors">
             <Zap size={12} strokeWidth={3} />
             <span>Core v1.02</span>
           </div>
         </div>
-        <div className="text-[10px] font-bold text-gray-600 dark:text-gray-400 dark:text-gray-500 dark:text-gray-500 flex items-center gap-2">
-          WORKSPACE: <span className="text-gray-900 dark:text-gray-200 bg-gray-100 dark:bg-white/5 px-2 py-0.5 rounded-md uppercase tracking-tighter">DESIGN-CORE</span>
+        <div className="text-[10px] font-bold text-[var(--text-muted)] dark:text-[var(--text-muted)] dark:text-[var(--text-faint)] dark:text-[var(--text-faint)] flex items-center gap-2">
+          WORKSPACE: <span className="text-[var(--text)] dark:text-[var(--text)] bg-[var(--surface)] dark:bg-[var(--accent-soft)] px-2 py-0.5 rounded uppercase tracking-tighter">DESIGN-CORE</span>
         </div>
       </footer>
     </div>

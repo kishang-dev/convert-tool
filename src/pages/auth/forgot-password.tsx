@@ -36,7 +36,7 @@ export default function ForgotPassword() {
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
+        <div className="min-h-screen bg-[var(--bg)]">
             <SEO
                 title="Forgot Password"
                 description="Reset your ToolBasketAI account password. Enter your email to receive a secure magic reset link."
@@ -50,14 +50,14 @@ export default function ForgotPassword() {
                 <div className="max-w-md w-full animate-fadeIn">
                     {/* Header */}
                     <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-4 py-2 rounded-full mb-4">
-                            <Sparkles className="text-purple-400" size={16} />
-                            <span className="text-sm text-gray-700 dark:text-gray-300">Recover Access</span>
+                        <div className="inline-flex items-center gap-2 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] px-4 py-2 rounded-full mb-4">
+                            <Sparkles className="text-[var(--accent)]" size={16} />
+                            <span className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)]">Recover Access</span>
                         </div>
                         <h2 className="text-3xl sm:text-4xl font-bold mb-2">
                             <span className="gradient-text">Forgot Password</span>
                         </h2>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base px-4">
+                        <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-sm sm:text-base px-4">
                             {isSent ? "Check your inbox for the reset link" : "We'll send you a magic reset link"}
                         </p>
                     </div>
@@ -70,12 +70,12 @@ export default function ForgotPassword() {
                                         <CheckCircle className="text-green-500" size={32} />
                                     </div>
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Email Sent!</h3>
-                                <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-                                    We've sent a password reset link to <span className="text-gray-900 dark:text-white font-bold">{email}</span>. Please check your inbox.
+                                <h3 className="text-xl font-bold text-[var(--text)] dark:text-[var(--text)] mb-4">Email Sent!</h3>
+                                <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-8 leading-relaxed">
+                                    We've sent a password reset link to <span className="text-[var(--text)] dark:text-[var(--text)] font-bold">{email}</span>. Please check your inbox.
                                 </p>
                                 <Link href="/login" className="block">
-                                    <Button className="w-full" size="lg">
+                                    <Button variant="accent" className="w-full" size="lg">
                                         Back to Login
                                     </Button>
                                 </Link>
@@ -83,18 +83,18 @@ export default function ForgotPassword() {
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label htmlFor="email" className="block text-sm font-medium text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-2">
                                         Email Address
                                     </label>
                                     <div className="relative">
                                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <Mail className="text-gray-500 dark:text-gray-500" size={20} />
+                                            <Mail className="text-[var(--text-faint)] dark:text-[var(--text-faint)]" size={20} />
                                         </div>
                                         <input
                                             id="email"
                                             type="email"
                                             required
-                                            className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white placeholder-gray-500 transition-smooth"
+                                            className="bg-[var(--bg)] border border-[var(--border-strong)] w-full pl-10 pr-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)] text-[var(--text)] dark:text-[var(--text)] placeholder-[var(--text-faint)] transition-smooth"
                                             placeholder="you@example.com"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
@@ -103,12 +103,13 @@ export default function ForgotPassword() {
                                 </div>
 
                                 {error && (
-                                    <div className="glass-strong border-l-4 border-red-500 p-4 rounded-lg">
+                                    <div className="bg-[var(--surface-hover)] border border-[var(--border-strong)] border-l-4 border-red-500 p-4 rounded">
                                         <p className="text-red-400 text-sm">{error}</p>
                                     </div>
                                 )}
 
                                 <Button
+                                    variant="accent"
                                     type="submit"
                                     className="w-full"
                                     size="lg"
@@ -124,7 +125,7 @@ export default function ForgotPassword() {
                     {/* Back to Login */}
                     {!isSent && (
                         <div className="text-center mt-6">
-                            <Link href="/login" className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-purple-400 transition-smooth text-sm font-medium">
+                            <Link href="/login" className="inline-flex items-center gap-2 text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--accent)] transition-smooth text-sm font-medium">
                                 <ArrowLeft size={16} />
                                 Wait, I remember it!
                             </Link>

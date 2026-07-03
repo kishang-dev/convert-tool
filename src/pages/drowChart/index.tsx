@@ -14,7 +14,6 @@ export default function ChartDashboard() {
     const [isAIModalOpen, setIsAIModalOpen] = useState(false);
     const [isGenerating, setIsGenerating] = useState(false);
 
-    // Supported Chart Types
     const chartTypes = [
         "Flowchart",
         "Process Flow Diagram (PFD)",
@@ -28,7 +27,6 @@ export default function ChartDashboard() {
         "Cross-functional Flowchart"
     ];
 
-    // AI Form State
     const [aiForm, setAiForm] = useState({
         title: "",
         prompt: "",
@@ -46,10 +44,7 @@ export default function ChartDashboard() {
 
     const handleCreateNew = async () => {
         try {
-            const newChart = await createChart({
-                title: `Untitled ${manualType}`,
-                chartType: manualType
-            });
+            const newChart = await createChart({ title: `Untitled ${manualType}`, chartType: manualType });
             setIsManualModalOpen(false);
             router.push(`/drowChart/${newChart._id}`);
         } catch (err) {
@@ -63,7 +58,6 @@ export default function ChartDashboard() {
             setToast({ message: "Please fill all fields", type: "error" });
             return;
         }
-
         setIsGenerating(true);
         try {
             const newChart = await generateAIChart({
@@ -104,7 +98,6 @@ export default function ChartDashboard() {
     const saveEdit = async (e: React.MouseEvent | React.KeyboardEvent, id: string) => {
         e.stopPropagation();
         if (!editTitle.trim()) return;
-
         try {
             await updateChart(id, { title: editTitle });
             setEditingId(null);
@@ -115,153 +108,139 @@ export default function ChartDashboard() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
-            <style jsx>{`
-                .custom-scrollbar::-webkit-scrollbar {
-                    width: 6px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-track {
-                    background: rgba(255, 255, 255, 0.05);
-                    border-radius: 10px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: rgba(59, 130, 246, 0.5);
-                    border-radius: 10px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: rgba(59, 130, 246, 0.8);
-                }
-                .no-scrollbar::-webkit-scrollbar {
-                    display: none;
-                }
-                .no-scrollbar {
-                    -ms-overflow-style: none;
-                    scrollbar-width: none;
-                }
-            `}</style>
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 
-            {/* Manual Creation Modal */}
+            {/* ── Manual Creation Modal ── */}
             {isManualModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-                    <div className="bg-[#1e293b] border border-gray-200 dark:border-white/10 rounded-3xl p-6 md:p-8 w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar overflow-x-hidden shadow-2xl relative">
-                        <button
-                            onClick={() => setIsManualModalOpen(false)}
-                            className="absolute top-6 right-6 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white transition-colors"
-                        >
-                            <X size={24} />
-                        </button>
-                        <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-6 uppercase tracking-tight">Select Diagram Type</h2>
-                        <div className="relative">
-                            <select
-                                value={manualType}
-                                onChange={(e) => setManualType(e.target.value)}
-                                className="w-full bg-gray-100 dark:bg-white/5 border-2 border-gray-200 dark:border-white/10 rounded-2xl px-6 py-4 text-gray-900 dark:text-white outline-none focus:border-blue-500/50 focus:bg-[#1e293b] transition-all font-black text-lg appearance-none cursor-pointer"
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+                    <div className="bg-[var(--surface)] border border-[var(--border)] rounded w-full max-w-sm shadow-2xl relative">
+                        {/* Header */}
+                        <div className="flex items-center justify-between p-5 border-b border-[var(--border)]">
+                            <h2 className="text-lg font-bold text-[var(--text)] uppercase tracking-tight">Select Diagram Type</h2>
+                            <button
+                                onClick={() => setIsManualModalOpen(false)}
+                                className="p-1.5 text-[var(--text)] opacity-50 hover:opacity-100 hover:bg-[var(--bg)] rounded transition-all"
                             >
-                                {chartTypes.map(t => (
-                                    <option key={t} value={t} className="bg-[#1e293b] text-gray-900 dark:text-white py-2">{t}</option>
-                                ))}
-                            </select>
-                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 dark:text-gray-400">
-                                <LayoutGrid size={20} />
-                            </div>
+                                <X size={18} />
+                            </button>
                         </div>
-                        <button
-                            onClick={handleCreateNew}
-                            className="w-full mt-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-gray-900 dark:text-white rounded-2xl font-black text-lg transition-all shadow-xl hover:shadow-blue-500/30 active:scale-95"
-                        >
-                            CREATE {manualType.split(' ')[0].toUpperCase()}
-                        </button>
+                        {/* Body */}
+                        <div className="p-5 space-y-4">
+                            <div className="relative">
+                                <select
+                                    value={manualType}
+                                    onChange={(e) => setManualType(e.target.value)}
+                                    className="w-full bg-[var(--bg)] border border-[var(--border)] rounded px-4 py-3 text-[var(--text)] outline-none focus:border-[var(--accent)] transition-all font-semibold text-sm appearance-none cursor-pointer"
+                                >
+                                    {chartTypes.map(t => (
+                                        <option key={t} value={t}>{t}</option>
+                                    ))}
+                                </select>
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text)] opacity-40">
+                                    <LayoutGrid size={16} />
+                                </div>
+                            </div>
+                            <button
+                                onClick={handleCreateNew}
+                                className="w-full py-3 bg-[var(--accent)] hover:opacity-90 text-white rounded font-bold text-sm transition-all"
+                            >
+                                Create {manualType.split(' ')[0]}
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
 
-            {/* AI Modal */}
+            {/* ── AI Modal ── */}
             {isAIModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-all duration-500">
-                    <div className="bg-[#1e293b] border border-gray-200 dark:border-white/10 rounded-[2.5rem] p-6 md:p-10 w-full max-w-2xl max-h-[95vh] overflow-y-auto no-scrollbar overflow-x-hidden shadow-[0_0_100px_rgba(59,130,246,0.1)] relative group">
-
-                        {/* Decorative background effects */}
-                        <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] group-hover:bg-blue-500/20 transition-all duration-1000" />
-                        <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-purple-500/10 rounded-full blur-[100px] group-hover:bg-purple-500/20 transition-all duration-1000" />
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+                    <div className="bg-[var(--surface)] border border-[var(--border)] rounded w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col">
 
                         {isGenerating ? (
-                            <div className="py-20 flex flex-col items-center justify-center text-center animate-in fade-in zoom-in duration-500">
-                                <div className="relative mb-12">
-                                    <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-2xl animate-pulse" />
-                                    <div className="relative w-32 h-32 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center shadow-2xl shadow-blue-500/40 border-4 border-white/20">
-                                        <Sparkles size={64} className="text-gray-900 dark:text-white animate-bounce" />
+                            <div className="py-20 flex flex-col items-center justify-center text-center">
+                                <div className="relative mb-8">
+                                    <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center shadow-xl">
+                                        <Sparkles size={36} className="text-white animate-bounce" />
                                     </div>
-                                    <div className="absolute -top-4 -right-4 w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center animate-spin-slow">
-                                        <Loader2 size={24} className="text-gray-900 dark:text-white" />
+                                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-[var(--accent)] rounded-full flex items-center justify-center">
+                                        <Loader2 size={16} className="text-white animate-spin" />
                                     </div>
                                 </div>
-                                <h2 className="text-4xl font-black gradient-text mb-4 animate-pulse uppercase tracking-tighter">Designing Brilliance</h2>
-                                <p className="text-gray-600 dark:text-gray-400 text-lg max-w-sm mx-auto leading-relaxed font-medium">
-                                    Our AI architect is mapping out your ${aiForm.chartType} with precision and style...
+                                <h2 className="text-2xl font-black text-[var(--text)] mb-2 uppercase tracking-tighter">Designing Brilliance</h2>
+                                <p className="text-[var(--text)] opacity-50 text-sm max-w-xs mx-auto">
+                                    Our AI architect is mapping out your {aiForm.chartType}...
                                 </p>
                             </div>
                         ) : (
                             <>
-                                <button
-                                    onClick={() => setIsAIModalOpen(false)}
-                                    className="absolute top-8 right-8 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white transition-all transform hover:rotate-90"
-                                >
-                                    <X size={28} />
-                                </button>
-
-                                <div className="flex items-center gap-4 mb-6 relative">
-                                    <div className="p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-[1.5rem] shadow-xl shadow-blue-500/20">
-                                        <Sparkles className="text-gray-900 dark:text-white" size={32} />
+                                {/* Modal Header */}
+                                <div className="flex items-center justify-between p-5 border-b border-[var(--border)] shrink-0">
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded">
+                                            <Sparkles className="text-white" size={20} />
+                                        </div>
+                                        <div>
+                                            <h2 className="text-base font-black text-[var(--text)] tracking-tight uppercase">AI Chart Architect</h2>
+                                            <p className="text-[var(--text)] opacity-40 text-[10px] uppercase tracking-widest">Generate professional diagrams in seconds</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight uppercase">AI Chart Architect</h2>
-                                        <p className="text-gray-600 dark:text-gray-400 font-bold uppercase text-[10px] tracking-[0.2em] opacity-70 mt-1">Generate professional diagrams in seconds</p>
-                                    </div>
+                                    <button
+                                        onClick={() => setIsAIModalOpen(false)}
+                                        className="p-1.5 text-[var(--text)] opacity-50 hover:opacity-100 hover:bg-[var(--bg)] rounded transition-all"
+                                    >
+                                        <X size={18} />
+                                    </button>
                                 </div>
 
-                                <form onSubmit={handleAIContextSubmit} className="space-y-6 relative">
-                                    <div className="grid md:grid-cols-2 gap-4">
-                                        <div className="space-y-6">
+                                {/* Modal Body */}
+                                <form onSubmit={handleAIContextSubmit} className="p-5 space-y-4 flex-1">
+                                    {/* Two-column on md+ */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {/* Left column */}
+                                        <div className="space-y-4">
                                             <div>
-                                                <label className="block text-xs font-black text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Project Identity</label>
+                                                <label className="block text-[10px] font-black text-[var(--text)] opacity-50 mb-1.5 uppercase tracking-widest">Project Identity</label>
                                                 <input
                                                     required
                                                     value={aiForm.title}
                                                     onChange={(e) => setAiForm({ ...aiForm, title: e.target.value })}
-                                                    className="w-full bg-gray-100 dark:bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-gray-900 dark:text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-black text-lg placeholder:text-gray-600"
+                                                    className="w-full bg-[var(--bg)] border border-[var(--border)] rounded px-4 py-2.5 text-[var(--text)] outline-none focus:border-[var(--accent)] transition-all text-sm placeholder:text-[var(--text)] placeholder:opacity-30"
                                                     placeholder="e.g. Master Auth Flow"
                                                 />
                                             </div>
 
                                             <div>
-                                                <label className="block text-xs font-black text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Diagram Type</label>
+                                                <label className="block text-[10px] font-black text-[var(--text)] opacity-50 mb-1.5 uppercase tracking-widest">Diagram Type</label>
                                                 <div className="relative">
                                                     <select
                                                         value={aiForm.chartType}
                                                         onChange={(e) => setAiForm({ ...aiForm, chartType: e.target.value })}
-                                                        className="w-full bg-gray-100 dark:bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-gray-900 dark:text-white outline-none focus:border-blue-500/50 focus:bg-[#1e293b] transition-all font-black text-lg appearance-none cursor-pointer"
+                                                        className="w-full bg-[var(--bg)] border border-[var(--border)] rounded px-4 py-2.5 text-[var(--text)] outline-none focus:border-[var(--accent)] transition-all text-sm appearance-none cursor-pointer font-semibold"
                                                     >
                                                         {chartTypes.map(t => (
-                                                            <option key={t} value={t} className="bg-[#1e293b] text-gray-900 dark:text-white py-2">{t}</option>
+                                                            <option key={t} value={t}>{t}</option>
                                                         ))}
                                                     </select>
-                                                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 dark:text-gray-400">
-                                                        <LayoutGrid size={20} />
+                                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text)] opacity-40">
+                                                        <LayoutGrid size={14} />
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div>
-                                                <label className="block text-xs font-black text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">AI Engine</label>
-                                                <div className="grid grid-cols-2 gap-3">
+                                                <label className="block text-[10px] font-black text-[var(--text)] opacity-50 mb-1.5 uppercase tracking-widest">AI Engine</label>
+                                                <div className="grid grid-cols-2 gap-2">
                                                     {["openai", "groq", "grok", "claude"].map((p) => (
                                                         <button
                                                             key={p}
                                                             type="button"
                                                             onClick={() => setAiForm({ ...aiForm, platform: p })}
-                                                            className={`py-3 px-4 rounded-xl border-2 transition-all font-black text-xs uppercase tracking-widest ${aiForm.platform === p ? 'bg-blue-600 border-blue-500 text-gray-900 dark:text-white shadow-lg shadow-blue-500/20' : 'bg-gray-100 dark:bg-white/5 border-white/5 text-gray-600 dark:text-gray-400 hover:bg-white/10'}`}
+                                                            className={`py-2 px-3 rounded border transition-all text-xs font-bold uppercase tracking-widest ${aiForm.platform === p
+                                                                ? 'bg-[var(--accent)] border-[var(--accent)] text-white'
+                                                                : 'bg-[var(--bg)] border-[var(--border)] text-[var(--text)] opacity-60 hover:opacity-100'
+                                                            }`}
                                                         >
                                                             {p}
                                                         </button>
@@ -270,38 +249,38 @@ export default function ChartDashboard() {
                                             </div>
                                         </div>
 
-                                        <div className="space-y-6">
-                                            <div>
-                                                <label className="block text-xs font-black text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Logic Blueprints</label>
-                                                <textarea
-                                                    required
-                                                    value={aiForm.prompt}
-                                                    onChange={(e) => setAiForm({ ...aiForm, prompt: e.target.value })}
-                                                    className="w-full bg-gray-100 dark:bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-gray-900 dark:text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all h-[13.5rem] resize-none font-bold placeholder:text-gray-600"
-                                                    placeholder="Describe the logic you want to map out..."
-                                                />
-                                            </div>
+                                        {/* Right column — textarea */}
+                                        <div>
+                                            <label className="block text-[10px] font-black text-[var(--text)] opacity-50 mb-1.5 uppercase tracking-widest">Logic Blueprints</label>
+                                            <textarea
+                                                required
+                                                value={aiForm.prompt}
+                                                onChange={(e) => setAiForm({ ...aiForm, prompt: e.target.value })}
+                                                className="w-full h-full min-h-[160px] bg-[var(--bg)] border border-[var(--border)] rounded px-4 py-2.5 text-[var(--text)] outline-none focus:border-[var(--accent)] transition-all text-sm resize-none placeholder:text-[var(--text)] placeholder:opacity-30"
+                                                placeholder="Describe the logic you want to map out..."
+                                            />
                                         </div>
                                     </div>
 
-                                    <div className="flex flex-col md:flex-row gap-8 items-end">
+                                    {/* API Key + Submit */}
+                                    <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-end pt-1">
                                         <div className="flex-1">
-                                            <label className="block text-xs font-black text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-[0.2em] ml-1 opacity-60">Authentication Key</label>
+                                            <label className="block text-[10px] font-black text-[var(--text)] opacity-50 mb-1.5 uppercase tracking-widest">Authentication Key</label>
                                             <input
                                                 required
                                                 type="password"
                                                 value={aiForm.apiKey}
                                                 onChange={(e) => setAiForm({ ...aiForm, apiKey: e.target.value })}
-                                                className="w-full bg-gray-100 dark:bg-white/5 border-2 border-white/5 rounded-2xl px-6 py-4 text-gray-900 dark:text-white outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all font-mono placeholder:text-gray-600"
+                                                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded px-4 py-2.5 text-[var(--text)] outline-none focus:border-[var(--accent)] transition-all text-sm font-mono placeholder:opacity-30"
                                                 placeholder="••••••••••••••••"
                                             />
                                         </div>
                                         <button
                                             type="submit"
-                                            className="w-full md:w-auto px-10 flex items-center justify-center gap-3 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-gray-900 dark:text-white rounded-[1.5rem] font-black text-lg transition-all shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 active:scale-[0.98] group/btn whitespace-nowrap"
+                                            className="flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded font-bold text-sm transition-all shadow-lg active:scale-95 whitespace-nowrap"
                                         >
-                                            <Sparkles size={22} className="group-hover/btn:rotate-12 transition-transform" />
-                                            <span>GENERATE DIAGRAM</span>
+                                            <Sparkles size={16} />
+                                            <span>Generate Diagram</span>
                                         </button>
                                     </div>
                                 </form>
@@ -311,118 +290,128 @@ export default function ChartDashboard() {
                 </div>
             )}
 
-            <main className="max-w-7xl mx-auto px-4 py-32">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+            {/* ── Main Content ── */}
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
+                {/* Page Header */}
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
                     <div>
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black gradient-text tracking-tighter mb-4">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-[var(--text)] tracking-tighter mb-1">
                             All Professional Charts
                         </h1>
-                        <p className="text-gray-600 dark:text-gray-400 text-lg">
+                        <p className="text-[var(--text)] opacity-50 text-sm">
                             Manage your logic flows, architecture diagrams, DFDs, and business processes.
                         </p>
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex gap-2 shrink-0">
                         <button
                             onClick={() => setIsAIModalOpen(true)}
-                            className="flex items-center gap-2 px-6 py-3 bg-indigo-600/20 border border-indigo-500/30 hover:bg-indigo-600/30 text-indigo-400 rounded-xl font-bold transition-all active:scale-95"
+                            className="flex items-center gap-2 px-4 py-2 border border-[var(--accent)] text-[var(--accent)] bg-transparent hover:bg-[var(--accent)] hover:text-white rounded font-bold text-sm transition-all active:scale-95"
                         >
-                            <Sparkles size={20} />
-                            <span>Create with AI</span>
+                            <Sparkles size={16} />
+                            <span className="hidden sm:inline">Create with AI</span>
+                            <span className="sm:hidden">AI</span>
                         </button>
                         <button
                             onClick={() => setIsManualModalOpen(true)}
                             disabled={loading && charts.length === 0}
-                            className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-gray-900 dark:text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-95"
+                            className="flex items-center gap-2 px-4 py-2 bg-[var(--accent)] hover:opacity-90 disabled:opacity-50 text-white rounded font-bold text-sm transition-all shadow-md active:scale-95"
                         >
-                            <Plus size={20} />
-                            <span>Manual Chart</span>
+                            <Plus size={16} />
+                            <span className="hidden sm:inline">Manual Chart</span>
+                            <span className="sm:hidden">New</span>
                         </button>
                     </div>
                 </div>
 
+                {/* Charts Grid / Empty State / Loader */}
                 {loading && charts.length === 0 ? (
                     <div className="flex justify-center items-center py-20">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[var(--accent)]"></div>
                     </div>
                 ) : charts.length === 0 ? (
-                    <div className="text-center py-20 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-3xl">
-                        <LayoutGrid className="mx-auto h-16 w-16 text-gray-600 dark:text-gray-400 mb-6" />
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">No Diagrams Yet</h3>
-                        <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-sm mx-auto">
+                    <div className="text-center py-20 bg-[var(--surface)] border border-[var(--border)] rounded">
+                        <LayoutGrid className="mx-auto h-12 w-12 text-[var(--text)] opacity-20 mb-4" />
+                        <h3 className="text-xl font-bold text-[var(--text)] mb-2">No Diagrams Yet</h3>
+                        <p className="text-[var(--text)] opacity-50 text-sm mb-6 max-w-xs mx-auto">
                             Create your first diagram to start mapping out your brilliant ideas.
                         </p>
-                        <div className="flex justify-center gap-4">
+                        <div className="flex justify-center gap-3">
                             <button
                                 onClick={() => setIsAIModalOpen(true)}
-                                className="px-8 py-3 bg-indigo-600 text-gray-900 dark:text-white rounded-xl font-bold hover:bg-indigo-700 transition-colors flex items-center gap-2"
+                                className="px-6 py-2.5 bg-[var(--accent)] text-white rounded font-bold text-sm hover:opacity-90 transition-all flex items-center gap-2"
                             >
-                                <Sparkles size={18} />
+                                <Sparkles size={16} />
                                 Start with AI
                             </button>
                             <button
                                 onClick={() => setIsManualModalOpen(true)}
-                                className="px-8 py-3 bg-white text-blue-900 rounded-xl font-bold hover:bg-gray-100 transition-colors"
+                                className="px-6 py-2.5 bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] rounded font-bold text-sm hover:border-[var(--accent)] transition-all"
                             >
                                 Manual Design
                             </button>
                         </div>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                         {charts.map((chart) => (
                             <div
                                 key={chart._id}
                                 onClick={() => editingId !== chart._id && router.push(`/drowChart/${chart._id}`)}
-                                className={`group relative bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all overflow-hidden ${editingId !== chart._id ? 'hover:border-blue-500/50 cursor-pointer' : ''}`}
+                                className={`group relative bg-[var(--surface)] border border-[var(--border)] rounded p-5 transition-all overflow-hidden ${editingId !== chart._id ? 'hover:border-[var(--accent)] cursor-pointer hover:shadow-md' : ''}`}
                             >
-                                {/* Decorative background blurs */}
-                                <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl group-hover:bg-blue-500/30 transition-all pointer-events-none" />
-
-                                <div className="relative z-10 flex flex-col h-full">
-                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center border border-gray-200 dark:border-white/10 mb-2 group-hover:scale-110 transition-transform">
-                                        <LayoutGrid className="text-blue-400" size={24} />
+                                <div className="flex flex-col h-full gap-3">
+                                    {/* Icon */}
+                                    <div className="w-10 h-10 rounded bg-[var(--bg)] flex items-center justify-center border border-[var(--border)] group-hover:border-[var(--accent)] transition-colors">
+                                        <LayoutGrid className="text-[var(--accent)]" size={20} />
                                     </div>
 
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-blue-500/60 mb-3">{chart.chartType || 'Flowchart'}</span>
+                                    {/* Type label */}
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] opacity-70">
+                                        {chart.chartType || 'Flowchart'}
+                                    </span>
 
+                                    {/* Title or edit */}
                                     {editingId === chart._id ? (
-                                        <div className="flex items-center gap-2 mb-2" onClick={e => e.stopPropagation()}>
+                                        <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
                                             <input
                                                 value={editTitle}
                                                 onChange={(e) => setEditTitle(e.target.value)}
                                                 onKeyDown={(e) => e.key === 'Enter' && saveEdit(e, chart._id)}
-                                                className="w-full bg-white/10 border border-blue-500/50 rounded-lg px-2 py-1 text-gray-900 dark:text-white text-lg font-bold outline-none"
+                                                className="flex-1 min-w-0 bg-[var(--bg)] border border-[var(--accent)] rounded px-2 py-1 text-[var(--text)] text-sm font-bold outline-none"
                                                 autoFocus
                                             />
-                                            <button onClick={(e) => saveEdit(e, chart._id)} className="p-1.5 bg-blue-600 hover:bg-blue-700 rounded-lg text-gray-900 dark:text-white">
-                                                <Check size={16} />
+                                            <button onClick={(e) => saveEdit(e, chart._id)} className="p-1.5 bg-[var(--accent)] hover:opacity-90 rounded text-white shrink-0">
+                                                <Check size={14} />
                                             </button>
-                                            <button onClick={(e) => { e.stopPropagation(); setEditingId(null); }} className="p-1.5 bg-gray-600 hover:bg-gray-700 rounded-lg text-gray-900 dark:text-white">
-                                                <X size={16} />
+                                            <button onClick={(e) => { e.stopPropagation(); setEditingId(null); }} className="p-1.5 bg-[var(--bg)] border border-[var(--border)] rounded text-[var(--text)] shrink-0">
+                                                <X size={14} />
                                             </button>
                                         </div>
                                     ) : (
-                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 truncate group-hover:text-blue-200 transition-colors">
+                                        <h3 className="text-base font-bold text-[var(--text)] truncate">
                                             {chart.title || "Untitled Diagram"}
                                         </h3>
                                     )}
 
-                                    <div className="flex items-center justify-between mt-auto pt-6">
-                                        <span className="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-blue-400 transition-colors">
+                                    {/* Footer */}
+                                    <div className="flex items-center justify-between mt-auto pt-2 border-t border-[var(--border)]">
+                                        <span className="text-[11px] text-[var(--text)] opacity-40">
                                             {new Date(chart.updatedAt).toLocaleDateString()}
                                         </span>
-                                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <div className="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <button
                                                 onClick={(e) => startEditing(e, chart._id, chart.title || "Untitled Diagram")}
-                                                className="p-2 bg-white/10 hover:bg-blue-500 text-gray-900 dark:text-white rounded-lg transition-colors"
+                                                className="p-1.5 bg-[var(--bg)] hover:bg-[var(--accent)] hover:text-white text-[var(--text)] rounded transition-colors"
+                                                title="Rename"
                                             >
-                                                <Edit size={16} />
+                                                <Edit size={14} />
                                             </button>
                                             <button
                                                 onClick={(e) => handleDelete(e, chart._id)}
-                                                className="p-2 bg-white/10 hover:bg-red-500 text-gray-900 dark:text-white rounded-lg transition-colors"
+                                                className="p-1.5 bg-[var(--bg)] hover:bg-red-500 hover:text-white text-[var(--text)] rounded transition-colors"
+                                                title="Delete"
                                             >
-                                                <Trash2 size={16} />
+                                                <Trash2 size={14} />
                                             </button>
                                         </div>
                                     </div>

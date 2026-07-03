@@ -75,7 +75,7 @@ export default function ProfilePage() {
     if (!_hasHydrated || !user) return null;
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a0a0f]">
+        <div className="min-h-screen bg-[var(--surface)] dark:bg-[#0a0a0f]">
             <SEO
                 title="My Profile — Account Settings"
                 description="Update your ToolBasketAI account details, profile photo, and contact information."
@@ -89,15 +89,15 @@ export default function ProfilePage() {
             </div>
 
             {/* Floating Elements */}
-            <div className="fixed top-20 left-10 w-72 h-72 bg-purple-500/30 rounded-full blur-3xl animate-float -z-10"></div>
+            <div className="fixed top-20 left-10 w-72 h-72 bg-[var(--accent)]/30 rounded-full blur-3xl animate-float -z-10"></div>
             <div className="fixed bottom-20 right-10 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1s' }}></div>
 
             <div className="flex items-center justify-center min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full animate-fadeIn">
                     <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-4 py-2 rounded-full mb-4">
-                            <Sparkles className="text-purple-400" size={16} />
-                            <span className="text-sm text-gray-700 dark:text-gray-300">Your Profile</span>
+                        <div className="inline-flex items-center gap-2 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] px-4 py-2 rounded-full mb-4">
+                            <Sparkles className="text-[var(--accent)]" size={16} />
+                            <span className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)]">Your Profile</span>
                         </div>
                         <h2 className="text-3xl sm:text-4xl font-bold mb-2">
                             <span className="gradient-text">Edit Profile</span>
@@ -110,16 +110,16 @@ export default function ProfilePage() {
                             {/* Avatar Upload */}
                             <div className="flex flex-col items-center mb-6">
                                 <div
-                                    className="relative w-24 h-24 rounded-full bg-gray-100 dark:bg-white/5 border-2 border-dashed border-gray-600 flex items-center justify-center cursor-pointer overflow-hidden hover:border-purple-500 transition-colors group"
+                                    className="relative w-24 h-24 rounded-full bg-[var(--surface)] dark:bg-[var(--accent-soft)] border-2 border-dashed border-gray-600 flex items-center justify-center cursor-pointer overflow-hidden hover:border-[var(--accent)] transition-colors group"
                                     onClick={() => fileInputRef.current?.click()}
                                 >
                                     {avatarPreview ? (
                                         <img src={avatarPreview} alt="Avatar Preview" loading="lazy" className="w-full h-full object-cover" />
                                     ) : (
-                                        <User className="text-gray-500 dark:text-gray-500" size={40} />
+                                        <User className="text-[var(--text-faint)] dark:text-[var(--text-faint)]" size={40} />
                                     )}
                                     <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <Camera className="text-gray-900 dark:text-white" size={24} />
+                                        <Camera className="text-[var(--text)] dark:text-[var(--text)]" size={24} />
                                     </div>
                                 </div>
                                 <input
@@ -129,21 +129,21 @@ export default function ProfilePage() {
                                     accept="image/*"
                                     className="hidden"
                                 />
-                                <span className="text-xs text-gray-600 dark:text-gray-400 mt-2">Click to change avatar</span>
+                                <span className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] mt-2">Click to change avatar</span>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label className="block text-sm font-medium text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-2">
                                     Name
                                 </label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <User className="text-gray-500 dark:text-gray-500" size={20} />
+                                        <User className="text-[var(--text-faint)] dark:text-[var(--text-faint)]" size={20} />
                                     </div>
                                     <input
                                         type="text"
                                         required
-                                        className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white placeholder-gray-500 transition-smooth"
+                                        className="bg-[var(--bg)] border border-[var(--border-strong)] w-full pl-10 pr-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)] text-[var(--text)] dark:text-[var(--text)] placeholder-[var(--text-faint)] transition-smooth"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                     />
@@ -151,16 +151,16 @@ export default function ProfilePage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label className="block text-sm font-medium text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-2">
                                     Phone Number
                                 </label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <Phone className="text-gray-500 dark:text-gray-500" size={20} />
+                                        <Phone className="text-[var(--text-faint)] dark:text-[var(--text-faint)]" size={20} />
                                     </div>
                                     <input
                                         type="tel"
-                                        className="glass w-full pl-10 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-white placeholder-gray-500 transition-smooth"
+                                        className="bg-[var(--bg)] border border-[var(--border-strong)] w-full pl-10 pr-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)] text-[var(--text)] dark:text-[var(--text)] placeholder-[var(--text-faint)] transition-smooth"
                                         placeholder="+1 234 567 8900"
                                         value={phone}
                                         onChange={(e) => setPhone(e.target.value)}
@@ -169,7 +169,7 @@ export default function ProfilePage() {
                             </div>
 
                             {message.text && (
-                                <div className={`glass-strong border-l-4 p-4 rounded-lg ${message.type === 'success' ? 'border-green-500 text-green-400' : 'border-red-500 text-red-400'}`}>
+                                <div className={`glass-strong border-l-4 p-4 rounded ${message.type === 'success' ? 'border-green-500 text-green-400' : 'border-red-500 text-red-400'}`}>
                                     <p className="text-sm">{message.text}</p>
                                 </div>
                             )}

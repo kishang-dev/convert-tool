@@ -90,7 +90,7 @@ export default function SqlFormatter() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO 
                 title="SQL Query Formatter Tools" 
                 description="Beautify, indent, format, and minify SQL queries client-side instantly for MySQL, PostgreSQL, Oracle, or SQL Server." 
@@ -107,19 +107,19 @@ export default function SqlFormatter() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">SQL Query Formatter</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Pretty print database query clauses. Capitalize commands and minify raw strings.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] p-4 rounded">
                     <div className="flex items-center gap-3">
                         <Button
                             onClick={handleLoadSample}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
+                            className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)]"
                         >
                             <Sparkles size={16} className="mr-1.5" />
                             Load Sample Query
@@ -139,14 +139,14 @@ export default function SqlFormatter() {
                             onClick={handleMinify}
                             variant="secondary"
                             size="sm"
-                            className="font-bold border border-gray-200 dark:border-white/10"
+                            className="font-bold border border-[var(--border)] dark:border-[var(--border)]"
                         >
                             Minify SQL
                         </Button>
                         <Button
                             onClick={handleFormat}
                             size="sm"
-                            className="bg-indigo-600 hover:bg-indigo-500 font-bold"
+                            className="bg-[var(--accent)] hover:bg-[var(--accent)] font-bold"
                         >
                             Format SQL
                         </Button>
@@ -157,27 +157,27 @@ export default function SqlFormatter() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
                     {/* Input Pane */}
                     <Card variant="elevated" className="flex flex-col p-6 min-h-[480px]">
-                        <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase mb-3 block">
+                        <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase mb-3 block">
                             Raw SQL Query Input
                         </span>
                         <textarea
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="select * from table where column = 'value'..."
-                            className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-gray-200 focus:outline-none focus:border-indigo-500/40 resize-none min-h-[350px] leading-relaxed"
+                            className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[350px] leading-relaxed"
                         />
                     </Card>
 
                     {/* Output Pane */}
                     <Card variant="elevated" className="flex flex-col p-6 min-h-[480px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">
                                 Beautified SQL Output
                             </span>
                             {output && (
                                 <button
                                     onClick={handleCopy}
-                                    className="flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-medium px-2.5 py-1 rounded bg-indigo-500/10"
+                                    className="flex items-center gap-1.5 text-xs text-[var(--accent)] hover:text-indigo-300 font-medium px-2.5 py-1 rounded bg-[var(--accent)]/10"
                                 >
                                     {copied ? <Check size={14} /> : <Copy size={14} />}
                                     {copied ? 'Copied' : 'Copy'}
@@ -188,7 +188,7 @@ export default function SqlFormatter() {
                             readOnly
                             value={output}
                             placeholder="Resulting formatted database queries will appear here..."
-                            className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-emerald-400 focus:outline-none resize-none min-h-[350px] leading-relaxed"
+                            className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-emerald-400 focus:outline-none resize-none min-h-[350px] leading-relaxed"
                         />
                     </Card>
                 </div>

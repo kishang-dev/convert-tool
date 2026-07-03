@@ -7,26 +7,40 @@ export default function HeroSection() {
     const router = useRouter();
 
     return (
-        <section className="min-h-[88vh] flex items-center justify-center border-b border-gray-200 dark:border-[#1a1a1a]">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center py-20">
+        <section className="min-h-[88vh] flex items-center justify-center border-b border-[var(--border)] relative overflow-hidden">
+            {/* Subtle accent glow background */}
+            <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    background: 'radial-gradient(ellipse 80% 50% at 50% -10%, var(--accent-soft) 0%, transparent 70%)',
+                }}
+            />
+
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center py-20 relative z-10">
 
                 {/* Badge */}
-                <div className="inline-flex items-center gap-2 bg-gray-200 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2a2a2a] px-3 py-1.5 rounded-full mb-8 animate-fadeIn">
-                    <span className="text-xs text-gray-500 dark:text-gray-500 dark:text-[#888] uppercase tracking-widest font-medium">Document Tools Platform</span>
+                <div className="inline-flex items-center gap-2 bg-[var(--accent-soft)] border border-[var(--accent-ring)] px-3 py-1.5 rounded-full mb-8 animate-fadeIn">
+                    <span
+                        className="w-1.5 h-1.5 rounded-full animate-pulse-accent"
+                        style={{ background: 'var(--accent)' }}
+                    />
+                    <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--accent)' }}>
+                        Document Tools Platform
+                    </span>
                 </div>
 
                 {/* Heading */}
                 <h1
-                    className="text-4xl sm:text-5xl md:text-7xl font-bold text-gray-900 dark:text-white tracking-tight leading-[1.05] mb-6 animate-fadeIn"
+                    className="text-4xl sm:text-5xl md:text-7xl font-bold text-[var(--text)] tracking-tight leading-[1.05] mb-6 animate-fadeIn"
                     style={{ animationDelay: '0.1s' }}
                 >
                     Manage Your Documents<br />
-                    <span className="text-gray-500 dark:text-gray-500 dark:text-[#888]">With Confidence</span>
+                    <span className="text-[var(--text-muted)]">With Confidence</span>
                 </h1>
 
                 {/* Sub */}
                 <p
-                    className="text-base sm:text-lg text-gray-600 dark:text-[#555] mb-10 max-w-2xl mx-auto leading-relaxed animate-fadeIn"
+                    className="text-base sm:text-lg text-[var(--text-muted)] mb-10 max-w-2xl mx-auto leading-relaxed animate-fadeIn"
                     style={{ animationDelay: '0.2s' }}
                 >
                     Convert, merge, split, compress, and process your PDF files and images — entirely free, no account needed.
@@ -38,6 +52,7 @@ export default function HeroSection() {
                     style={{ animationDelay: '0.3s' }}
                 >
                     <Button
+                        variant="accent"
                         size="lg"
                         className="w-full sm:w-auto flex items-center justify-center gap-2"
                         onClick={() => router.push('/tools')}
@@ -61,11 +76,14 @@ export default function HeroSection() {
                     style={{ animationDelay: '0.4s' }}
                 >
                     {[
-                        { icon: <Zap size={14} className="text-[#666]" />, label: 'Lightning Fast' },
-                        { icon: <Shield size={14} className="text-[#666]" />, label: '100% Secure' },
-                        { icon: <span className="text-[#666] text-xs">∞</span>, label: 'No Registration' },
+                        { icon: <Zap size={14} style={{ color: 'var(--accent)' }} />, label: 'Lightning Fast' },
+                        { icon: <Shield size={14} style={{ color: 'var(--accent)' }} />, label: '100% Secure' },
+                        { icon: <span style={{ color: 'var(--accent)', fontSize: '12px' }}>∞</span>, label: 'No Registration' },
                     ].map(({ icon, label }) => (
-                        <div key={label} className="flex items-center gap-2 bg-gray-100 dark:bg-[#111] border border-gray-300 dark:border-[#222] px-3 py-1.5 rounded-full text-xs text-[#666]">
+                        <div
+                            key={label}
+                            className="flex items-center gap-2 bg-[var(--surface)] border border-[var(--border)] px-3 py-1.5 rounded-full text-xs text-[var(--text-muted)]"
+                        >
                             {icon}
                             {label}
                         </div>

@@ -109,7 +109,7 @@ export default function CsvJsonConverter() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO 
                 title="CSV ↔ JSON Converter Tools" 
                 description="Convert CSV spreadsheets to JSON format and JSON arrays back to CSV tables instantly." 
@@ -126,13 +126,13 @@ export default function CsvJsonConverter() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">CSV ↔ JSON Converter</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Instantly convert comma-separated values (CSV) into structured JSON arrays, and JSON objects back to clean tables.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] p-4 rounded">
                     <div className="flex items-center gap-3">
                         <Button 
                             onClick={handleToggleDirection} 
@@ -147,7 +147,7 @@ export default function CsvJsonConverter() {
                             onClick={() => fileInputRef.current?.click()}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
+                            className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)]"
                         >
                             <Upload size={16} className="mr-2" />
                             Upload File
@@ -186,7 +186,7 @@ export default function CsvJsonConverter() {
                     {/* Input Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">
                                 Input {direction === 'csv-to-json' ? 'CSV' : 'JSON'}
                             </span>
                         </div>
@@ -212,14 +212,14 @@ export default function CsvJsonConverter() {
     "role": "Designer"
   }
 ]`}
-                            className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-gray-200 focus:outline-none focus:border-teal-500/40 resize-none min-h-[400px] leading-relaxed"
+                            className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent)] resize-none min-h-[400px] leading-relaxed"
                         />
                     </Card>
 
                     {/* Output Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">
                                 Output {direction === 'csv-to-json' ? 'JSON' : 'CSV'}
                             </span>
                             {output && (
@@ -236,7 +236,7 @@ export default function CsvJsonConverter() {
                             readOnly
                             value={output}
                             placeholder="Converted result will appear here..."
-                            className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-emerald-400 focus:outline-none resize-none min-h-[400px] leading-relaxed"
+                            className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-emerald-400 focus:outline-none resize-none min-h-[400px] leading-relaxed"
                         />
                     </Card>
                 </div>

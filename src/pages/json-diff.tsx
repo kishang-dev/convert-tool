@@ -176,7 +176,7 @@ export default function JsonDiffChecker() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO
                 title="JSON Diff Checker Tools"
                 description="Compare two JSON objects side-by-side in real-time. Detect insertions, deletions, and updates instantly."
@@ -193,19 +193,19 @@ export default function JsonDiffChecker() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">JSON Diff Checker</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Compare two JSON files line-by-line. Identify additions, modifications, and deletions instantly.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] p-4 rounded">
                     <div className="flex items-center gap-3">
                         <Button
                             onClick={handleLoadSample}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
+                            className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)]"
                         >
                             <Sparkles size={16} className="mr-1.5" />
                             Load Sample JSONs
@@ -222,7 +222,7 @@ export default function JsonDiffChecker() {
                         </Button>
                         <Button
                             onClick={calculateDiff}
-                            className="bg-indigo-600 hover:bg-indigo-500 font-bold"
+                            className="bg-[var(--accent)] hover:bg-[var(--accent)] font-bold"
                         >
                             Compare JSONs
                         </Button>
@@ -241,54 +241,54 @@ export default function JsonDiffChecker() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
                         {/* JSON A */}
                         <Card variant="elevated" className="flex flex-col p-6 min-h-[400px]">
-                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase mb-3 block">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase mb-3 block">
                                 JSON Original (A)
                             </span>
                             <textarea
                                 value={jsonA}
                                 onChange={(e) => setJsonA(e.target.value)}
                                 placeholder="Paste baseline JSON here..."
-                                className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-gray-200 focus:outline-none focus:border-indigo-500/40 resize-none min-h-[300px] leading-relaxed"
+                                className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[300px] leading-relaxed"
                             />
                         </Card>
 
                         {/* JSON B */}
                         <Card variant="elevated" className="flex flex-col p-6 min-h-[400px]">
-                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase mb-3 block">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase mb-3 block">
                                 JSON Modified (B)
                             </span>
                             <textarea
                                 value={jsonB}
                                 onChange={(e) => setJsonB(e.target.value)}
                                 placeholder="Paste modified JSON here..."
-                                className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-gray-200 focus:outline-none focus:border-indigo-500/40 resize-none min-h-[300px] leading-relaxed"
+                                className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[300px] leading-relaxed"
                             />
                         </Card>
                     </div>
                 ) : (
                     /* Visual Difference Result */
                     <Card variant="elevated" className="p-6">
-                        <div className="flex justify-between items-center mb-4 border-b border-white/5 pb-2">
-                            <span className="text-sm font-semibold text-gray-600 dark:text-gray-400 tracking-wider uppercase flex items-center gap-2">
-                                <Layers size={16} className="text-indigo-400" />
+                        <div className="flex justify-between items-center mb-4 border-b border-[var(--border)] pb-2">
+                            <span className="text-sm font-semibold text-[var(--text-muted)] dark:text-[var(--text-muted)] tracking-wider uppercase flex items-center gap-2">
+                                <Layers size={16} className="text-[var(--accent)]" />
                                 Visual Differences
                             </span>
                             <button
                                 onClick={() => setDiffResult(null)}
-                                className="text-xs text-indigo-400 font-bold hover:underline"
+                                className="text-xs text-[var(--accent)] font-bold hover:underline"
                             >
                                 Edit Payloads
                             </button>
                         </div>
-                        <div className="bg-[#090d16] border border-white/5 rounded-xl overflow-x-auto p-4 font-mono text-xs leading-relaxed max-h-[500px]">
+                        <div className="bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded overflow-x-auto p-4 font-mono text-xs leading-relaxed max-h-[500px]">
                             {diffResult.map((line, idx) => (
                                 <div
                                     key={idx}
-                                    className={`flex py-0.5 px-2 rounded ${line.type === 'added' ? 'bg-green-500/10 text-green-300' : line.type === 'removed' ? 'bg-red-500/10 text-red-300' : 'text-gray-600 dark:text-gray-400'}`}
+                                    className={`flex py-0.5 px-2 rounded ${line.type === 'added' ? 'bg-green-500/10 text-green-300' : line.type === 'removed' ? 'bg-red-500/10 text-red-300' : 'text-[var(--text-muted)] dark:text-[var(--text-muted)]'}`}
                                 >
                                     {/* Line indexes */}
-                                    <span className="w-8 shrink-0 select-none text-[10px] text-gray-600 pr-1 text-right">{line.lineNumA || ''}</span>
-                                    <span className="w-8 shrink-0 select-none text-[10px] text-gray-600 pr-2 text-right">{line.lineNumB || ''}</span>
+                                    <span className="w-8 shrink-0 select-none text-[10px] text-[var(--text-muted)] pr-1 text-right">{line.lineNumA || ''}</span>
+                                    <span className="w-8 shrink-0 select-none text-[10px] text-[var(--text-muted)] pr-2 text-right">{line.lineNumB || ''}</span>
                                     {/* Diff indicator prefix */}
                                     <span className="w-4 shrink-0 select-none font-bold">{line.type === 'added' ? '+' : line.type === 'removed' ? '-' : ' '}</span>
                                     <span className="break-all whitespace-pre-wrap">{line.content}</span>

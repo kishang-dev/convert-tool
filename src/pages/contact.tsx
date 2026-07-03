@@ -40,7 +40,7 @@ export default function ContactPage() {
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white flex flex-col font-sans">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] dark:text-[var(--text)] flex flex-col font-sans">
             <SEO
                 title="Contact Us — ToolBasketAI Support"
                 description="Get in touch with the ToolBasketAI team. We respond within 24 hours to all questions, feedback, and business inquiries."
@@ -55,11 +55,11 @@ export default function ContactPage() {
                         {/* Info Section */}
                         <section>
                             <div className="mb-10">
-                                <p className="text-xs text-gray-600 dark:text-[#555] uppercase tracking-widest font-medium mb-2">Get in touch</p>
+                                <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest font-medium mb-2">Get in touch</p>
                                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
                                     Let's start a conversation
                                 </h1>
-                                <p className="text-sm text-gray-600 dark:text-[#555] leading-relaxed max-w-sm">
+                                <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] leading-relaxed max-w-sm">
                                     Have a question or a project in mind? We'd love to hear from you. Our team typically responds within 24 hours.
                                 </p>
                             </div>
@@ -70,13 +70,13 @@ export default function ContactPage() {
                                     { icon: MessageCircle, label: "Real-time Chat", value: "@converter_support" },
                                     { icon: MapPin, label: "Office Location", value: "Ahmedabad, Gujarat, IN" }
                                 ].map((item, idx) => (
-                                    <div key={idx} className="flex items-center gap-4 bg-gray-100 dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] p-4 rounded-xl">
-                                        <div className="bg-gray-200 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#222] p-2.5 rounded-lg">
-                                            <item.icon size={18} className="text-gray-500 dark:text-gray-500 dark:text-[#888]" />
+                                    <div key={idx} className="flex items-center gap-4 bg-[var(--surface)] dark:bg-[var(--surface)] border border-[var(--border)] dark:border-[var(--border)] p-4 rounded">
+                                        <div className="bg-[var(--surface-hover)] dark:bg-[var(--surface-hover)] border border-[var(--border-strong)] dark:border-[var(--border)] p-2.5 rounded">
+                                            <item.icon size={18} className="text-[var(--text-faint)] dark:text-[var(--text-faint)] dark:text-[var(--text-muted)]" />
                                         </div>
                                         <div>
-                                            <p className="text-[10px] text-gray-600 dark:text-[#555] uppercase tracking-widest mb-0.5 font-medium">{item.label}</p>
-                                            <p className="text-sm font-semibold text-gray-900 dark:text-white">{item.value}</p>
+                                            <p className="text-[10px] text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest mb-0.5 font-medium">{item.label}</p>
+                                            <p className="text-sm font-semibold text-[var(--text)] dark:text-[var(--text)]">{item.value}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -85,14 +85,14 @@ export default function ContactPage() {
 
                         {/* Form Section */}
                         <section>
-                            <div className="bg-gray-100 dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] rounded-xl p-6 sm:p-8">
+                            <div className="bg-[var(--surface)] dark:bg-[var(--surface)] border border-[var(--border)] dark:border-[var(--border)] rounded p-6 sm:p-8">
                                 {isSent ? (
                                     <div className="text-center py-10">
-                                        <div className="bg-gray-200 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#222] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                                            <CheckCircle className="text-gray-900 dark:text-white" size={24} />
+                                        <div className="bg-[var(--surface-hover)] dark:bg-[var(--surface-hover)] border border-[var(--border-strong)] dark:border-[var(--border)] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                                            <CheckCircle className="text-[var(--text)] dark:text-[var(--text)]" size={24} />
                                         </div>
                                         <h3 className="text-xl font-bold mb-2">Message Sent!</h3>
-                                        <p className="text-gray-600 dark:text-[#555] text-sm mb-8">
+                                        <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-sm mb-8">
                                             Thank you for reaching out. We've received your inquiry and will get back to you shortly.
                                         </p>
                                         <Button
@@ -107,50 +107,50 @@ export default function ContactPage() {
                                     <form onSubmit={handleSubmit} className="space-y-4">
                                         <div className="grid sm:grid-cols-2 gap-4">
                                             <div>
-                                                <label className="block text-xs text-gray-600 dark:text-[#555] uppercase tracking-widest font-medium mb-2">Full Name</label>
+                                                <label className="block text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest font-medium mb-2">Full Name</label>
                                                 <input
                                                     required
                                                     value={formData.name}
                                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                                    className="w-full bg-white dark:bg-[#0a0a0a] border border-gray-300 dark:border-[#222] rounded-lg px-4 py-2.5 text-gray-900 dark:text-white text-sm outline-none focus:border-[#444] transition-colors"
+                                                    className="w-full bg-[var(--bg)] border border-[var(--border-strong)] dark:border-[var(--border)] rounded px-4 py-2.5 text-[var(--text)] dark:text-[var(--text)] text-sm outline-none focus:border-[var(--accent)] transition-colors"
                                                     placeholder="John Doe"
                                                 />
                                             </div>
                                             <div>
-                                                <label className="block text-xs text-gray-600 dark:text-[#555] uppercase tracking-widest font-medium mb-2">Email Address</label>
+                                                <label className="block text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest font-medium mb-2">Email Address</label>
                                                 <input
                                                     required
                                                     type="email"
                                                     value={formData.email}
                                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                                    className="w-full bg-white dark:bg-[#0a0a0a] border border-gray-300 dark:border-[#222] rounded-lg px-4 py-2.5 text-gray-900 dark:text-white text-sm outline-none focus:border-[#444] transition-colors"
+                                                    className="w-full bg-[var(--bg)] border border-[var(--border-strong)] dark:border-[var(--border)] rounded px-4 py-2.5 text-[var(--text)] dark:text-[var(--text)] text-sm outline-none focus:border-[var(--accent)] transition-colors"
                                                     placeholder="john@example.com"
                                                 />
                                             </div>
                                         </div>
                                         <div>
-                                            <label className="block text-xs text-gray-600 dark:text-[#555] uppercase tracking-widest font-medium mb-2">Subject</label>
+                                            <label className="block text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest font-medium mb-2">Subject</label>
                                             <input
                                                 required
                                                 value={formData.subject}
                                                 onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                                                className="w-full bg-white dark:bg-[#0a0a0a] border border-gray-300 dark:border-[#222] rounded-lg px-4 py-2.5 text-gray-900 dark:text-white text-sm outline-none focus:border-[#444] transition-colors"
+                                                className="w-full bg-[var(--bg)] border border-[var(--border-strong)] dark:border-[var(--border)] rounded px-4 py-2.5 text-[var(--text)] dark:text-[var(--text)] text-sm outline-none focus:border-[var(--accent)] transition-colors"
                                                 placeholder="How can we help?"
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs text-gray-600 dark:text-[#555] uppercase tracking-widest font-medium mb-2">Message</label>
+                                            <label className="block text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest font-medium mb-2">Message</label>
                                             <textarea
                                                 required
                                                 value={formData.message}
                                                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                                className="w-full bg-white dark:bg-[#0a0a0a] border border-gray-300 dark:border-[#222] rounded-lg px-4 py-2.5 text-gray-900 dark:text-white text-sm outline-none focus:border-[#444] transition-colors h-32 resize-none"
+                                                className="w-full bg-[var(--bg)] border border-[var(--border-strong)] dark:border-[var(--border)] rounded px-4 py-2.5 text-[var(--text)] dark:text-[var(--text)] text-sm outline-none focus:border-[var(--accent)] transition-colors h-32 resize-none"
                                                 placeholder="Tell us more about your inquiry..."
                                             />
                                         </div>
 
                                         {error && (
-                                            <div className="p-3 bg-gray-200 dark:bg-[#1a1a1a] border border-red-900/30 text-red-400 rounded-lg text-xs text-center">
+                                            <div className="p-3 bg-[var(--surface-hover)] dark:bg-[var(--surface-hover)] border border-red-900/30 text-red-400 rounded text-xs text-center">
                                                 {error}
                                             </div>
                                         )}

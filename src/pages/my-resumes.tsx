@@ -80,7 +80,7 @@ export default function MyResumesPage() {
     if (!_hasHydrated || !user) return null;
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a0a0f] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[var(--surface)] dark:bg-[#0a0a0f] text-[var(--text)] dark:text-[var(--text)]">
             <SEO
                 title="My Resumes — Manage Your Saved Resumes"
                 description="Manage, edit, download, and export all your saved resumes in one place. Built with ToolBasketAI's free AI-powered resume builder."
@@ -95,21 +95,21 @@ export default function MyResumesPage() {
                 <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
             </div>
             <div className="fixed top-20 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-float -z-10"></div>
-            <div className="fixed bottom-20 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1.5s' }}></div>
+            <div className="fixed bottom-20 right-10 w-96 h-96 bg-[var(--accent)]/20 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1.5s' }}></div>
 
             <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="animate-fadeIn mb-10">
-                    <div className="inline-flex items-center gap-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-4 py-2 rounded-full mb-4">
+                    <div className="inline-flex items-center gap-2 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] px-4 py-2 rounded-full mb-4">
                         <Sparkles className="text-blue-400" size={16} />
-                        <span className="text-sm text-gray-700 dark:text-gray-300">Resume Library</span>
+                        <span className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)]">Resume Library</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                         <div>
                             <h1 className="text-4xl sm:text-5xl font-black gradient-text tracking-tight mb-2">
                                 My Resumes
                             </h1>
-                            <p className="text-gray-600 dark:text-gray-400 text-base">
+                            <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base">
                                 {resumes.length > 0
                                     ? `${resumes.length} resume${resumes.length > 1 ? 's' : ''} saved to your account`
                                     : 'Create your first professional resume'}
@@ -129,13 +129,13 @@ export default function MyResumesPage() {
                 {/* Search Bar */}
                 {resumes.length > 0 && (
                     <div className="relative mb-8 max-w-md">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-500" size={18} />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-faint)] dark:text-[var(--text-faint)]" size={18} />
                         <input
                             type="text"
                             placeholder="Search resumes..."
                             value={searchQuery}
                             onChange={e => setSearchQuery(e.target.value)}
-                            className="w-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 pl-12 pr-4 py-3 rounded-xl outline-none focus:border-blue-500/50 focus:bg-white/8 transition-all text-gray-900 dark:text-white placeholder-gray-500"
+                            className="w-full bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] pl-12 pr-4 py-3 rounded outline-none focus:border-[var(--accent)] focus:bg-[var(--surface-hover)] transition-all text-[var(--text)] dark:text-[var(--text)] placeholder-[var(--text-faint)]"
                         />
                     </div>
                 )}
@@ -147,12 +147,12 @@ export default function MyResumesPage() {
                     </div>
                 ) : resumes.length === 0 ? (
                     /* Empty State */
-                    <Card variant="elevated" className="p-16 text-center bg-white/3 border-dashed border-gray-200 dark:border-white/10">
-                        <div className="w-24 h-24 bg-blue-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8">
+                    <Card variant="elevated" className="p-16 text-center bg-[var(--surface-hover)] border-dashed border-[var(--border)] dark:border-[var(--border)]">
+                        <div className="w-24 h-24 bg-blue-500/10 rounded flex items-center justify-center mx-auto mb-8">
                             <FileText size={48} className="text-blue-400/60" />
                         </div>
-                        <h2 className="text-2xl font-bold mb-3 text-gray-700 dark:text-gray-300">No resumes yet</h2>
-                        <p className="text-gray-500 dark:text-gray-500 mb-8 max-w-sm mx-auto">
+                        <h2 className="text-2xl font-bold mb-3 text-[var(--text-muted)] dark:text-[var(--text-muted)]">No resumes yet</h2>
+                        <p className="text-[var(--text-faint)] dark:text-[var(--text-faint)] mb-8 max-w-sm mx-auto">
                             Create your first professional resume using our AI-powered builder.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -168,8 +168,8 @@ export default function MyResumesPage() {
                     </Card>
                 ) : filteredResumes.length === 0 ? (
                     <div className="text-center py-20">
-                        <Search className="mx-auto text-gray-600 mb-4" size={40} />
-                        <p className="text-gray-600 dark:text-gray-400">No resumes match &quot;{searchQuery}&quot;</p>
+                        <Search className="mx-auto text-[var(--text-muted)] mb-4" size={40} />
+                        <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)]">No resumes match &quot;{searchQuery}&quot;</p>
                         <button onClick={() => setSearchQuery('')} className="text-blue-400 hover:text-blue-300 mt-2 text-sm">
                             Clear search
                         </button>
@@ -190,14 +190,14 @@ export default function MyResumesPage() {
                         {/* Add New Card */}
                         <button
                             onClick={() => router.push('/resume-builder')}
-                            className="group relative p-8 rounded-2xl border-2 border-dashed border-gray-200 dark:border-white/10 hover:border-blue-500/40 bg-white/2 hover:bg-gray-100 dark:bg-white/5 transition-all duration-300 flex flex-col items-center justify-center gap-4 min-h-[280px]"
+                            className="group relative p-8 rounded border-2 border-dashed border-[var(--border)] dark:border-[var(--border)] hover:border-blue-500/40 bg-[var(--surface-hover)] hover:bg-[var(--surface)] dark:bg-[var(--accent-soft)] transition-all duration-300 flex flex-col items-center justify-center gap-4 min-h-[280px]"
                         >
-                            <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <div className="w-16 h-16 bg-blue-500/10 rounded flex items-center justify-center group-hover:scale-110 transition-transform">
                                 <Plus size={32} className="text-blue-400/70 group-hover:text-blue-400" />
                             </div>
                             <div className="text-center">
-                                <p className="text-gray-600 dark:text-gray-400 font-semibold group-hover:text-gray-700 dark:text-gray-300 transition-colors">New Resume</p>
-                                <p className="text-gray-600 text-sm mt-1">Create from scratch or upload</p>
+                                <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] font-semibold group-hover:text-[var(--text-muted)] dark:text-[var(--text-muted)] transition-colors">New Resume</p>
+                                <p className="text-[var(--text-muted)] text-sm mt-1">Create from scratch or upload</p>
                             </div>
                         </button>
                     </div>
@@ -226,18 +226,18 @@ function ResumeCard({
     return (
         <Card
             variant="elevated"
-            className="group relative p-6 bg-white/4 border border-white/8 hover:border-blue-500/30 hover:bg-white/6 transition-all duration-300 cursor-pointer flex flex-col gap-4"
+            className="group relative p-6 bg-[var(--surface-hover)] border border-[var(--border)] hover:border-blue-500/30 hover:bg-[var(--surface-hover)] transition-all duration-300 cursor-pointer flex flex-col gap-4"
             onClick={onEdit}
         >
             {/* Header */}
             <div className="flex justify-between items-start">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-600/30 to-purple-600/30 rounded-xl flex items-center justify-center border border-gray-200 dark:border-white/10">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-600/30 to-purple-600/30 rounded flex items-center justify-center border border-[var(--border)] dark:border-[var(--border)]">
                     <FileText size={22} className="text-blue-300" />
                 </div>
                 <button
                     onClick={e => { e.stopPropagation(); onDelete(); }}
                     disabled={isDeleting}
-                    className="text-gray-600 hover:text-red-400 transition-colors p-1.5 rounded-lg hover:bg-red-500/10 opacity-0 group-hover:opacity-100"
+                    className="text-[var(--text-muted)] hover:text-red-400 transition-colors p-1.5 rounded hover:bg-red-500/10 opacity-0 group-hover:opacity-100"
                     title="Delete resume"
                 >
                     {isDeleting
@@ -249,16 +249,16 @@ function ResumeCard({
 
             {/* Title & Name */}
             <div className="flex-1">
-                <h3 className="font-bold text-lg leading-tight mb-1 text-gray-900 dark:text-white group-hover:text-blue-200 transition-colors truncate">
+                <h3 className="font-bold text-lg leading-tight mb-1 text-[var(--text)] dark:text-[var(--text)] group-hover:text-blue-200 transition-colors truncate">
                     {resume.title || resume.personalInfo.fullName || 'Untitled Resume'}
                 </h3>
                 {resume.title && (
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 flex items-center gap-1">
+                    <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-2 flex items-center gap-1">
                         <User size={12} />
                         {resume.personalInfo.fullName}
                     </p>
                 )}
-                <p className="text-xs text-gray-500 dark:text-gray-500 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-[var(--text-faint)] dark:text-[var(--text-faint)] line-clamp-2 leading-relaxed">
                     {resume.personalInfo.summary || 'No summary provided.'}
                 </p>
             </div>
@@ -266,18 +266,18 @@ function ResumeCard({
             {/* Stats */}
             <div className="flex gap-3">
                 {expCount > 0 && (
-                    <span className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-white/5 px-2 py-1 rounded-full">
+                    <span className="flex items-center gap-1 text-xs text-[var(--text-faint)] dark:text-[var(--text-faint)] bg-[var(--surface)] dark:bg-[var(--accent-soft)] px-2 py-1 rounded-full">
                         <Briefcase size={10} />
                         {expCount} job{expCount > 1 ? 's' : ''}
                     </span>
                 )}
                 {skillCount > 0 && (
-                    <span className="text-xs text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-white/5 px-2 py-1 rounded-full">
+                    <span className="text-xs text-[var(--text-faint)] dark:text-[var(--text-faint)] bg-[var(--surface)] dark:bg-[var(--accent-soft)] px-2 py-1 rounded-full">
                         {skillCount} skills
                     </span>
                 )}
                 {(resume as any).createdAt && (
-                    <span className="flex items-center gap-1 text-xs text-gray-600 ml-auto">
+                    <span className="flex items-center gap-1 text-xs text-[var(--text-muted)] ml-auto">
                         <Clock size={10} />
                         {formatDate((resume as any).createdAt)}
                     </span>
@@ -285,7 +285,7 @@ function ResumeCard({
             </div>
 
             {/* Action Bar */}
-            <div className="flex gap-2 pt-2 border-t border-white/5">
+            <div className="flex gap-2 pt-2 border-t border-[var(--border)]">
                 <Button
                     size="sm"
                     className="flex-1 text-sm py-2"
@@ -294,8 +294,8 @@ function ResumeCard({
                     <Edit3 size={14} />
                     Edit
                 </Button>
-                <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-500 bg-gray-100 dark:bg-white/5 px-3 py-2 rounded-lg">
-                    <ChevronRight size={12} className="text-gray-600 dark:text-gray-400" />
+                <div className="flex items-center gap-1 text-xs text-[var(--text-faint)] dark:text-[var(--text-faint)] bg-[var(--surface)] dark:bg-[var(--accent-soft)] px-3 py-2 rounded">
+                    <ChevronRight size={12} className="text-[var(--text-muted)] dark:text-[var(--text-muted)]" />
                     Open
                 </div>
             </div>

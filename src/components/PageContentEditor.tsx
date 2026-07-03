@@ -346,9 +346,9 @@ export default function PageContentEditor({
     return (
         <div className="fixed inset-0 z-50 flex flex-col bg-[#0f1117] text-slate-100 font-sans overflow-hidden">
             {/* ── Header ── */}
-            <header className="bg-[#1a1d27] border-b border-gray-200 dark:border-white/10 px-6 py-3 flex items-center justify-between z-[120] shadow-lg">
+            <header className="bg-[#1a1d27] border-b border-[var(--border)] dark:border-[var(--border)] px-6 py-3 flex items-center justify-between z-[120] shadow-lg">
                 <div className="flex items-center gap-4">
-                    <button onClick={onClose} className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-gray-900 dark:text-white transition-all">
+                    <button onClick={onClose} className="p-2 rounded hover:bg-[var(--surface-hover)] text-slate-400 hover:text-[var(--text)] dark:text-[var(--text)] transition-all">
                         <ChevronLeft size={20} />
                     </button>
                     <div>
@@ -365,10 +365,10 @@ export default function PageContentEditor({
                 <div className="flex items-center gap-3">
                     {hasChanges && (
                         <>
-                            <span className="text-xs font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                            <span className="text-xs font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-3 py-1.5 rounded flex items-center gap-1.5">
                                 <AlertCircle size={12} /> Unsaved changes
                             </span>
-                            <button onClick={resetAll} className="px-3 py-2 text-xs font-bold rounded-lg border border-gray-200 dark:border-white/10 hover:border-white/20 text-slate-400 hover:text-gray-900 dark:text-white transition-all flex items-center gap-1.5">
+                            <button onClick={resetAll} className="px-3 py-2 text-xs font-bold rounded border border-[var(--border)] dark:border-[var(--border)] hover:border-[var(--border)] text-slate-400 hover:text-[var(--text)] dark:text-[var(--text)] transition-all flex items-center gap-1.5">
                                 <RefreshCw size={13} /> Reset
                             </button>
                         </>
@@ -376,7 +376,7 @@ export default function PageContentEditor({
                     <button
                         onClick={handleSave}
                         disabled={saving || !hasChanges}
-                        className="px-5 py-2 bg-violet-600 hover:bg-violet-500 disabled:opacity-40 disabled:bg-slate-700 text-gray-900 dark:text-white text-sm font-bold rounded-lg transition-all flex items-center gap-2 shadow-lg shadow-violet-900/40"
+                        className="px-5 py-2 bg-violet-600 hover:bg-violet-500 disabled:opacity-40 disabled:bg-slate-700 text-[var(--text)] dark:text-[var(--text)] text-sm font-bold rounded transition-all flex items-center gap-2 shadow-lg shadow-violet-900/40"
                     >
                         {saving ? <Loader2 className="animate-spin" size={15} /> : <Save size={15} />}
                         Save PDF
@@ -385,16 +385,16 @@ export default function PageContentEditor({
             </header>
 
             {/* ── Mode Switcher ── */}
-            <div className="bg-[#13151f] border-b border-gray-200 dark:border-white/10 px-6 py-2 flex items-center gap-2 z-[110]">
+            <div className="bg-[#13151f] border-b border-[var(--border)] dark:border-[var(--border)] px-6 py-2 flex items-center gap-2 z-[110]">
                 <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mr-2">Mode:</span>
                 {MODES.map(m => (
                     <button
                         key={m.id}
                         onClick={() => setMode(m.id as EditMode)}
                         title={m.desc}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${mode === m.id
-                            ? "bg-violet-600 border-violet-500 text-gray-900 dark:text-white shadow-md shadow-violet-900/40"
-                            : "border-transparent text-slate-400 hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:bg-white/5"
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-bold transition-all border ${mode === m.id
+                            ? "bg-violet-600 border-violet-500 text-[var(--text)] dark:text-[var(--text)] shadow-md shadow-violet-900/40"
+                            : "border-transparent text-slate-400 hover:text-[var(--text)] dark:text-[var(--text)] hover:bg-[var(--surface)] dark:bg-[var(--accent-soft)]"
                             }`}
                     >
                         <m.icon size={12} />
@@ -523,9 +523,9 @@ function FullDocMode({
     return (
         <div className="h-full flex gap-0 overflow-hidden">
             {/* Left: Thumbnail */}
-            <div className="w-56 flex-shrink-0 bg-[#0d0f18] border-r border-gray-200 dark:border-white/10 overflow-y-auto flex flex-col items-center py-6 gap-3">
+            <div className="w-56 flex-shrink-0 bg-[#0d0f18] border-r border-[var(--border)] dark:border-[var(--border)] overflow-y-auto flex flex-col items-center py-6 gap-3">
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">PDF Preview</p>
-                <div className="w-44 shadow-xl rounded overflow-hidden border border-gray-200 dark:border-white/10">
+                <div className="w-44 shadow-xl rounded overflow-hidden border border-[var(--border)] dark:border-[var(--border)]">
                     <img src={imageUrl} alt="PDF" loading="lazy" className="w-full h-auto block" />
                 </div>
                 <div className="mt-2 px-4 w-full space-y-2">
@@ -538,7 +538,7 @@ function FullDocMode({
                     </div>
                 </div>
                 <div className="mt-4 px-4 w-full">
-                    <div className="bg-violet-500/10 border border-violet-500/20 rounded-lg p-3 text-[10px] text-violet-300 leading-relaxed">
+                    <div className="bg-violet-500/10 border border-violet-500/20 rounded p-3 text-[10px] text-violet-300 leading-relaxed">
                         <strong className="block mb-1">✦ Mode 1: Full Doc</strong>
                         Edit the entire PDF text in this editor. Each line corresponds to one line in the PDF. Save when done.
                     </div>
@@ -547,14 +547,14 @@ function FullDocMode({
 
             {/* Right: Editor */}
             <div className="flex-1 flex flex-col overflow-hidden bg-[#0f1117]">
-                <div className="px-6 py-3 border-b border-gray-200 dark:border-white/10 flex items-center gap-3">
+                <div className="px-6 py-3 border-b border-[var(--border)] dark:border-[var(--border)] flex items-center gap-3">
                     <FileText size={14} className="text-violet-400" />
                     <span className="text-xs font-bold text-slate-300">Full Document Text Editor</span>
                     <span className="text-[10px] text-slate-500 ml-auto">Each line = one PDF text line. Edit freely.</span>
                 </div>
                 <div className="flex flex-1 overflow-hidden">
                     {/* Line numbers */}
-                    <div className="bg-[#0d0f18] border-r border-gray-200 dark:border-white/10 py-4 px-3 overflow-hidden select-none" style={{ minWidth: 48 }}>
+                    <div className="bg-[#0d0f18] border-r border-[var(--border)] dark:border-[var(--border)] py-4 px-3 overflow-hidden select-none" style={{ minWidth: 48 }}>
                         {value.split("\n").map((_, i) => (
                             <div key={i} className="text-[11px] text-slate-600 text-right leading-6 font-mono">{i + 1}</div>
                         ))}
@@ -602,18 +602,18 @@ function SplitViewMode({
     return (
         <div className="h-full flex overflow-hidden">
             {/* Left: PDF */}
-            <div className="flex-1 overflow-auto bg-[#0d0f18] flex flex-col items-center py-8 border-r border-gray-200 dark:border-white/10">
+            <div className="flex-1 overflow-auto bg-[#0d0f18] flex flex-col items-center py-8 border-r border-[var(--border)] dark:border-[var(--border)]">
                 <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
                     <Eye size={11} /> Original PDF
                 </div>
-                <div className="shadow-2xl rounded overflow-hidden border border-gray-200 dark:border-white/10" style={{ width: pdfDims ? pdfDims.width * scale * 0.8 : "auto" }}>
+                <div className="shadow-2xl rounded overflow-hidden border border-[var(--border)] dark:border-[var(--border)]" style={{ width: pdfDims ? pdfDims.width * scale * 0.8 : "auto" }}>
                     <img ref={imageRef} src={imageUrl} alt="PDF" loading="lazy" className="w-full h-auto block" />
                 </div>
             </div>
 
             {/* Right: Editor */}
             <div className="flex-1 flex flex-col overflow-hidden bg-[#0f1117]">
-                <div className="px-6 py-3 border-b border-gray-200 dark:border-white/10 flex items-center gap-3 bg-[#13151f]">
+                <div className="px-6 py-3 border-b border-[var(--border)] dark:border-[var(--border)] flex items-center gap-3 bg-[#13151f]">
                     <Columns size={14} className="text-cyan-400" />
                     <span className="text-xs font-bold text-slate-300">Live Text Editor</span>
                     <div className="ml-auto flex items-center gap-2 text-[10px] text-slate-500">
@@ -621,7 +621,7 @@ function SplitViewMode({
                         Changes apply on save
                     </div>
                 </div>
-                <div className="px-3 py-2 bg-[#0d0f18] border-b border-gray-200 dark:border-white/10">
+                <div className="px-3 py-2 bg-[#0d0f18] border-b border-[var(--border)] dark:border-[var(--border)]">
                     <p className="text-[10px] text-slate-500">
                         ✦ <strong className="text-slate-400">Mode 2 — Split View:</strong> Edit all PDF text freely on the right. The left shows the original PDF reference.
                     </p>
@@ -679,7 +679,7 @@ function ParagraphMode({
                 <AlignLeft size={11} /> Mode 3: Click any paragraph to edit it as a whole block
             </div>
             <div
-                className="relative shadow-2xl bg-white rounded overflow-hidden border border-gray-200 dark:border-white/10"
+                className="relative shadow-2xl bg-[var(--surface)] rounded overflow-hidden border border-[var(--border)] dark:border-[var(--border)]"
                 ref={containerRef}
                 style={{ width: pdfDims ? pdfDims.width * scale : "auto" }}
             >
@@ -709,7 +709,7 @@ function ParagraphMode({
                                         onChange={e => setParaEditVal(e.target.value)}
                                         onKeyDown={e => { if (e.key === "Escape") setActivePara(null); }}
                                         onBlur={confirmPara}
-                                        className="w-full bg-white/95 border-2 border-violet-500 rounded text-slate-900 outline-none resize-none px-1 py-1 shadow-xl"
+                                        className="w-full bg-[var(--surface-hover)] border-2 border-violet-500 rounded text-slate-900 outline-none resize-none px-1 py-1 shadow-xl"
                                         style={{
                                             fontSize: para.fontSize * scale,
                                             fontFamily: para.fontName.toLowerCase().includes("serif") ? "serif" : "sans-serif",
@@ -717,7 +717,7 @@ function ParagraphMode({
                                             minHeight: (para.height + para.fontSize) * scale + 20,
                                         }}
                                     />
-                                    <div className="absolute -top-7 right-0 bg-violet-700 text-gray-900 dark:text-white text-[9px] font-bold px-2 py-1 rounded shadow-lg">
+                                    <div className="absolute -top-7 right-0 bg-violet-700 text-[var(--text)] dark:text-[var(--text)] text-[9px] font-bold px-2 py-1 rounded shadow-lg">
                                         Blur or Esc to confirm
                                     </div>
                                 </div>
@@ -731,13 +731,13 @@ function ParagraphMode({
                                     title="Click to edit this paragraph"
                                 >
                                     {isEdited && (
-                                        <div className="absolute inset-0 bg-white/90 rounded flex items-start p-1 overflow-hidden">
+                                        <div className="absolute inset-0 bg-[var(--surface-hover)] rounded flex items-start p-1 overflow-hidden">
                                             <span className="text-violet-700 font-medium leading-snug"
                                                 style={{ fontSize: para.fontSize * scale, fontFamily: para.fontName.toLowerCase().includes("serif") ? "serif" : "sans-serif" }}>
                                                 {displayTx}
                                             </span>
                                             <button
-                                                className="absolute top-0.5 right-0.5 p-0.5 bg-red-500 text-gray-900 dark:text-white rounded-full"
+                                                className="absolute top-0.5 right-0.5 p-0.5 bg-red-500 text-[var(--text)] dark:text-[var(--text)] rounded-full"
                                                 onClick={e => { e.stopPropagation(); setParaEdits((prev: any) => { const n = { ...prev }; delete n[para.id]; return n; }); }}
                                             ><X size={10} /></button>
                                         </div>
@@ -782,9 +782,9 @@ function OverlayMode({
                 </div>
                 <button
                     onClick={() => setShowOverlay(!showOverlay)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition-all ${showOverlay
-                        ? "bg-violet-600 border-violet-500 text-gray-900 dark:text-white"
-                        : "border-gray-200 dark:border-white/10 text-slate-400 hover:text-gray-900 dark:text-white hover:border-white/20"
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-bold border transition-all ${showOverlay
+                        ? "bg-violet-600 border-violet-500 text-[var(--text)] dark:text-[var(--text)]"
+                        : "border-[var(--border)] dark:border-[var(--border)] text-slate-400 hover:text-[var(--text)] dark:text-[var(--text)] hover:border-[var(--border)]"
                         }`}
                 >
                     {showOverlay ? <><Check size={12} /> Editing Active</> : <><Edit3 size={12} /> Enable Overlay Editor</>}
@@ -793,7 +793,7 @@ function OverlayMode({
 
             <div
                 ref={containerRef}
-                className="relative shadow-2xl rounded overflow-hidden border border-gray-200 dark:border-white/10"
+                className="relative shadow-2xl rounded overflow-hidden border border-[var(--border)] dark:border-[var(--border)]"
                 style={{ width: pdfDims ? pdfDims.width * scale : "auto" }}
             >
                 {/* PDF base */}
@@ -824,7 +824,7 @@ function OverlayMode({
                         className="absolute inset-0 flex items-center justify-center cursor-pointer"
                         onClick={() => setShowOverlay(true)}
                     >
-                        <div className="bg-violet-600 hover:bg-violet-500 transition-colors text-gray-900 dark:text-white px-5 py-3 rounded-xl font-bold flex items-center gap-2 shadow-xl text-sm">
+                        <div className="bg-violet-600 hover:bg-violet-500 transition-colors text-[var(--text)] dark:text-[var(--text)] px-5 py-3 rounded font-bold flex items-center gap-2 shadow-xl text-sm">
                             <Edit3 size={16} /> Click to Start Editing
                         </div>
                     </div>
@@ -882,7 +882,7 @@ function LineMode({
             </div>
             <div
                 ref={containerRef}
-                className="relative shadow-2xl bg-white rounded overflow-hidden border border-gray-200 dark:border-white/10"
+                className="relative shadow-2xl bg-[var(--surface)] rounded overflow-hidden border border-[var(--border)] dark:border-[var(--border)]"
                 style={{ width: pdfDims ? pdfDims.width * scale : "auto" }}
             >
                 <img ref={imageRef} src={imageUrl} alt="PDF" loading="lazy" className="block w-full h-auto select-none pointer-events-none" />
@@ -902,7 +902,7 @@ function LineMode({
                                     zIndex: isActive ? 100 : isEdited ? 90 : 80,
                                 }}>
                                     {isActive ? (
-                                        <div className="relative flex items-center w-full shadow-2xl rounded-sm" style={{ backgroundColor: "white" }}>
+                                        <div className="relative flex items-center w-full shadow-2xl rounded" style={{ backgroundColor: "white" }}>
                                             <input
                                                 ref={lineInputRef}
                                                 type="text"
@@ -910,20 +910,20 @@ function LineMode({
                                                 onChange={e => setLineEditVal(e.target.value)}
                                                 onKeyDown={e => { if (e.key === "Enter") confirmLine(); if (e.key === "Escape") setActiveLineId(null); }}
                                                 onBlur={confirmLine}
-                                                className="w-full bg-transparent border-2 border-violet-500 outline-none rounded-sm text-slate-900 px-1"
+                                                className="w-full bg-transparent border-2 border-violet-500 outline-none rounded text-slate-900 px-1"
                                                 style={{ fontSize: line.fontSize * scale, fontFamily: line.fontName?.toLowerCase().includes("serif") ? "serif" : "sans-serif", minWidth: Math.max(line.width * scale + 20, 200) }}
                                             />
-                                            <div className="absolute -top-7 right-0 bg-violet-700 text-gray-900 dark:text-white text-[9px] font-bold px-2 py-1 rounded shadow pointer-events-none">Enter to save</div>
+                                            <div className="absolute -top-7 right-0 bg-violet-700 text-[var(--text)] dark:text-[var(--text)] text-[9px] font-bold px-2 py-1 rounded shadow pointer-events-none">Enter to save</div>
                                         </div>
                                     ) : isEdited ? (
-                                        <div onClick={() => { setActiveLineId(id); setLineEditVal(lineEdits[id]); }} className="relative flex items-center w-full cursor-pointer hover:bg-blue-50/90 px-[2px] rounded-sm" style={{ backgroundColor: "white" }}>
+                                        <div onClick={() => { setActiveLineId(id); setLineEditVal(lineEdits[id]); }} className="relative flex items-center w-full cursor-pointer hover:bg-blue-50/90 px-[2px] rounded" style={{ backgroundColor: "white" }}>
                                             <span className="truncate text-blue-600" style={{ fontSize: line.fontSize * scale, fontFamily: line.fontName?.toLowerCase().includes("serif") ? "serif" : "sans-serif" }}>{dsText}</span>
-                                            <button onClick={e => { e.stopPropagation(); setLineEdits((p: any) => { const n = { ...p }; delete n[id]; return n; }); }} className="absolute right-[-22px] opacity-0 group-hover:opacity-100 p-0.5 bg-white text-red-500 rounded-full shadow">
+                                            <button onClick={e => { e.stopPropagation(); setLineEdits((p: any) => { const n = { ...p }; delete n[id]; return n; }); }} className="absolute right-[-22px] opacity-0 group-hover:opacity-100 p-0.5 bg-[var(--surface)] text-red-500 rounded-full shadow">
                                                 <Undo2 size={11} />
                                             </button>
                                         </div>
                                     ) : (
-                                        <div onClick={() => { setActiveLineId(id); setLineEditVal(line.str); }} className="w-full h-full cursor-text border border-transparent hover:border-violet-400 hover:bg-violet-400/10 rounded-sm transition-all" title="Click to edit" />
+                                        <div onClick={() => { setActiveLineId(id); setLineEditVal(line.str); }} className="w-full h-full cursor-text border border-transparent hover:border-violet-400 hover:bg-violet-400/10 rounded transition-all" title="Click to edit" />
                                     )}
                                 </div>
                             );

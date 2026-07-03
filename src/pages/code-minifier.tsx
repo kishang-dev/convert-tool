@@ -127,7 +127,7 @@ function computeDouble( number ) {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO
                 title="HTML, CSS & JS Code Minifier — Free Online Tool"
                 description="Compress and minify HTML documents, CSS stylesheets, and JavaScript code client-side in real-time. No upload needed, instant results."
@@ -145,19 +145,19 @@ function computeDouble( number ) {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">Unified Code Minifier</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Compress HTML, CSS, and JS. Strip comments, whitespace, and empty lines instantly.
                     </p>
                 </div>
 
                 {/* Tab Selector & Controls */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] p-4 rounded">
                     <div className="flex gap-2">
                         {(['HTML', 'CSS', 'JS'] as const).map(t => (
                             <button
                                 key={t}
                                 onClick={() => { setTab(t); setInput(''); setOutput(''); setMetrics(null); }}
-                                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${tab === t ? 'bg-indigo-600 text-gray-900 dark:text-white' : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white'}`}
+                                className={`px-4 py-2 rounded text-xs font-bold transition-all ${tab === t ? 'bg-[var(--accent)] text-[var(--text)] dark:text-[var(--text)]' : 'bg-[var(--surface)] dark:bg-[var(--accent-soft)] text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)]'}`}
                             >
                                 {t} Minifier
                             </button>
@@ -168,7 +168,7 @@ function computeDouble( number ) {
                             onClick={handleLoadSample}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
+                            className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)]"
                         >
                             <Sparkles size={16} className="mr-1.5" />
                             Load Sample
@@ -185,7 +185,7 @@ function computeDouble( number ) {
                         <Button
                             onClick={handleMinify}
                             size="sm"
-                            className="bg-indigo-600 hover:bg-indigo-500 font-bold"
+                            className="bg-[var(--accent)] hover:bg-[var(--accent)] font-bold"
                         >
                             Minify Code
                         </Button>
@@ -197,14 +197,14 @@ function computeDouble( number ) {
                     {/* Left: Input */}
                     <div className="lg:col-span-8 flex flex-col gap-4">
                         <Card variant="elevated" className="flex flex-col p-6 min-h-[480px] h-full">
-                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase mb-3 block">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase mb-3 block">
                                 Raw {tab} Code Input
                             </span>
                             <textarea
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder={`Paste raw ${tab} code here...`}
-                                className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-gray-200 focus:outline-none focus:border-indigo-500/40 resize-none min-h-[350px] leading-relaxed"
+                                className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[350px] leading-relaxed"
                             />
                         </Card>
                     </div>
@@ -212,12 +212,12 @@ function computeDouble( number ) {
                     {/* Right: Output & Metrics */}
                     <div className="lg:col-span-4 flex flex-col gap-4">
                         {metrics && (
-                            <Card variant="elevated" className="border-indigo-500/30 bg-indigo-500/5 p-4 flex gap-4 items-center">
-                                <Zap className="text-indigo-400 shrink-0" size={24} />
+                            <Card variant="elevated" className="border-[var(--accent)]/30 bg-[var(--accent)]/5 p-4 flex gap-4 items-center">
+                                <Zap className="text-[var(--accent)] shrink-0" size={24} />
                                 <div>
-                                    <h4 className="text-sm font-bold text-indigo-400">Minified Successfully</h4>
-                                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                                        Bytes saved: <span className="font-bold text-gray-900 dark:text-white font-mono">{metrics.original - metrics.compressed} B</span> ({metrics.ratio}% compression)
+                                    <h4 className="text-sm font-bold text-[var(--accent)]">Minified Successfully</h4>
+                                    <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] mt-1">
+                                        Bytes saved: <span className="font-bold text-[var(--text)] dark:text-[var(--text)] font-mono">{metrics.original - metrics.compressed} B</span> ({metrics.ratio}% compression)
                                     </p>
                                 </div>
                             </Card>
@@ -225,11 +225,11 @@ function computeDouble( number ) {
 
                         <Card variant="elevated" className="p-6 flex-grow flex flex-col min-h-[350px]">
                             <div className="flex items-center justify-between mb-3">
-                                <span className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Minified Output</span>
+                                <span className="text-xs font-bold text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">Minified Output</span>
                                 {output && (
                                     <button
                                         onClick={handleCopy}
-                                        className="flex items-center gap-1 text-xs text-indigo-400 hover:text-indigo-300 font-semibold px-2 py-0.5 rounded bg-indigo-500/10"
+                                        className="flex items-center gap-1 text-xs text-[var(--accent)] hover:text-indigo-300 font-semibold px-2 py-0.5 rounded bg-[var(--accent)]/10"
                                     >
                                         {copied ? <Check size={12} /> : <Copy size={12} />}
                                         {copied ? 'Copied' : 'Copy'}
@@ -240,7 +240,7 @@ function computeDouble( number ) {
                                 readOnly
                                 value={output}
                                 placeholder="Resulting minified code will appear here..."
-                                className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-xs text-indigo-400 outline-none resize-none h-[280px]"
+                                className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-xs text-[var(--accent)] outline-none resize-none h-[280px]"
                             />
                         </Card>
                     </div>

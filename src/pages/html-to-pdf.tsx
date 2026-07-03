@@ -79,7 +79,7 @@ export default function HtmlToPdf() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO 
                 title="HTML to PDF Converter Tools" 
                 description="Convert HTML files to PDF documents." 
@@ -96,7 +96,7 @@ export default function HtmlToPdf() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                         <span className="gradient-text">HTML to PDF</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-lg">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-lg">
                         Convert your HTML files to PDF documents.
                     </p>
                 </div>
@@ -105,7 +105,7 @@ export default function HtmlToPdf() {
                     <Card variant="elevated" className="p-8 md:p-12">
                         {!convertedFile ? (
                             <div className="flex flex-col items-center gap-6">
-                                <div className="w-20 h-20 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-2">
+                                <div className="w-20 h-20 bg-blue-500/10 rounded flex items-center justify-center mb-2">
                                     {file ? (
                                         <FileCode size={40} className="text-blue-400" />
                                     ) : (
@@ -129,7 +129,7 @@ export default function HtmlToPdf() {
                                 ) : (
                                     <div className="text-center">
                                         <p className="text-xl font-medium mb-2">Upload HTML File</p>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                                        <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-6">
                                             Select an .html file to convert
                                         </p>
                                         <Button onClick={() => fileInputRef.current?.click()} size="lg">

@@ -2,7 +2,7 @@ import React from 'react';
 import { Loader2 } from 'lucide-react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: 'primary' | 'secondary' | 'ghost';
+    variant?: 'primary' | 'secondary' | 'ghost' | 'accent';
     size?: 'sm' | 'md' | 'lg';
     loading?: boolean;
     children: React.ReactNode;
@@ -17,12 +17,15 @@ export default function Button({
     disabled,
     ...props
 }: ButtonProps) {
-    const baseStyles = 'font-medium rounded-lg transition-smooth inline-flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed';
+    const baseStyles = 'font-medium rounded transition-smooth inline-flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed select-none';
 
     const variants = {
-        primary:   'bg-gray-900 text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-100 shadow-sm',
-        secondary: 'bg-transparent border border-gray-300 dark:border-[#333] text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]',
-        ghost:     'bg-transparent text-gray-500 dark:text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]',
+        // Indigo/violet accent — the brand colour
+        accent:    'bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] shadow-sm',
+        // Neutral primary (dark/light auto)
+        primary:   'bg-[var(--text)] text-[var(--bg)] hover:opacity-85 shadow-sm',
+        secondary: 'bg-transparent border border-[var(--border-strong)] text-[var(--text)] hover:bg-[var(--surface-hover)]',
+        ghost:     'bg-transparent text-[var(--text-faint)] hover:text-[var(--text)] hover:bg-[var(--surface-hover)]',
     };
 
     const sizes = {

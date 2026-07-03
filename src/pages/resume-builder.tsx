@@ -231,6 +231,8 @@ export default function ResumeBuilder() {
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const resumeRef = useRef<HTMLDivElement>(null);
+    const previewContainerRef = useRef<HTMLDivElement>(null);
+    const [previewScale, setPreviewScale] = useState(1);
     const [mobilePreviewOpen, setMobilePreviewOpen] = useState(false);
     const { user } = useAuthStore();
 
@@ -252,6 +254,20 @@ export default function ResumeBuilder() {
             }
         }
     }, [user]);
+
+    // Auto-scale the preview template to fill its container
+    useEffect(() => {
+        const updateScale = () => {
+            if (previewContainerRef.current) {
+                const containerWidth = previewContainerRef.current.offsetWidth;
+                setPreviewScale(containerWidth / 794);
+            }
+        };
+        updateScale();
+        const observer = new ResizeObserver(updateScale);
+        if (previewContainerRef.current) observer.observe(previewContainerRef.current);
+        return () => observer.disconnect();
+    }, [step]);
 
     const fetchSavedResumes = async () => {
         try {
@@ -429,7 +445,7 @@ export default function ResumeBuilder() {
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
                 title="Free Resume Builder — 50+ Professional Templates"
                 description="Build a professional resume in minutes with ToolBasketAI's free AI-powered resume builder. Choose from 50+ templates, export to PDF instantly. No sign-up needed."
@@ -1029,18 +1045,18 @@ export default function ResumeBuilder() {
                                 </Button>
                             </div>
 
-                            <div className="bg-gray-900/50 rounded-[32px] border border-white/5 p-8 h-full flex justify-center items-start overflow-hidden relative group">
+                            <div className="bg-[var(--surface)] rounded border border-[var(--border)] p-8 h-full flex justify-center items-start overflow-hidden relative group">
                                 {/* The Wrapper: Fixed dimensions to match the scaled resume (794 * 0.45 = ~357) */}
                                 <div className="relative w-[357px] h-[505px] transition-all duration-500 group-hover:scale-[1.02]">
-                                    <div className="absolute top-0 left-0 origin-top-left scale-[0.45] pointer-events-none shadow-[0_30px_100px_rgba(0,0,0,0.5)] rounded-sm overflow-hidden">
+                                    <div className="absolute top-0 left-0 origin-top-left scale-[0.45] pointer-events-none shadow-xl border border-[var(--border)] rounded overflow-hidden">
                                         <div className="bg-white">
                                             <ResumeTemplate data={resumeData} template={resumeData.template} primaryColor={resumeData.color} />
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-6 py-2 bg-black/60 backdrop-blur-xl rounded-full text-[9px] text-gray-600 dark:text-gray-400 uppercase tracking-[0.3em] font-black border border-gray-200 dark:border-white/10 z-20">
-                                    Preview Mode
+                                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-6 py-2 bg-[var(--accent)] text-white rounded shadow-lg text-[9px] uppercase tracking-[0.3em] font-black z-20">
+                                    Live Rendering
                                 </div>
                             </div>
                         </div>
@@ -1050,22 +1066,27 @@ export default function ResumeBuilder() {
                 {step === 3 && (
                     <div className="flex flex-col gap-10 animate-slideIn">
                         {/* Final Review Header & Actions */}
-                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-gray-100 dark:bg-white/5 backdrop-blur-xl p-8 rounded-[32px] border border-gray-200 dark:border-white/10 gap-6">
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-[var(--surface)] p-4 rounded border border-[var(--border)] gap-4">
                             <div>
-                                <h2 className="text-4xl font-black gradient-text tracking-tighter mb-2">Luxury Presentation</h2>
-                                <p className="text-gray-600 dark:text-gray-400 font-medium">Your professional identity is ready for global deployment.</p>
+                                <h2 className="text-2xl font-black gradient-text tracking-tighter">Luxury Presentation</h2>
+                                <p className="text-gray-500 dark:text-gray-400 text-sm">Your professional identity is ready for global deployment.</p>
                             </div>
-                            <div className="flex gap-4 w-full md:w-auto">
-                                <Button variant="ghost" onClick={() => setStep(2)} className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white flex-1 md:flex-none">
+                            <div className="flex gap-3 items-center shrink-0">
+                                <button onClick={() => setStep(2)} className="text-sm text-[var(--text)] opacity-60 hover:opacity-100 transition-opacity px-3 py-1.5">
                                     ← Back to Editing
-                                </Button>
-                                <Button size="lg" onClick={handleExport} loading={loading} className="px-10 bg-blue-600 hover:bg-blue-700 shadow-2xl shadow-blue-500/30 flex-1 md:flex-none py-6 rounded-2xl text-lg">
-                                    <Download size={22} className="mr-2" /> Export to PDF
-                                </Button>
+                                </button>
+                                <button
+                                    onClick={handleExport}
+                                    disabled={loading}
+                                    className="flex items-center gap-2 px-4 py-2 bg-[var(--accent)] text-white text-sm font-semibold rounded hover:opacity-90 transition-opacity shadow-md disabled:opacity-60"
+                                >
+                                    <Download size={16} />
+                                    {loading ? 'Exporting...' : 'Export to PDF'}
+                                </button>
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                             {/* Sidebar: Stylizing */}
                             <div className="lg:col-span-1 space-y-6">
                                 <div className="flex items-center gap-3 mb-4 text-pink-500 px-2">
@@ -1073,7 +1094,7 @@ export default function ResumeBuilder() {
                                     <h3 className="text-xl font-bold">Visual Vitals</h3>
                                 </div>
 
-                                <Card className="p-6 bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 rounded-2xl">
+                                <Card className="p-6 bg-[var(--surface)] border-[var(--border)] rounded">
                                     <label className="text-[10px] text-gray-500 dark:text-gray-500 uppercase font-black tracking-widest block mb-6">Accent Profile</label>
                                     <div className="flex flex-wrap gap-3">
                                         {['#3b82f6', '#10b981', '#ef4444', '#f59e0b', '#8b5cf6', '#000000', '#6366f1', '#ec4899', '#14b8a6'].map(c => (
@@ -1087,7 +1108,7 @@ export default function ResumeBuilder() {
                                     </div>
                                 </Card>
 
-                                <Card className="p-6 bg-gray-100 dark:bg-white/5 border-gray-200 dark:border-white/10 rounded-2xl">
+                                <Card className="p-6 bg-[var(--surface)] border-[var(--border)] rounded">
                                     <label className="text-[10px] text-gray-500 dark:text-gray-500 uppercase font-black tracking-widest block mb-6">Master Typography</label>
                                     <div className="space-y-8">
                                         <div className="space-y-3">
@@ -1184,33 +1205,27 @@ export default function ResumeBuilder() {
                             </div>
 
                             {/* Main Presentation Area */}
-                            <div className="lg:col-span-3 space-y-12">
+                            <div className="lg:col-span-3 space-y-6">
                                 {/* The High-Def Preview */}
-                                <div className="relative group">
-                                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-[40px] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                                    <div className="relative flex justify-center items-center bg-gray-950 p-12 lg:p-20 rounded-[40px] border border-white/5 min-h-[850px] overflow-hidden">
-                                        <div className="absolute top-8 left-12 flex items-center gap-2 opacity-30 select-none z-20">
-                                            <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
-                                            <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
-                                            <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
-                                            <span className="text-[10px] font-mono text-gray-900 dark:text-white/20 ml-4 tracking-[0.3em]">RENDER_ACTIVE_V0.1.X</span>
-                                        </div>
-
-                                        <div className="transform scale-[0.45] sm:scale-[0.6] md:scale-[0.75] lg:scale-[0.9] xl:scale-[1.0] transition-all duration-700 ease-out origin-center shadow-2xl z-10">
-                                            <div ref={resumeRef} className="bg-white">
+                                <div className="relative group w-full" ref={previewContainerRef}>
+                                    {/* Bounding box: clip overflow so blank min-h space is hidden */}
+                                    <div
+                                        className="relative w-full overflow-hidden shadow-xl border border-[var(--border)] rounded bg-white"
+                                        style={{ height: `${794 * 1.295 * previewScale}px` }}
+                                    >
+                                        <div
+                                            className="absolute top-0 left-0 origin-top-left"
+                                            style={{ width: '794px', transform: `scale(${previewScale})`, transformOrigin: 'top left' }}
+                                        >
+                                            <div ref={resumeRef} className="w-[794px] bg-white">
                                                 <ResumeTemplate data={resumeData} template={resumeData.template} primaryColor={resumeData.color} />
                                             </div>
-                                        </div>
-
-                                        <div className="absolute bottom-10 right-10 flex flex-col items-end gap-2 opacity-40 z-20">
-                                            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-gray-900 dark:text-white">Selected Template</span>
-                                            <span className="text-sm font-bold text-gray-600 dark:text-gray-400">{TEMPLATES.find(t => t.id === resumeData.template)?.name}</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Luxury Template Library */}
-                                <div className="space-y-8 pt-12 border-t border-white/5">
+                                <div className="space-y-4 pt-6 border-t border-[var(--border)]">
                                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                                         <div>
                                             <h3 className="text-3xl font-black italic tracking-tighter uppercase mb-2">Luxury Style Library</h3>
@@ -1230,14 +1245,14 @@ export default function ResumeBuilder() {
                                                     // Smooth scroll to top preview
                                                     window.scrollTo({ top: 0, behavior: 'smooth' });
                                                 }}
-                                                className={`group cursor-pointer relative rounded-[20px] overflow-hidden border-2 transition-all duration-500 ${resumeData.template === t.id
+                                                className={`group cursor-pointer relative rounded overflow-hidden border-2 transition-all duration-500 ${resumeData.template === t.id
                                                     ? 'border-blue-500 ring-4 ring-blue-500/20 scale-105 shadow-2xl z-10'
                                                     : 'border-white/5 hover:border-white/20 hover:scale-[1.03]'
                                                     }`}
                                             >
                                                 {/* Thumbnail Rendering */}
-                                                <div className="aspect-[1/1.414] bg-white overflow-hidden relative grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700 flex justify-center items-start">
-                                                    <div className="w-[794px] origin-top scale-[0.23] sm:scale-[0.2] md:scale-[0.25] pointer-events-none transform-gpu">
+                                                <div className="aspect-[1/1.414] bg-white overflow-hidden relative grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700">
+                                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[794px] origin-top scale-[0.23] sm:scale-[0.2] md:scale-[0.25] pointer-events-none transform-gpu">
                                                         <ResumeTemplate data={resumeData} template={t.id} primaryColor={resumeData.color} />
                                                     </div>
                                                 </div>

@@ -128,7 +128,7 @@ export default function RegexTester() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO 
                 title="Regex Tester & Match Debugger Tools" 
                 description="Test regular expressions in real-time. Match parsing, capturing groups, visual highlights, and regex flags." 
@@ -145,7 +145,7 @@ export default function RegexTester() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">Regex Tester</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Validate regular expressions, extract capturing groups, and inspect visual match highlighting instantly.
                     </p>
                 </div>
@@ -154,20 +154,20 @@ export default function RegexTester() {
                     {/* Left: Editor & RegEx inputs */}
                     <div className="lg:col-span-7 flex flex-col gap-6">
                         <Card variant="elevated" className="p-6 space-y-4">
-                            <h2 className="text-base font-bold text-gray-200 uppercase tracking-wider">Regular Expression Input</h2>
+                            <h2 className="text-base font-bold text-[var(--text)] uppercase tracking-wider">Regular Expression Input</h2>
                             
                             {/* Regex input and flags */}
                             <div className="space-y-4">
                                 <div className="flex gap-2">
-                                    <span className="flex items-center text-gray-500 dark:text-gray-500 font-mono text-lg font-bold bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-3 rounded-xl">/</span>
+                                    <span className="flex items-center text-[var(--text-faint)] dark:text-[var(--text-faint)] font-mono text-lg font-bold bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] px-3 rounded">/</span>
                                     <input
                                         type="text"
                                         value={pattern}
                                         onChange={(e) => setPattern(e.target.value)}
                                         placeholder="Enter regex pattern (e.g. [a-z]+)"
-                                        className="w-full flex-grow px-4 py-3 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl focus:border-indigo-500/50 outline-none text-gray-900 dark:text-white font-mono text-sm"
+                                        className="w-full flex-grow px-4 py-3 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] rounded focus:border-[var(--accent-ring)] outline-none text-[var(--text)] dark:text-[var(--text)] font-mono text-sm"
                                     />
-                                    <span className="flex items-center text-gray-500 dark:text-gray-500 font-mono text-lg font-bold bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-3 rounded-xl">/</span>
+                                    <span className="flex items-center text-[var(--text-faint)] dark:text-[var(--text-faint)] font-mono text-lg font-bold bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] px-3 rounded">/</span>
                                 </div>
 
                                 {/* Flag toggles */}
@@ -180,7 +180,7 @@ export default function RegexTester() {
                                         <button
                                             key={flag.key}
                                             onClick={() => handleFlagToggle(flag.key as any)}
-                                            className={`px-3 py-1.5 rounded-lg border text-xs font-semibold font-mono transition-all ${flags[flag.key as keyof typeof flags] ? 'border-indigo-500 bg-indigo-500/5 text-gray-900 dark:text-white' : 'border-gray-200 dark:border-white/10 hover:border-white/20 bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400'}`}
+                                            className={`px-3 py-1.5 rounded border text-xs font-semibold font-mono transition-all ${flags[flag.key as keyof typeof flags] ? 'border-[var(--accent)] bg-[var(--accent)]/5 text-[var(--text)] dark:text-[var(--text)]' : 'border-[var(--border)] dark:border-[var(--border)] hover:border-[var(--border)] bg-[var(--surface)] dark:bg-[var(--accent-soft)] text-[var(--text-muted)] dark:text-[var(--text-muted)]'}`}
                                             title={flag.desc}
                                         >
                                             {flag.label}
@@ -192,12 +192,12 @@ export default function RegexTester() {
 
                         {/* Test string input */}
                         <Card variant="elevated" className="p-6 flex flex-col flex-grow min-h-[300px]">
-                            <h2 className="text-base font-bold text-gray-200 uppercase tracking-wider mb-3">Test String</h2>
+                            <h2 className="text-base font-bold text-[var(--text)] uppercase tracking-wider mb-3">Test String</h2>
                             <textarea
                                 value={testText}
                                 onChange={(e) => setTestText(e.target.value)}
                                 placeholder="Enter text to match regex against..."
-                                className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-gray-200 focus:outline-none focus:border-indigo-500/40 resize-none min-h-[220px] leading-relaxed"
+                                className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[220px] leading-relaxed"
                             />
                         </Card>
                     </div>
@@ -210,7 +210,7 @@ export default function RegexTester() {
                                 <AlertCircle size={20} className="text-red-400 mt-0.5 shrink-0" />
                                 <div>
                                     <h4 className="text-sm font-bold text-red-400">Regex Syntax Error</h4>
-                                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 font-mono leading-relaxed">{error}</p>
+                                    <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] mt-1 font-mono leading-relaxed">{error}</p>
                                 </div>
                             </Card>
                         )}
@@ -218,10 +218,10 @@ export default function RegexTester() {
                         {/* Match Highlight Box */}
                         {!error && (
                             <Card variant="elevated" className="p-6 flex-grow flex flex-col">
-                                <h3 className="text-sm font-bold tracking-wider text-gray-600 dark:text-gray-400 uppercase mb-3">Visual Matches Highlight</h3>
+                                <h3 className="text-sm font-bold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase mb-3">Visual Matches Highlight</h3>
                                 <div 
                                     dangerouslySetInnerHTML={{ __html: highlightedHtml || 'Paste text on the left to see highlights...' }}
-                                    className="p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-gray-700 dark:text-gray-300 leading-relaxed overflow-y-auto max-h-[220px] flex-grow break-all"
+                                    className="p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] leading-relaxed overflow-y-auto max-h-[220px] flex-grow break-all"
                                 />
                             </Card>
                         )}
@@ -229,21 +229,21 @@ export default function RegexTester() {
                         {/* Capturing Groups / Match Details */}
                         <Card variant="elevated" className="p-6 max-h-[300px] overflow-y-auto">
                             <div className="flex justify-between items-center mb-4">
-                                <h3 className="text-sm font-bold tracking-wider text-gray-600 dark:text-gray-400 uppercase">Match Metrics ({matches.length})</h3>
+                                <h3 className="text-sm font-bold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">Match Metrics ({matches.length})</h3>
                             </div>
                             
                             {matches.length > 0 ? (
                                 <div className="space-y-3">
                                     {matches.map((match, idx) => (
-                                        <div key={idx} className="p-3 bg-gray-100 dark:bg-white/5 border border-white/5 rounded-xl font-mono text-xs">
-                                            <div className="flex justify-between font-semibold border-b border-white/5 pb-1.5 mb-1.5">
-                                                <span className="text-indigo-400">Match #{idx + 1}</span>
-                                                <span className="text-gray-600 dark:text-gray-400">Index: {match.index}</span>
+                                        <div key={idx} className="p-3 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] rounded font-mono text-xs">
+                                            <div className="flex justify-between font-semibold border-b border-[var(--border)] pb-1.5 mb-1.5">
+                                                <span className="text-[var(--accent)]">Match #{idx + 1}</span>
+                                                <span className="text-[var(--text-muted)] dark:text-[var(--text-muted)]">Index: {match.index}</span>
                                             </div>
                                             <div className="text-yellow-400 break-all">"{match.value}"</div>
                                             {match.groups.length > 0 && (
-                                                <div className="mt-2 pl-2 border-l border-gray-200 dark:border-white/10 space-y-1">
-                                                    <span className="text-[10px] text-gray-500 dark:text-gray-500 font-bold block">CAPTURE GROUPS:</span>
+                                                <div className="mt-2 pl-2 border-l border-[var(--border)] dark:border-[var(--border)] space-y-1">
+                                                    <span className="text-[10px] text-[var(--text-faint)] dark:text-[var(--text-faint)] font-bold block">CAPTURE GROUPS:</span>
                                                     {match.groups.map((group: string, gIdx: number) => (
                                                         <div key={gIdx} className="text-emerald-400 break-all text-[11px]">
                                                             Group {gIdx + 1}: "{group || 'N/A'}"
@@ -255,7 +255,7 @@ export default function RegexTester() {
                                     ))}
                                 </div>
                             ) : (
-                                <div className="text-center py-6 text-gray-500 dark:text-gray-500">
+                                <div className="text-center py-6 text-[var(--text-faint)] dark:text-[var(--text-faint)]">
                                     <HelpCircle size={32} className="opacity-10 mx-auto mb-2" />
                                     <p className="text-xs">No active matches found. Check your pattern or text input.</p>
                                 </div>

@@ -203,7 +203,7 @@ export default function GenericToolPage({ id }: { id: string }) {
 
     if (!tool) {
         return (
-            <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white flex flex-col items-center justify-center p-4">
+            <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] dark:text-[var(--text)] flex flex-col items-center justify-center p-4">
                 <h1 className="text-2xl font-semibold mb-4">Tool Not Found</h1>
                 <Button onClick={() => router.push("/tools")}>Back to Tools</Button>
             </div>
@@ -329,7 +329,7 @@ export default function GenericToolPage({ id }: { id: string }) {
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
                 title={tool.title}
                 description={tool.description}
@@ -343,35 +343,35 @@ export default function GenericToolPage({ id }: { id: string }) {
             <main className="max-w-3xl mx-auto px-4 py-24 md:py-28">
                 <button
                     onClick={() => router.push("/tools")}
-                    className="flex items-center gap-1.5 text-[#666] hover:text-gray-900 dark:text-white transition-colors mb-8 text-sm"
+                    className="flex items-center gap-1.5 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors mb-8 text-sm"
                 >
                     <ArrowLeft size={16} />
                     All Tools
                 </button>
 
                 <div className="mb-8 animate-fadeIn">
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{tool.title}</h1>
-                    <p className="text-[#666] text-sm">{tool.description}</p>
+                    <h1 className="text-3xl font-bold text-[var(--text)] dark:text-[var(--text)] mb-2">{tool.title}</h1>
+                    <p className="text-[var(--text-muted)] text-sm">{tool.description}</p>
                 </div>
 
-                <section className="bg-gray-100 dark:bg-[#111111] border border-[#222222] rounded-xl overflow-hidden animate-fadeIn" style={{ animationDelay: '0.1s' }}>
+                <section className="bg-[var(--surface)] dark:bg-[var(--surface)] border border-[#222222] rounded overflow-hidden animate-fadeIn" style={{ animationDelay: '0.1s' }}>
                     {/* Upload Section */}
                     {files.length < tool.maxFiles && (
                         <div
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDrop}
-                            className={`p-12 border-b border-gray-300 dark:border-[#222] text-center transition-all cursor-pointer ${isDragging ? "bg-gray-100 dark:bg-white/5 border-dashed border-2 border-[#444]" : "hover:bg-gray-100 dark:bg-[#161616]"
+                            className={`p-12 border-b border-[var(--border-strong)] dark:border-[var(--border)] text-center transition-all cursor-pointer ${isDragging ? "bg-[var(--surface)] dark:bg-[var(--accent-soft)] border-dashed border-2 border-[#444]" : "hover:bg-[var(--surface)] dark:bg-[var(--bg-elevated)]"
                                 }`}
                             onClick={() => !loading && fileInputRef.current?.click()}
                         >
                             <div className="flex flex-col items-center gap-3">
-                                <div className="bg-gray-200 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2a2a2a] p-4 rounded-xl inline-block">
-                                    <Upload className="text-gray-900 dark:text-white" size={24} />
+                                <div className="bg-[var(--surface-hover)] dark:bg-[var(--surface-hover)] border border-[var(--border-strong)] dark:border-[var(--border-strong)] p-4 rounded inline-block">
+                                    <Upload className="text-[var(--text)] dark:text-[var(--text)]" size={24} />
                                 </div>
                                 <div>
-                                    <h2 className="text-gray-900 dark:text-white font-medium mb-1">Click to upload or drag & drop</h2>
-                                    <p className="text-gray-600 dark:text-[#555] text-sm">
+                                    <h2 className="text-[var(--text)] dark:text-[var(--text)] font-medium mb-1">Click to upload or drag & drop</h2>
+                                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-sm">
                                         {tool.accepts.toUpperCase().replace(/\./g, '').replace(/,/g, ', ')} &mdash; Max {tool.maxFiles} file{tool.maxFiles > 1 ? 's' : ''}
                                     </p>
                                 </div>
@@ -388,16 +388,16 @@ export default function GenericToolPage({ id }: { id: string }) {
                     )}
 
                     {loading && (
-                        <div className="p-6 text-center border-b border-gray-300 dark:border-[#222]">
+                        <div className="p-6 text-center border-b border-[var(--border-strong)] dark:border-[var(--border)]">
                             <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-                            <p className="text-sm text-[#666]">Uploading...</p>
+                            <p className="text-sm text-[var(--text-muted)]">Uploading...</p>
                         </div>
                     )}
 
                     {/* Uploaded Files */}
                     {files.length > 0 && (
-                        <div className="border-b border-gray-300 dark:border-[#222] p-4">
-                            <h3 className="text-xs text-gray-600 dark:text-[#555] font-medium uppercase tracking-wider mb-3">Selected Files ({files.length}/{tool.maxFiles})</h3>
+                        <div className="border-b border-[var(--border-strong)] dark:border-[var(--border)] p-4">
+                            <h3 className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] font-medium uppercase tracking-wider mb-3">Selected Files ({files.length}/{tool.maxFiles})</h3>
                             <FileList
                                 files={files}
                                 onRemove={handleRemoveFile}
@@ -408,13 +408,13 @@ export default function GenericToolPage({ id }: { id: string }) {
 
                     {/* Password field for protect-pdf */}
                     {tool.needsPassword && files.length > 0 && (
-                        <div className="border-b border-gray-300 dark:border-[#222] p-4">
-                            <label className="block text-sm text-gray-500 dark:text-gray-500 dark:text-[#888] mb-2">Password</label>
+                        <div className="border-b border-[var(--border-strong)] dark:border-[var(--border)] p-4">
+                            <label className="block text-sm text-[var(--text-faint)] dark:text-[var(--text-faint)] dark:text-[var(--text-muted)] mb-2">Password</label>
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-gray-100 dark:bg-[#161616] border border-gray-300 dark:border-[#2a2a2a] px-4 py-2.5 rounded-lg text-sm text-gray-900 dark:text-white placeholder-[#444] focus:border-[#444] outline-none transition-colors"
+                                className="w-full bg-[var(--surface)] dark:bg-[var(--bg-elevated)] border border-[var(--border-strong)] dark:border-[var(--border-strong)] px-4 py-2.5 rounded text-sm text-[var(--text)] dark:text-[var(--text)] placeholder-[#444] focus:border-[var(--accent)] outline-none transition-colors"
                                 placeholder="Enter password to protect PDF…"
                             />
                         </div>
@@ -423,6 +423,7 @@ export default function GenericToolPage({ id }: { id: string }) {
                     {/* Action */}
                     <div className="p-4 flex justify-end">
                         <Button
+                            variant="accent"
                             size="md"
                             onClick={runTool}
                             disabled={files.length < tool.minFiles || loading || processing}

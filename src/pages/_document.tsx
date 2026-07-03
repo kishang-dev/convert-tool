@@ -17,11 +17,12 @@ export default function Document() {
         {/* Performance: Preconnect to external resources */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
         {/* Global site verification (add your actual codes here) */}
         <meta name="google-site-verification" content="iNd_jJnkjOmSB-Al-BEjoMnfRz4q_Zsp7zr5HVSmAeM" />
       </Head>
-      <body className="antialiased bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white">
+      <body className="antialiased bg-[var(--bg)] text-[var(--text)]">
         <Main />
         <NextScript />
       </body>

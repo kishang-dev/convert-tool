@@ -132,7 +132,7 @@ export default function Base64Tool() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO 
                 title="Base64 Encoder & Decoder Tools" 
                 description="Encode strings/files to Base64 or decode Base64 strings back to text instantly." 
@@ -149,13 +149,13 @@ export default function Base64Tool() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">Base64 Encoder & Decoder</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Encode plain text and files to Base64, or decode base64 representations back to string text or downloads.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] p-4 rounded">
                     <div className="flex items-center gap-3">
                         <Button 
                             onClick={handleToggleMode} 
@@ -164,13 +164,13 @@ export default function Base64Tool() {
                             className="flex items-center gap-2"
                         >
                             <ArrowLeftRight size={16} />
-                            Mode: <span className="font-bold text-indigo-400">{mode === 'encode' ? 'Encode Text' : 'Decode Base64'}</span>
+                            Mode: <span className="font-bold text-[var(--accent)]">{mode === 'encode' ? 'Encode Text' : 'Decode Base64'}</span>
                         </Button>
                         <Button
                             onClick={() => fileInputRef.current?.click()}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
+                            className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)]"
                         >
                             <Upload size={16} className="mr-2" />
                             File to Base64
@@ -195,7 +195,7 @@ export default function Base64Tool() {
                         <Button
                             onClick={handleProcess}
                             size="sm"
-                            className="bg-indigo-600 hover:bg-indigo-500 font-bold"
+                            className="bg-[var(--accent)] hover:bg-[var(--accent)] font-bold"
                         >
                             {mode === 'encode' ? 'Encode' : 'Decode'}
                         </Button>
@@ -207,7 +207,7 @@ export default function Base64Tool() {
                     {/* Input Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">
                                 Input {mode === 'encode' ? 'Text' : 'Base64'}
                             </span>
                         </div>
@@ -217,14 +217,14 @@ export default function Base64Tool() {
                             placeholder={mode === 'encode' ? 
 `Type or paste plain text here to encode...` : 
 `Paste Base64 string here to decode...`}
-                            className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-gray-200 focus:outline-none focus:border-indigo-500/40 resize-none min-h-[400px] leading-relaxed"
+                            className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[400px] leading-relaxed"
                         />
                     </Card>
 
                     {/* Output Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">
                                 Result
                             </span>
                             {output && (
@@ -232,7 +232,7 @@ export default function Base64Tool() {
                                     {mode === 'encode' ? null : (
                                         <button
                                             onClick={handleDownloadBinary}
-                                            className="flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-medium px-2 py-1 rounded bg-indigo-500/10 transition-all mr-1"
+                                            className="flex items-center gap-1.5 text-xs text-[var(--accent)] hover:text-indigo-300 font-medium px-2 py-1 rounded bg-[var(--accent)]/10 transition-all mr-1"
                                         >
                                             <Download size={14} />
                                             Download File
@@ -240,7 +240,7 @@ export default function Base64Tool() {
                                     )}
                                     <button
                                         onClick={handleCopy}
-                                        className="flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-medium px-2 py-1 rounded bg-indigo-500/10 transition-all"
+                                        className="flex items-center gap-1.5 text-xs text-[var(--accent)] hover:text-indigo-300 font-medium px-2 py-1 rounded bg-[var(--accent)]/10 transition-all"
                                     >
                                         {copied ? <Check size={14} /> : <Copy size={14} />}
                                         {copied ? 'Copied' : 'Copy'}
@@ -252,7 +252,7 @@ export default function Base64Tool() {
                             readOnly
                             value={output}
                             placeholder="Result will appear here..."
-                            className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-indigo-400 focus:outline-none resize-none min-h-[400px] leading-relaxed"
+                            className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--accent)] focus:outline-none resize-none min-h-[400px] leading-relaxed"
                         />
                     </Card>
                 </div>

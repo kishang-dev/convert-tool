@@ -145,7 +145,7 @@ export default function pdfEditor() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+            <div className="min-h-screen flex items-center justify-center bg-[var(--bg)]">
                 <Loader2 className="animate-spin text-blue-500" size={48} />
             </div>
         );
@@ -153,35 +153,35 @@ export default function pdfEditor() {
 
     if (!file) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <p className="text-xl text-gray-500 dark:text-gray-500">File not found.</p>
+            <div className="min-h-screen flex items-center justify-center bg-[var(--bg)]">
+                <p className="text-xl text-[var(--text-faint)] dark:text-[var(--text-faint)]">File not found.</p>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
+        <div className="min-h-screen bg-[var(--bg)] flex flex-col">
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
             {/* Header */}
-            <header className="bg-white shadow-sm sticky top-0 z-10">
+            <header className="bg-[var(--surface)] shadow-sm sticky top-0 z-10">
                 <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <button
                             onClick={() => router.push("/")}
-                            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                            className="p-2 hover:bg-[var(--surface)] rounded-full transition-colors"
                         >
-                            <ArrowLeft size={24} className="text-gray-600" />
+                            <ArrowLeft size={24} className="text-[var(--text-muted)]" />
                         </button>
                         <div>
-                            <h1 className="text-xl font-bold text-gray-800">Edit PDF</h1>
-                            <p className="text-sm text-gray-500 dark:text-gray-500">{file.originalName}</p>
+                            <h1 className="text-xl font-bold text-[var(--text)]">Edit PDF</h1>
+                            <p className="text-sm text-[var(--text-faint)] dark:text-[var(--text-faint)]">{file.originalName}</p>
                         </div>
                     </div>
                     <button
                         onClick={handleSave}
                         disabled={saving}
-                        className="bg-blue-600 text-gray-900 dark:text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-70"
+                        className="bg-[var(--accent)] text-[var(--text)] dark:text-[var(--text)] px-6 py-2 rounded hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-70"
                     >
                         {saving ? (
                             <Loader2 className="animate-spin" size={20} />
@@ -202,15 +202,15 @@ export default function pdfEditor() {
                         {pages.map((page, index) => (
                             <div
                                 key={index}
-                                className={`group relative bg-white rounded-xl shadow-sm border-2 transition-all overflow-hidden ${page.deleted
-                                    ? "opacity-50 border-gray-200 grayscale"
+                                className={`group relative bg-[var(--surface)] rounded shadow-sm border-2 transition-all overflow-hidden ${page.deleted
+                                    ? "opacity-50 border-[var(--border)] grayscale"
                                     : "border-transparent hover:border-blue-400 hover:shadow-md"
                                     }`}
                             >
                                 {/* Image Container with Overlay */}
-                                <div className="relative p-4 bg-gray-100 min-h-[200px] flex items-center justify-center border-b">
+                                <div className="relative p-4 bg-[var(--surface)] min-h-[200px] flex items-center justify-center border-b">
                                     {/* Page Number */}
-                                    <div className="absolute top-2 left-2 bg-black/50 text-gray-900 dark:text-white px-2 py-0.5 rounded text-xs z-10">
+                                    <div className="absolute top-2 left-2 bg-black/50 text-[var(--text)] dark:text-[var(--text)] px-2 py-0.5 rounded text-xs z-10">
                                         Page {page.originalIndex + 1}
                                     </div>
 
@@ -219,7 +219,7 @@ export default function pdfEditor() {
                                         {page.deleted ? (
                                             <button
                                                 onClick={() => handleRestore(index)}
-                                                className="p-3 bg-white text-green-600 rounded-full hover:bg-green-50 transition-colors"
+                                                className="p-3 bg-[var(--surface)] text-green-600 rounded-full hover:bg-green-50 transition-colors"
                                                 title="Restore Page"
                                             >
                                                 <Undo size={24} />
@@ -228,14 +228,14 @@ export default function pdfEditor() {
                                             <div className="flex gap-2">
                                                 <button
                                                     onClick={() => handleRotate(index)}
-                                                    className="p-3 bg-white text-blue-600 rounded-full hover:bg-blue-50 transition-colors"
+                                                    className="p-3 bg-[var(--surface)] text-blue-600 rounded-full hover:bg-blue-50 transition-colors"
                                                     title="Rotate 90° CW"
                                                 >
                                                     <RotateCw size={24} />
                                                 </button>
                                                 <button
                                                     onClick={() => handleDelete(index)}
-                                                    className="p-3 bg-white text-red-600 rounded-full hover:bg-red-50 transition-colors"
+                                                    className="p-3 bg-[var(--surface)] text-red-600 rounded-full hover:bg-red-50 transition-colors"
                                                     title="Delete Page"
                                                 >
                                                     <Trash2 size={24} />
@@ -254,10 +254,10 @@ export default function pdfEditor() {
 
                                 {/* Footer Actions */}
                                 {!page.deleted && (
-                                    <div className="p-3 bg-gray-50 flex justify-center">
+                                    <div className="p-3 bg-[var(--bg)] flex justify-center">
                                         <button
                                             onClick={() => setEditingPage({ index: page.originalIndex, url: page.imageUrl })}
-                                            className="w-full py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 font-medium text-sm transition-all flex items-center justify-center gap-2"
+                                            className="w-full py-2 bg-[var(--surface)] border border-[var(--border-strong)] text-[var(--text-muted)] rounded hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 font-medium text-sm transition-all flex items-center justify-center gap-2"
                                         >
                                             <MousePointer2 size={16} />
                                             Edit Text
@@ -269,13 +269,13 @@ export default function pdfEditor() {
 
                         {/* Add Page Card */}
                         <div
-                            className="flex flex-col items-center justify-center min-h-[200px] bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer group"
+                            className="flex flex-col items-center justify-center min-h-[200px] bg-[var(--bg)] border-2 border-dashed border-[var(--border-strong)] rounded hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer group"
                             onClick={handleAddPage}
                         >
-                            <div className="p-4 bg-white rounded-full shadow-sm group-hover:shadow text-blue-500 mb-3">
+                            <div className="p-4 bg-[var(--surface)] rounded-full shadow-sm group-hover:shadow text-blue-500 mb-3">
                                 <Plus size={32} />
                             </div>
-                            <span className="font-medium text-gray-600 group-hover:text-blue-600">Add New Page</span>
+                            <span className="font-medium text-[var(--text-muted)] group-hover:text-blue-600">Add New Page</span>
                         </div>
                     </div>
                 </div>

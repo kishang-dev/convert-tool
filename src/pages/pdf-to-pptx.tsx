@@ -82,7 +82,7 @@ export default function PdfToPptx() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO 
                 title="PDF to PowerPoint Converter Tools" 
                 description="Convert PDF documents to PowerPoint presentations easily." 
@@ -99,7 +99,7 @@ export default function PdfToPptx() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                         <span className="gradient-text">PDF to PowerPoint</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-lg">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-lg">
                         Convert your PDF documents to editable PowerPoint presentations.
                     </p>
                 </div>
@@ -108,18 +108,18 @@ export default function PdfToPptx() {
                     <Card variant="elevated" className="p-8 md:p-12">
                         {!convertedFile ? (
                             <div className="flex flex-col items-center gap-6">
-                                <div className="w-20 h-20 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-2">
+                                <div className="w-20 h-20 bg-[var(--accent)]/10 rounded flex items-center justify-center mb-2">
                                     {file ? (
-                                        <FileText size={40} className="text-purple-400" />
+                                        <FileText size={40} className="text-[var(--accent)]" />
                                     ) : (
-                                        <Upload size={40} className="text-purple-400" />
+                                        <Upload size={40} className="text-[var(--accent)]" />
                                     )}
                                 </div>
 
                                 {file ? (
                                     <div className="text-center">
                                         <p className="text-xl font-medium mb-2">{file.name}</p>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                                        <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-6">
                                             {(file.size / 1024 / 1024).toFixed(2)} MB
                                         </p>
                                         <div className="flex gap-4 justify-center">
@@ -135,7 +135,7 @@ export default function PdfToPptx() {
                                 ) : (
                                     <div className="text-center">
                                         <p className="text-xl font-medium mb-2">Upload PDF File</p>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                                        <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-6">
                                             Select a PDF file to convert to PowerPoint
                                         </p>
                                         <Button onClick={() => fileInputRef.current?.click()} size="lg">
@@ -159,7 +159,7 @@ export default function PdfToPptx() {
                                 </div>
                                 <div className="text-center">
                                     <p className="text-2xl font-bold mb-2">Conversion Complete!</p>
-                                    <p className="text-gray-600 dark:text-gray-400 mb-8">
+                                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-8">
                                         Your file has been successfully converted to PowerPoint.
                                     </p>
                                     <div className="flex gap-4 justify-center">
@@ -176,17 +176,17 @@ export default function PdfToPptx() {
                         )}
                     </Card>
 
-                    <div className="grid md:grid-cols-3 gap-6 text-center text-sm text-gray-600 dark:text-gray-400">
-                        <div className="p-4 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/10">
-                            <h3 className="font-semibold text-gray-900 dark:text-white mb-2">High Quality</h3>
+                    <div className="grid md:grid-cols-3 gap-6 text-center text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)]">
+                        <div className="p-4 bg-[var(--surface)] dark:bg-[var(--accent-soft)] rounded border border-[var(--border)] dark:border-[var(--border)]">
+                            <h3 className="font-semibold text-[var(--text)] dark:text-[var(--text)] mb-2">High Quality</h3>
                             <p>Preserves layout and formatting in the slides.</p>
                         </div>
-                        <div className="p-4 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/10">
-                            <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Fast Conversion</h3>
+                        <div className="p-4 bg-[var(--surface)] dark:bg-[var(--accent-soft)] rounded border border-[var(--border)] dark:border-[var(--border)]">
+                            <h3 className="font-semibold text-[var(--text)] dark:text-[var(--text)] mb-2">Fast Conversion</h3>
                             <p>Process your files in seconds.</p>
                         </div>
-                        <div className="p-4 bg-gray-100 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/10">
-                            <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Secure</h3>
+                        <div className="p-4 bg-[var(--surface)] dark:bg-[var(--accent-soft)] rounded border border-[var(--border)] dark:border-[var(--border)]">
+                            <h3 className="font-semibold text-[var(--text)] dark:text-[var(--text)] mb-2">Secure</h3>
                             <p>Files are automatically deleted after 1 hour.</p>
                         </div>
                     </div>

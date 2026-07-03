@@ -136,7 +136,7 @@ export default function JwtDecoder() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO 
                 title="JWT Decoder & Parser Tools" 
                 description="Decode JSON Web Tokens (JWT) client-side in real-time. View header, payload, and expiration details." 
@@ -153,7 +153,7 @@ export default function JwtDecoder() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">JWT Decoder & Parser</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Decode and analyze JSON Web Tokens (JWT) securely in real-time. Done completely in your browser.
                     </p>
                 </div>
@@ -162,7 +162,7 @@ export default function JwtDecoder() {
                     {/* Left: Paste Token */}
                     <div className="lg:col-span-5 flex flex-col gap-6">
                         <Card variant="elevated" className="flex flex-col p-6 h-full">
-                            <h2 className="text-lg font-bold mb-3 text-indigo-400 flex items-center gap-2">
+                            <h2 className="text-lg font-bold mb-3 text-[var(--accent)] flex items-center gap-2">
                                 <KeyRound size={20} />
                                 Paste JWT Token
                             </h2>
@@ -170,7 +170,7 @@ export default function JwtDecoder() {
                                 value={token}
                                 onChange={(e) => handleDecode(e.target.value)}
                                 placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE4MTYyMzkwMjJ9..."
-                                className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:border-indigo-500/40 resize-none min-h-[300px] leading-relaxed"
+                                className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[300px] leading-relaxed"
                             />
                         </Card>
                     </div>
@@ -183,18 +183,18 @@ export default function JwtDecoder() {
                                 <Card variant="elevated" className={`p-4 ${tokenState.isExpired ? 'border-red-500/30 bg-red-500/5' : 'border-green-500/30 bg-green-500/5'}`}>
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
-                                            <div className={`p-2 rounded-lg ${tokenState.isExpired ? 'bg-red-500/10 text-red-400' : 'bg-green-500/10 text-green-400'}`}>
+                                            <div className={`p-2 rounded ${tokenState.isExpired ? 'bg-red-500/10 text-red-400' : 'bg-green-500/10 text-green-400'}`}>
                                                 {tokenState.isExpired ? <AlertTriangle size={20} /> : <ShieldCheck size={20} />}
                                             </div>
                                             <div>
-                                                <h3 className="font-bold text-sm tracking-wide uppercase text-gray-600 dark:text-gray-400">Token Status</h3>
+                                                <h3 className="font-bold text-sm tracking-wide uppercase text-[var(--text-muted)] dark:text-[var(--text-muted)]">Token Status</h3>
                                                 <p className={`font-semibold ${tokenState.isExpired ? 'text-red-400' : 'text-green-400'}`}>
                                                     {tokenState.isExpired ? 'Token Expired' : 'Token Active'}
                                                 </p>
                                             </div>
                                         </div>
                                         <div className="text-right">
-                                            <span className="text-xs text-gray-600 dark:text-gray-400 block font-semibold uppercase tracking-wider">Time Info</span>
+                                            <span className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] block font-semibold uppercase tracking-wider">Time Info</span>
                                             <span className="font-mono text-sm font-semibold">{tokenState.timeRemaining}</span>
                                         </div>
                                     </div>
@@ -202,41 +202,41 @@ export default function JwtDecoder() {
 
                                 {/* Meta details */}
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <Card variant="default" className="p-4 bg-gray-100 dark:bg-white/5 border border-white/5">
-                                        <span className="text-xs text-gray-600 dark:text-gray-400 font-semibold block mb-1">ALGORITHM</span>
-                                        <span className="font-mono font-bold text-indigo-400">{tokenState.algorithm}</span>
+                                    <Card variant="default" className="p-4 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)]">
+                                        <span className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] font-semibold block mb-1">ALGORITHM</span>
+                                        <span className="font-mono font-bold text-[var(--accent)]">{tokenState.algorithm}</span>
                                     </Card>
-                                    <Card variant="default" className="p-4 bg-gray-100 dark:bg-white/5 border border-white/5">
-                                        <span className="text-xs text-gray-600 dark:text-gray-400 font-semibold block mb-1 flex items-center gap-1"><Calendar size={12} /> ISSUED AT</span>
-                                        <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{tokenState.issuedAt}</span>
+                                    <Card variant="default" className="p-4 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)]">
+                                        <span className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] font-semibold block mb-1 flex items-center gap-1"><Calendar size={12} /> ISSUED AT</span>
+                                        <span className="text-xs font-semibold text-[var(--text-muted)] dark:text-[var(--text-muted)]">{tokenState.issuedAt}</span>
                                     </Card>
-                                    <Card variant="default" className="p-4 bg-gray-100 dark:bg-white/5 border border-white/5">
-                                        <span className="text-xs text-gray-600 dark:text-gray-400 font-semibold block mb-1 flex items-center gap-1"><Clock size={12} /> EXPIRES AT</span>
-                                        <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{tokenState.expiresAt}</span>
+                                    <Card variant="default" className="p-4 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)]">
+                                        <span className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] font-semibold block mb-1 flex items-center gap-1"><Clock size={12} /> EXPIRES AT</span>
+                                        <span className="text-xs font-semibold text-[var(--text-muted)] dark:text-[var(--text-muted)]">{tokenState.expiresAt}</span>
                                     </Card>
                                 </div>
 
                                 {/* JSON Header & Payload splits */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <Card variant="elevated" className="p-4 flex flex-col">
-                                        <span className="text-xs text-gray-600 dark:text-gray-400 font-bold tracking-wider mb-2">HEADER: ALGORITHM & TOKEN TYPE</span>
-                                        <pre className="p-3 bg-[#090d16] border border-white/5 rounded-lg font-mono text-xs text-indigo-400 overflow-x-auto max-h-[250px] leading-relaxed">
+                                        <span className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] font-bold tracking-wider mb-2">HEADER: ALGORITHM & TOKEN TYPE</span>
+                                        <pre className="p-3 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-xs text-[var(--accent)] overflow-x-auto max-h-[250px] leading-relaxed">
                                             {header}
                                         </pre>
                                     </Card>
                                     <Card variant="elevated" className="p-4 flex flex-col">
-                                        <span className="text-xs text-gray-600 dark:text-gray-400 font-bold tracking-wider mb-2">PAYLOAD: DATA & CLAIMS</span>
-                                        <pre className="p-3 bg-[#090d16] border border-white/5 rounded-lg font-mono text-xs text-emerald-400 overflow-x-auto max-h-[250px] leading-relaxed">
+                                        <span className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] font-bold tracking-wider mb-2">PAYLOAD: DATA & CLAIMS</span>
+                                        <pre className="p-3 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-xs text-emerald-400 overflow-x-auto max-h-[250px] leading-relaxed">
                                             {payload}
                                         </pre>
                                     </Card>
                                 </div>
                             </div>
                         ) : (
-                            <Card variant="elevated" className="p-8 flex flex-col items-center justify-center text-center h-full text-gray-500 dark:text-gray-500">
+                            <Card variant="elevated" className="p-8 flex flex-col items-center justify-center text-center h-full text-[var(--text-faint)] dark:text-[var(--text-faint)]">
                                 <ShieldCheck size={48} className="opacity-10 mb-3" />
                                 <p className="text-base font-medium">Paste a valid JWT to view payload details</p>
-                                <p className="text-xs text-gray-600 mt-1">A typical JWT structure is xxxxx.yyyyy.zzzzz</p>
+                                <p className="text-xs text-[var(--text-muted)] mt-1">A typical JWT structure is xxxxx.yyyyy.zzzzz</p>
                             </Card>
                         )}
                     </div>

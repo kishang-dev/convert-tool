@@ -53,7 +53,7 @@ export default function FAQ() {
                         Frequently Asked
                         <span className="gradient-text"> Questions</span>
                     </h2>
-                    <p className="text-sm sm:text-lg text-gray-600 dark:text-gray-400 font-bold uppercase tracking-widest opacity-60">
+                    <p className="text-sm sm:text-lg text-[var(--text-muted)] dark:text-[var(--text-muted)] font-bold uppercase tracking-widest opacity-60">
                         Everything you need to know about our tools
                     </p>
                 </div>
@@ -68,13 +68,13 @@ export default function FAQ() {
                         >
                             <button
                                 onClick={() => toggleFAQ(index)}
-                                className="w-full p-6 text-left flex items-center justify-between hover:bg-gray-100 dark:bg-white/5 transition-smooth"
+                                className="w-full p-6 text-left flex items-center justify-between hover:bg-[var(--surface)] dark:bg-[var(--accent-soft)] transition-smooth"
                             >
-                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white pr-8">
+                                <h3 className="text-lg font-semibold text-[var(--text)] dark:text-[var(--text)] pr-8">
                                     {faq.question}
                                 </h3>
                                 <ChevronDown
-                                    className={`text-purple-400 transition-transform flex-shrink-0 ${openIndex === index ? 'rotate-180' : ''
+                                    className={`text-[var(--accent)] transition-transform flex-shrink-0 ${openIndex === index ? 'rotate-180' : ''
                                         }`}
                                     size={24}
                                 />
@@ -83,7 +83,7 @@ export default function FAQ() {
                                 className={`overflow-hidden transition-all duration-300 ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                                     }`}
                             >
-                                <p className="px-6 pb-6 text-gray-600 dark:text-gray-400 leading-relaxed">
+                                <p className="px-6 pb-6 text-[var(--text-muted)] dark:text-[var(--text-muted)] leading-relaxed">
                                     {faq.answer}
                                 </p>
                             </div>

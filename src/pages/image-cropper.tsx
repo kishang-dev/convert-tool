@@ -263,7 +263,7 @@ export default function ImageCropper() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO 
                 title="Image Cropper Tools" 
                 description="Crop and cut your images online client-side. Aspect ratio templates, fully adjustable crop boxes with visual handles." 
@@ -280,7 +280,7 @@ export default function ImageCropper() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">Image Cropper</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Drag, adjust, and crop your images instantly. 100% private execution inside your browser.
                     </p>
                 </div>
@@ -292,7 +292,7 @@ export default function ImageCropper() {
                             {previewUrl ? (
                                 <div 
                                     ref={containerRef}
-                                    className="relative max-h-[420px] max-w-full border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden bg-slate-950/40 cursor-crosshair"
+                                    className="relative max-h-[420px] max-w-full border border-[var(--border)] dark:border-[var(--border)] rounded overflow-hidden bg-slate-950/40 cursor-crosshair"
                                     style={{ display: 'inline-block' }}
                                 >
                                     <img 
@@ -327,32 +327,32 @@ export default function ImageCropper() {
                                         <div 
                                             onMouseDown={(e) => startAction('tl', e)}
                                             onTouchStart={(e) => startAction('tl', e)}
-                                            className="absolute w-3.5 h-3.5 -top-1.5 -left-1.5 bg-indigo-500 border border-white rounded-full cursor-nwse-resize"
+                                            className="absolute w-3.5 h-3.5 -top-1.5 -left-1.5 bg-[var(--accent)] border border-white rounded-full cursor-nwse-resize"
                                         />
                                         <div 
                                             onMouseDown={(e) => startAction('tr', e)}
                                             onTouchStart={(e) => startAction('tr', e)}
-                                            className="absolute w-3.5 h-3.5 -top-1.5 -right-1.5 bg-indigo-500 border border-white rounded-full cursor-nesw-resize"
+                                            className="absolute w-3.5 h-3.5 -top-1.5 -right-1.5 bg-[var(--accent)] border border-white rounded-full cursor-nesw-resize"
                                         />
                                         <div 
                                             onMouseDown={(e) => startAction('bl', e)}
                                             onTouchStart={(e) => startAction('bl', e)}
-                                            className="absolute w-3.5 h-3.5 -bottom-1.5 -left-1.5 bg-indigo-500 border border-white rounded-full cursor-nesw-resize"
+                                            className="absolute w-3.5 h-3.5 -bottom-1.5 -left-1.5 bg-[var(--accent)] border border-white rounded-full cursor-nesw-resize"
                                         />
                                         <div 
                                             onMouseDown={(e) => startAction('br', e)}
                                             onTouchStart={(e) => startAction('br', e)}
-                                            className="absolute w-3.5 h-3.5 -bottom-1.5 -right-1.5 bg-indigo-500 border border-white rounded-full cursor-nwse-resize"
+                                            className="absolute w-3.5 h-3.5 -bottom-1.5 -right-1.5 bg-[var(--accent)] border border-white rounded-full cursor-nwse-resize"
                                         />
                                     </div>
                                 </div>
                             ) : (
                                 <div className="text-center py-12 flex flex-col items-center">
-                                    <div className="w-20 h-20 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-4">
+                                    <div className="w-20 h-20 bg-emerald-500/10 rounded flex items-center justify-center mb-4">
                                         <Crop size={40} className="text-emerald-400" />
                                     </div>
                                     <p className="text-xl font-semibold mb-2">Upload Photo to Crop</p>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 max-w-sm">
+                                    <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-6 max-w-sm">
                                         Support JPG, PNG, and WEBP formats. Crop instantly with visual dimensions.
                                     </p>
                                     <Button onClick={() => fileInputRef.current?.click()} size="lg">
@@ -375,7 +375,7 @@ export default function ImageCropper() {
                         {file ? (
                             <Card variant="elevated" className="p-6 space-y-6 flex flex-col justify-between h-full">
                                 <div className="space-y-6">
-                                    <h3 className="text-lg font-bold text-gray-200 border-b border-white/5 pb-2 flex items-center gap-2">
+                                    <h3 className="text-lg font-bold text-[var(--text)] border-b border-[var(--border)] pb-2 flex items-center gap-2">
                                         <Ratio size={18} className="text-emerald-400" />
                                         Crop Presets
                                     </h3>
@@ -391,23 +391,23 @@ export default function ImageCropper() {
                                             <button
                                                 key={preset.key}
                                                 onClick={() => setAspectPreset(preset.key as any)}
-                                                className={`p-3 rounded-xl border text-left transition-all ${aspectPreset === preset.key ? 'border-emerald-500 bg-emerald-500/5 text-gray-900 dark:text-white' : 'border-gray-200 dark:border-white/10 hover:border-white/20 bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300'}`}
+                                                className={`p-3 rounded border text-left transition-all ${aspectPreset === preset.key ? 'border-emerald-500 bg-emerald-500/5 text-[var(--text)] dark:text-[var(--text)]' : 'border-[var(--border)] dark:border-[var(--border)] hover:border-[var(--border)] bg-[var(--surface)] dark:bg-[var(--accent-soft)] text-[var(--text-muted)] dark:text-[var(--text-muted)]'}`}
                                             >
                                                 <span className="text-xs font-bold font-mono block">{preset.label}</span>
-                                                <span className="text-[10px] text-gray-600 dark:text-gray-400 block mt-0.5">{preset.desc}</span>
+                                                <span className="text-[10px] text-[var(--text-muted)] dark:text-[var(--text-muted)] block mt-0.5">{preset.desc}</span>
                                             </button>
                                         ))}
                                     </div>
 
                                     {/* Interactive instruction box */}
-                                    <div className="p-3 bg-gray-100 dark:bg-white/5 border border-white/5 rounded-xl text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                                        <p className="font-semibold text-gray-700 dark:text-gray-300 mb-1">How to Crop:</p>
+                                    <div className="p-3 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] rounded text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] leading-relaxed">
+                                        <p className="font-semibold text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-1">How to Crop:</p>
                                         1. Click and drag the <span className="font-bold text-emerald-400">Center Compass icon</span> to reposition the crop window.<br />
                                         2. Drag the <span className="font-bold text-emerald-400">corner circle handles</span> to scale boundaries.
                                     </div>
                                 </div>
 
-                                <div className="flex gap-3 pt-6 border-t border-white/5">
+                                <div className="flex gap-3 pt-6 border-t border-[var(--border)]">
                                     <Button variant="ghost" onClick={() => setFile(null)} className="w-1/3">
                                         Clear
                                     </Button>
@@ -422,10 +422,10 @@ export default function ImageCropper() {
                                 </div>
                             </Card>
                         ) : (
-                            <Card variant="elevated" className="p-8 flex flex-col items-center justify-center text-center h-full text-gray-500 dark:text-gray-500">
+                            <Card variant="elevated" className="p-8 flex flex-col items-center justify-center text-center h-full text-[var(--text-faint)] dark:text-[var(--text-faint)]">
                                 <Crop size={48} className="opacity-10 mb-3" />
                                 <p className="text-base font-semibold">Cropping Presets</p>
-                                <p className="text-xs text-gray-600 mt-1">Aspect ratio configurations, square sizing, and action crop buttons will show up here.</p>
+                                <p className="text-xs text-[var(--text-muted)] mt-1">Aspect ratio configurations, square sizing, and action crop buttons will show up here.</p>
                             </Card>
                         )}
                     </div>

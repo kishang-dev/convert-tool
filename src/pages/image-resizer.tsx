@@ -156,7 +156,7 @@ export default function ImageResizer() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO 
                 title="Image Resizer Tools" 
                 description="Resize JPG, PNG, and WEBP images in seconds client-side. Lock aspect ratio, select quality, and compress dimensions." 
@@ -173,7 +173,7 @@ export default function ImageResizer() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">Image Resizer</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Compress, scale, and resize your images instantly right in your browser with zero server uploads.
                     </p>
                 </div>
@@ -184,21 +184,21 @@ export default function ImageResizer() {
                         <Card variant="elevated" className="p-6 h-full flex flex-col items-center justify-center min-h-[400px]">
                             {previewUrl ? (
                                 <div className="w-full flex flex-col items-center gap-4 flex-grow justify-center">
-                                    <div className="relative border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden max-h-[380px] bg-slate-950/60 p-2 flex items-center justify-center">
-                                        <img src={previewUrl} alt="Preview" loading="lazy" className="max-h-[350px] object-contain rounded-lg" />
+                                    <div className="relative border border-[var(--border)] dark:border-[var(--border)] rounded overflow-hidden max-h-[380px] bg-slate-950/60 p-2 flex items-center justify-center">
+                                        <img src={previewUrl} alt="Preview" loading="lazy" className="max-h-[350px] object-contain rounded" />
                                     </div>
                                     <div className="text-center">
                                         <p className="text-sm font-semibold truncate max-w-xs">{file?.name}</p>
-                                        <p className="text-xs text-gray-600 dark:text-gray-400">Original Dimensions: {originalWidth} x {originalHeight} px</p>
+                                        <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)]">Original Dimensions: {originalWidth} x {originalHeight} px</p>
                                     </div>
                                 </div>
                             ) : (
                                 <div className="text-center py-12 flex flex-col items-center">
-                                    <div className="w-20 h-20 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-4">
-                                        <Upload size={40} className="text-indigo-400" />
+                                    <div className="w-20 h-20 bg-[var(--accent)]/10 rounded flex items-center justify-center mb-4">
+                                        <Upload size={40} className="text-[var(--accent)]" />
                                     </div>
                                     <p className="text-xl font-semibold mb-2">Upload Image File</p>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 max-w-sm">
+                                    <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-6 max-w-sm">
                                         Select JPEG, PNG, or WebP format to start scaling your images
                                     </p>
                                     <Button onClick={() => fileInputRef.current?.click()} size="lg">
@@ -221,54 +221,54 @@ export default function ImageResizer() {
                         {file ? (
                             <Card variant="elevated" className="p-6 space-y-6 flex flex-col justify-between h-full">
                                 <div className="space-y-6">
-                                    <h3 className="text-lg font-bold text-gray-200 border-b border-white/5 pb-2 flex items-center gap-2">
-                                        <Sparkles size={18} className="text-indigo-400" />
+                                    <h3 className="text-lg font-bold text-[var(--text)] border-b border-[var(--border)] pb-2 flex items-center gap-2">
+                                        <Sparkles size={18} className="text-[var(--accent)]" />
                                         Resize Settings
                                     </h3>
 
                                     {/* Dimensions */}
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-2">
-                                            <label className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Width (px)</label>
+                                            <label className="text-xs font-bold text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">Width (px)</label>
                                             <input
                                                 type="number"
                                                 value={width || ''}
                                                 onChange={(e) => handleWidthChange(Number(e.target.value))}
-                                                className="w-full px-4 py-2.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl focus:border-indigo-500/50 outline-none text-gray-900 dark:text-white font-mono text-sm"
+                                                className="w-full px-4 py-2.5 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] rounded focus:border-[var(--accent-ring)] outline-none text-[var(--text)] dark:text-[var(--text)] font-mono text-sm"
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Height (px)</label>
+                                            <label className="text-xs font-bold text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">Height (px)</label>
                                             <input
                                                 type="number"
                                                 value={height || ''}
                                                 onChange={(e) => handleHeightChange(Number(e.target.value))}
-                                                className="w-full px-4 py-2.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl focus:border-indigo-500/50 outline-none text-gray-900 dark:text-white font-mono text-sm"
+                                                className="w-full px-4 py-2.5 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] rounded focus:border-[var(--accent-ring)] outline-none text-[var(--text)] dark:text-[var(--text)] font-mono text-sm"
                                             />
                                         </div>
                                     </div>
 
                                     {/* Lock Aspect Ratio */}
-                                    <label className="flex items-center gap-2.5 cursor-pointer group text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                    <label className="flex items-center gap-2.5 cursor-pointer group text-sm font-semibold text-[var(--text-muted)] dark:text-[var(--text-muted)]">
                                         <input
                                             type="checkbox"
                                             checked={lockAspectRatio}
                                             onChange={(e) => setLockAspectRatio(e.target.checked)}
-                                            className="w-4 h-4 rounded border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-white/5 text-indigo-600 focus:ring-0"
+                                            className="w-4 h-4 rounded border-[var(--border)] dark:border-[var(--border)] bg-[var(--surface)] dark:bg-[var(--accent-soft)] text-[var(--accent)] focus:ring-0"
                                         />
-                                        <Ratio size={16} className="text-indigo-400" />
+                                        <Ratio size={16} className="text-[var(--accent)]" />
                                         Lock Aspect Ratio
                                     </label>
 
                                     {/* Presets */}
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase block">Presets</label>
+                                        <label className="text-xs font-bold text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase block">Presets</label>
                                         <div className="flex gap-2 flex-wrap">
                                             {[25, 50, 75, 100, 150, 200].map(pct => (
                                                 <button
                                                     key={pct}
                                                     onClick={() => handlePercentScale(pct)}
-                                                    className="px-3 py-1.5 bg-gray-100 dark:bg-white/5 hover:bg-white/10 border border-white/5 rounded-lg text-xs font-semibold font-mono transition-all"
+                                                    className="px-3 py-1.5 bg-[var(--surface)] dark:bg-[var(--accent-soft)] hover:bg-[var(--surface-hover)] border border-[var(--border)] rounded text-xs font-semibold font-mono transition-all"
                                                 >
                                                     {pct}%
                                                 </button>
@@ -278,11 +278,11 @@ export default function ImageResizer() {
 
                                     {/* Formats */}
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase block">Export Format</label>
+                                        <label className="text-xs font-bold text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase block">Export Format</label>
                                         <select
                                             value={format}
                                             onChange={(e) => setFormat(e.target.value)}
-                                            className="w-full px-4 py-2.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-sm text-gray-200 outline-none"
+                                            className="w-full px-4 py-2.5 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] rounded text-sm text-[var(--text)] outline-none"
                                         >
                                             <option value="image/jpeg" className="bg-[#0f172a]">JPEG / JPG</option>
                                             <option value="image/png" className="bg-[#0f172a]">PNG</option>
@@ -294,8 +294,8 @@ export default function ImageResizer() {
                                     {format !== 'image/png' && (
                                         <div className="space-y-2">
                                             <div className="flex items-center justify-between">
-                                                <label className="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase">Image Quality</label>
-                                                <span className="text-xs font-bold font-mono text-indigo-400">{quality}%</span>
+                                                <label className="text-xs font-bold text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">Image Quality</label>
+                                                <span className="text-xs font-bold font-mono text-[var(--accent)]">{quality}%</span>
                                             </div>
                                             <input
                                                 type="range"
@@ -303,20 +303,20 @@ export default function ImageResizer() {
                                                 max="100"
                                                 value={quality}
                                                 onChange={(e) => setQuality(Number(e.target.value))}
-                                                className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                                                className="w-full h-1.5 bg-[var(--surface-hover)] rounded appearance-none cursor-pointer accent-indigo-500"
                                             />
                                         </div>
                                     )}
                                 </div>
 
-                                <div className="flex gap-3 pt-6 border-t border-white/5">
+                                <div className="flex gap-3 pt-6 border-t border-[var(--border)]">
                                     <Button variant="ghost" onClick={() => setFile(null)} className="w-1/3">
                                         Clear
                                     </Button>
                                     <Button
                                         onClick={handleResize}
                                         loading={loading}
-                                        className="bg-indigo-600 hover:bg-indigo-500 font-bold flex-grow text-sm py-3"
+                                        className="bg-[var(--accent)] hover:bg-[var(--accent)] font-bold flex-grow text-sm py-3"
                                     >
                                         Resize & Download
                                         <Download size={16} className="ml-2" />
@@ -324,10 +324,10 @@ export default function ImageResizer() {
                                 </div>
                             </Card>
                         ) : (
-                            <Card variant="elevated" className="p-8 flex flex-col items-center justify-center text-center h-full text-gray-500 dark:text-gray-500">
+                            <Card variant="elevated" className="p-8 flex flex-col items-center justify-center text-center h-full text-[var(--text-faint)] dark:text-[var(--text-faint)]">
                                 <ImageIcon size={48} className="opacity-10 mb-3" />
                                 <p className="text-base font-semibold">Resize properties</p>
-                                <p className="text-xs text-gray-600 mt-1">Properties, percentages, and quality sliders will appear after uploading an image.</p>
+                                <p className="text-xs text-[var(--text-muted)] mt-1">Properties, percentages, and quality sliders will appear after uploading an image.</p>
                             </Card>
                         )}
                     </div>

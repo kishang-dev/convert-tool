@@ -106,7 +106,7 @@ const BaseNode = ({ children, selected, style, id, data, ...props }: any) => {
       {selected && (
         <button
           onClick={handleDelete}
-          className="delete-handle absolute -top-3 -right-3 w-6 h-6 bg-red-500 text-gray-900 dark:text-white rounded-full flex items-center justify-center shadow-md hover:bg-red-600 transition-colors z-50 text-[10px]"
+          className="delete-handle absolute -top-3 -right-3 w-6 h-6 bg-red-500 text-[var(--text)] dark:text-[var(--text)] rounded-full flex items-center justify-center shadow-md hover:bg-red-600 transition-colors z-50 text-[10px]"
         >
           ✕
         </button>
@@ -215,7 +215,7 @@ const ShapeNode = memo(
               e.stopPropagation();
               setNodes((nds) => nds.filter((n) => n.id !== id));
             }}
-            className="delete-handle absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-gray-900 dark:text-white rounded-full flex items-center justify-center shadow-md z-50 text-[10px]"
+            className="delete-handle absolute -top-2 -right-2 w-5 h-5 bg-red-500 text-[var(--text)] dark:text-[var(--text)] rounded-full flex items-center justify-center shadow-md z-50 text-[10px]"
           >
             ✕
           </button>

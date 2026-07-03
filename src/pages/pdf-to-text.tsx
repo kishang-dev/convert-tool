@@ -89,7 +89,7 @@ export default function PdfToText() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO 
                 title="PDF to Text Converter Tools" 
                 description="Extract plain text from PDF documents." 
@@ -106,7 +106,7 @@ export default function PdfToText() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                         <span className="gradient-text">PDF to Text</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-lg">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-lg">
                         Extract text from your PDF documents.
                     </p>
                 </div>
@@ -115,11 +115,11 @@ export default function PdfToText() {
                     <Card variant="elevated" className="p-8 md:p-12">
                         {!convertedFile ? (
                             <div className="flex flex-col items-center gap-6">
-                                <div className="w-20 h-20 bg-gray-500/10 rounded-2xl flex items-center justify-center mb-2">
+                                <div className="w-20 h-20 bg-[var(--surface-hover)] rounded flex items-center justify-center mb-2">
                                     {file ? (
-                                        <FileText size={40} className="text-gray-600 dark:text-gray-400" />
+                                        <FileText size={40} className="text-[var(--text-muted)] dark:text-[var(--text-muted)]" />
                                     ) : (
-                                        <Upload size={40} className="text-gray-600 dark:text-gray-400" />
+                                        <Upload size={40} className="text-[var(--text-muted)] dark:text-[var(--text-muted)]" />
                                     )}
                                 </div>
 
@@ -139,7 +139,7 @@ export default function PdfToText() {
                                 ) : (
                                     <div className="text-center">
                                         <p className="text-xl font-medium mb-2">Upload PDF File</p>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                                        <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-6">
                                             Select a PDF file to extract text from
                                         </p>
                                         <Button onClick={() => fileInputRef.current?.click()} size="lg">
@@ -165,10 +165,10 @@ export default function PdfToText() {
                                     <p className="text-2xl font-bold mb-2">Extraction Complete!</p>
 
                                     {textPreview && (
-                                        <div className="bg-black/30 p-4 rounded-lg text-left text-gray-700 dark:text-gray-300 font-mono text-sm max-h-60 overflow-y-auto mb-6 w-full relative group">
+                                        <div className="bg-black/30 p-4 rounded text-left text-[var(--text-muted)] dark:text-[var(--text-muted)] font-mono text-sm max-h-60 overflow-y-auto mb-6 w-full relative group">
                                             <button
                                                 onClick={handleCopyText}
-                                                className="absolute top-2 right-2 p-2 bg-white/10 rounded hover:bg-white/20 transition-colors opacity-0 group-hover:opacity-100"
+                                                className="absolute top-2 right-2 p-2 bg-[var(--surface-hover)] rounded hover:bg-[var(--surface-hover)] transition-colors opacity-0 group-hover:opacity-100"
                                                 title="Copy to clipboard"
                                             >
                                                 <Copy size={16} />

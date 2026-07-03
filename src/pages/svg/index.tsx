@@ -27,20 +27,20 @@ export default function Home() {
       </div>
 
       {/* Floating Elements */}
-      <div className="fixed top-20 left-10 w-72 h-72 bg-purple-500/30 rounded-full blur-3xl animate-float -z-10"></div>
+      <div className="fixed top-20 left-10 w-72 h-72 bg-[var(--accent)]/30 rounded-full blur-3xl animate-float -z-10"></div>
       <div className="fixed bottom-20 right-10 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1s' }}></div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
         {/* Header Section */}
         <div className="text-center space-y-6 mb-16 animate-fadeIn">
           <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-4">
-            <Sparkles className="text-purple-400" size={16} />
-            <span className="text-sm text-gray-700 dark:text-gray-300">AI-Powered Vectorization</span>
+            <Sparkles className="text-[var(--accent)]" size={16} />
+            <span className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)]">AI-Powered Vectorization</span>
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight">
             <span className="gradient-text">Vectorize</span> Instantly
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-[var(--text-muted)] dark:text-[var(--text-muted)] max-w-2xl mx-auto">
             Transform your raster images into clean, scalable SVG vectors.
             Perfect for designers, developers, and creators.
           </p>
@@ -59,11 +59,11 @@ export default function Home() {
                   className="p-6 text-center animate-fadeIn"
                   style={{ animationDelay: '0.1s' }}
                 >
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mx-auto mb-4">
-                    <Zap className="text-gray-900 dark:text-white" size={28} />
+                  <div className="w-14 h-14 rounded bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mx-auto mb-4">
+                    <Zap className="text-[var(--text)] dark:text-[var(--text)]" size={28} />
                   </div>
-                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2">Lightning Fast</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  <h3 className="font-bold text-lg text-[var(--text)] dark:text-[var(--text)] mb-2">Lightning Fast</h3>
+                  <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-sm">
                     Convert complex images to SVGs in under 2 seconds with our
                     optimized engine.
                   </p>
@@ -74,11 +74,11 @@ export default function Home() {
                   className="p-6 text-center animate-fadeIn"
                   style={{ animationDelay: '0.2s' }}
                 >
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center mx-auto mb-4">
-                    <Shield className="text-gray-900 dark:text-white" size={28} />
+                  <div className="w-14 h-14 rounded bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center mx-auto mb-4">
+                    <Shield className="text-[var(--text)] dark:text-[var(--text)]" size={28} />
                   </div>
-                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2">Privacy First</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  <h3 className="font-bold text-lg text-[var(--text)] dark:text-[var(--text)] mb-2">Privacy First</h3>
+                  <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-sm">
                     Images are processed securely and deleted immediately after
                     conversion.
                   </p>
@@ -89,11 +89,11 @@ export default function Home() {
                   className="p-6 text-center animate-fadeIn"
                   style={{ animationDelay: '0.3s' }}
                 >
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center mx-auto mb-4">
-                    <MousePointer2 className="text-gray-900 dark:text-white" size={28} />
+                  <div className="w-14 h-14 rounded bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center mx-auto mb-4">
+                    <MousePointer2 className="text-[var(--text)] dark:text-[var(--text)]" size={28} />
                   </div>
-                  <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2">Layer Support</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  <h3 className="font-bold text-lg text-[var(--text)] dark:text-[var(--text)] mb-2">Layer Support</h3>
+                  <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-sm">
                     Automatically detects shapes and creates clean, editable SVG
                     layers.
                   </p>
@@ -107,7 +107,7 @@ export default function Home() {
 
         {/* Error Notification */}
         {error && (
-          <div className="fixed bottom-8 left-1/2 -translate-x-1/2 glass-strong border-l-4 border-red-500 px-6 py-4 rounded-xl shadow-xl flex items-center gap-3 animate-slideInRight z-50">
+          <div className="fixed bottom-8 left-1/2 -translate-x-1/2 glass-strong border-l-4 border-red-500 px-6 py-4 rounded shadow-xl flex items-center gap-3 animate-slideInRight z-50">
             <span className="w-2 h-2 rounded-full bg-red-500" />
             <span className="font-medium text-red-400">{error}</span>
           </div>
@@ -115,7 +115,7 @@ export default function Home() {
       </main>
 
       <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-800 text-center">
-        <p className="text-gray-500 dark:text-gray-500 text-sm font-medium">
+        <p className="text-[var(--text-faint)] dark:text-[var(--text-faint)] text-sm font-medium">
           &copy; {new Date().getFullYear()} ToolBasketAI Tools. Built with Next.js
           and Lucide Icons.
         </p>

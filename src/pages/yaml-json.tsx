@@ -109,7 +109,7 @@ export default function YamlJsonConverter() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-gray-900 dark:text-white">
+        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
             <SEO 
                 title="YAML ↔ JSON Converter Tools" 
                 description="Convert YAML documents to JSON format and JSON to YAML format in real-time." 
@@ -126,13 +126,13 @@ export default function YamlJsonConverter() {
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">YAML ↔ JSON Converter</span>
                     </h1>
-                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Quickly and securely convert YAML files to standard JSON format, and JSON keys back to YAML format.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] p-4 rounded">
                     <div className="flex items-center gap-3">
                         <Button 
                             onClick={handleToggleDirection} 
@@ -147,7 +147,7 @@ export default function YamlJsonConverter() {
                             onClick={() => fileInputRef.current?.click()}
                             variant="ghost"
                             size="sm"
-                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white"
+                            className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)]"
                         >
                             <Upload size={16} className="mr-2" />
                             Upload File
@@ -174,7 +174,7 @@ export default function YamlJsonConverter() {
                             onClick={handleConvert}
                             loading={loading}
                             size="sm"
-                            className="bg-blue-600 hover:bg-blue-500 font-bold"
+                            className="bg-[var(--accent)] hover:bg-[var(--accent)] font-bold"
                         >
                             Convert
                         </Button>
@@ -186,7 +186,7 @@ export default function YamlJsonConverter() {
                     {/* Input Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">
                                 Input {direction === 'yaml-to-json' ? 'YAML' : 'JSON'}
                             </span>
                         </div>
@@ -211,14 +211,14 @@ database:
     "enabled": true
   }
 }`}
-                            className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-gray-200 focus:outline-none focus:border-blue-500/40 resize-none min-h-[400px] leading-relaxed"
+                            className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent)] resize-none min-h-[400px] leading-relaxed"
                         />
                     </Card>
 
                     {/* Output Pane */}
                     <Card variant="elevated" className="flex flex-col p-4 md:p-6 min-h-[500px]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-gray-600 dark:text-gray-400 uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">
                                 Output {direction === 'yaml-to-json' ? 'JSON' : 'YAML'}
                             </span>
                             {output && (
@@ -235,7 +235,7 @@ database:
                             readOnly
                             value={output}
                             placeholder="Converted result will appear here..."
-                            className="w-full flex-grow p-4 bg-[#090d16] border border-white/5 rounded-xl font-mono text-sm text-emerald-400 focus:outline-none resize-none min-h-[400px] leading-relaxed"
+                            className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-emerald-400 focus:outline-none resize-none min-h-[400px] leading-relaxed"
                         />
                     </Card>
                 </div>
