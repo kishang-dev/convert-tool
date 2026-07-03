@@ -57,7 +57,8 @@ export default function LandingPage() {
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
 
             {/* Hero */}
-            <HeroSection />
+            <main>
+                <HeroSection />
 
             {/* Stats bar */}
             <div className="border-y border-gray-200 dark:border-[#1a1a1a] bg-gray-50 dark:bg-[#0d0d0d]">
@@ -216,6 +217,7 @@ export default function LandingPage() {
                     <p className="text-[#333] text-xs mt-4 uppercase tracking-widest">No sign-up required · 100% free</p>
                 </div>
             </section>
+            </main>
 
             <Footer />
         </div>

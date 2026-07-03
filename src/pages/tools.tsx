@@ -143,10 +143,10 @@ export default function Tools() {
             <Navbar />
 
             {/* ── Main Content ── */}
-            <div className="max-w-7xl mx-auto px-4 py-24 md:py-32">
+            <main className="max-w-7xl mx-auto px-4 py-24 md:py-32">
 
                 {/* ── Page Header ── */}
-                <div className="text-center mb-10 animate-fadeIn">
+                <header className="text-center mb-10 animate-fadeIn">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-200 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2a2a2a] rounded-full mb-5 text-gray-500 dark:text-gray-500 dark:text-[#888] text-[10px] font-bold uppercase tracking-[0.15em]">
                         <Sparkles size={11} />
                         40+ Tools &middot; All Free &middot; No Sign-up
@@ -178,14 +178,14 @@ export default function Tools() {
                             )}
                         </div>
                     </div>
-                </div>
+                </header>
 
                 {/* Removed common file upload panel */}
 
                 {/* Category Directory */}
                 <div className="space-y-12 mb-12">
                     {filteredCategories.map((category, catIdx) => (
-                        <div
+                        <section
                             key={catIdx}
                             className="animate-fadeIn"
                             style={{ animationDelay: `${0.1 + catIdx * 0.04}s` } as React.CSSProperties}
@@ -219,7 +219,7 @@ export default function Tools() {
                                     </div>
                                 ))}
                             </div>
-                        </div>
+                        </section>
                     ))}
 
                     {/* Empty search state */}
@@ -235,13 +235,13 @@ export default function Tools() {
                 </div>
 
                 {/* Footer Banner */}
-                <div className="bg-gray-100 dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 animate-fadeIn">
+                <aside className="bg-gray-100 dark:bg-[#111] border border-gray-200 dark:border-[#1a1a1a] rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 animate-fadeIn">
                     <div>
-                        <p className="font-semibold text-gray-900 dark:text-white text-sm">🔒 Secure & Private</p>
+                        <h2 className="font-semibold text-gray-900 dark:text-white text-sm">🔒 Secure & Private</h2>
                         <p className="text-xs text-gray-600 dark:text-[#555] mt-0.5">All files are encrypted in transit and auto-deleted after 1 hour. Nothing is stored permanently.</p>
                     </div>
-                </div>
-            </div>
+                </aside>
+            </main>
 
             {/* Modals removed because they moved to specific tool pages */}
         </div>

@@ -340,7 +340,7 @@ export default function GenericToolPage({ id }: { id: string }) {
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 
-            <div className="max-w-3xl mx-auto px-4 py-24 md:py-28">
+            <main className="max-w-3xl mx-auto px-4 py-24 md:py-28">
                 <button
                     onClick={() => router.push("/tools")}
                     className="flex items-center gap-1.5 text-[#666] hover:text-gray-900 dark:text-white transition-colors mb-8 text-sm"
@@ -354,7 +354,7 @@ export default function GenericToolPage({ id }: { id: string }) {
                     <p className="text-[#666] text-sm">{tool.description}</p>
                 </div>
 
-                <div className="bg-gray-100 dark:bg-[#111111] border border-[#222222] rounded-xl overflow-hidden animate-fadeIn" style={{ animationDelay: '0.1s' }}>
+                <section className="bg-gray-100 dark:bg-[#111111] border border-[#222222] rounded-xl overflow-hidden animate-fadeIn" style={{ animationDelay: '0.1s' }}>
                     {/* Upload Section */}
                     {files.length < tool.maxFiles && (
                         <div
@@ -370,7 +370,7 @@ export default function GenericToolPage({ id }: { id: string }) {
                                     <Upload className="text-gray-900 dark:text-white" size={24} />
                                 </div>
                                 <div>
-                                    <p className="text-gray-900 dark:text-white font-medium mb-1">Click to upload or drag & drop</p>
+                                    <h2 className="text-gray-900 dark:text-white font-medium mb-1">Click to upload or drag & drop</h2>
                                     <p className="text-gray-600 dark:text-[#555] text-sm">
                                         {tool.accepts.toUpperCase().replace(/\./g, '').replace(/,/g, ', ')} &mdash; Max {tool.maxFiles} file{tool.maxFiles > 1 ? 's' : ''}
                                     </p>
@@ -397,7 +397,7 @@ export default function GenericToolPage({ id }: { id: string }) {
                     {/* Uploaded Files */}
                     {files.length > 0 && (
                         <div className="border-b border-gray-300 dark:border-[#222] p-4">
-                            <p className="text-xs text-gray-600 dark:text-[#555] font-medium uppercase tracking-wider mb-3">Selected Files ({files.length}/{tool.maxFiles})</p>
+                            <h3 className="text-xs text-gray-600 dark:text-[#555] font-medium uppercase tracking-wider mb-3">Selected Files ({files.length}/{tool.maxFiles})</h3>
                             <FileList
                                 files={files}
                                 onRemove={handleRemoveFile}
@@ -432,10 +432,10 @@ export default function GenericToolPage({ id }: { id: string }) {
                             {processing ? "Processing…" : tool.title}
                         </Button>
                     </div>
-                </div>
+                </section>
 
                 <ToolSEOContent toolName={tool.title} toolDescription={tool.description} />
-            </div>
+            </main>
         </div>
     );
 }

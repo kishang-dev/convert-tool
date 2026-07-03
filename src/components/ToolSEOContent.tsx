@@ -62,7 +62,7 @@ export default function ToolSEOContent({ toolName, toolDescription, steps, featu
     };
 
     return (
-        <div className="max-w-5xl mx-auto px-4 py-16 md:py-24 border-t border-gray-200 dark:border-white/10 mt-12">
+        <section className="max-w-5xl mx-auto px-4 py-16 md:py-24 border-t border-gray-200 dark:border-white/10 mt-12">
             <Head>
                 <script
                     type="application/ld+json"
@@ -71,7 +71,7 @@ export default function ToolSEOContent({ toolName, toolDescription, steps, featu
             </Head>
             
             {/* Features Section */}
-            <div className="mb-20">
+            <article className="mb-20">
                 <div className="text-center mb-12">
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">Why use our {toolName}?</h2>
                     {toolDescription && <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">{toolDescription}</p>}
@@ -88,10 +88,10 @@ export default function ToolSEOContent({ toolName, toolDescription, steps, featu
                         </div>
                     ))}
                 </div>
-            </div>
+            </article>
 
             {/* How To Section */}
-            <div>
+            <article>
                 <div className="text-center mb-12">
                     <h2 className="text-2xl md:text-3xl font-bold mb-4">How to use {toolName}</h2>
                     <p className="text-gray-600 dark:text-gray-400">Follow these simple steps to get your work done quickly.</p>
@@ -111,8 +111,8 @@ export default function ToolSEOContent({ toolName, toolDescription, steps, featu
                         </div>
                     ))}
                 </div>
-            </div>
+            </article>
             
-        </div>
+        </section>
     );
 }
