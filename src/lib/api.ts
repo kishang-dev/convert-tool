@@ -72,6 +72,11 @@ export interface FileData {
   updatedAt: string;
 }
 
+export interface PdfPageSelection {
+  fileId: string;
+  pageIndex: number;
+}
+
 export const fileAPI = {
   // Upload files
   uploadFiles: async (
@@ -152,13 +157,14 @@ export const fileAPI = {
   // Merge PDFs
   mergePDFs: async (
     fileIds: string[],
+    pageOrder?: PdfPageSelection[],
   ): Promise<{
     success: boolean;
     message: string;
     file: FileData;
     downloadUrl: string;
   }> => {
-    const response = await api.post("/files/merge", { fileIds });
+    const response = await api.post("/files/merge", { fileIds, pageOrder });
     return response.data;
   },
 
