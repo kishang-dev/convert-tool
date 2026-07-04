@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { fileAPI, FileData } from "@/lib/api";
 import {
     RotateCw,
@@ -161,6 +162,9 @@ export default function pdfEditor() {
 
     return (
         <div className="min-h-screen bg-[var(--bg)] flex flex-col">
+            <Head>
+                <meta name="robots" content="noindex, nofollow" />
+            </Head>
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
             {/* Header */}

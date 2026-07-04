@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
-import Head from "next/head";
 import { fileAPI, FileData } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Card from "@/components/Card";
@@ -181,7 +180,7 @@ const TOOL_CONFIGS: Record<string, { title: string, description: string, minFile
     }
 };
 
-export default function GenericToolPage({ id }: { id: string }) {
+export default function GenericToolPage({ id, canonicalPath }: { id: string; canonicalPath?: string }) {
     const router = useRouter();
 
     const [files, setFiles] = useState<FileData[]>([]);
@@ -194,6 +193,7 @@ export default function GenericToolPage({ id }: { id: string }) {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const tool = typeof id === "string" ? TOOL_CONFIGS[id] : null;
+    const pagePath = canonicalPath || `/${id}`;
 
     useEffect(() => {
         // Clear files when switching tools
@@ -320,7 +320,7 @@ export default function GenericToolPage({ id }: { id: string }) {
         "description": tool.description,
         "applicationCategory": "BrowserApplication",
         "operatingSystem": "All",
-        "url": `https://toolbasketai.com/${id}`,
+        "url": `https://toolbasketai.com${pagePath}`,
         "offers": {
             "@type": "Offer",
             "price": "0.00",
@@ -333,7 +333,7 @@ export default function GenericToolPage({ id }: { id: string }) {
             <SEO
                 title={tool.title}
                 description={tool.description}
-                canonical={`/${id}`}
+                canonical={pagePath}
                 structuredData={structuredData}
             />
 

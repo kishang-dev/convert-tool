@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { ChartEditor } from "@/components/drowChart/ChartEditor";
+import Head from "next/head";
 
 export default function DrowChartPage() {
     const router = useRouter();
@@ -15,5 +16,12 @@ export default function DrowChartPage() {
         );
     }
 
-    return <ChartEditor id={id} />;
+    return (
+        <>
+            <Head>
+                <meta name="robots" content="noindex, nofollow" />
+            </Head>
+            <ChartEditor id={id} />
+        </>
+    );
 }

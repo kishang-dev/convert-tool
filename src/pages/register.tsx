@@ -82,6 +82,7 @@ export default function RegisterPage() {
                 title="Create Free Account — ToolBasketAI"
                 description="Sign up for a free ToolBasketAI account to save your work, access resume builder, and track your file conversion history."
                 canonical="/register"
+                noIndex={true}
                 keywords="sign up ToolBasketAI, create account, free PDF tools account, register online tools"
             />
             <Navbar />

@@ -85,6 +85,7 @@ export default function MyResumesPage() {
                 title="My Resumes — Manage Your Saved Resumes"
                 description="Manage, edit, download, and export all your saved resumes in one place. Built with ToolBasketAI's free AI-powered resume builder."
                 canonical="/my-resumes"
+                noIndex={true}
                 keywords="my resumes, saved resumes, resume manager, edit resume online, download resume PDF"
             />
 

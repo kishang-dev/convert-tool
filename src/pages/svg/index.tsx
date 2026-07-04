@@ -1,4 +1,4 @@
-import Head from "next/head";
+import SEO from "@/components/SEO";
 import { Sparkles, Zap, Shield, MousePointer2 } from "lucide-react";
 import { useSvgStore } from "@/store/useSvgStore";
 import { FileUpload } from "@/components/FileUpload";
@@ -11,13 +11,21 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      <Head>
-        <title>Image to SVG Converter | ToolBasketAI Tools</title>
-        <meta
-          name="description"
-          content="Convert your PNG, JPG and WEBP images to high-quality SVG vectors instantly with AI-powered technology."
-        />
-      </Head>
+      <SEO
+        title="Image to SVG Converter"
+        description="Convert your PNG, JPG and WEBP images to high-quality SVG vectors instantly with AI-powered technology."
+        canonical="/svg"
+        keywords="image to SVG, SVG converter, PNG to SVG, JPG to SVG, vectorize image, ToolBasketAI"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebApplication',
+          name: 'Image to SVG Converter',
+          url: 'https://toolbasketai.com/svg',
+          applicationCategory: 'DesignApplication',
+          operatingSystem: 'All',
+          offers: { '@type': 'Offer', price: '0.00', priceCurrency: 'USD' },
+        }}
+      />
 
       <Navbar />
 

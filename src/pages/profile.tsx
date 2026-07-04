@@ -80,6 +80,7 @@ export default function ProfilePage() {
                 title="My Profile — Account Settings"
                 description="Update your ToolBasketAI account details, profile photo, and contact information."
                 canonical="/profile"
+                noIndex={true}
             />
             <Navbar />
 

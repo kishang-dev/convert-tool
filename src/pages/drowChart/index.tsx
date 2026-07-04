@@ -4,6 +4,7 @@ import { Plus, LayoutGrid, Trash2, Edit, Check, X, Sparkles, Loader2 } from "luc
 import Navbar from "@/components/Navbar";
 import { useChartStore } from "@/store/useChartStore";
 import Toast from "@/components/Toast";
+import SEO from "@/components/SEO";
 
 export default function ChartDashboard() {
     const router = useRouter();
@@ -109,6 +110,21 @@ export default function ChartDashboard() {
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+            <SEO
+                title="AI Chart and Diagram Maker"
+                description="Create flowcharts, process diagrams, DFDs, BPMN diagrams, swimlanes, and logic maps with ToolBasketAI's free AI chart maker."
+                canonical="/drowChart"
+                keywords="AI chart maker, diagram maker, flowchart generator, DFD maker, BPMN diagram, ToolBasketAI"
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'WebApplication',
+                    name: 'AI Chart and Diagram Maker',
+                    url: 'https://toolbasketai.com/drowChart',
+                    applicationCategory: 'DesignApplication',
+                    operatingSystem: 'All',
+                    offers: { '@type': 'Offer', price: '0.00', priceCurrency: 'USD' },
+                }}
+            />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 

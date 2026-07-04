@@ -68,6 +68,7 @@ export default function HistoryPage() {
                 title="File History — Your Conversion Activity"
                 description="View and download all your previously converted and processed files on ToolBasketAI."
                 canonical="/history"
+                noIndex={true}
             />
             <Navbar />
 
