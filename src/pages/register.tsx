@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar';
 import SEO from '@/components/SEO';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
-import { Mail, Lock, User, UserPlus, Sparkles } from 'lucide-react';
+import { Mail, Lock, User, UserPlus, Sparkles, Eye, EyeOff } from 'lucide-react';
 import { useGoogleLogin } from '@react-oauth/google';
 
 export default function RegisterPage() {
@@ -17,6 +17,7 @@ export default function RegisterPage() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [googleLoading, setGoogleLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
     const { login, user, _hasHydrated } = useAuthStore();
 
@@ -183,24 +184,32 @@ export default function RegisterPage() {
 
                             {/* Password Input */}
                             <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-2">
+                                <label htmlFor="password" className="block text-sm font-medium text-[var(--text-muted)] mb-2">
                                     Password
                                 </label>
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <Lock className="text-[var(--text-faint)] dark:text-[var(--text-faint)]" size={20} />
+                                        <Lock className="text-[var(--text-faint)]" size={20} />
                                     </div>
                                     <input
                                         id="password"
-                                        type="password"
+                                        type={showPassword ? 'text' : 'password'}
                                         required
-                                        className="w-full bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] pl-10 pr-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)] text-[var(--text)] dark:text-[var(--text)] placeholder-[var(--text-faint)] transition-smooth"
+                                        className="w-full bg-[var(--bg)] border border-[var(--border-strong)] pl-10 pr-12 py-3 rounded focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)] text-[var(--text)] placeholder-[var(--text-faint)] transition-smooth"
                                         placeholder="••••••••"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-smooth"
+                                        aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                    >
+                                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
                                 </div>
-                                <p className="mt-2 text-xs text-[var(--text-faint)] dark:text-[var(--text-faint)]">
+                                <p className="mt-2 text-xs text-[var(--text-faint)]">
                                     Must be at least 8 characters long
                                 </p>
                             </div>

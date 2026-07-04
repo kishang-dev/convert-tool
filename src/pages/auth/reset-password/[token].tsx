@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
-import { Sparkles, Lock, CheckCircle, ShieldCheck } from "lucide-react";
+import { Sparkles, Lock, CheckCircle, ShieldCheck, Eye, EyeOff } from "lucide-react";
 import { authApi } from "@/services/api";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -17,6 +17,8 @@ export default function ResetPassword() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [isSuccess, setIsSuccess] = React.useState(false);
     const [error, setError] = React.useState("");
+    const [showPassword, setShowPassword] = React.useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
     React.useEffect(() => {
         setMounted(true);
@@ -90,44 +92,60 @@ export default function ResetPassword() {
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>
-                                    <label htmlFor="password" className="block text-sm font-medium text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-2">
+                                    <label htmlFor="password" className="block text-sm font-medium text-[var(--text-muted)] mb-2">
                                         New Password
                                     </label>
                                     <div className="relative">
                                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <Lock className="text-[var(--text-faint)] dark:text-[var(--text-faint)]" size={20} />
+                                            <Lock className="text-[var(--text-faint)]" size={20} />
                                         </div>
                                         <input
                                             id="password"
-                                            type="password"
+                                            type={showPassword ? 'text' : 'password'}
                                             required
                                             minLength={6}
-                                            className="bg-[var(--bg)] border border-[var(--border-strong)] w-full pl-10 pr-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)] text-[var(--text)] dark:text-[var(--text)] placeholder-[var(--text-faint)] transition-smooth"
+                                            className="bg-[var(--bg)] border border-[var(--border-strong)] w-full pl-10 pr-12 py-3 rounded focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)] text-[var(--text)] placeholder-[var(--text-faint)] transition-smooth"
                                             placeholder="••••••••"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute inset-y-0 right-0 pr-3 flex items-center text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-smooth"
+                                            aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                        >
+                                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                        </button>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-2">
+                                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-[var(--text-muted)] mb-2">
                                         Confirm Password
                                     </label>
                                     <div className="relative">
                                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <Lock className="text-[var(--text-faint)] dark:text-[var(--text-faint)]" size={20} />
+                                            <Lock className="text-[var(--text-faint)]" size={20} />
                                         </div>
                                         <input
                                             id="confirmPassword"
-                                            type="password"
+                                            type={showConfirmPassword ? 'text' : 'password'}
                                             required
                                             minLength={6}
-                                            className="bg-[var(--bg)] border border-[var(--border-strong)] w-full pl-10 pr-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)] text-[var(--text)] dark:text-[var(--text)] placeholder-[var(--text-faint)] transition-smooth"
+                                            className="bg-[var(--bg)] border border-[var(--border-strong)] w-full pl-10 pr-12 py-3 rounded focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)] text-[var(--text)] placeholder-[var(--text-faint)] transition-smooth"
                                             placeholder="••••••••"
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                         />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                            className="absolute inset-y-0 right-0 pr-3 flex items-center text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-smooth"
+                                            aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                                        >
+                                            {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                        </button>
                                     </div>
                                 </div>
 

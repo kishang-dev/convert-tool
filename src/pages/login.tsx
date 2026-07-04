@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
-import { Mail, Lock, LogIn, Sparkles } from 'lucide-react';
+import { Mail, Lock, LogIn, Sparkles, Eye, EyeOff } from 'lucide-react';
 import SEO from '@/components/SEO';
 import { useGoogleLogin } from '@react-oauth/google';
 
@@ -17,6 +17,7 @@ export default function LoginPage() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [googleLoading, setGoogleLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
     const { login, user, _hasHydrated } = useAuthStore();
 
@@ -165,31 +166,39 @@ export default function LoginPage() {
                                 </div>
                             </div>
 
-                            {/* Password Input */}
-                            <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-2">
-                                    Password
-                                </label>
-                                <div className="relative">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <Lock className="text-[var(--text-faint)] dark:text-[var(--text-faint)]" size={20} />
+                                {/* Password Input */}
+                                <div>
+                                    <label htmlFor="password" className="block text-sm font-medium text-[var(--text-muted)] mb-2">
+                                        Password
+                                    </label>
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <Lock className="text-[var(--text-faint)]" size={20} />
+                                        </div>
+                                        <input
+                                            id="password"
+                                            type={showPassword ? 'text' : 'password'}
+                                            required
+                                            className="bg-[var(--bg)] border border-[var(--border-strong)] w-full pl-10 pr-12 py-3 rounded focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)] text-[var(--text)] placeholder-[var(--text-faint)] transition-smooth"
+                                            placeholder="••••••••"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute inset-y-0 right-0 pr-3 flex items-center text-[var(--text-faint)] hover:text-[var(--text-muted)] transition-smooth"
+                                            aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                        >
+                                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                        </button>
                                     </div>
-                                    <input
-                                        id="password"
-                                        type="password"
-                                        required
-                                        className="bg-[var(--bg)] border border-[var(--border-strong)] w-full pl-10 pr-4 py-3 rounded focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)] text-[var(--text)] dark:text-[var(--text)] placeholder-[var(--text-faint)] transition-smooth"
-                                        placeholder="••••••••"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                    />
+                                    <div className="text-right mt-2 font-medium">
+                                        <Link href="/auth/forgot-password" title="Recover Password" className="text-xs text-[var(--accent)] hover:text-[var(--accent-hover)] transition-smooth uppercase tracking-widest">
+                                            Forgot Password?
+                                        </Link>
+                                    </div>
                                 </div>
-                                <div className="text-right mt-2 font-medium">
-                                    <Link href="/auth/forgot-password" title="Recover Password" className="text-xs text-[var(--accent)] hover:text-[var(--accent-hover)] transition-smooth uppercase tracking-widest">
-                                        Forgot Password?
-                                    </Link>
-                                </div>
-                            </div>
 
                             {/* Error Message */}
                             {error && (
