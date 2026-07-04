@@ -38,6 +38,25 @@ export default function pdfEditor() {
         type: "success" | "error";
     } | null>(null);
 
+    const getAssetUrl = (url: string) => {
+        if (!url) return "";
+        if (/^https?:\/\//i.test(url)) return url;
+
+        const baseUrl = (
+            process.env.NEXT_PUBLIC_ASSETS_URL ||
+            process.env.NEXT_PUBLIC_API_URL?.replace("/api", "") ||
+            process.env.NEXT_PUBLIC_BASE_URL ||
+            ""
+        ).replace(/\/$/, "");
+
+        return `${baseUrl}${url.startsWith("/") ? url : `/${url}`}`;
+    };
+
+    const cacheBust = (url: string) => {
+        const separator = url.includes("?") ? "&" : "?";
+        return `${url}${separator}v=${Date.now()}`;
+    };
+
     useEffect(() => {
         if (id && typeof id === "string") {
             loadFileAndPreviews(id);
@@ -57,9 +76,7 @@ export default function pdfEditor() {
                         originalIndex: index,
                         rotation: 0,
                         deleted: false,
-                        imageUrl: process.env.NEXT_PUBLIC_API_URL
-                            ? `${process.env.NEXT_PUBLIC_API_URL.replace("/api", "")}${url}`
-                            : `${process.env.NEXT_PUBLIC_BASE_URL}${url}`,
+                        imageUrl: cacheBust(getAssetUrl(url)),
                     }))
                 );
             }
@@ -93,6 +110,13 @@ export default function pdfEditor() {
         );
     };
 
+    const switchToFile = async (newFileId: string) => {
+        if (!newFileId) return;
+        setEditingPage(null);
+        await router.replace(`/editor/${newFileId}`, undefined, { shallow: true });
+        await loadFileAndPreviews(newFileId);
+    };
+
     const handleSave = async () => {
         if (!file) return;
 
@@ -109,12 +133,19 @@ export default function pdfEditor() {
             const response = await fileAPI.editPDF(file._id, pagesSpec);
             setToast({ message: "PDF saved successfully!", type: "success" });
 
-            // Trigger download
-            const downloadUrl = process.env.NEXT_PUBLIC_API_URL
-                ? `${process.env.NEXT_PUBLIC_API_URL.replace("/api", "")}${response.downloadUrl}`
-                : `${process.env.NEXT_PUBLIC_BASE_URL}${response.downloadUrl}`;
+            if (response.file?._id) {
+                await switchToFile(response.file._id);
+            }
 
-            window.open(downloadUrl, "_blank");
+            const downloadUrl = response.downloadUrl
+                ? getAssetUrl(response.downloadUrl)
+                : response.file
+                    ? fileAPI.getDownloadUrl(response.file)
+                    : "";
+
+            if (downloadUrl) {
+                window.open(downloadUrl, "_blank", "noopener,noreferrer");
+            }
 
         } catch (error: any) {
             setToast({
@@ -131,9 +162,9 @@ export default function pdfEditor() {
         try {
             setLoading(true);
             const res = await fileAPI.addPage(file._id);
-            if (res.success) {
-                // Reload with new file
-                router.push(`/editor/${res.file._id}`);
+            if (res.success && res.file?._id) {
+                setToast({ message: "Blank page added successfully!", type: "success" });
+                await switchToFile(res.file._id);
             }
         } catch (error: any) {
             setToast({
@@ -292,8 +323,11 @@ export default function pdfEditor() {
                     pageIndex={editingPage.index}
                     imageUrl={editingPage.url}
                     onClose={() => setEditingPage(null)}
-                    onSave={(newId) => {
-                        window.location.reload();
+                    onSave={async (newId) => {
+                        if (newId) {
+                            setToast({ message: "PDF content saved successfully!", type: "success" });
+                            await switchToFile(newId);
+                        }
                     }}
                 />
             )}

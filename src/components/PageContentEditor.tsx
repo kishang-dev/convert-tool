@@ -131,6 +131,7 @@ export default function PageContentEditor({
     const [pdfDims, setPdfDims] = useState<{ width: number; height: number } | null>(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [saveError, setSaveError] = useState<string | null>(null);
     const [scale, setScale] = useState(1);
     const [mode, setMode] = useState<EditMode>("full-doc");
 
@@ -316,10 +317,21 @@ export default function PageContentEditor({
         const mods = buildMods();
         if (!mods.length) return;
         try {
+            setSaveError(null);
             setSaving(true);
             const res = await fileAPI.savePageContent(fileId, pageIndex, mods);
-            if (res.success) { onSave(res.file._id); onClose(); }
-        } catch (e) { console.error(e); } finally { setSaving(false); }
+            if (res.success && res.file?._id) {
+                await onSave(res.file._id);
+                onClose();
+            } else {
+                setSaveError("The PDF was not saved. Please try again.");
+            }
+        } catch (e: any) {
+            console.error(e);
+            setSaveError(e.response?.data?.details || e.response?.data?.error || "Failed to save PDF changes. Please try again.");
+        } finally {
+            setSaving(false);
+        }
     };
 
     const hasChanges = (() => {
@@ -383,6 +395,13 @@ export default function PageContentEditor({
                     </button>
                 </div>
             </header>
+
+            {saveError && (
+                <div className="z-[115] border-b border-red-500/30 bg-red-500/10 px-6 py-2 text-xs text-red-200 flex items-start gap-2">
+                    <AlertCircle size={14} className="mt-0.5 shrink-0" />
+                    <span>{saveError}</span>
+                </div>
+            )}
 
             {/* ── Mode Switcher ── */}
             <div className="bg-[#13151f] border-b border-[var(--border)] dark:border-[var(--border)] px-6 py-2 flex items-center gap-2 z-[110]">
