@@ -9,6 +9,7 @@ import { devToolsAPI } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function XmlTool() {
     const [input, setInput] = useState('');
@@ -187,7 +188,7 @@ export default function XmlTool() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO 
                 title="XML Formatter & Validator Tools" 
                 description="Format, beautify, validate, and minify your XML documents instantly client-side with full error details." 
@@ -199,24 +200,31 @@ export default function XmlTool() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-24">
+            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+                <Breadcrumbs
+                    items={[
+                        { label: 'All Tools', href: '/tools' },
+                        { label: 'XML Formatter', href: '/xml-tool' }
+                    ]}
+                />
+
                 <div className="text-center mb-10 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">XML Formatter & Validator</span>
                     </h1>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Beautify, minify, and inspect XML tag nesting structures instantly. Catch exact syntax lines.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] p-4 rounded">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded">
                     <div className="flex items-center gap-3">
                         <Button
                             onClick={handleLoadSample}
                             variant="ghost"
                             size="sm"
-                            className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)]"
+                            className="text-[var(--text-muted)] hover:text-[var(--text)]"
                         >
                             <Sparkles size={16} className="mr-1.5" />
                             Load Sample
@@ -236,7 +244,7 @@ export default function XmlTool() {
                             onClick={() => validateXml(input)}
                             variant="secondary"
                             size="sm"
-                            className="font-bold border border-[var(--border)] dark:border-[var(--border)]"
+                            className="font-bold border border-[var(--border)]"
                         >
                             Validate
                         </Button>
@@ -270,15 +278,15 @@ export default function XmlTool() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                     {/* Left: Input Editor */}
                     <div className="lg:col-span-8 flex flex-col gap-4">
-                        <Card variant="elevated" className="flex flex-col p-6 min-h-[480px] h-full">
-                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase mb-3 block">
+                        <Card variant="elevated" className="flex flex-col p-6 min-h-[480px] h-full bg-[var(--surface)] border-[var(--border)]">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] uppercase mb-3 block">
                                 Raw XML Input
                             </span>
                             <textarea
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder="Paste raw XML tags here..."
-                                className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[350px] leading-relaxed"
+                                className="w-full flex-grow p-4 bg-[var(--bg)] border border-[var(--border-strong)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent)] resize-none min-h-[350px] leading-relaxed"
                             />
                         </Card>
                     </div>
@@ -354,7 +362,7 @@ export default function XmlTool() {
                         )}
                     </div>
                 </div>
-            </div>
+            </main>
         
             <ToolSEOContent toolName="XML Formatter & Validator Tools" toolDescription="Format, beautify, validate, and minify your XML documents instantly client-side with full error details." />
             <Footer />

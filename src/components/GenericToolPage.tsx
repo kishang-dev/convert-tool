@@ -10,6 +10,7 @@ import { Upload, ArrowLeft } from "lucide-react";
 import * as gtag from "@/lib/gtag";
 import SEO from "@/components/SEO";
 import ToolSEOContent from "@/components/ToolSEOContent";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Toast from "./Toast";
 
 const TOOL_CONFIGS: Record<string, { title: string, description: string, minFiles: number, maxFiles: number, run: (files: FileData[], password?: string) => Promise<any>, needsPassword?: boolean, accepts: string, openEditor?: boolean }> = {
@@ -341,21 +342,20 @@ export default function GenericToolPage({ id, canonicalPath }: { id: string; can
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 
-            <main className="max-w-3xl mx-auto px-4 py-24 md:py-28">
-                <button
-                    onClick={() => router.push("/tools")}
-                    className="flex items-center gap-1.5 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors mb-8 text-sm"
-                >
-                    <ArrowLeft size={16} />
-                    All Tools
-                </button>
+            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+                <Breadcrumbs 
+                    items={[
+                        { label: 'All Tools', href: '/tools' },
+                        { label: tool.title, href: pagePath }
+                    ]} 
+                />
 
                 <div className="mb-8 animate-fadeIn">
                     <h1 className="text-3xl font-bold text-[var(--text)] dark:text-[var(--text)] mb-2">{tool.title}</h1>
                     <p className="text-[var(--text-muted)] text-sm">{tool.description}</p>
                 </div>
 
-                <section className="bg-[var(--surface)] dark:bg-[var(--surface)] border border-[#222222] rounded overflow-hidden animate-fadeIn" style={{ animationDelay: '0.1s' }}>
+                <section className="bg-[var(--surface)] border border-[var(--border-strong)] rounded overflow-hidden animate-fadeIn" style={{ animationDelay: '0.1s' }}>
                     {/* Upload Section */}
                     {files.length < tool.maxFiles && (
                         <div

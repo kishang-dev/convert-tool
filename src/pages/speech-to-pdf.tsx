@@ -12,6 +12,8 @@ import { twMerge } from 'tailwind-merge';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Footer from '@/components/Footer';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import Navbar from '@/components/Navbar';
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -536,7 +538,7 @@ export default function SpeechToPdf() {
     };
 
     return (
-        <div className="min-h-screen bg-[#080c14] text-slate-100 font-sans selection:bg-[var(--accent)]/30">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] font-sans selection:bg-[var(--accent)]/30">
             <SEO 
                 title="VoicePDF | Speech to Professional PDF" 
                 description="Convert your speech to properly formatted PDF documents." 
@@ -544,22 +546,16 @@ export default function SpeechToPdf() {
                 structuredData={structuredData}
             />
 
-            {/* Background blobs */}
-            <div className="fixed inset-0 overflow-hidden pointer-events-none select-none">
-                <div className="absolute top-[-15%] left-[-5%] w-[50%] h-[50%] bg-indigo-900/15 blur-[160px] rounded-full" />
-                <div className="absolute bottom-[-10%] right-[-5%] w-[45%] h-[45%] bg-cyan-900/10 blur-[160px] rounded-full" />
-                <div className="absolute top-[40%] left-[40%] w-[30%] h-[30%] bg-violet-900/10 blur-[120px] rounded-full" />
-                {/* Subtle grid overlay */}
-                <div
-                    className="absolute inset-0 opacity-[0.03]"
-                    style={{
-                        backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
-                        backgroundSize: '40px 40px',
-                    }}
-                />
-            </div>
+            <Navbar />
 
-            <main className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-10">
+            <main className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-24 md:py-28">
+                <Breadcrumbs 
+                    items={[
+                        { label: 'All Tools', href: '/tools' },
+                        { label: 'VoicePDF', href: '/speech-to-pdf' }
+                    ]} 
+                />
+                
                 {/* ── Header ── */}
                 <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
                     <div className="flex items-center gap-3">
@@ -593,7 +589,7 @@ export default function SpeechToPdf() {
                     <aside className="lg:col-span-1 space-y-4">
 
                         {/* Settings Card */}
-                        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded p-5 shadow-xl">
+                        <div className="bg-[var(--surface)] border border-[var(--border-strong)] rounded p-5 shadow-xl">
                             <h2 className="text-sm font-semibold mb-4 flex items-center gap-2 text-slate-300">
                                 <Settings className="w-4 h-4 text-[var(--accent)]" /> Settings
                             </h2>
@@ -612,7 +608,7 @@ export default function SpeechToPdf() {
                                                 'py-2 px-3 rounded text-xs font-medium flex items-center justify-center gap-2 transition-all border',
                                                 recordMode === 'audio' 
                                                     ? 'bg-[var(--accent)]/10 border-[var(--accent)]/50 text-[var(--accent)]' 
-                                                    : 'bg-slate-900/50 border-slate-800 text-slate-400 hover:text-slate-300 disabled:opacity-50'
+                                                    : 'bg-[var(--surface)] border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text)] disabled:opacity-50'
                                             )}
                                         >
                                             <Mic className="w-3.5 h-3.5" /> Mic Only
@@ -624,7 +620,7 @@ export default function SpeechToPdf() {
                                                 'py-2 px-3 rounded text-xs font-medium flex items-center justify-center gap-2 transition-all border',
                                                 recordMode === 'meeting' 
                                                     ? 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400' 
-                                                    : 'bg-slate-900/50 border-slate-800 text-slate-400 hover:text-slate-300 disabled:opacity-50'
+                                                    : 'bg-[var(--surface)] border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text)] disabled:opacity-50'
                                             )}
                                         >
                                             <MonitorUp className="w-3.5 h-3.5" /> Screen + Mic
@@ -642,7 +638,7 @@ export default function SpeechToPdf() {
                                         value={title}
                                         onChange={e => setTitle(e.target.value)}
                                         placeholder="Enter PDF title…"
-                                        className="w-full bg-slate-950/50 border border-slate-700/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)]/40 focus:border-[var(--accent-ring)] transition-all placeholder-slate-600"
+                                        className="w-full bg-[var(--bg)] border border-[var(--border-strong)] rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:border-[var(--accent)] transition-all placeholder-[var(--text-faint)] text-[var(--text)]"
                                     />
                                 </div>
 
@@ -663,7 +659,7 @@ export default function SpeechToPdf() {
                                         onChange={e => setDescription(e.target.value)}
                                         placeholder="Meeting summary will generate here automatically or you can type it..."
                                         rows={3}
-                                        className="w-full bg-slate-950/50 border border-slate-700/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)]/40 focus:border-[var(--accent-ring)] transition-all placeholder-slate-600 resize-none"
+                                        className="w-full bg-[var(--bg)] border border-[var(--border-strong)] rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:border-[var(--accent)] transition-all placeholder-[var(--text-faint)] text-[var(--text)] resize-none"
                                     />
                                 </div>
 
@@ -682,7 +678,7 @@ export default function SpeechToPdf() {
                                     <button
                                         onClick={() => fileInputRef.current?.click()}
                                         disabled={isListening || isUploadingFile || isProcessing}
-                                        className="w-full py-2.5 rounded border border-dashed border-slate-700 bg-slate-900/30 hover:bg-slate-800/50 text-slate-400 hover:text-slate-200 transition-all text-xs font-medium flex justify-center items-center gap-2 group disabled:opacity-50"
+                                        className="w-full py-2.5 rounded border border-dashed border-[var(--border-strong)] bg-[var(--surface)] hover:bg-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text)] transition-all text-xs font-medium flex justify-center items-center gap-2 group disabled:opacity-50"
                                     >
                                         {isUploadingFile ? (
                                             <span className="flex items-center gap-2 animate-pulse text-[var(--accent)]">
@@ -709,7 +705,7 @@ export default function SpeechToPdf() {
                                             if (isListening) stopListening();
                                             setSelectedLang(e.target.value);
                                         }}
-                                        className="w-full bg-slate-950/50 border border-slate-700/60 rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent-ring)]/40 focus:border-[var(--accent-ring)] transition-all text-slate-200"
+                                        className="w-full bg-[var(--bg)] border border-[var(--border-strong)] rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/40 focus:border-[var(--accent)] transition-all text-[var(--text)]"
                                     >
                                         {LANGUAGES.map(l => (
                                             <option key={l.code} value={l.code}>{l.label}</option>
@@ -751,7 +747,7 @@ export default function SpeechToPdf() {
                                             'w-full flex items-center justify-center gap-2.5 py-3.5 rounded font-semibold text-sm transition-all duration-200 select-none',
                                             isListening
                                                 ? 'bg-red-500/10 text-red-400 border border-red-500/25 hover:bg-red-500/20 active:scale-95'
-                                                : 'bg-gradient-to-r from-indigo-600 to-cyan-500 text-[var(--text)] dark:text-[var(--text)] shadow-lg shadow-[var(--accent-soft)] hover:brightness-110 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed'
+                                                : 'bg-[var(--accent)] text-white shadow-lg hover:brightness-110 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed'
                                         )}
                                     >
                                         {isListening ? (
@@ -774,7 +770,7 @@ export default function SpeechToPdf() {
                         </div>
 
                         {/* Stats Card */}
-                        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded p-5 shadow-xl">
+                        <div className="bg-[var(--surface)] border border-[var(--border-strong)] rounded p-5 shadow-xl">
                             <h2 className="text-sm font-semibold mb-4 flex items-center gap-2 text-slate-300">
                                 <BarChart2 className="w-4 h-4 text-[var(--accent)]" /> Stats
                             </h2>
@@ -783,17 +779,17 @@ export default function SpeechToPdf() {
                                     { icon: <Type className="w-3.5 h-3.5" />, label: 'Words', value: wordCount.toLocaleString() },
                                     { icon: <AlignLeft className="w-3.5 h-3.5" />, label: 'Characters', value: charCount.toLocaleString() },
                                 ].map(stat => (
-                                    <div key={stat.label} className="bg-slate-800/50 rounded p-3 border border-slate-700/30">
-                                        <div className="flex items-center gap-1.5 text-slate-500 text-xs mb-1">{stat.icon}{stat.label}</div>
-                                        <p className="text-xl font-bold text-slate-100 tabular-nums">{stat.value}</p>
+                                    <div key={stat.label} className="bg-[var(--bg-elevated)] rounded p-3 border border-[var(--border)]">
+                                        <div className="flex items-center gap-1.5 text-[var(--text-muted)] text-xs mb-1">{stat.icon}{stat.label}</div>
+                                        <p className="text-xl font-bold text-[var(--text)] tabular-nums">{stat.value}</p>
                                     </div>
                                 ))}
                             </div>
                             <div className="mt-3 bg-slate-800/50 rounded p-3 border border-slate-700/30">
-                                <div className="flex items-center gap-1.5 text-slate-500 text-xs mb-1">
+                                <div className="flex items-center gap-1.5 text-[var(--text-muted)] text-xs mb-1">
                                     <FileText className="w-3.5 h-3.5" /> Est. Reading Time
                                 </div>
-                                <p className="text-base font-semibold text-slate-100">
+                                <p className="text-base font-semibold text-[var(--text)]">
                                     {wordCount < 200 ? '< 1 min' : `~${Math.round(wordCount / 200)} min`}
                                 </p>
                             </div>
@@ -834,12 +830,12 @@ export default function SpeechToPdf() {
 
                     {/* ── Right Panel: Transcript ── */}
                     <section className="lg:col-span-2 flex flex-col gap-4">
-                        <div className="relative bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded shadow-2xl flex flex-col"
+                        <div className="relative bg-[var(--surface)] border border-[var(--border-strong)] rounded shadow-2xl flex flex-col"
                             style={{ minHeight: '620px', maxHeight: '780px' }}>
 
                             {/* Panel header */}
-                            <div className="px-5 py-3.5 border-b border-slate-800/60 flex justify-between items-center gap-3 shrink-0">
-                                <span className="flex items-center gap-2 text-sm text-slate-400 font-medium">
+                            <div className="px-5 py-3.5 border-b border-[var(--border)] flex justify-between items-center gap-3 shrink-0">
+                                <span className="flex items-center gap-2 text-sm text-[var(--text-muted)] font-medium">
                                     <FileText className="w-4 h-4 text-[var(--accent)]" /> Live Transcript
                                     {isListening && (
                                         <span className="text-[10px] bg-red-500 text-[var(--text)] dark:text-[var(--text)] px-2 py-0.5 rounded-full uppercase font-black tracking-tight animate-pulse">
@@ -854,7 +850,7 @@ export default function SpeechToPdf() {
                                         onClick={handleUndo}
                                         disabled={history.length === 0}
                                         title="Undo last speech"
-                                        className="p-2 rounded text-slate-500 hover:text-slate-200 hover:bg-slate-700/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                        className="p-2 rounded text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-hover)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                                     >
                                         <Undo2 className="w-4 h-4" />
                                     </button>
@@ -864,7 +860,7 @@ export default function SpeechToPdf() {
                                         onClick={handleCopy}
                                         disabled={!transcript}
                                         title="Copy as plain text"
-                                        className="p-2 rounded text-slate-500 hover:text-slate-200 hover:bg-slate-700/50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                                        className="p-2 rounded text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface-hover)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                                     >
                                         {copyStatus
                                             ? <CheckCircle2 className="w-4 h-4 text-green-400" />
@@ -876,7 +872,7 @@ export default function SpeechToPdf() {
                                     <button
                                         onClick={clearTranscript}
                                         title="Clear transcript"
-                                        className="p-2 rounded text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                                        className="p-2 rounded text-[var(--text-muted)] hover:text-red-400 hover:bg-red-500/10 transition-colors"
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </button>
@@ -898,7 +894,7 @@ export default function SpeechToPdf() {
 
                                 {/* Interim preview bar */}
                                 {isListening && (
-                                    <div className="px-5 py-3 border-t border-slate-800/50 bg-slate-950/40 backdrop-blur-sm shrink-0 animate-in slide-in-from-bottom-2 duration-200">
+                                    <div className="px-5 py-3 border-t border-[var(--border)] bg-[var(--bg-elevated)] backdrop-blur-sm shrink-0 animate-in slide-in-from-bottom-2 duration-200">
                                         <div className="flex items-center gap-2 mb-1">
                                             <span className="relative flex h-2 w-2">
                                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
@@ -906,7 +902,7 @@ export default function SpeechToPdf() {
                                             </span>
                                             <span className="text-[10px] font-semibold text-[var(--accent)] uppercase tracking-widest">Recognizing…</span>
                                         </div>
-                                        <p className="text-slate-400 italic text-sm min-h-[1.25rem] leading-relaxed line-clamp-2">
+                                        <p className="text-[var(--text-muted)] italic text-sm min-h-[1.25rem] leading-relaxed line-clamp-2">
                                             {interimText || 'Waiting for speech…'}
                                         </p>
                                     </div>
@@ -914,7 +910,7 @@ export default function SpeechToPdf() {
                             </div>
 
                             {/* Export footer */}
-                            <div className="p-4 border-t border-slate-800/50 flex gap-3 shrink-0">
+                            <div className="p-4 border-t border-[var(--border)] flex gap-3 shrink-0">
                                 {/* Export .txt */}
                                 <button
                                     onClick={handleDownloadTxt}
@@ -923,8 +919,8 @@ export default function SpeechToPdf() {
                                     className={cn(
                                         'flex items-center justify-center gap-2 px-4 py-3 rounded text-sm font-medium transition-all border',
                                         !transcript
-                                            ? 'bg-slate-800/50 text-slate-600 border-slate-700/30 cursor-not-allowed'
-                                            : 'bg-slate-800 text-slate-200 border-slate-700/50 hover:bg-slate-700 active:scale-95'
+                                            ? 'bg-[var(--surface)] text-[var(--text-muted)] border-[var(--border)] cursor-not-allowed'
+                                            : 'bg-[var(--surface-hover)] text-[var(--text)] border-[var(--border-strong)] hover:bg-[var(--surface)] active:scale-95'
                                     )}
                                 >
                                     <FileText className="w-4 h-4" /> .TXT
@@ -937,8 +933,8 @@ export default function SpeechToPdf() {
                                     className={cn(
                                         'flex-1 group relative flex items-center justify-center gap-2.5 py-3 rounded font-semibold text-sm transition-all overflow-hidden',
                                         !transcript || isProcessing
-                                            ? 'bg-slate-800 text-slate-600 cursor-not-allowed'
-                                            : 'bg-[var(--surface)] text-slate-950 hover:-translate-y-0.5 hover:shadow-2xl shadow-white/10 active:scale-95'
+                                            ? 'bg-[var(--surface)] text-[var(--text-muted)] cursor-not-allowed'
+                                            : 'bg-[var(--accent)] text-white hover:-translate-y-0.5 hover:shadow-2xl shadow-[var(--accent-ring)] active:scale-95'
                                     )}
                                 >
                                     {isProcessing ? (

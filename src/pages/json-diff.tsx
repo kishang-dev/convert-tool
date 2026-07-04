@@ -8,6 +8,7 @@ import { ShieldCheck, AlertCircle, Sparkles, RefreshCw, Layers } from 'lucide-re
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 interface DiffLine {
     type: 'equal' | 'added' | 'removed';
@@ -177,7 +178,7 @@ export default function JsonDiffChecker() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
                 title="JSON Diff Checker Tools"
                 description="Compare two JSON objects side-by-side in real-time. Detect insertions, deletions, and updates instantly."
@@ -189,24 +190,31 @@ export default function JsonDiffChecker() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-24">
+            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+                <Breadcrumbs
+                    items={[
+                        { label: 'All Tools', href: '/tools' },
+                        { label: 'JSON Diff Checker', href: '/json-diff' }
+                    ]}
+                />
+
                 <div className="text-center mb-10 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">JSON Diff Checker</span>
                     </h1>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Compare two JSON files line-by-line. Identify additions, modifications, and deletions instantly.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] p-4 rounded">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded">
                     <div className="flex items-center gap-3">
                         <Button
                             onClick={handleLoadSample}
                             variant="ghost"
                             size="sm"
-                            className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)]"
+                            className="text-[var(--text-muted)] hover:text-[var(--text)]"
                         >
                             <Sparkles size={16} className="mr-1.5" />
                             Load Sample JSONs
@@ -241,28 +249,28 @@ export default function JsonDiffChecker() {
                 {!diffResult ? (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
                         {/* JSON A */}
-                        <Card variant="elevated" className="flex flex-col p-6 min-h-[400px]">
-                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase mb-3 block">
+                        <Card variant="elevated" className="flex flex-col p-6 min-h-[400px] bg-[var(--surface)] border-[var(--border)]">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] uppercase mb-3 block">
                                 JSON Original (A)
                             </span>
                             <textarea
                                 value={jsonA}
                                 onChange={(e) => setJsonA(e.target.value)}
                                 placeholder="Paste baseline JSON here..."
-                                className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[300px] leading-relaxed"
+                                className="w-full flex-grow p-4 bg-[var(--bg)] border border-[var(--border-strong)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent)] resize-none min-h-[300px] leading-relaxed"
                             />
                         </Card>
 
                         {/* JSON B */}
-                        <Card variant="elevated" className="flex flex-col p-6 min-h-[400px]">
-                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase mb-3 block">
+                        <Card variant="elevated" className="flex flex-col p-6 min-h-[400px] bg-[var(--surface)] border-[var(--border)]">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] uppercase mb-3 block">
                                 JSON Modified (B)
                             </span>
                             <textarea
                                 value={jsonB}
                                 onChange={(e) => setJsonB(e.target.value)}
                                 placeholder="Paste modified JSON here..."
-                                className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[300px] leading-relaxed"
+                                className="w-full flex-grow p-4 bg-[var(--bg)] border border-[var(--border-strong)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent)] resize-none min-h-[300px] leading-relaxed"
                             />
                         </Card>
                     </div>
@@ -281,7 +289,7 @@ export default function JsonDiffChecker() {
                                 Edit Payloads
                             </button>
                         </div>
-                        <div className="bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded overflow-x-auto p-4 font-mono text-xs leading-relaxed max-h-[500px]">
+                        <div className="bg-[var(--bg)] border border-[var(--border-strong)] rounded overflow-x-auto p-4 font-mono text-xs leading-relaxed max-h-[500px]">
                             {diffResult.map((line, idx) => (
                                 <div
                                     key={idx}
@@ -298,7 +306,7 @@ export default function JsonDiffChecker() {
                         </div>
                     </Card>
                 )}
-            </div>
+            </main>
 
             <ToolSEOContent toolName="JSON Diff Checker Tools" toolDescription="Compare two JSON objects side-by-side in real-time. Detect insertions, deletions, and updates instantly." />
             <Footer />

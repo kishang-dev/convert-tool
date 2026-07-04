@@ -9,6 +9,7 @@ import { devToolsAPI } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function SqlFormatter() {
     const [input, setInput] = useState('');
@@ -91,7 +92,7 @@ export default function SqlFormatter() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO 
                 title="SQL Query Formatter Tools" 
                 description="Beautify, indent, format, and minify SQL queries client-side instantly for MySQL, PostgreSQL, Oracle, or SQL Server." 
@@ -103,24 +104,31 @@ export default function SqlFormatter() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-24">
+            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+                <Breadcrumbs
+                    items={[
+                        { label: 'All Tools', href: '/tools' },
+                        { label: 'SQL Formatter', href: '/sql-formatter' }
+                    ]}
+                />
+
                 <div className="text-center mb-10 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">SQL Query Formatter</span>
                     </h1>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Pretty print database query clauses. Capitalize commands and minify raw strings.
                     </p>
                 </div>
 
                 {/* Toolbar */}
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] p-4 rounded">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded">
                     <div className="flex items-center gap-3">
                         <Button
                             onClick={handleLoadSample}
                             variant="ghost"
                             size="sm"
-                            className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)]"
+                            className="text-[var(--text-muted)] hover:text-[var(--text)]"
                         >
                             <Sparkles size={16} className="mr-1.5" />
                             Load Sample Query
@@ -140,7 +148,7 @@ export default function SqlFormatter() {
                             onClick={handleMinify}
                             variant="secondary"
                             size="sm"
-                            className="font-bold border border-[var(--border)] dark:border-[var(--border)]"
+                            className="font-bold border border-[var(--border)]"
                         >
                             Minify SQL
                         </Button>
@@ -157,22 +165,22 @@ export default function SqlFormatter() {
                 {/* Editor Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
                     {/* Input Pane */}
-                    <Card variant="elevated" className="flex flex-col p-6 min-h-[480px]">
-                        <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase mb-3 block">
+                    <Card variant="elevated" className="flex flex-col p-6 min-h-[480px] bg-[var(--surface)] border-[var(--border)]">
+                        <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] uppercase mb-3 block">
                             Raw SQL Query Input
                         </span>
                         <textarea
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="select * from table where column = 'value'..."
-                            className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[350px] leading-relaxed"
+                            className="w-full flex-grow p-4 bg-[var(--bg)] border border-[var(--border-strong)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent)] resize-none min-h-[350px] leading-relaxed"
                         />
                     </Card>
 
                     {/* Output Pane */}
-                    <Card variant="elevated" className="flex flex-col p-6 min-h-[480px]">
+                    <Card variant="elevated" className="flex flex-col p-6 min-h-[480px] bg-[var(--surface)] border-[var(--border)]">
                         <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">
+                            <span className="text-sm font-semibold tracking-wider text-[var(--text-muted)] uppercase">
                                 Beautified SQL Output
                             </span>
                             {output && (
@@ -189,11 +197,11 @@ export default function SqlFormatter() {
                             readOnly
                             value={output}
                             placeholder="Resulting formatted database queries will appear here..."
-                            className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-emerald-400 focus:outline-none resize-none min-h-[350px] leading-relaxed"
+                            className="w-full flex-grow p-4 bg-[var(--bg)] border border-[var(--border-strong)] rounded font-mono text-sm text-emerald-400 focus:outline-none resize-none min-h-[350px] leading-relaxed"
                         />
                     </Card>
                 </div>
-            </div>
+            </main>
         
             <ToolSEOContent toolName="SQL Query Formatter Tools" toolDescription="Beautify, indent, format, and minify SQL queries client-side instantly for MySQL, PostgreSQL, Oracle, or SQL Server." />
             <Footer />

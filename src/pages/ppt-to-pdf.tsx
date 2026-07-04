@@ -9,6 +9,7 @@ import { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function PptToPdf() {
     const [file, setFile] = useState<File | null>(null);
@@ -80,7 +81,7 @@ export default function PptToPdf() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO 
                 title="PowerPoint to PDF Converter Tools" 
                 description="Convert PowerPoint presentations to PDF documents." 
@@ -92,12 +93,18 @@ export default function PptToPdf() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-4xl mx-auto px-4 py-24">
+            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+                <Breadcrumbs 
+                    items={[
+                        { label: 'All Tools', href: '/tools' },
+                        { label: 'PPT to PDF', href: '/ppt-to-pdf' }
+                    ]} 
+                />
                 <div className="text-center mb-12 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                         <span className="gradient-text">PowerPoint to PDF</span>
                     </h1>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-lg">
+                    <p className="text-[var(--text-muted)] text-lg">
                         Convert your presentations to PDF.
                     </p>
                     <div className="mt-4 inline-flex items-center gap-2 bg-yellow-500/10 px-4 py-2 rounded border border-yellow-500/20 text-yellow-200 text-sm">
@@ -107,7 +114,7 @@ export default function PptToPdf() {
                 </div>
 
                 <div className="grid gap-8">
-                    <Card variant="elevated" className="p-8 md:p-12">
+                    <Card variant="elevated" className="p-8 md:p-12 bg-[var(--surface)] border-[var(--border)]">
                         {!convertedFile ? (
                             <div className="flex flex-col items-center gap-6">
                                 <div className="w-20 h-20 bg-orange-500/10 rounded flex items-center justify-center mb-2">
@@ -134,7 +141,7 @@ export default function PptToPdf() {
                                 ) : (
                                     <div className="text-center">
                                         <p className="text-xl font-medium mb-2">Upload PowerPoint File</p>
-                                        <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-6">
+                                        <p className="text-sm text-[var(--text-muted)] mb-6">
                                             Select a .pptx or .ppt file to convert
                                         </p>
                                         <Button onClick={() => fileInputRef.current?.click()} size="lg">
@@ -172,7 +179,7 @@ export default function PptToPdf() {
                         )}
                     </Card>
                 </div>
-            </div>
+            </main>
         
             <ToolSEOContent toolName="PowerPoint to PDF Converter Tools" toolDescription="Convert PowerPoint presentations to PDF documents." />
             <Footer />

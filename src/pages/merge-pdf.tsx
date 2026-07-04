@@ -9,6 +9,7 @@ import Toast from "@/components/Toast";
 import ToolSEOContent from "@/components/ToolSEOContent";
 import PdfUploadDropzone from "@/components/PdfUploadDropzone";
 import PdfPageOrganizer, { PdfPreviewPage } from "@/components/PdfPageOrganizer";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { fileAPI, FileData } from "@/lib/api";
 import * as gtag from "@/lib/gtag";
 
@@ -221,13 +222,12 @@ export default function MergePdf() {
             <Navbar />
 
             <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
-                <button
-                    onClick={() => router.push("/tools")}
-                    className="flex items-center gap-1.5 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors mb-8 text-sm"
-                >
-                    <ArrowLeft size={16} />
-                    All Tools
-                </button>
+                <Breadcrumbs 
+                    items={[
+                        { label: 'All Tools', href: '/tools' },
+                        { label: 'Merge PDF', href: '/merge-pdf' }
+                    ]} 
+                />
 
                 <div className="mb-8 animate-fadeIn">
                     <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Merge PDF</h1>

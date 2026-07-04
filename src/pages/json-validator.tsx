@@ -8,6 +8,7 @@ import { ShieldCheck, AlertCircle, Sparkles, CheckCircle2, ChevronRight } from '
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function JsonValidator() {
     const [input, setInput] = useState('');
@@ -150,7 +151,7 @@ export default function JsonValidator() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO 
                 title="JSON Validator & Syntax Debugger Tools" 
                 description="Validate your JSON codes instantly, analyze object depth, and discover exact syntax error lines." 
@@ -162,12 +163,19 @@ export default function JsonValidator() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-24">
+            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+                <Breadcrumbs
+                    items={[
+                        { label: 'All Tools', href: '/tools' },
+                        { label: 'JSON Validator', href: '/json-validator' }
+                    ]}
+                />
+
                 <div className="text-center mb-10 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">JSON Validator & Debugger</span>
                     </h1>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
+                    <p className="text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
                         Validate JSON structure, detect syntax formatting anomalies, and find line-by-line debugging indices.
                     </p>
                 </div>
@@ -175,7 +183,7 @@ export default function JsonValidator() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                     {/* Left: Input */}
                     <div className="lg:col-span-7 flex flex-col gap-4">
-                        <Card variant="elevated" className="flex flex-col p-6 h-full">
+                        <Card variant="elevated" className="flex flex-col p-6 h-full bg-[var(--surface)] border-[var(--border)]">
                             <div className="flex items-center justify-between mb-3">
                                 <h2 className="text-lg font-bold text-[var(--text)]">
                                     JSON Input
@@ -194,13 +202,13 @@ export default function JsonValidator() {
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder='Paste your JSON payload here...'
-                                className="w-full flex-grow p-4 bg-[var(--surface)] dark:bg-[var(--surface-hover)] border border-[var(--border)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent-ring)] resize-none min-h-[400px] leading-relaxed"
+                                className="w-full flex-grow p-4 bg-[var(--bg)] border border-[var(--border-strong)] rounded font-mono text-sm text-[var(--text)] focus:outline-none focus:border-[var(--accent)] resize-none min-h-[400px] leading-relaxed"
                             />
                             <div className="flex justify-end gap-3 mt-4">
                                 <Button 
                                     onClick={() => setInput('')} 
                                     variant="ghost"
-                                    className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)]"
+                                    className="text-[var(--text-muted)] hover:text-[var(--text)]"
                                 >
                                     Clear
                                 </Button>
@@ -308,7 +316,7 @@ export default function JsonValidator() {
                         )}
                     </div>
                 </div>
-            </div>
+            </main>
         
             <ToolSEOContent toolName="JSON Validator & Syntax Debugger Tools" toolDescription="Validate your JSON codes instantly, analyze object depth, and discover exact syntax error lines." />
             <Footer />

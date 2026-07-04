@@ -9,6 +9,7 @@ import { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function PdfUnlock() {
     const [file, setFile] = useState<File | null>(null);
@@ -84,7 +85,7 @@ export default function PdfUnlock() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO 
                 title="PDF Unlock & Password Remover Tools" 
                 description="Unlock password protected PDFs and permanently remove passwords and restrictions." 
@@ -96,7 +97,14 @@ export default function PdfUnlock() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-4xl mx-auto px-4 py-24">
+            <div className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+                <Breadcrumbs 
+                    items={[
+                        { label: 'All Tools', href: '/tools' },
+                        { label: 'PDF Unlock', href: '/pdf-unlock' }
+                    ]} 
+                />
+
                 <div className="text-center mb-12 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4">
                         <span className="gradient-text">PDF Unlock & Password Remover</span>
@@ -107,7 +115,7 @@ export default function PdfUnlock() {
                 </div>
 
                 <div className="grid gap-8">
-                    <Card variant="elevated" className="p-8 md:p-12 relative overflow-hidden">
+                    <Card variant="elevated" className="p-8 md:p-12 relative overflow-hidden bg-[var(--surface)] border-[var(--border)]">
                         <div className="absolute top-0 right-0 p-4 opacity-5">
                             <Unlock size={120} className="text-[var(--text)] dark:text-[var(--text)]" />
                         </div>
