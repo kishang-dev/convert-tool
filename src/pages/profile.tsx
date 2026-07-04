@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useAuthStore } from '@/store/authStore';
 import { authApi } from '@/services/api';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
@@ -188,6 +189,7 @@ export default function ProfilePage() {
                     </Card>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
@@ -259,6 +260,7 @@ export default function Base64Tool() {
             </div>
         
             <ToolSEOContent toolName="Base64 Encoder & Decoder Tools" toolDescription="Encode strings/files to Base64 or decode Base64 strings back to text instantly." />
+            <Footer />
         </div>
     );
 }

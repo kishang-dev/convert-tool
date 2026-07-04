@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
@@ -195,6 +196,7 @@ export default function SqlFormatter() {
             </div>
         
             <ToolSEOContent toolName="SQL Query Formatter Tools" toolDescription="Beautify, indent, format, and minify SQL queries client-side instantly for MySQL, PostgreSQL, Oracle, or SQL Server." />
+            <Footer />
         </div>
     );
 }

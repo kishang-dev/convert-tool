@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
@@ -174,6 +175,7 @@ export default function PptToPdf() {
             </div>
         
             <ToolSEOContent toolName="PowerPoint to PDF Converter Tools" toolDescription="Convert PowerPoint presentations to PDF documents." />
+            <Footer />
         </div>
     );
 }

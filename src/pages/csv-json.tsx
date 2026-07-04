@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
@@ -243,6 +244,7 @@ export default function CsvJsonConverter() {
             </div>
         
             <ToolSEOContent toolName="CSV ↔ JSON Converter Tools" toolDescription="Convert CSV spreadsheets to JSON format and JSON arrays back to CSV tables instantly." />
+            <Footer />
         </div>
     );
 }

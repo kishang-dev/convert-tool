@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Plus, LayoutGrid, Trash2, Edit, Check, X, Sparkles, Loader2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { useChartStore } from "@/store/useChartStore";
 import Toast from "@/components/Toast";
 import SEO from "@/components/SEO";
@@ -437,6 +438,7 @@ export default function ChartDashboard() {
                     </div>
                 )}
             </main>
+            <Footer />
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
 import Toast from '@/components/Toast';
@@ -1321,6 +1322,7 @@ export default function ResumeBuilder() {
 
                 <ToolSEOContent toolName="Free Resume Builder — 50+ Professional Templates" toolDescription="Build a professional resume in minutes with ToolBasketAI" />
             </div>
+            <Footer />
         </div >
     );
 }

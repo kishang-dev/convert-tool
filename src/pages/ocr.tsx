@@ -4,6 +4,7 @@ import { Upload, FileText, Loader2, Image as ImageIcon, Sparkles } from "lucide-
 import Toast from "@/components/Toast";
 import { ocrApi } from "@/services/api";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import Card from "@/components/Card";
 import Button from "@/components/Button";
 import SEO from "@/components/SEO";
@@ -233,6 +234,7 @@ export default function OcrPage() {
             `}</style>
 
             <ToolSEOContent toolName="Free OCR Tool — Extract Text from Images" toolDescription="Extract text from images instantly using ToolBasketAI" />
+            <Footer />
         </div>
     );
 }

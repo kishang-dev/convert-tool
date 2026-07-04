@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useAuthStore } from '@/store/authStore';
 import api from '@/services/api';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import Card from '@/components/Card';
 import { Clock, FileText, Download, Sparkles, Trash2 } from 'lucide-react';
@@ -162,6 +163,7 @@ export default function HistoryPage() {
                     </Card>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
@@ -242,6 +243,7 @@ database:
             </div>
         
             <ToolSEOContent toolName="YAML ↔ JSON Converter Tools" toolDescription="Convert YAML documents to JSON format and JSON to YAML format in real-time." />
+            <Footer />
         </div>
     );
 }

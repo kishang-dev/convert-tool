@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
@@ -271,6 +272,7 @@ Feel free to paste your own *.md* files here!`);
             </div>
 
             <ToolSEOContent toolName="Markdown Editor & HTML Converter Tools" toolDescription="Write, edit, and convert Markdown to HTML cleanly client-side. Side-by-side panels, tables support, and instant copying." />
+            <Footer />
         </div>
     );
 }

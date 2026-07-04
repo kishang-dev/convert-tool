@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
@@ -248,6 +249,7 @@ function computeDouble( number ) {
             </div>
         
             <ToolSEOContent toolName="HTML, CSS & JS Code Minifier" toolDescription="Compress and minify HTML, CSS, and JavaScript code instantly. Strip comments, whitespace, and reduce file size for faster websites." />
+            <Footer />
         </div>
     );
 }

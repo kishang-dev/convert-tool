@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
@@ -170,6 +171,7 @@ export default function HtmlToPdf() {
             </div>
         
             <ToolSEOContent toolName="HTML to PDF Converter Tools" toolDescription="Convert HTML files to PDF documents." />
+            <Footer />
         </div>
     );
 }

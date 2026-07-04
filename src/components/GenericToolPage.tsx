@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import { fileAPI, FileData } from "@/lib/api";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import Card from "@/components/Card";
 import Button from "@/components/Button";
 import FileList from "@/components/FileList";
@@ -437,6 +438,7 @@ export default function GenericToolPage({ id, canonicalPath }: { id: string; can
 
                 <ToolSEOContent toolName={tool.title} toolDescription={tool.description} />
             </main>
+            <Footer />
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
@@ -231,6 +232,7 @@ export default function JsonFormatter() {
             </div>
 
             <ToolSEOContent toolName="JSON Formatter & Minifier Online" toolDescription="Format, beautify, validate, and minify JSON instantly online. Free JSON formatter with syntax highlighting, indent control, and clipboard copy. No sign-up." />
+            <Footer />
         </div>
     );
 }

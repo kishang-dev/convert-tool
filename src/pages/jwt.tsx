@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
@@ -244,6 +245,7 @@ export default function JwtDecoder() {
             </div>
         
             <ToolSEOContent toolName="JWT Decoder & Parser Tools" toolDescription="Decode JSON Web Tokens (JWT) client-side in real-time. View header, payload, and expiration details." />
+            <Footer />
         </div>
     );
 }

@@ -4,6 +4,7 @@ import { useSvgStore } from "@/store/useSvgStore";
 import { FileUpload } from "@/components/FileUpload";
 import { SvgPreview } from "@/components/SvgPreview";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import Card from "@/components/Card";
 
 export default function Home() {
@@ -128,7 +129,7 @@ export default function Home() {
           and Lucide Icons.
         </p>
       </footer>
+        <Footer />
     </div>
-  );
+    );
 }
-

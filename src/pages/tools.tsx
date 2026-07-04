@@ -28,6 +28,7 @@ import Toast from "@/components/Toast";
 import FeatureCard from "@/components/FeatureCard";
 import FileList from "@/components/FileList";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import Card from "@/components/Card";
 import Button from "@/components/Button";
 import SEO from "@/components/SEO";
@@ -244,8 +245,7 @@ export default function Tools() {
             </main>
 
             {/* Modals removed because they moved to specific tool pages */}
+            <Footer />
         </div>
     );
 }
-
-

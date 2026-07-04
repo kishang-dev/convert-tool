@@ -11,6 +11,7 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Footer from '@/components/Footer';
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -969,6 +970,7 @@ export default function SpeechToPdf() {
       `}</style>
         
             <ToolSEOContent toolName="VoicePDF | Speech to Professional PDF" toolDescription="Convert your speech to properly formatted PDF documents." />
+            <Footer />
         </div>
     );
 }
