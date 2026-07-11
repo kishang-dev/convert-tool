@@ -217,12 +217,12 @@ export default function Navbar() {
                                 >
                                     Sign In
                                 </Link>
-                                <Link
+                                {/* <Link
                                     href="/register"
                                     style={{ height: 40, padding: '0 18px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg, var(--accent), #8B5CF6)', color: '#fff', fontFamily: '"Poppins", sans-serif', fontWeight: 600, fontSize: 14, cursor: 'pointer', boxShadow: '0 8px 20px color-mix(in srgb, var(--accent) 35%, transparent)', display: 'flex', alignItems: 'center' }}
                                 >
                                     Upgrade
-                                </Link>
+                                </Link> */}
                             </>
                         )}
                     </div>
