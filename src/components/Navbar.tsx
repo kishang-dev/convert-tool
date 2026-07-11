@@ -109,7 +109,13 @@ export default function Navbar() {
                     {/* Logo */}
                     <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', flexShrink: 0 }}>
                         <div style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg, var(--accent), #8B5CF6)', display: 'grid', placeItems: 'center', boxShadow: '0 6px 16px color-mix(in srgb, var(--accent) 40%, transparent)' }}>
-                            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8h18l-1.6 9.2a2 2 0 0 1-2 1.8H6.6a2 2 0 0 1-2-1.8L3 8Z" /><path d="M8 8 9.5 4h5L16 8" /></svg>
+                            <Image
+                                src="/assets/logo1.png"
+                                alt="ToolBasketAI Logo"
+                                width={38}
+                                height={38}
+                                style={{ width: 38, height: 38, objectFit: 'contain' }}
+                            />
                         </div>
                         <span style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: 19, letterSpacing: '-.02em', color: 'var(--text)' }}>ToolBasket<span style={{ color: 'var(--accent)' }}>AI</span></span>
                     </Link>

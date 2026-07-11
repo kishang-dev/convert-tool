@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FiTwitter, FiFacebook, FiLinkedin, FiInstagram } from 'react-icons/fi';
+import Image from 'next/image';
 
 export default function Footer() {
     return (
@@ -9,13 +10,19 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-[1.6fr_1fr_1fr_1fr] gap-8 mb-8">
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-                            <div style={{ width: 32, height: 32, borderRadius: 9, background: 'linear-gradient(135deg, var(--accent), #8B5CF6)', display: 'grid', placeItems: 'center' }}>
-                                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8h18l-1.6 9.2a2 2 0 0 1-2 1.8H6.6a2 2 0 0 1-2-1.8L3 8Z" /><path d="M8 8 9.5 4h5L16 8" /></svg>
+                            <div style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg, var(--accent), #8B5CF6)', display: 'grid', placeItems: 'center', boxShadow: '0 6px 16px color-mix(in srgb, var(--accent) 40%, transparent)' }}>
+                                <Image
+                                    src="/assets/logo1.png"
+                                    alt="ToolBasketAI Logo"
+                                    width={38}
+                                    height={38}
+                                    style={{ width: 38, height: 38, objectFit: 'contain' }}
+                                />
                             </div>
                             <span style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: 17, color: 'var(--text)' }}>ToolBasket<span style={{ color: 'var(--accent)' }}>AI</span></span>
                         </div>
                         <p style={{ fontSize: 13.5, color: 'var(--text-muted)', lineHeight: 1.6, maxWidth: 300, margin: 0, fontFamily: '"Poppins", sans-serif' }}>
-                            Your all-in-one online toolkit. Convert, merge, split and process PDFs, images and documents. All files are deleted within 1 hour.
+                            Your all-in-one online toolkit. Convert, merge, split and process PDFs, images and documents. All files are deleted within 1 Week.
                         </p>
                     </div>
 
