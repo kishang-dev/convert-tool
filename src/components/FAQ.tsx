@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-import Card from './Card';
+import { FiChevronDown } from 'react-icons/fi';
 
 const faqs = [
     {
@@ -45,51 +44,67 @@ export default function FAQ() {
     };
 
     return (
-        <section className="py-20 px-4">
-            <div className="max-w-4xl mx-auto">
-                {/* Section Header */}
-                <div className="text-center mb-16 px-4">
-                    <h2 className="text-3xl sm:text-5xl font-black mb-4 uppercase tracking-tighter leading-none">
-                        Frequently Asked
-                        <span className="gradient-text"> Questions</span>
-                    </h2>
-                    <p className="text-sm sm:text-lg text-[var(--text-muted)] dark:text-[var(--text-muted)] font-bold uppercase tracking-widest opacity-60">
-                        Everything you need to know about our tools
-                    </p>
-                </div>
+        <section style={{ maxWidth: 1200, margin: '66px auto', padding: '0 24px' }}>
+            <div style={{ textAlign: 'center', marginBottom: 34 }}>
+                <h2 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: 'clamp(26px,4vw,40px)', letterSpacing: '-.02em', margin: '0 0 8px', color: 'var(--text)' }}>
+                    Frequently Asked Questions
+                </h2>
+                <p style={{ color: 'var(--text-muted)', fontSize: 16, margin: 0, fontFamily: '"Poppins", sans-serif' }}>
+                    Everything you need to know about our tools.
+                </p>
+            </div>
 
-                {/* FAQ Items */}
-                <div className="space-y-4">
-                    {faqs.map((faq, index) => (
-                        <Card
-                            key={index}
-                            variant="elevated"
-                            className="overflow-hidden transition-smooth"
+            <div style={{ maxWidth: 760, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {faqs.map((faq, index) => (
+                    <div 
+                        key={index} 
+                        style={{ 
+                            background: 'var(--surface)', 
+                            border: '1px solid var(--border)', 
+                            borderRadius: 16, 
+                            overflow: 'hidden',
+                            transition: 'border-color 0.2s, box-shadow 0.2s'
+                        }}
+                        className="hover:border-[var(--accent)] hover:shadow-md"
+                    >
+                        <button
+                            onClick={() => toggleFAQ(index)}
+                            style={{ 
+                                width: '100%', 
+                                padding: '18px 22px', 
+                                textAlign: 'left', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'space-between', 
+                                background: 'transparent', 
+                                border: 'none', 
+                                cursor: 'pointer' 
+                            }}
+                            className="hover:bg-[var(--surface-hover)] transition-colors"
                         >
-                            <button
-                                onClick={() => toggleFAQ(index)}
-                                className="w-full p-6 text-left flex items-center justify-between hover:bg-[var(--surface)] dark:bg-[var(--accent-soft)] transition-smooth"
-                            >
-                                <h3 className="text-lg font-semibold text-[var(--text)] dark:text-[var(--text)] pr-8">
-                                    {faq.question}
-                                </h3>
-                                <ChevronDown
-                                    className={`text-[var(--accent)] transition-transform flex-shrink-0 ${openIndex === index ? 'rotate-180' : ''
-                                        }`}
-                                    size={24}
+                            <h3 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 700, fontSize: 15.5, color: 'var(--text)', margin: 0, paddingRight: 16 }}>
+                                {faq.question}
+                            </h3>
+                            <div style={{ flexShrink: 0, display: 'grid', placeItems: 'center', width: 32, height: 32, borderRadius: 10, background: openIndex === index ? 'var(--accent-soft)' : 'var(--surface-hover)', transition: 'background 0.2s' }}>
+                                <FiChevronDown 
+                                    size={18} 
+                                    color={openIndex === index ? 'var(--accent)' : 'var(--text-muted)'} 
+                                    style={{ transform: openIndex === index ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }} 
                                 />
-                            </button>
-                            <div
-                                className={`overflow-hidden transition-all duration-300 ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                                    }`}
-                            >
-                                <p className="px-6 pb-6 text-[var(--text-muted)] dark:text-[var(--text-muted)] leading-relaxed">
-                                    {faq.answer}
-                                </p>
                             </div>
-                        </Card>
-                    ))}
-                </div>
+                        </button>
+                        <div style={{ 
+                            maxHeight: openIndex === index ? 500 : 0, 
+                            opacity: openIndex === index ? 1 : 0, 
+                            overflow: 'hidden', 
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' 
+                        }}>
+                            <p style={{ padding: '0 22px 20px', margin: 0, fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.6, fontFamily: '"Poppins", sans-serif' }}>
+                                {faq.answer}
+                            </p>
+                        </div>
+                    </div>
+                ))}
             </div>
         </section>
     );

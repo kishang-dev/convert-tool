@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Shield, Lock, Eye, FileText } from "lucide-react";
+import { LuShield as Shield, LuLock as Lock, LuEye as Eye, LuFileText as FileText } from "react-icons/lu";
 import SEO from "@/components/SEO";
 
 export default function PrivacyPage() {
@@ -23,7 +23,7 @@ export default function PrivacyPage() {
             />
             <Navbar />
 
-            <main className="flex-1 pt-32 pb-20">
+            <main className="flex-1 pt-12 pb-20">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6">
                     <div className="mb-16">
                         <div className="bg-[var(--surface-hover)] dark:bg-[var(--surface-hover)] border border-[var(--border-strong)] dark:border-[var(--border)] p-3 rounded inline-block mb-6">

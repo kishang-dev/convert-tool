@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
-import { ChevronRight, Home } from 'lucide-react';
+import { LuChevronRight as ChevronRight, LuHouse as Home } from "react-icons/lu";
 
 interface BreadcrumbItem {
     label: string;

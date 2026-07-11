@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { ShieldCheck, Calendar, Clock, AlertTriangle, KeyRound } from 'lucide-react';
+import { LuShieldCheck as ShieldCheck, LuCalendar as Calendar, LuClock as Clock, LuTriangleAlert as AlertTriangle, LuKeyRound as KeyRound } from "react-icons/lu";
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
@@ -150,10 +150,9 @@ export default function JwtDecoder() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
                 <Breadcrumbs
                     items={[
-                        { label: 'All Tools', href: '/tools' },
                         { label: 'JWT Decoder', href: '/jwt' }
                     ]}
                 />

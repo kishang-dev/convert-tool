@@ -1,9 +1,6 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
-import {
-    Save, Loader2, ChevronLeft, Undo2, AlertCircle,
-    FileText, Columns, Layers, Edit3, AlignLeft, Check, X, RefreshCw, Eye
-} from "lucide-react";
+import { LuSave as Save, LuLoader as Loader2, LuChevronLeft as ChevronLeft, LuUndo2 as Undo2, LuCircleAlert as AlertCircle, LuFileText as FileText, LuLayoutPanelLeft as Columns, LuLayers as Layers, LuPenLine as Edit3, LuAlignLeft as AlignLeft, LuCheck as Check, LuX as X, LuRefreshCw as RefreshCw, LuEye as Eye } from "react-icons/lu";
 import { fileAPI } from "@/lib/api";
 
 // ─────────────────────────────────────────────

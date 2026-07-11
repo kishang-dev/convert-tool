@@ -1,5 +1,5 @@
 import React from 'react';
-import { Upload, Settings, Download } from 'lucide-react';
+import { LuUpload as Upload, LuSettings as Settings, LuDownload as Download } from "react-icons/lu";
 
 const steps = [
     {
@@ -24,12 +24,23 @@ const steps = [
 
 export default function HowItWorks() {
     return (
-        <section className="py-20 px-4 sm:px-6 border-t border-[var(--border)] dark:border-[var(--border)]">
-            <div className="max-w-5xl mx-auto">
+        <section className="py-20 px-4 sm:px-6 border-t border-[var(--border)]">
+            <style>{`
+                .feature-card:hover .feature-icon-box {
+                    background: var(--accent) !important;
+                    border-color: var(--accent) !important;
+                    transform: scale(1.05) rotate(3deg);
+                }
+                .feature-card:hover .feature-icon {
+                    color: #fff !important;
+                }
+            `}</style>
+            <div className="max-w-6xl mx-auto">
                 {/* Header */}
-                <div className="mb-12">
-                    <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest font-medium mb-2">How it works</p>
-                    <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text)] dark:text-[var(--text)] tracking-tight">Three steps to done</h2>
+                <div className="mb-12 text-center">
+                    <p className="text-xs text-[var(--accent)] uppercase tracking-widest font-semibold mb-2">How it works</p>
+                    <h2 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: 'clamp(26px,4vw,36px)', letterSpacing: '-.02em', margin: '0 0 10px', color: 'var(--text)' }}>Three steps to done</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: 15, margin: 0, fontFamily: '"Poppins", sans-serif' }}>Get your files processed instantly without any hassle.</p>
                 </div>
 
                 {/* Steps */}
@@ -39,16 +50,17 @@ export default function HowItWorks() {
                         return (
                             <div
                                 key={step.num}
-                                className="bg-[var(--surface)] dark:bg-[var(--surface)] border border-[var(--border)] dark:border-[var(--border)] rounded p-6 hover:border-[var(--border-strong)] dark:border-[var(--border-strong)] transition-colors"
+                                style={{ background: 'var(--surface)', border: '1.5px solid var(--border)', borderRadius: 16, padding: '28px 24px', transition: 'all 0.3s ease', position: 'relative', display: 'flex', flexDirection: 'column' }}
+                                className="hover:-translate-y-1 hover:shadow-xl hover:border-[var(--accent)] feature-card"
                             >
-                                <div className="flex items-center justify-between mb-5">
-                                    <div className="bg-[var(--surface-hover)] dark:bg-[var(--surface-hover)] border border-[var(--border-strong)] dark:border-[var(--border-strong)] p-2.5 rounded">
-                                        <Icon size={18} className="text-[var(--text)] dark:text-[var(--text)]" />
+                                <div className="flex items-center justify-between mb-6">
+                                    <div style={{ background: 'var(--accent-soft)', border: '1px solid var(--border)', width: 44, height: 44, borderRadius: 12, display: 'grid', placeItems: 'center', transition: 'all 0.3s ease' }} className="feature-icon-box">
+                                        <Icon size={20} className="text-[var(--accent)] transition-colors duration-300 feature-icon" />
                                     </div>
-                                    <span className="text-[#2a2a2a] text-2xl font-bold tabular-nums">{step.num}</span>
+                                    <span style={{ fontSize: 54, fontWeight: 800, color: 'var(--border-strong)', opacity: 0.3, lineHeight: 1, fontFamily: '"Sora", sans-serif', letterSpacing: '-0.04em', pointerEvents: 'none' }}>{step.num}</span>
                                 </div>
-                                <h3 className="text-[var(--text)] dark:text-[var(--text)] font-semibold mb-2">{step.title}</h3>
-                                <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] leading-relaxed">{step.description}</p>
+                                <h3 style={{ fontFamily: '"Poppins", sans-serif', fontWeight: 600, fontSize: 17, color: 'var(--text)', marginBottom: 8 }}>{step.title}</h3>
+                                <p style={{ color: 'var(--text-muted)', fontSize: 13.5, lineHeight: 1.6, margin: 0 }}>{step.description}</p>
                             </div>
                         );
                     })}

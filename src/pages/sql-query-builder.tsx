@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { Copy, Trash2, Check, Plus, Database, Sparkles } from 'lucide-react';
+import { LuCopy as Copy, LuTrash2 as Trash2, LuCheck as Check, LuPlus as Plus, LuDatabase as Database, LuSparkles as Sparkles } from "react-icons/lu";
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
@@ -160,7 +160,7 @@ export default function SqlQueryBuilder() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-24">
+            <div className="max-w-7xl mx-auto px-4 py-8">
                 <div className="text-center mb-10 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">SQL Query Builder</span>

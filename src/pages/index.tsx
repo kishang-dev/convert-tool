@@ -14,7 +14,7 @@ const homeStructuredData = {
       description: 'All-in-One Document & PDF Tools — Free Online Toolkit',
       potentialAction: {
         '@type': 'SearchAction',
-        target: { '@type': 'EntryPoint', urlTemplate: 'https://toolbasketai.com/tools?q={search_term_string}' },
+        target: { '@type': 'EntryPoint', urlTemplate: 'https://toolbasketai.com/?q={search_term_string}' },
         'query-input': 'required name=search_term_string',
       },
     },
@@ -33,7 +33,10 @@ export default function Home() {
   return (
     <>
       <SEO
+        title="ToolBasketAI — Free Online Document & PDF Tools"
+        description="Convert, merge, split, compress, and edit PDFs, images, and documents entirely free right in your browser. 40+ free tools, no sign-up required."
         canonical="/"
+        keywords="free PDF tools, PDF converter online, image resizer, JSON formatter, resume builder, OCR online, merge PDF, compress PDF, ToolBasketAI"
         structuredData={homeStructuredData}
       />
       <Navbar />

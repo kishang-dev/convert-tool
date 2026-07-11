@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Users, Shield, Zap, Globe, Heart } from "lucide-react";
+import { LuUsers as Users, LuShield as Shield, LuZap as Zap, LuGlobe as Globe, LuHeart as Heart } from "react-icons/lu";
 import SEO from "@/components/SEO";
 
 
@@ -31,35 +31,46 @@ export default function AboutPage() {
             />
             <Navbar />
 
-            <main className="flex-1 pt-32 pb-20">
+            <main className="flex-1 pt-12 pb-20">
+                <style>{`
+                    .feature-card:hover .feature-icon-box {
+                        background: var(--accent) !important;
+                        border-color: var(--accent) !important;
+                        transform: scale(1.05) rotate(3deg);
+                    }
+                    .feature-card:hover .feature-icon {
+                        color: #fff !important;
+                    }
+                `}</style>
+
                 {/* Hero Section */}
-                <section className="px-4 sm:px-6 mb-20 text-center">
+                <section className="px-4 sm:px-6 mb-24 text-center">
                     <div className="max-w-3xl mx-auto">
-                        <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest font-medium mb-4">Our Mission</p>
-                        <h1 className="text-3xl sm:text-5xl font-bold tracking-tight mb-6">
+                        <p className="text-xs text-[var(--accent)] uppercase tracking-widest font-semibold mb-4">Our Mission</p>
+                        <h1 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: 'clamp(38px, 6vw, 54px)', letterSpacing: '-.03em', margin: '0 0 20px', color: 'var(--text)' }}>
                             Revolutionizing modern workflows
                         </h1>
-                        <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-sm leading-relaxed max-w-2xl mx-auto">
+                        <p style={{ fontSize: 18, color: 'var(--text-muted)', maxWidth: 640, margin: '0 auto', lineHeight: 1.6, fontFamily: '"Poppins", sans-serif' }}>
                             We are building the world's most powerful, fast conversion engine to help creators, engineers, and businesses transform data with precision and style.
                         </p>
                     </div>
                 </section>
 
                 {/* Values Section */}
-                <section className="py-20 border-y border-[var(--border)] dark:border-[var(--border)] bg-[var(--bg)] dark:bg-[var(--bg)]">
-                    <div className="max-w-5xl mx-auto px-4 sm:px-6">
+                <section className="py-8 border-y border-[var(--border)] bg-[var(--surface-hover)]">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6">
                         <div className="grid md:grid-cols-3 gap-6">
                             {[
                                 { icon: Shield, title: 'Security First', desc: 'Your data is your most valuable asset. We use enterprise-grade encryption and privacy-focused processing for every single conversion.' },
                                 { icon: Zap, title: 'Velocity Driven', desc: 'Speed shouldn\'t compromise quality. Our advanced infrastructure ensures lightning-fast processing across all file types.' },
                                 { icon: Users, title: 'User Centric', desc: 'We design tools that feel human. Every feature is polished to perfection to ensure the best possible user experience.' }
                             ].map((v, i) => (
-                                <div key={i} className="bg-[var(--surface)] dark:bg-[var(--surface)] border border-[var(--border)] dark:border-[var(--border)] rounded p-6 hover:border-[var(--border-strong)] dark:border-[var(--border-strong)] transition-colors">
-                                    <div className="bg-[var(--surface-hover)] dark:bg-[var(--surface-hover)] border border-[var(--border-strong)] dark:border-[var(--border)] p-2.5 rounded inline-block mb-4">
-                                        <v.icon size={17} className="text-[var(--text-faint)] dark:text-[var(--text-faint)] dark:text-[var(--text-muted)]" />
+                                <div key={i} style={{ background: 'var(--surface)', border: '1.5px solid var(--border)', borderRadius: 16, padding: '32px 28px', transition: 'all 0.3s ease' }} className="hover:-translate-y-1 hover:shadow-xl hover:border-[var(--accent)] feature-card">
+                                    <div style={{ background: 'var(--accent-soft)', border: '1px solid var(--border)', width: 48, height: 48, borderRadius: 12, display: 'grid', placeItems: 'center', marginBottom: 20, transition: 'all 0.3s ease' }} className="feature-icon-box">
+                                        <v.icon size={22} className="text-[var(--accent)] transition-colors duration-300 feature-icon" />
                                     </div>
-                                    <h3 className="text-[var(--text)] dark:text-[var(--text)] font-semibold text-sm mb-2">{v.title}</h3>
-                                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-xs leading-relaxed">{v.desc}</p>
+                                    <h3 style={{ fontFamily: '"Poppins", sans-serif', fontWeight: 600, fontSize: 18, color: 'var(--text)', marginBottom: 10 }}>{v.title}</h3>
+                                    <p style={{ color: 'var(--text-muted)', fontSize: 14.5, lineHeight: 1.6, margin: 0, fontFamily: '"Poppins", sans-serif' }}>{v.desc}</p>
                                 </div>
                             ))}
                         </div>
@@ -67,36 +78,36 @@ export default function AboutPage() {
                 </section>
 
                 {/* Content Section */}
-                <section className="py-20 px-4 sm:px-6">
-                    <div className="max-w-4xl mx-auto">
-                        <div className="grid md:grid-cols-2 gap-12 items-start">
+                <section className="py-8 px-4 sm:px-6">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="grid md:grid-cols-2 gap-16 items-start">
                             <div>
-                                <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest font-medium mb-2">Who We Are</p>
-                                <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text)] dark:text-[var(--text)] tracking-tight mb-4">
+                                <p className="text-xs text-[var(--accent)] uppercase tracking-widest font-semibold mb-3">Who We Are</p>
+                                <h2 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: 'clamp(28px, 4vw, 36px)', letterSpacing: '-.02em', margin: '0 0 20px', color: 'var(--text)' }}>
                                     Our Story
                                 </h2>
-                                <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-sm leading-relaxed mb-6">
+                                <p style={{ fontSize: 15.5, color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 20, fontFamily: '"Poppins", sans-serif' }}>
                                     Founded in 2024, ToolBasketAI started with a simple belief: file conversion shouldn't be a chore. Most tools on the market are slow, filled with intrusive ads, and look like they belong in the early 2000s. We decided to change that.
                                 </p>
-                                <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-sm leading-relaxed">
+                                <p style={{ fontSize: 15.5, color: 'var(--text-muted)', lineHeight: 1.7, margin: 0, fontFamily: '"Poppins", sans-serif' }}>
                                     Today, we provide a comprehensive suite of tools ranging from simple PDF conversions to advanced AI-powered Flowchart generation and CV building. Our team consists of passionate developers and designers dedicated to pushing the boundaries of what's possible in a browser.
                                 </p>
                             </div>
 
-                            <div className="grid sm:grid-cols-2 gap-4">
-                                <div className="bg-[var(--surface)] dark:bg-[var(--surface)] border border-[var(--border)] dark:border-[var(--border)] rounded p-6">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <Globe size={18} className="text-[var(--text-faint)] dark:text-[var(--text-faint)] dark:text-[var(--text-muted)]" />
-                                        <span className="text-xl font-bold text-[var(--text)] dark:text-[var(--text)]">100+</span>
+                            <div className="grid sm:grid-cols-2 gap-5 mt-4 md:mt-0">
+                                <div style={{ background: 'linear-gradient(135deg, var(--surface), var(--surface-hover))', border: '1.5px solid var(--border)', borderRadius: 20, padding: 28, boxShadow: '0 12px 30px rgba(0,0,0,0.04)' }}>
+                                    <div style={{ width: 44, height: 44, borderRadius: 12, background: 'var(--accent-soft)', display: 'grid', placeItems: 'center', marginBottom: 16 }}>
+                                        <Globe size={20} className="text-[var(--accent)]" />
                                     </div>
-                                    <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest">Countries Reached</p>
+                                    <span style={{ fontFamily: '"Sora", sans-serif', fontSize: 32, fontWeight: 800, color: 'var(--text)', display: 'block', marginBottom: 6 }}>100+</span>
+                                    <p style={{ fontSize: 12, color: 'var(--text-muted)', uppercase: 'uppercase', tracking: 'widest', fontWeight: 600, margin: 0 }}>Countries Reached</p>
                                 </div>
-                                <div className="bg-[var(--surface)] dark:bg-[var(--surface)] border border-[var(--border)] dark:border-[var(--border)] rounded p-6">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <Heart size={18} className="text-[var(--text-faint)] dark:text-[var(--text-faint)] dark:text-[var(--text-muted)]" />
-                                        <span className="text-xl font-bold text-[var(--text)] dark:text-[var(--text)]">10M+</span>
+                                <div style={{ background: 'linear-gradient(135deg, var(--accent), #8B5CF6)', border: '1.5px solid var(--accent)', borderRadius: 20, padding: 28, boxShadow: '0 18px 40px color-mix(in srgb,var(--accent) 30%,transparent)', color: '#fff' }}>
+                                    <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'grid', placeItems: 'center', marginBottom: 16 }}>
+                                        <Heart size={20} color="#fff" />
                                     </div>
-                                    <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest">Files Converted</p>
+                                    <span style={{ fontFamily: '"Sora", sans-serif', fontSize: 32, fontWeight: 800, display: 'block', marginBottom: 6 }}>10M+</span>
+                                    <p style={{ fontSize: 12, opacity: 0.9, textTransform: 'uppercase', tracking: 'widest', fontWeight: 600, margin: 0 }}>Files Converted</p>
                                 </div>
                             </div>
                         </div>

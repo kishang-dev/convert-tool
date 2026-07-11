@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { Copy, Check, FileText, Code, Eye, Sparkles, BookOpen } from 'lucide-react';
+import { LuCopy as Copy, LuCheck as Check, LuFileText as FileText, LuCode as Code, LuEye as Eye, LuSparkles as Sparkles, LuBookOpen as BookOpen } from "react-icons/lu";
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
@@ -171,7 +171,7 @@ Feel free to paste your own *.md* files here!`);
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-24">
+            <div className="max-w-7xl mx-auto px-4 py-8">
                 <div className="text-center mb-10 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
                         <span className="gradient-text">Markdown Editor & Converter</span>

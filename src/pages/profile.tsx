@@ -7,7 +7,7 @@ import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
-import { User, Phone, Save, Sparkles, Camera } from 'lucide-react';
+import { LuUser as User, LuPhone as Phone, LuSave as Save, LuSparkles as Sparkles, LuCamera as Camera } from "react-icons/lu";
 
 export default function ProfilePage() {
     const { user, updateUser, _hasHydrated } = useAuthStore();
@@ -94,7 +94,7 @@ export default function ProfilePage() {
             <div className="fixed top-20 left-10 w-72 h-72 bg-[var(--accent)]/30 rounded-full blur-3xl animate-float -z-10"></div>
             <div className="fixed bottom-20 right-10 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1s' }}></div>
 
-            <div className="flex items-center justify-center min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-center min-h-screen pt-12 pb-20 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full animate-fadeIn">
                     <div className="text-center mb-8">
                         <div className="inline-flex items-center gap-2 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] px-4 py-2 rounded-full mb-4">

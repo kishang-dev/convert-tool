@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Upload } from "lucide-react";
+import { LuUpload as Upload } from "react-icons/lu";
 
 interface PdfUploadDropzoneProps {
     accept?: string;

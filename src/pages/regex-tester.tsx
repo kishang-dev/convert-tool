@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { Settings, Sparkles, CheckCircle2, AlertCircle, HelpCircle } from 'lucide-react';
+import { LuSettings as Settings, LuSparkles as Sparkles, LuCircleCheck as CheckCircle2, LuCircleAlert as AlertCircle, LuCircleHelp as HelpCircle } from "react-icons/lu";
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
@@ -142,10 +142,9 @@ export default function RegexTester() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
                 <Breadcrumbs
                     items={[
-                        { label: 'All Tools', href: '/tools' },
                         { label: 'Regex Tester', href: '/regex-tester' }
                     ]}
                 />

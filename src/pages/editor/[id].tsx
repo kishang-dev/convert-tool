@@ -2,18 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { fileAPI, FileData } from "@/lib/api";
-import {
-    RotateCw,
-    Trash2,
-    Save,
-    Download,
-    ArrowLeft,
-    Loader2,
-    Undo,
-    RefreshCcw,
-    MousePointer2,
-    Plus,
-} from "lucide-react";
+import { LuRotateCw as RotateCw, LuTrash2 as Trash2, LuSave as Save, LuDownload as Download, LuArrowLeft as ArrowLeft, LuLoader as Loader2, LuUndo as Undo, LuRefreshCcw as RefreshCcw, LuMousePointer2 as MousePointer2, LuPlus as Plus } from "react-icons/lu";
 import Toast from "@/components/Toast";
 import PageContentEditor from "@/components/PageContentEditor";
 

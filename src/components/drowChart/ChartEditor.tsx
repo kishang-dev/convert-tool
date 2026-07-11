@@ -5,13 +5,13 @@ import { Sidebar } from "./Sidebar";
 import { Flow } from "./Flow";
 import { useRouter } from "next/navigation";
 import { useChartStore } from "@/store/useChartStore";
-import { ArrowLeft, Layers, Share2, Download, Settings, Github, Zap } from "lucide-react";
+import { LuArrowLeft as ArrowLeft, LuLayers as Layers, LuShare2 as Share2, LuDownload as Download, LuSettings as Settings, LuGithub as Github, LuZap as Zap } from "react-icons/lu";
 import dynamic from "next/dynamic";
 
 import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
 import { chartApi } from "@/services/api";
-import { ChevronDown, FileJson, FileText, Image as ImageIcon } from "lucide-react";
+import { LuChevronDown as ChevronDown, LuFileJson as FileJson, LuFileText as FileText, LuImage as ImageIcon } from "react-icons/lu";
 
 const PrimaryButton = ({ className, onClick, isLoading, children }: any) => (
   <button

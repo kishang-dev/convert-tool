@@ -1,222 +1,102 @@
-import React from 'react';
-import { ArrowRight, Shield, Zap, Globe, Clock, Users, Check } from 'lucide-react';
-import HeroSection from './HeroSection';
-import FeaturesShowcase from './FeaturesShowcase';
+import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
+import Footer from './Footer';
 import HowItWorks from './HowItWorks';
 import FAQ from './FAQ';
-import Button from './Button';
-import Footer from './Footer';
-import { useRouter } from 'next/router';
-
-const benefits = [
-    {
-        icon: Shield,
-        title: 'Enterprise Security',
-        description: 'Military-grade encryption for all file transfers. Files are auto-deleted from our servers within 24 hours.',
-    },
-    {
-        icon: Zap,
-        title: 'AI Optimizers',
-        description: 'Our AI engines optimize PDF file sizes without losing quality, making your documents web-ready instantly.',
-    },
-    {
-        icon: Globe,
-        title: 'Global Reach',
-        description: 'Supporting 100+ languages for OCR and document conversion, ensuring accuracy across all borders.',
-    },
-    {
-        icon: Clock,
-        title: 'Always Online',
-        description: 'Distributed cloud infrastructure ensures 99.9% availability. Your tools are ready when you are.',
-    },
-    {
-        icon: Users,
-        title: 'No Compromise',
-        description: 'Highest quality output in the industry — whether SVG vectors or OCR text, we deliver precision.',
-    },
-    {
-        icon: Shield,
-        title: 'Intuitive Interface',
-        description: 'A clean, modern interface designed for focus. Custom views to match your workflow preferences.',
-    },
-];
-
-const freeFeatures = [
-    'Unlimited Conversions',
-    'High Precision OCR',
-    'AI Diagram Generator',
-    '24h File Retention',
-    'No Account Required',
-    'All 40+ Tools Included',
-];
+import {
+    LandingHero,
+    LandingCategories,
+    LandingTools,
+    LandingStats,
+    LandingPremium,
+    LandingBenefits,
+    LandingAbout,
+    LandingPricing,
+    LandingCTA,
+    LandingBlogs
+} from './LandingSections';
+import { allTools, C } from '../data/landingData';
 
 export default function LandingPage() {
-    const router = useRouter();
+    const [rotIdx, setRotIdx] = useState(0);
+    const [query, setQuery] = useState('');
+    const [tab, setTab] = useState('all');
+
+    const words = ['PDFs', 'Images', 'Documents', 'Conversions', 'Your Files', 'Any Task'];
+    const wcolors = ['#FF5C7A', '#22C55E', '#5D5FEF', '#F59E0B', '#EC4899', '#8B5CF6'];
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setRotIdx((prev) => (prev + 1) % words.length);
+        }, 2200);
+        return () => clearInterval(timer);
+    }, [words.length]);
+
+    const tabKeys = ['all', 'pdf', 'image', 'docs', 'ai', 'dev', 'ocr'];
+    const tabLabels = { all: 'All Tools', pdf: 'PDF', image: 'Image', docs: 'Documents', ai: 'AI Suite', dev: 'Developer', ocr: 'OCR' };
+
+    const q = query.trim().toLowerCase();
+    let list = allTools;
+    if (q) {
+        list = list.filter(t => t[0].toLowerCase().includes(q) || t[2].toLowerCase().includes(q) || C[t[1] as keyof typeof C].label.toLowerCase().includes(q));
+    } else if (tab !== 'all') {
+        list = list.filter(t => t[1] === tab);
+    }
 
     return (
         <div className="min-h-screen bg-[var(--bg)]">
+            <Head>
+                <title>ToolBasketAI | Free Online PDF, Image, and Document Tools</title>
+                <meta name="description" content="Convert, merge, split, compress and process your PDFs, images and documents — entirely free, right in your browser. 40+ free tools with no sign-up required." />
+                <meta name="keywords" content="PDF tools, image resizer, document converter, free OCR, AI tools, online tools, file converter" />
+                <meta property="og:title" content="ToolBasketAI | Free Online PDF, Image, and Document Tools" />
+                <meta property="og:description" content="Convert, merge, split, compress and process your PDFs, images and documents — entirely free, right in your browser." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="ToolBasketAI | Free Online PDF, Image, and Document Tools" />
+                <meta name="twitter:description" content="Convert, merge, split, compress and process your PDFs, images and documents — entirely free, right in your browser." />
+                <link rel="canonical" href="https://toolbasketai.com/" />
+            </Head>
 
-            {/* Hero */}
+            <style>{`
+                .feature-card:hover .feature-icon-box {
+                    background: var(--accent) !important;
+                    border-color: var(--accent) !important;
+                    transform: scale(1.05) rotate(3deg);
+                }
+                .feature-card:hover .feature-icon {
+                    color: #fff !important;
+                }
+            `}</style>
             <main>
-                <HeroSection />
+                <LandingHero
+                    query={query}
+                    setQuery={setQuery}
+                    rotIdx={rotIdx}
+                    wcolors={wcolors}
+                    words={words}
+                />
 
-                {/* Stats bar */}
-                <div className="border-y border-[var(--border)] bg-[var(--surface)]">
-                    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                            {[
-                                { value: '10M+', label: 'Files Processed' },
-                                { value: '99.9%', label: 'OCR Accuracy' },
-                                { value: '2.5M+', label: 'Active Users' },
-                                { value: '40+', label: 'Free Tools' },
-                            ].map((stat) => (
-                                <div key={stat.label}>
-                                    <div className="text-2xl font-bold text-[var(--accent)] mb-0.5">{stat.value}</div>
-                                    <div className="text-xs text-[var(--text-faint)] uppercase tracking-wider">{stat.label}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
 
-                {/* Features Showcase */}
-                <FeaturesShowcase />
+                <LandingTools
+                    query={query}
+                    list={list}
+                    tabKeys={tabKeys}
+                    tab={tab}
+                    setTab={setTab}
+                    setQuery={setQuery}
+                    tabLabels={tabLabels}
+                />
 
-                {/* How It Works */}
+                <LandingStats />
+                <LandingPremium />
                 <HowItWorks />
-
-                {/* Benefits Grid */}
-                <section className="py-20 px-4 sm:px-6 border-t border-[var(--border)]">
-                    <div className="max-w-5xl mx-auto">
-                        <div className="mb-12">
-                            <p className="text-xs text-[var(--accent)] uppercase tracking-widest font-semibold mb-2">Why ToolBasketAI</p>
-                            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text)] tracking-tight">
-                                Built for precision & speed
-                            </h2>
-                            <p className="text-sm text-[var(--text-muted)] mt-2 max-w-lg">
-                                A rock-solid infrastructure to handle your most complex document tasks without breaking a sweat.
-                            </p>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {benefits.map((b, i) => {
-                                const Icon = b.icon;
-                                return (
-                                    <div
-                                        key={i}
-                                        className="bg-[var(--surface)] border border-[var(--border)] rounded p-6 hover:border-[var(--border-strong)] transition-colors"
-                                    >
-                                        <div className="bg-[var(--accent-soft)] border border-[var(--border)] p-2.5 rounded inline-block mb-4">
-                                            <Icon size={17} className="text-[var(--accent)]" />
-                                        </div>
-                                        <h3 className="text-[var(--text)] font-semibold text-sm mb-2">{b.title}</h3>
-                                        <p className="text-[var(--text-faint)] text-xs leading-relaxed">{b.description}</p>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </section>
-
-                {/* About section */}
-                <section className="py-20 px-4 sm:px-6 border-t border-[var(--border)]">
-                    <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-                        <div>
-                            <p className="text-xs text-[var(--accent)] uppercase tracking-widest font-semibold mb-2">About</p>
-                            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text)] tracking-tight mb-4">
-                                The vision behind ToolBasketAI
-                            </h2>
-                            <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6">
-                                Founded in 2024, ToolBasketAI was born out of a simple need: universal, high-speed document processing without the clutter of traditional tools. We believe professional-grade tools should be accessible to everyone, anywhere.
-                            </p>
-                            <Button variant="secondary" onClick={() => router.push('/about')}>
-                                Read Our Story
-                            </Button>
-                        </div>
-
-                        {/* Accuracy bars */}
-                        <div className="bg-[var(--surface)] border border-[var(--border)] rounded p-6 space-y-5">
-                            {[
-                                { label: 'PDF Processing', pct: 90 },
-                                { label: 'AI Accuracy', pct: 95 },
-                                { label: 'SVG Vectorization', pct: 85 },
-                            ].map(({ label, pct }) => (
-                                <div key={label}>
-                                    <div className="flex justify-between text-xs mb-2">
-                                        <span className="text-[var(--text-muted)]">{label}</span>
-                                        <span className="text-[var(--accent)] font-semibold">{pct}%</span>
-                                    </div>
-                                    <div className="h-1.5 bg-[var(--border)] rounded-full overflow-hidden">
-                                        <div
-                                            className="h-full rounded-full"
-                                            style={{ width: `${pct}%`, background: 'var(--accent)' }}
-                                        />
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* FAQ */}
+                <LandingBenefits />
+                <LandingAbout />
                 <FAQ />
-
-                {/* Pricing / Free access */}
-                <section className="py-20 px-4 sm:px-6 border-t border-[var(--border)]">
-                    <div className="max-w-5xl mx-auto">
-                        <div className="mb-10">
-                            <p className="text-xs text-[var(--accent)] uppercase tracking-widest font-semibold mb-2">Pricing</p>
-                            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text)] tracking-tight">Simple, transparent access</h2>
-                            <p className="text-sm text-[var(--text-muted)] mt-2">Professional tools should be accessible to everyone.</p>
-                        </div>
-
-                        <div className="max-w-sm">
-                            <div className="bg-[var(--surface)] border border-[var(--border-strong)] rounded p-8">
-                                <div className="flex items-center justify-between mb-1">
-                                    <h3 className="text-[var(--text)] font-semibold">Community Free</h3>
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent-ring)] px-2 py-0.5 rounded-full">Popular</span>
-                                </div>
-                                <div className="flex items-baseline gap-1.5 mb-6 mt-3">
-                                    <span className="text-4xl font-bold text-[var(--text)]">$0</span>
-                                    <span className="text-xs text-[var(--text-faint)] uppercase">Forever</span>
-                                </div>
-
-                                <ul className="space-y-3 mb-7">
-                                    {freeFeatures.map((f) => (
-                                        <li key={f} className="flex items-center gap-3 text-sm text-[var(--text-muted)]">
-                                            <div className="bg-[var(--accent-soft)] border border-[var(--accent-ring)] rounded p-0.5">
-                                                <Check size={12} className="text-[var(--accent)]" />
-                                            </div>
-                                            {f}
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <Button variant="accent" className="w-full" onClick={() => router.push('/tools')}>
-                                    Start Now
-                                    <ArrowRight size={15} />
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Final CTA */}
-                <section className="py-20 px-4 sm:px-6 border-t border-[var(--border)]">
-                    <div className="max-w-3xl mx-auto text-center">
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--text)] tracking-tight mb-4">
-                            Start your journey now
-                        </h2>
-                        <p className="text-[var(--text-muted)] text-sm mb-8 max-w-md mx-auto leading-relaxed">
-                            Join millions of users and experience the future of document processing. Entirely free, remarkably fast.
-                        </p>
-                        <Button variant="accent" size="lg" onClick={() => router.push('/tools')} className="inline-flex items-center gap-2">
-                            Get Started Free
-                            <ArrowRight size={18} />
-                        </Button>
-                        <p className="text-[var(--text-faint)] text-xs mt-4 uppercase tracking-widest">No sign-up required · 100% free</p>
-                    </div>
-                </section>
+                <LandingPricing />
+                <LandingBlogs />
+                <LandingCTA />
             </main>
 
             <Footer />

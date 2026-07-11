@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { Upload, Unlock, Download, ArrowRight, CheckCircle, ShieldAlert } from 'lucide-react';
+import { LuUpload as Upload, LuLockOpen as Unlock, LuDownload as Download, LuArrowRight as ArrowRight, LuCircleCheck as CheckCircle, LuShieldAlert as ShieldAlert } from "react-icons/lu";
 import { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
@@ -97,10 +97,9 @@ export default function PdfUnlock() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+            <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
                 <Breadcrumbs 
                     items={[
-                        { label: 'All Tools', href: '/tools' },
                         { label: 'PDF Unlock', href: '/pdf-unlock' }
                     ]} 
                 />

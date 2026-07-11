@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowDown, ArrowUp, FileText, GripVertical, Loader2, X } from "lucide-react";
+import { LuArrowDown as ArrowDown, LuArrowUp as ArrowUp, LuFileText as FileText, LuGripVertical as GripVertical, LuLoader as Loader2, LuX as X } from "react-icons/lu";
 
 export interface PdfPreviewPage {
     id: string;

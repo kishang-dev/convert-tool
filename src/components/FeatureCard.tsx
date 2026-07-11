@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import { LucideIcon } from "lucide-react";
+import { IconType } from "react-icons";
+import { FiChevronRight } from "react-icons/fi";
 
 interface FeatureCardProps {
-  icon: LucideIcon;
+  icon: any; // Accept any icon (Lucide or React-Icons)
   title: string;
   onClick: () => void;
   gradient?: string;
@@ -15,37 +16,52 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   icon: Icon,
   title,
   onClick,
-  description
+  description,
+  gradient
 }) => {
   return (
-    <button
+    <div
       onClick={onClick}
-      className="
-        bg-[var(--surface)] border border-[var(--border)] rounded p-5
-        text-left w-full group
-        hover:border-[var(--accent)] hover:shadow-[0_0_0_1px_var(--accent-ring)]
-        hover:bg-[var(--surface-hover)]
-        transition-all duration-200 flex items-start gap-4
-      "
+      className="group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-[var(--accent)]"
+      style={{ 
+        cursor: 'pointer', 
+        background: 'var(--surface)', 
+        border: '1px solid var(--border)', 
+        borderRadius: 16, 
+        padding: 18, 
+        display: 'flex', 
+        gap: 14, 
+        alignItems: 'flex-start' 
+      }}
     >
-      <div className="
-        bg-[var(--accent-soft)] border border-[var(--border)]
-        p-2.5 rounded flex-shrink-0
-        group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)]
-        transition-all duration-200
-      ">
-        <Icon
-          className="text-[var(--accent)] group-hover:text-white transition-colors duration-200"
-          size={20}
-        />
+      <div 
+        style={{ 
+          flexShrink: 0, 
+          width: 44, 
+          height: 44, 
+          borderRadius: 12, 
+          display: 'grid', 
+          placeItems: 'center', 
+          background: 'var(--surface-hover)' 
+        }}
+        className="group-hover:bg-[var(--accent-soft)] transition-colors"
+      >
+        <Icon size={20} className="text-[var(--accent)]" />
       </div>
-      <div className="min-w-0">
-        <div className="text-[var(--text)] font-medium text-sm leading-snug truncate">{title}</div>
+      <div style={{ minWidth: 0, flex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <h3 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 700, fontSize: 15.5, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--text)' }}>
+            {title}
+          </h3>
+        </div>
         {description && (
-          <div className="text-[var(--text-faint)] text-xs mt-1 leading-relaxed line-clamp-2">{description}</div>
+          <p style={{ fontSize: 13, color: 'var(--text-muted)', margin: '5px 0 0 0', lineHeight: 1.5, fontFamily: '"Poppins", sans-serif', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+            {description}
+          </p>
         )}
       </div>
-    </button>
+      <FiChevronRight size={17} color="var(--text-muted)" style={{ flexShrink: 0, marginTop: 4 }} className="group-hover:text-[var(--accent)] transition-colors" />
+    </div>
   );
 };
 

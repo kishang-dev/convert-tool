@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { Plus, LayoutGrid, Trash2, Edit, Check, X, Sparkles, Loader2 } from "lucide-react";
+import { LuPlus as Plus, LuLayoutGrid as LayoutGrid, LuTrash2 as Trash2, LuPencil as Edit, LuCheck as Check, LuX as X, LuSparkles as Sparkles, LuLoader as Loader2 } from "react-icons/lu";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useChartStore } from "@/store/useChartStore";

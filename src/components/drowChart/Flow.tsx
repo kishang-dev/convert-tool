@@ -23,7 +23,7 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useChartStore } from "@/store/useChartStore";
-import { Save, Trash2, Maximize, MousePointer, Info } from "lucide-react";
+import { LuSave as Save, LuTrash2 as Trash2, LuMaximize as Maximize, LuMousePointer as MousePointer, LuInfo as Info } from "react-icons/lu";
 
 import { nodeTypes } from "./CustomNodes";
 

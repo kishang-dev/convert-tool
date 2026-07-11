@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { ArrowLeft, FileText, Trash2 } from "lucide-react";
+import { LuArrowLeft as ArrowLeft, LuFileText as FileText, LuTrash2 as Trash2 } from "react-icons/lu";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
@@ -221,10 +221,9 @@ export default function MergePdf() {
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 
-            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
                 <Breadcrumbs 
                     items={[
-                        { label: 'All Tools', href: '/tools' },
                         { label: 'Merge PDF', href: '/merge-pdf' }
                     ]} 
                 />

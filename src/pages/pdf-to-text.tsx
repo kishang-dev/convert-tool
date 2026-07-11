@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { Upload, FileText, Download, ArrowRight, CheckCircle, Copy } from 'lucide-react';
+import { LuUpload as Upload, LuFileText as FileText, LuDownload as Download, LuArrowRight as ArrowRight, LuCircleCheck as CheckCircle, LuCopy as Copy } from "react-icons/lu";
 import { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
@@ -103,10 +103,9 @@ export default function PdfToText() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
                 <Breadcrumbs 
                     items={[
-                        { label: 'All Tools', href: '/tools' },
                         { label: 'PDF to Text', href: '/pdf-to-text' }
                     ]} 
                 />

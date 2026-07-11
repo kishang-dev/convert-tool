@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
-import { Sparkles, Lock, CheckCircle, ShieldCheck, Eye, EyeOff } from "lucide-react";
+import { LuSparkles as Sparkles, LuLock as Lock, LuCircleCheck as CheckCircle, LuShieldCheck as ShieldCheck, LuEye as Eye, LuEyeOff as EyeOff } from "react-icons/lu";
 import { authApi } from "@/services/api";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -55,7 +55,7 @@ export default function ResetPassword() {
             <Navbar />
 
             {/* Main Content */}
-            <div className="flex items-center justify-center min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-center min-h-screen pt-12 pb-20 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full animate-fadeIn">
                     {/* Header */}
                     <div className="text-center mb-8">

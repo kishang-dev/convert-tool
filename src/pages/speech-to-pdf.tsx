@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import SEO from '@/components/SEO';
-import {
-    Mic, Download, FileText, Trash2, Settings, CheckCircle2,
-    Copy, Languages, BarChart2, AlignLeft, Save, Undo2, Type,
-    Video, MonitorUp, Wand2, PlaySquare, UploadCloud, FileAudio
-} from 'lucide-react';
+import { LuMic as Mic, LuDownload as Download, LuFileText as FileText, LuTrash2 as Trash2, LuSettings as Settings, LuCircleCheck as CheckCircle2, LuCopy as Copy, LuLanguages as Languages, LuChartColumn as BarChart2, LuAlignLeft as AlignLeft, LuSave as Save, LuUndo2 as Undo2, LuType as Type, LuVideo as Video, LuMonitorUp as MonitorUp, LuWandSparkles as Wand2, LuSquarePlay as PlaySquare, LuCloudUpload as UploadCloud, LuFileAudio as FileAudio } from "react-icons/lu";
 import api from '@/services/api';
 import RichTextEditor from '@/components/RichTextEditor';
 import { clsx, type ClassValue } from 'clsx';
@@ -548,10 +544,9 @@ export default function SpeechToPdf() {
 
             <Navbar />
 
-            <main className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-24 md:py-28">
+            <main className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12">
                 <Breadcrumbs 
                     items={[
-                        { label: 'All Tools', href: '/tools' },
                         { label: 'VoicePDF', href: '/speech-to-pdf' }
                     ]} 
                 />

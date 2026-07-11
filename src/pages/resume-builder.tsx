@@ -7,11 +7,7 @@ import Toast from '@/components/Toast';
 import SEO from '@/components/SEO';
 import ResumeTemplate from '@/components/ResumeTemplate';
 import { resumeAPI, ResumeData } from '@/lib/api';
-import {
-    Upload, FileText, Download, Save, Palette,
-    User, Briefcase, GraduationCap, Code, Globe,
-    Plus, Trash2, Edit3, ChevronRight, CheckCircle, Layout, Eye, X, Clock
-} from 'lucide-react';
+import { LuUpload as Upload, LuFileText as FileText, LuDownload as Download, LuSave as Save, LuPalette as Palette, LuUser as User, LuBriefcase as Briefcase, LuGraduationCap as GraduationCap, LuCode as Code, LuGlobe as Globe, LuPlus as Plus, LuTrash2 as Trash2, LuPenLine as Edit3, LuChevronRight as ChevronRight, LuCircleCheck as CheckCircle, LuLayoutDashboard as Layout, LuEye as Eye, LuX as X, LuClock as Clock } from "react-icons/lu";
 import { useAuthStore } from '@/store/authStore';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
@@ -465,7 +461,7 @@ export default function ResumeBuilder() {
             <Navbar />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-24">
+            <div className="max-w-7xl mx-auto px-4 py-8">
                 {/* Stepper */}
                 <div className="flex justify-center mb-12">
                     <div className="flex items-center gap-4 bg-gray-100 dark:bg-white/5 p-2 rounded-full border border-gray-200 dark:border-white/10">

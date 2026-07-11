@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar';
 import SEO from '@/components/SEO';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
-import { Mail, Lock, User, UserPlus, Sparkles, Eye, EyeOff } from 'lucide-react';
+import { LuMail as Mail, LuLock as Lock, LuUser as User, LuUserPlus as UserPlus, LuSparkles as Sparkles, LuEye as Eye, LuEyeOff as EyeOff } from "react-icons/lu";
 import { useGoogleLogin } from '@react-oauth/google';
 
 export default function RegisterPage() {
@@ -23,7 +23,7 @@ export default function RegisterPage() {
 
     useEffect(() => {
         if (_hasHydrated && user) {
-            router.push('/tools');
+            router.push('/');
         }
     }, [user, _hasHydrated, router]);
 
@@ -36,7 +36,7 @@ export default function RegisterPage() {
             const res = await api.post('/auth/register', { name, email, password });
             if (res.data.success) {
                 login(res.data);
-                router.push('/tools');
+                router.push('/');
             }
         } catch (err: any) {
             setError(err.response?.data?.error || 'Registration failed');
@@ -61,7 +61,7 @@ export default function RegisterPage() {
 
             if (res.data.success) {
                 login(res.data);
-                router.push('/tools');
+                router.push('/');
             }
         } catch (err: any) {
             setError(err.response?.data?.error || 'Google sign-in failed. Please try again.');
@@ -89,22 +89,22 @@ export default function RegisterPage() {
             <Navbar />
 
             {/* Main Content */}
-            <div className="flex items-center justify-center min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-center min-h-screen pt-12 pb-20 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full animate-fadeIn">
                     {/* Header */}
-                    <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] px-4 py-2 rounded-full mb-4">
+                    <div className="text-center mb-10">
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--accent-soft)', border: '1px solid var(--border)', padding: '6px 16px', borderRadius: 24, marginBottom: 16 }}>
                             <Sparkles className="text-[var(--accent)]" size={16} />
-                            <span className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)]">Join Us Today</span>
+                            <span style={{ fontSize: 13, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em' }}>Join Us Today</span>
                         </div>
-                        <h2 className="text-3xl sm:text-4xl font-bold mb-2">
-                            <span className="gradient-text">Create Account</span>
+                        <h2 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: 'clamp(28px, 5vw, 36px)', letterSpacing: '-.02em', margin: '0 0 10px', color: 'var(--text)' }}>
+                            Create Account
                         </h2>
-                        <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-sm sm:text-base px-4">Start using our powerful PDF tools for free</p>
+                        <p style={{ fontSize: 15, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif', margin: 0 }}>Start using our powerful PDF tools for free</p>
                     </div>
 
                     {/* Register Form */}
-                    <Card variant="elevated" className="p-6 sm:p-8">
+                    <div style={{ background: 'var(--surface)', border: '1.5px solid var(--border)', borderRadius: 24, padding: '32px 28px', boxShadow: '0 12px 40px rgba(0,0,0,0.06)' }}>
                         {/* Google Sign-In Button */}
                         <button
                             id="google-register-btn"
@@ -222,19 +222,18 @@ export default function RegisterPage() {
                             )}
 
                             {/* Submit Button */}
-                            <Button
-                                variant="accent"
+                            <button
                                 type="submit"
-                                className="w-full"
-                                size="lg"
-                                loading={loading}
+                                disabled={loading}
+                                style={{ width: '100%', height: 50, borderRadius: 12, border: 'none', background: 'linear-gradient(135deg, var(--accent), #8B5CF6)', color: '#fff', fontFamily: '"Poppins", sans-serif', fontWeight: 600, fontSize: 15, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, boxShadow: '0 8px 20px color-mix(in srgb,var(--accent) 30%,transparent)', transition: 'transform 0.2s', marginTop: 10 }}
+                                className="hover:-translate-y-0.5"
                             >
                                 <UserPlus size={20} />
                                 {loading ? 'Creating account...' : 'Create Account'}
-                            </Button>
+                            </button>
 
                             {/* Terms */}
-                            <p className="text-xs text-[var(--text-faint)] dark:text-[var(--text-faint)] text-center">
+                            <p style={{ fontSize: 12, color: 'var(--text-faint)', textAlign: 'center', fontFamily: '"Poppins", sans-serif', marginTop: 16 }}>
                                 By creating an account, you agree to our{' '}
                                 <a href="#" className="text-[var(--accent)] hover:text-[var(--accent-hover)] transition-smooth">
                                     Terms of Service
@@ -246,23 +245,23 @@ export default function RegisterPage() {
                             </p>
 
                             {/* Divider */}
-                            <div className="relative">
+                            <div className="relative mt-6 mb-6">
                                 <div className="absolute inset-0 flex items-center">
-                                    <div className="w-full border-t border-[var(--border)] dark:border-[var(--border)]"></div>
+                                    <div className="w-full border-t border-[var(--border)]"></div>
                                 </div>
                                 <div className="relative flex justify-center text-sm">
-                                    <span className="px-2 bg-[var(--surface)] text-[var(--text-muted)] dark:text-[var(--text-muted)]">Already have an account?</span>
+                                    <span style={{ padding: '0 12px', background: 'var(--surface)', color: 'var(--text-muted)', fontSize: 13, fontFamily: '"Poppins", sans-serif' }}>Already have an account?</span>
                                 </div>
                             </div>
 
                             {/* Login Link */}
                             <Link href="/login">
-                                <Button variant="secondary" className="w-full" size="lg">
+                                <button type="button" style={{ width: '100%', height: 50, borderRadius: 12, border: '1.5px solid var(--border)', background: 'var(--surface-hover)', color: 'var(--text)', fontFamily: '"Poppins", sans-serif', fontWeight: 600, fontSize: 15, cursor: 'pointer', transition: 'all 0.2s' }} className="hover:border-[var(--text-muted)]">
                                     Sign In
-                                </Button>
+                                </button>
                             </Link>
                         </form>
-                    </Card>
+                    </div>
 
                     {/* Back to Home */}
                     <div className="text-center mt-6">

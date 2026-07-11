@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { Upload, Download, ArrowRight, CheckCircle, FileImage, Settings, RefreshCw } from 'lucide-react';
+import { LuUpload as Upload, LuDownload as Download, LuArrowRight as ArrowRight, LuCircleCheck as CheckCircle, LuFileImage as FileImage, LuSettings as Settings, LuRefreshCw as RefreshCw } from "react-icons/lu";
 import api, { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
@@ -165,7 +165,7 @@ export default function ImageConverter() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-4xl mx-auto px-4 py-24">
+            <div className="max-w-4xl mx-auto px-4 py-8">
                 <div className="text-center mb-12 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4">
                         <span className="gradient-text">Image Converter</span>

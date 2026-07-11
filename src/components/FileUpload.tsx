@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Upload, Image as ImageIcon, X } from "lucide-react";
+import { LuUpload as Upload, LuImage as ImageIcon, LuX as X } from "react-icons/lu";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { useSvgStore } from "../store/useSvgStore";

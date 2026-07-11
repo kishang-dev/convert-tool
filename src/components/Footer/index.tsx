@@ -1,82 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Mail, Shield, FileText, Info, Globe, Sparkles } from 'lucide-react';
+import { FiTwitter, FiFacebook, FiLinkedin, FiInstagram } from 'react-icons/fi';
 
 export default function Footer() {
     return (
-        <footer className="w-full bg-[var(--surface)] dark:bg-[#0a0a0f] border-t border-[var(--border)] pt-20 pb-10 px-4 sm:px-6 font-sans">
-            <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-                    {/* Brand Section */}
-                    <div className="space-y-6 text-center md:text-left">
-                        <Link href="/" className="flex items-center justify-center md:justify-start gap-2 group">
-                            <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded group-hover:rotate-12 transition-transform shadow-lg shadow-[0_0_0_1px_var(--accent-ring)]">
-                                <Sparkles className="text-[var(--text)] dark:text-[var(--text)]" size={20} />
+        <footer style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', padding: '54px 24px 34px' }}>
+            <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+                <div className="grid grid-cols-1 md:grid-cols-[1.6fr_1fr_1fr_1fr] gap-8 mb-8">
+                    <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+                            <div style={{ width: 32, height: 32, borderRadius: 9, background: 'linear-gradient(135deg, var(--accent), #8B5CF6)', display: 'grid', placeItems: 'center' }}>
+                                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 8h18l-1.6 9.2a2 2 0 0 1-2 1.8H6.6a2 2 0 0 1-2-1.8L3 8Z" /><path d="M8 8 9.5 4h5L16 8" /></svg>
                             </div>
-                            <span className="text-xl font-black text-[var(--text)] dark:text-[var(--text)] tracking-tight uppercase">ToolBasketAI</span>
-                        </Link>
-                        <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-sm leading-relaxed font-medium mx-auto md:mx-0 max-w-sm md:max-w-none">
-                            The world's most advanced AI-powered conversion platform. Transforming how you handle documents, one file at a time.
+                            <span style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: 17, color: 'var(--text)' }}>ToolBasket<span style={{ color: 'var(--accent)' }}>AI</span></span>
+                        </div>
+                        <p style={{ fontSize: 13.5, color: 'var(--text-muted)', lineHeight: 1.6, maxWidth: 300, margin: 0, fontFamily: '"Poppins", sans-serif' }}>
+                            Your all-in-one online toolkit. Convert, merge, split and process PDFs, images and documents. All files are deleted within 1 hour.
                         </p>
-                        <div className="flex items-center justify-center md:justify-start gap-4 text-[var(--text-faint)] dark:text-[var(--text-faint)]">
-                            <Link href="#" className="hover:text-blue-500 transition-colors"><Globe size={20} /></Link>
-                            <Link href="/contact" className="hover:text-blue-500 transition-colors"><Mail size={20} /></Link>
+                    </div>
+
+                    <div>
+                        <h4 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 700, fontSize: 14, margin: '0 0 14px', color: 'var(--text)' }}>Core Tools</h4>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                            {[
+                                { name: 'All Tools', path: '/#tb-tools' },
+                                { name: 'AI Chart Maker', path: '/drowChart' },
+                                { name: 'AI Resume Builder', path: '/resume-builder' },
+                                { name: 'Precision OCR', path: '/ocr' },
+                                { name: 'Merge PDF', path: '/merge-pdf' }
+                            ].map(link => (
+                                <Link href={link.path} key={link.name} style={{ fontSize: 13.5, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif' }} className="hover:text-[var(--accent)] transition-colors">{link.name}</Link>
+                            ))}
                         </div>
                     </div>
 
-                    {/* Tools Section */}
-                    <div className="text-center md:text-left">
-                        <h4 className="text-xs font-black text-[var(--text)] dark:text-[var(--text)] uppercase tracking-[0.2em] mb-6 md:mb-8 opacity-60">Core Tools</h4>
-                        <ul className="space-y-4">
-                            <li><Link href="/tools" className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)] text-sm font-bold uppercase tracking-wider transition-colors">All Converters</Link></li>
-                            <li><Link href="/drowChart" className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)] text-sm font-bold uppercase tracking-wider transition-colors">AI Chart maker</Link></li>
-                            <li><Link href="/resume-builder" className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)] text-sm font-bold uppercase tracking-wider transition-colors">CV Architect</Link></li>
-                            <li><Link href="/ocr" className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)] text-sm font-bold uppercase tracking-wider transition-colors">Precision OCR</Link></li>
-                        </ul>
+                    <div>
+                        <h4 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 700, fontSize: 14, margin: '0 0 14px', color: 'var(--text)' }}>Company</h4>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                            <Link href="/about" style={{ fontSize: 13.5, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif' }} className="hover:text-[var(--accent)] transition-colors">About Us</Link>
+                            <Link href="/contact" style={{ fontSize: 13.5, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif' }} className="hover:text-[var(--accent)] transition-colors">Contact</Link>
+                            <Link href="/blog" style={{ fontSize: 13.5, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif' }} className="hover:text-[var(--accent)] transition-colors">Blog</Link>
+                            <Link href="/privacy" style={{ fontSize: 13.5, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif' }} className="hover:text-[var(--accent)] transition-colors">Privacy</Link>
+                            <Link href="/terms" style={{ fontSize: 13.5, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif' }} className="hover:text-[var(--accent)] transition-colors">Terms</Link>
+                        </div>
                     </div>
 
-                    {/* Company Section */}
-                    <div className="text-center md:text-left">
-                        <h4 className="text-xs font-black text-[var(--text)] dark:text-[var(--text)] uppercase tracking-[0.2em] mb-6 md:mb-8 opacity-60">Ecosystem</h4>
-                        <ul className="space-y-4">
-                            <li><Link href="/about" className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)] text-sm font-bold uppercase tracking-wider transition-colors flex items-center justify-center md:justify-start gap-3">
-                                <Info size={16} /> About Us
-                            </Link></li>
-                            <li><Link href="/contact" className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)] text-sm font-bold uppercase tracking-wider transition-colors flex items-center justify-center md:justify-start gap-3">
-                                <Mail size={16} /> Contact
-                            </Link></li>
-                            <li><Link href="/privacy" className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)] text-sm font-bold uppercase tracking-wider transition-colors flex items-center justify-center md:justify-start gap-3">
-                                <Shield size={16} /> Privacy
-                            </Link></li>
-                            <li><Link href="/terms" className="text-[var(--text-muted)] dark:text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)] text-sm font-bold uppercase tracking-wider transition-colors flex items-center justify-center md:justify-start gap-3">
-                                <FileText size={16} /> Terms
-                            </Link></li>
-                        </ul>
-                    </div>
-
-                    {/* Newsletter/Status */}
-                    <div className="text-center md:text-left">
-                        <h4 className="text-xs font-black text-[var(--text)] dark:text-[var(--text)] uppercase tracking-[0.2em] mb-6 md:mb-8 opacity-60 text-center md:text-left">System Status</h4>
-                        <div className="p-6 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] rounded space-y-4 max-w-sm mx-auto md:mx-0">
-                            <div className="flex items-center justify-center md:justify-start gap-3">
-                                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                                <span className="text-[10px] font-black text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest">All Engines Operational</span>
-                            </div>
-                            <p className="text-[10px] text-[var(--text-faint)] dark:text-[var(--text-faint)] leading-relaxed font-bold uppercase text-center md:text-left">
-                                Optimized for Google AdSense & Search Visibility
-                            </p>
+                    <div>
+                        <h4 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 700, fontSize: 14, margin: '0 0 14px', color: 'var(--text)' }}>Support</h4>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                            <Link href="/contact" style={{ fontSize: 13.5, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif' }} className="hover:text-[var(--accent)] transition-colors">Help Center</Link>
+                            {/* <Link href="#" style={{ fontSize: 13.5, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif' }} className="hover:text-[var(--accent)] transition-colors">System Status</Link> */}
+                            <Link href="/contact" style={{ fontSize: 13.5, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif' }} className="hover:text-[var(--accent)] transition-colors">Suggest a Tool</Link>
+                            <Link href="/contact" style={{ fontSize: 13.5, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif' }} className="hover:text-[var(--accent)] transition-colors">Report a Bug</Link>
                         </div>
                     </div>
                 </div>
 
-                {/* Bottom Bar */}
-                <div className="border-t border-[var(--border)] pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-xs font-black text-[var(--text-faint)] dark:text-[var(--text-faint)] uppercase tracking-[0.2em]">
-                        &copy; 2026 ToolBasketAI Tools. Crafted for Performance.
-                    </p>
-                    <div className="flex items-center gap-8">
-                        <Link href="/privacy" className="text-[10px] font-black text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)] uppercase tracking-widest transition-colors">Security</Link>
-                        <Link href="/terms" className="text-[10px] font-black text-[var(--text-muted)] hover:text-[var(--text)] dark:text-[var(--text)] uppercase tracking-widest transition-colors">Compliance</Link>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', marginTop: 40, paddingTop: 24, borderTop: '1px solid var(--border)' }}>
+                    <span style={{ fontSize: 13, color: 'var(--text-muted)', fontFamily: '"Poppins", sans-serif' }}>© 2026 ToolBasketAI. All rights reserved.</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                        <span style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 500, fontFamily: '"Poppins", sans-serif' }}>Show us some love</span>
+                        <a href="#" aria-label="Twitter" className="hover:text-[var(--accent)] hover:border-[var(--accent)] transition-colors" style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--border)', background: 'var(--surface)', color: 'var(--text-muted)', display: 'grid', placeItems: 'center' }}><FiTwitter size={15} /></a>
+                        <a href="#" aria-label="Facebook" className="hover:text-[var(--accent)] hover:border-[var(--accent)] transition-colors" style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--border)', background: 'var(--surface)', color: 'var(--text-muted)', display: 'grid', placeItems: 'center' }}><FiFacebook size={15} /></a>
+                        <a href="#" aria-label="LinkedIn" className="hover:text-[var(--accent)] hover:border-[var(--accent)] transition-colors" style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--border)', background: 'var(--surface)', color: 'var(--text-muted)', display: 'grid', placeItems: 'center' }}><FiLinkedin size={15} /></a>
+                        <a href="#" aria-label="Instagram" className="hover:text-[var(--accent)] hover:border-[var(--accent)] transition-colors" style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--border)', background: 'var(--surface)', color: 'var(--text-muted)', display: 'grid', placeItems: 'center' }}><FiInstagram size={15} /></a>
                     </div>
                 </div>
             </div>

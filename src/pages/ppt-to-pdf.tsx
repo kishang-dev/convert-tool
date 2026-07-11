@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { Upload, FileText, Download, ArrowRight, CheckCircle, AlertTriangle } from 'lucide-react';
+import { LuUpload as Upload, LuFileText as FileText, LuDownload as Download, LuArrowRight as ArrowRight, LuCircleCheck as CheckCircle, LuTriangleAlert as AlertTriangle } from "react-icons/lu";
 import { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
@@ -93,10 +93,9 @@ export default function PptToPdf() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
                 <Breadcrumbs 
                     items={[
-                        { label: 'All Tools', href: '/tools' },
                         { label: 'PPT to PDF', href: '/ppt-to-pdf' }
                     ]} 
                 />

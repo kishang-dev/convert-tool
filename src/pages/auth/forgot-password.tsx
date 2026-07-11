@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
-import { Sparkles, Mail, Send, CheckCircle, ArrowLeft } from "lucide-react";
+import { LuSparkles as Sparkles, LuMail as Mail, LuSend as Send, LuCircleCheck as CheckCircle, LuArrowLeft as ArrowLeft } from "react-icons/lu";
 import { authApi } from "@/services/api";
 import Link from "next/link";
 import Footer from "@/components/Footer";
@@ -46,7 +46,7 @@ export default function ForgotPassword() {
             <Navbar />
 
             {/* Main Content */}
-            <div className="flex items-center justify-center min-h-screen pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-center min-h-screen pt-12 pb-20 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full animate-fadeIn">
                     {/* Header */}
                     <div className="text-center mb-8">

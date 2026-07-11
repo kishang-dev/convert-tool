@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckCircle, AlertCircle, X } from "lucide-react";
+import { LuCircleCheck as CheckCircle, LuCircleAlert as AlertCircle, LuX as X } from "react-icons/lu";
 
 interface ToastProps {
   message: string;

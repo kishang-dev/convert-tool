@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { ArrowLeftRight, Copy, Trash2, Upload, File, Check, Download } from 'lucide-react';
+import { LuArrowLeftRight as ArrowLeftRight, LuCopy as Copy, LuTrash2 as Trash2, LuUpload as Upload, LuFile as File, LuCheck as Check, LuDownload as Download } from "react-icons/lu";
 import { devToolsAPI } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
@@ -146,10 +146,9 @@ export default function Base64Tool() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
                 <Breadcrumbs
                     items={[
-                        { label: 'All Tools', href: '/tools' },
                         { label: 'Base64 Encoder/Decoder', href: '/base64' }
                     ]}
                 />

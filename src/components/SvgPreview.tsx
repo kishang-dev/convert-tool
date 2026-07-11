@@ -1,5 +1,5 @@
 import React from "react";
-import { Download, RefreshCw, Layers } from "lucide-react";
+import { LuDownload as Download, LuRefreshCw as RefreshCw, LuLayers as Layers } from "react-icons/lu";
 import { useSvgStore } from "../store/useSvgStore";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Zap, Shield } from 'lucide-react';
+import { LuArrowRight as ArrowRight, LuZap as Zap, LuShield as Shield } from "react-icons/lu";
 import Button from './Button';
 import { useRouter } from 'next/router';
 
@@ -55,7 +55,7 @@ export default function HeroSection() {
                         variant="accent"
                         size="lg"
                         className="w-full sm:w-auto flex items-center justify-center gap-2"
-                        onClick={() => router.push('/tools')}
+                        onClick={() => router.push('/#tb-tools')}
                     >
                         Start for Free
                         <ArrowRight size={18} />

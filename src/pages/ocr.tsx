@@ -1,6 +1,6 @@
 // pages/ocr.tsx
 import React, { useState, useRef } from "react";
-import { Upload, FileText, Loader2, Image as ImageIcon, Sparkles } from "lucide-react";
+import { LuUpload as Upload, LuFileText as FileText, LuLoader as Loader2, LuImage as ImageIcon, LuSparkles as Sparkles } from "react-icons/lu";
 import Toast from "@/components/Toast";
 import { ocrApi } from "@/services/api";
 import Navbar from "@/components/Navbar";
@@ -105,7 +105,7 @@ export default function OcrPage() {
             <div className="fixed top-20 right-10 w-72 h-72 bg-blue-500/30 rounded-full blur-3xl animate-float -z-10"></div>
             <div className="fixed bottom-20 left-10 w-96 h-96 bg-[var(--accent)]/30 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1.5s' }}></div>
 
-            <div className="max-w-7xl mx-auto px-4 py-24">
+            <div className="max-w-7xl mx-auto px-4 py-8">
                 {/* Header */}
                 <div className="text-center mb-16 animate-fadeIn">
                     <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-4">

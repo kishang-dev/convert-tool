@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import Card from "@/components/Card";
 import Button from "@/components/Button";
 import FileList from "@/components/FileList";
-import { Upload, ArrowLeft } from "lucide-react";
+import { LuUpload as Upload, LuArrowLeft as ArrowLeft } from "react-icons/lu";
 import * as gtag from "@/lib/gtag";
 import SEO from "@/components/SEO";
 import ToolSEOContent from "@/components/ToolSEOContent";
@@ -207,7 +207,7 @@ export default function GenericToolPage({ id, canonicalPath }: { id: string; can
         return (
             <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] dark:text-[var(--text)] flex flex-col items-center justify-center p-4">
                 <h1 className="text-2xl font-semibold mb-4">Tool Not Found</h1>
-                <Button onClick={() => router.push("/tools")}>Back to Tools</Button>
+                <Button onClick={() => router.push("/")}>Back to Tools</Button>
             </div>
         );
     }
@@ -343,11 +343,10 @@ export default function GenericToolPage({ id, canonicalPath }: { id: string; can
             <Navbar />
 
             <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
-                <Breadcrumbs 
+                <Breadcrumbs
                     items={[
-                        { label: 'All Tools', href: '/tools' },
                         { label: tool.title, href: pagePath }
-                    ]} 
+                    ]}
                 />
 
                 <div className="mb-8 animate-fadeIn">

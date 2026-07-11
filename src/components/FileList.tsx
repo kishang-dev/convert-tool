@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { FileText, X, Download } from "lucide-react";
+import { LuFileText as FileText, LuX as X, LuDownload as Download } from "react-icons/lu";
 import { FileData } from "@/lib/api";
 import Card from "./Card";
 

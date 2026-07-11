@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { Shield, Globe, Zap, CheckCircle2, Lock, Smartphone } from 'lucide-react';
+import { LuShield as Shield, LuGlobe as Globe, LuZap as Zap, LuCircleCheck as CheckCircle2, LuLock as Lock, LuSmartphone as Smartphone } from "react-icons/lu";
 
 export interface Step {
     name: string;

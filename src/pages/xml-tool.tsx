@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { Copy, Trash2, Check, ShieldCheck, AlertCircle, FileCode, Sparkles } from 'lucide-react';
+import { LuCopy as Copy, LuTrash2 as Trash2, LuCheck as Check, LuShieldCheck as ShieldCheck, LuCircleAlert as AlertCircle, LuFileCode as FileCode, LuSparkles as Sparkles } from "react-icons/lu";
 import { devToolsAPI } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
@@ -200,10 +200,9 @@ export default function XmlTool() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
                 <Breadcrumbs
                     items={[
-                        { label: 'All Tools', href: '/tools' },
                         { label: 'XML Formatter', href: '/xml-tool' }
                     ]}
                 />
