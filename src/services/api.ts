@@ -210,4 +210,20 @@ export const conversionApi = {
   convertHeic: async (fileId: string) => (await api.post("/heic-to-jpg", { fileId })).data,
 };
 
+export const blogApi = {
+  getAllBlogs: async () => (await api.get("/blogs")).data,
+  getBlogById: async (idOrSlug: string) => (await api.get(`/blogs/${idOrSlug}`)).data,
+  createBlog: async (data: any) => (await api.post("/blogs", data)).data,
+  updateBlog: async (id: string, data: any) => (await api.put(`/blogs/${id}`, data)).data,
+  deleteBlog: async (id: string) => (await api.delete(`/blogs/${id}`)).data,
+  uploadImage: async (file: File) => {
+    const formData = new FormData();
+    formData.append("image", file);
+    const response = await api.post("/blogs/upload-image", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
+  },
+};
+
 export default api;

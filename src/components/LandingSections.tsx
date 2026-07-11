@@ -10,6 +10,7 @@ import {
 } from 'react-icons/lu';
 import Button from './Button';
 import { C, allTools, toolIcons, catIcons, benefits, freeFeatures } from '../data/landingData';
+import { blogApi } from '../services/api';
 
 export function LandingHero({ query, setQuery, rotIdx, wcolors, words }: any) {
     return (
@@ -339,8 +340,25 @@ export function LandingCTA() {
         </section>
     );
 }
-
 export function LandingBlogs() {
+    const [blogs, setBlogs] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            try {
+                const res = await blogApi.getAllBlogs();
+                if (res.success && res.data) {
+                    setBlogs(res.data.slice(0, 3));
+                }
+            } catch (error) {
+                console.error('Error fetching blogs:', error);
+            }
+        };
+        fetchBlogs();
+    }, []);
+
+    if (blogs.length === 0) return null;
+
     return (
         <section className="py-24 px-6 border-t border-[var(--border)] bg-[var(--bg)]">
             <div className="max-w-7xl mx-auto">
@@ -357,7 +375,7 @@ export function LandingBlogs() {
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {require('../data/blogData').blogs.slice(0, 3).map((blog: any, idx: number) => (
+                    {blogs.map((blog: any, idx: number) => (
                         <a href={`/blog/${blog.slug}`} key={blog.slug} className="group flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-[20px] overflow-hidden hover:shadow-[0_20px_50px_rgba(20,20,43,0.12)] hover:border-[var(--accent)] transition-all duration-300 transform hover:-translate-y-1">
                             <div className="relative h-52 overflow-hidden">
                                 <img src={blog.image} alt={blog.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />

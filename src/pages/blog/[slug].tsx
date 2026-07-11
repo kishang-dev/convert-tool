@@ -5,11 +5,11 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { blogs } from '@/data/blogData';
 import { FiCalendar, FiClock, FiUser, FiArrowLeft } from 'react-icons/fi';
 import Link from 'next/link';
+import { GetServerSideProps } from 'next';
 
-export default function BlogPost({ blog }: { blog: typeof blogs[0] }) {
+export default function BlogPost({ blog }: { blog: any }) {
     if (!blog) return null;
 
     const structuredData = {
@@ -114,29 +114,24 @@ export default function BlogPost({ blog }: { blog: typeof blogs[0] }) {
     );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    const paths = blogs.map((blog) => ({
-        params: { slug: blog.slug },
-    }));
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+    try {
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const api_root = API_BASE_URL.endsWith('/api') ? API_BASE_URL : `${API_BASE_URL}/api`;
 
-    return {
-        paths,
-        fallback: false,
-    };
-};
+        const res = await fetch(`${api_root}/blogs/${params?.slug}`);
+        const data = await res.json();
+        
+        if (!data.success || !data.data) {
+            return { notFound: true };
+        }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const blog = blogs.find((b) => b.slug === params?.slug);
-
-    if (!blog) {
         return {
-            notFound: true,
+            props: {
+                blog: data.data,
+            },
         };
+    } catch (error) {
+        return { notFound: true };
     }
-
-    return {
-        props: {
-            blog,
-        },
-    };
 };

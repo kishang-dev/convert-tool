@@ -3,11 +3,11 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import Link from 'next/link';
-import { blogs } from '@/data/blogData';
+import { blogApi } from '@/services/api';
 import { FiArrowRight, FiCalendar, FiClock } from 'react-icons/fi';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
-export default function BlogPage() {
+export default function BlogPage({ blogs }: { blogs: any[] }) {
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "Blog",
@@ -95,4 +95,21 @@ export default function BlogPage() {
             <Footer />
         </div>
     );
+}
+
+export async function getServerSideProps() {
+    try {
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const api_root = API_BASE_URL.endsWith('/api') ? API_BASE_URL : `${API_BASE_URL}/api`;
+        
+        const res = await fetch(`${api_root}/blogs`);
+        const data = await res.json();
+        return {
+            props: { blogs: data.data || [] }
+        };
+    } catch (error) {
+        return {
+            props: { blogs: [] }
+        };
+    }
 }
