@@ -87,7 +87,7 @@ export default function AboutPage() {
                                     Our Story
                                 </h2>
                                 <p style={{ fontSize: 15.5, color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 20, fontFamily: '"Poppins", sans-serif' }}>
-                                    Founded in 2024, ToolBasketAI started with a simple belief: file conversion shouldn't be a chore. Most tools on the market are slow, filled with intrusive ads, and look like they belong in the early 2000s. We decided to change that.
+                                    Founded in 2026, ToolBasketAI started with a simple belief: file conversion shouldn't be a chore. Most tools on the market are slow, filled with intrusive ads, and look like they belong in the early 2000s. We decided to change that.
                                 </p>
                                 <p style={{ fontSize: 15.5, color: 'var(--text-muted)', lineHeight: 1.7, margin: 0, fontFamily: '"Poppins", sans-serif' }}>
                                     Today, we provide a comprehensive suite of tools ranging from simple PDF conversions to advanced AI-powered Flowchart generation and CV building. Our team consists of passionate developers and designers dedicated to pushing the boundaries of what's possible in a browser.

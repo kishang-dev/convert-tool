@@ -34,7 +34,7 @@ import ToolSEOContent from '@/components/ToolSEOContent';
 
 const INITIAL_DATA: ResumeData = {
     _id: undefined,
-    title: 'Senior Software Engineer — 2024',
+    title: 'Senior Software Engineer — 2026',
     personalInfo: {
         fullName: 'Alexandra Carter',
         email: 'alexandra.carter@gmail.com',
@@ -603,7 +603,7 @@ export default function ResumeBuilder() {
                                 <input
                                     value={resumeData.title || ''}
                                     onChange={e => setResumeData({ ...resumeData, title: e.target.value })}
-                                    placeholder={`e.g. "Software Engineer — Google 2024"`}
+                                    placeholder={`e.g. "Software Engineer — Google 2026"`}
                                     className="w-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-3 rounded-lg focus:border-blue-500 outline-none text-gray-900 dark:text-white placeholder-gray-600"
                                 />
                             </Card>

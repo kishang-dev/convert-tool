@@ -30,7 +30,7 @@ export default function TermsPage() {
                             <Scale className="text-[var(--text-faint)] dark:text-[var(--text-faint)] dark:text-[var(--text-muted)]" size={24} />
                         </div>
                         <h1 className="text-3xl sm:text-4xl font-bold text-[var(--text)] dark:text-[var(--text)] tracking-tight mb-4">Terms of Service</h1>
-                        <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest font-medium">Effective Date: March 28, 2024</p>
+                        <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase tracking-widest font-medium">Effective Date: March 28, 2026</p>
                     </div>
 
                     <div className="space-y-12">

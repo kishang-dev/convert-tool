@@ -243,7 +243,7 @@ export function LandingAbout() {
                         The vision behind ToolBasketAI
                     </h2>
                     <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6 font-['Poppins',sans-serif]">
-                        Founded in 2024, ToolBasketAI was born out of a simple need: universal, high-speed document processing without the clutter of traditional tools. We believe professional-grade tools should be accessible to everyone, anywhere.
+                        Founded in 2026, ToolBasketAI was born out of a simple need: universal, high-speed document processing without the clutter of traditional tools. We believe professional-grade tools should be accessible to everyone, anywhere.
                     </p>
                     <Button variant="secondary" onClick={() => router.push('/about')}>
                         Read Our Story
@@ -373,7 +373,7 @@ export function LandingBlogs() {
                         View All Articles
                     </Button>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {blogs.map((blog: any, idx: number) => (
                         <a href={`/blog/${blog.slug}`} key={blog.slug} className="group flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-[20px] overflow-hidden hover:shadow-[0_20px_50px_rgba(20,20,43,0.12)] hover:border-[var(--accent)] transition-all duration-300 transform hover:-translate-y-1">
@@ -383,7 +383,7 @@ export function LandingBlogs() {
                                     {blog.category}
                                 </div>
                             </div>
-                            
+
                             <div className="p-6 flex flex-col flex-1">
                                 <h3 className="font-['Sora',sans-serif] font-bold text-[18px] leading-[1.4] mb-3 text-[var(--text)] group-hover:text-[var(--accent)] transition-colors line-clamp-2">
                                     {blog.title}
@@ -396,7 +396,7 @@ export function LandingBlogs() {
                                         {blog.date}
                                     </span>
                                     <div className="font-bold text-[13px] text-[var(--text)] group-hover:text-[var(--accent)] transition-colors flex items-center gap-1.5">
-                                        Read <FiArrowRight size={14} className="transform group-hover:translate-x-1 transition-transform"/>
+                                        Read <FiArrowRight size={14} className="transform group-hover:translate-x-1 transition-transform" />
                                     </div>
                                 </div>
                             </div>
