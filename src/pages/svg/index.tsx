@@ -6,12 +6,13 @@ import { SvgPreview } from "@/components/SvgPreview";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Card from "@/components/Card";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function Home() {
   const { svgUrl, uploading, error } = useSvgStore();
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
       <SEO
         title="Image to SVG Converter"
         description="Convert your PNG, JPG and WEBP images to high-quality SVG vectors instantly with AI-powered technology."
@@ -30,28 +31,17 @@ export default function Home() {
 
       <Navbar />
 
-      {/* Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-pink-900/20 -z-10">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-      </div>
+      <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+        <Breadcrumbs
+          items={[
+            { label: 'Image to SVG Converter', href: '/svg' }
+          ]}
+        />
 
-      {/* Floating Elements */}
-      <div className="fixed top-20 left-10 w-72 h-72 bg-[var(--accent)]/30 rounded-full blur-3xl animate-float -z-10"></div>
-      <div className="fixed bottom-20 right-10 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1s' }}></div>
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
-        {/* Header Section */}
-        <div className="text-center space-y-6 mb-16 animate-fadeIn">
-          <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-4">
-            <Sparkles className="text-[var(--accent)]" size={16} />
-            <span className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)]">AI-Powered Vectorization</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight">
-            <span className="gradient-text">Vectorize</span> Instantly
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-[var(--text-muted)] dark:text-[var(--text-muted)] max-w-2xl mx-auto">
-            Transform your raster images into clean, scalable SVG vectors.
-            Perfect for designers, developers, and creators.
+        <div className="mb-8 animate-fadeIn">
+          <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Image to SVG Converter</h1>
+          <p className="text-[var(--text-muted)] text-sm max-w-2xl">
+            Transform your raster images into clean, scalable SVG vectors instantly. Perfect for designers and developers.
           </p>
         </div>
 
@@ -123,13 +113,7 @@ export default function Home() {
         )}
       </main>
 
-      <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-800 text-center">
-        <p className="text-[var(--text-faint)] dark:text-[var(--text-faint)] text-sm font-medium">
-          &copy; {new Date().getFullYear()} ToolBasketAI Tools. Built with Next.js
-          and Lucide Icons.
-        </p>
-      </footer>
-        <Footer />
+      <Footer />
     </div>
-    );
+  );
 }

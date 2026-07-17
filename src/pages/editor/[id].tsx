@@ -189,7 +189,7 @@ export default function pdfEditor() {
 
             {/* Header */}
             <header className="bg-[var(--surface)] shadow-sm sticky top-0 z-10">
-                <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+                <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <button
                             onClick={() => router.push("/")}
@@ -221,7 +221,7 @@ export default function pdfEditor() {
 
             {/* Editor Area */}
             <main className="flex-1 p-8 overflow-y-auto">
-                <div className="max-w-7xl mx-auto">
+                <div className="max-w-6xl mx-auto">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {pages.map((page, index) => (
                             <div

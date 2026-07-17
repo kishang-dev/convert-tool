@@ -9,6 +9,7 @@ import { devToolsAPI } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function CodeMinifier() {
     const [tab, setTab] = useState<'HTML' | 'CSS' | 'JS'>('HTML');
@@ -111,7 +112,7 @@ function computeDouble( number ) {
         setMetrics(null);
     };
 
-    
+
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
@@ -128,7 +129,7 @@ function computeDouble( number ) {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
                 title="HTML, CSS & JS Code Minifier — Free Online Tool"
                 description="Compress and minify HTML documents, CSS stylesheets, and JavaScript code client-side in real-time. No upload needed, instant results."
@@ -141,12 +142,16 @@ function computeDouble( number ) {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-8">
-                <div className="text-center mb-10 animate-fadeIn">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
-                        <span className="gradient-text">Unified Code Minifier</span>
-                    </h1>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+                <Breadcrumbs 
+                    items={[
+                        { label: 'Code Minifier', href: '/code-minifier' }
+                    ]} 
+                />
+
+                <div className="mb-8 animate-fadeIn">
+                    <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Code Minifier</h1>
+                    <p className="text-[var(--text-muted)] text-sm max-w-2xl">
                         Compress HTML, CSS, and JS. Strip comments, whitespace, and empty lines instantly.
                     </p>
                 </div>
@@ -246,8 +251,8 @@ function computeDouble( number ) {
                         </Card>
                     </div>
                 </div>
-            </div>
-        
+            </main>
+
             <ToolSEOContent toolName="HTML, CSS & JS Code Minifier" toolDescription="Compress and minify HTML, CSS, and JavaScript code instantly. Strip comments, whitespace, and reduce file size for faster websites." />
             <Footer />
         </div>

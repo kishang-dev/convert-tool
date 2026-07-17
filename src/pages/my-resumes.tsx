@@ -96,7 +96,7 @@ export default function MyResumesPage() {
             <div className="fixed top-20 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-float -z-10"></div>
             <div className="fixed bottom-20 right-10 w-96 h-96 bg-[var(--accent)]/20 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1.5s' }}></div>
 
-            <div className="pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div className="pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
                 {/* Header */}
                 <div className="animate-fadeIn mb-10">
                     <div className="inline-flex items-center gap-2 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] px-4 py-2 rounded-full mb-4">

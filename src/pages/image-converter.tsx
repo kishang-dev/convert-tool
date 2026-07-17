@@ -9,6 +9,7 @@ import api, { fileAPI, FileData } from '@/lib/api';
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function ImageConverter() {
     const [file, setFile] = useState<File | null>(null);
@@ -57,7 +58,7 @@ export default function ImageConverter() {
             const name = selectedFile.name.toLowerCase();
             const isHeic = name.endsWith('.heic');
             const isImg = selectedFile.type.startsWith('image/');
-            
+
             if (!isImg && !isHeic) {
                 showToast('Please select a valid image file (JPG, PNG, WEBP, or HEIC)', 'error');
                 return;
@@ -109,7 +110,7 @@ export default function ImageConverter() {
                     const dataUrl = canvas.toDataURL(outFormat, 0.92);
                     const ext = outFormat.split('/')[1] === 'jpeg' ? 'jpg' : outFormat.split('/')[1];
                     const baseName = file.name.substring(0, file.name.lastIndexOf('.'));
-                    
+
                     setConvertedFile({
                         url: dataUrl,
                         filename: `${baseName}.${ext}`
@@ -165,12 +166,12 @@ export default function ImageConverter() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-4xl mx-auto px-4 py-8">
-                <div className="text-center mb-12 animate-fadeIn">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4">
-                        <span className="gradient-text">Image Converter</span>
-                    </h1>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-lg">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+                <Breadcrumbs items={[{ label: 'Image Converter', href: '/image-converter' }]} />
+
+                <div className="mb-8 animate-fadeIn">
+                    <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Image Converter</h1>
+                    <p className="text-[var(--text-muted)] text-sm max-w-2xl">
                         Convert HEIC to JPG, WEBP to JPG, JPG to WEBP, PNG to WEBP, and more.
                     </p>
                 </div>
@@ -227,8 +228,8 @@ export default function ImageConverter() {
                                             <Button variant="ghost" onClick={() => setFile(null)}>
                                                 Change File
                                             </Button>
-                                            <Button 
-                                                onClick={handleConvert} 
+                                            <Button
+                                                onClick={handleConvert}
                                                 loading={loading}
                                                 className="bg-[var(--accent)] hover:bg-[var(--accent)] font-bold"
                                             >
@@ -279,8 +280,8 @@ export default function ImageConverter() {
                         )}
                     </Card>
                 </div>
-            </div>
-        
+            </main>
+
             <ToolSEOContent toolName="Image Converter — HEIC to JPG, WEBP, PNG" toolDescription="Convert images instantly online. HEIC to JPG, WEBP to PNG, PNG to WEBP and more. Free image format converter with no watermarks or sign-up required." />
             <Footer />
         </div>

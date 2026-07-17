@@ -8,6 +8,7 @@ import { LuUpload as Upload, LuCrop as Crop, LuDownload as Download, LuArrowRigh
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function ImageCropper() {
     const [file, setFile] = useState<File | null>(null);
@@ -15,10 +16,10 @@ export default function ImageCropper() {
     const [loading, setLoading] = useState(false);
     const [aspectPreset, setAspectPreset] = useState<'free' | '1:1' | '16:9' | '4:3'>('free');
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
-    
+
     // Crop box state (percentages of container size to adapt responsively)
     const [cropBox, setCropBox] = useState({ x: 10, y: 10, w: 80, h: 80 });
-    
+
     const containerRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -44,7 +45,7 @@ export default function ImageCropper() {
     // Update crop aspect ratio preset changes
     useEffect(() => {
         if (aspectPreset === 'free') return;
-        
+
         let ratio = 1;
         if (aspectPreset === '1:1') ratio = 1;
         else if (aspectPreset === '16:9') ratio = 16 / 9;
@@ -165,7 +166,7 @@ export default function ImageCropper() {
                 } else {
                     nextW = nextH * ratio;
                 }
-                
+
                 // Outer check
                 if (nextX + nextW > 100 || nextY + nextH > 100) return;
             }
@@ -206,7 +207,7 @@ export default function ImageCropper() {
         setLoading(true);
         try {
             const img = imageRef.current;
-            
+
             // Calculate pixel dimensions relative to original image size
             // imageRef.current holds the loaded dimensions, naturalWidth/naturalHeight are raw pixels
             const naturalW = img.naturalWidth;
@@ -247,7 +248,7 @@ export default function ImageCropper() {
         }
     };
 
-    
+
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
@@ -264,10 +265,10 @@ export default function ImageCropper() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
-            <SEO 
-                title="Image Cropper Tools" 
-                description="Crop and cut your images online client-side. Aspect ratio templates, fully adjustable crop boxes with visual handles." 
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+            <SEO
+                title="Image Cropper Tools"
+                description="Crop and cut your images online client-side. Aspect ratio templates, fully adjustable crop boxes with visual handles."
                 canonical="/image-cropper"
                 structuredData={structuredData}
             />
@@ -276,12 +277,16 @@ export default function ImageCropper() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-8">
-                <div className="text-center mb-10 animate-fadeIn">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
-                        <span className="gradient-text">Image Cropper</span>
-                    </h1>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+                <Breadcrumbs
+                    items={[
+                        { label: 'Image Cropper', href: '/image-cropper' }
+                    ]}
+                />
+
+                <div className="mb-8 animate-fadeIn">
+                    <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Image Cropper</h1>
+                    <p className="text-[var(--text-muted)] text-sm max-w-2xl">
                         Drag, adjust, and crop your images instantly. 100% private execution inside your browser.
                     </p>
                 </div>
@@ -291,22 +296,22 @@ export default function ImageCropper() {
                     <div className="lg:col-span-8 flex flex-col gap-4">
                         <Card variant="elevated" className="p-6 h-full flex flex-col items-center justify-center min-h-[450px] relative overflow-hidden select-none">
                             {previewUrl ? (
-                                <div 
+                                <div
                                     ref={containerRef}
                                     className="relative max-h-[420px] max-w-full border border-[var(--border)] dark:border-[var(--border)] rounded overflow-hidden bg-slate-950/40 cursor-crosshair"
                                     style={{ display: 'inline-block' }}
                                 >
-                                    <img 
-                                        ref={imageRef} 
-                                        src={previewUrl} 
-                                        alt="Crop Source" 
+                                    <img
+                                        ref={imageRef}
+                                        src={previewUrl}
+                                        alt="Crop Source"
                                         loading="lazy"
                                         className="max-h-[400px] object-contain block"
                                         draggable="false"
                                     />
-                                    
+
                                     {/* Crop overlay cutout and handles */}
-                                    <div 
+                                    <div
                                         className="absolute border border-indigo-400/80 shadow-[0_0_15px_rgba(99,102,241,0.2)] bg-black/30 backdrop-blur-[0.5px]"
                                         style={{
                                             left: `${cropBox.x}%`,
@@ -316,7 +321,7 @@ export default function ImageCropper() {
                                         }}
                                     >
                                         {/* Drag Box Area */}
-                                        <div 
+                                        <div
                                             onMouseDown={(e) => startAction('move', e)}
                                             onTouchStart={(e) => startAction('move', e)}
                                             className="w-full h-full cursor-move flex items-center justify-center opacity-30 group"
@@ -325,22 +330,22 @@ export default function ImageCropper() {
                                         </div>
 
                                         {/* Drag Corner Handles */}
-                                        <div 
+                                        <div
                                             onMouseDown={(e) => startAction('tl', e)}
                                             onTouchStart={(e) => startAction('tl', e)}
                                             className="absolute w-3.5 h-3.5 -top-1.5 -left-1.5 bg-[var(--accent)] border border-white rounded-full cursor-nwse-resize"
                                         />
-                                        <div 
+                                        <div
                                             onMouseDown={(e) => startAction('tr', e)}
                                             onTouchStart={(e) => startAction('tr', e)}
                                             className="absolute w-3.5 h-3.5 -top-1.5 -right-1.5 bg-[var(--accent)] border border-white rounded-full cursor-nesw-resize"
                                         />
-                                        <div 
+                                        <div
                                             onMouseDown={(e) => startAction('bl', e)}
                                             onTouchStart={(e) => startAction('bl', e)}
                                             className="absolute w-3.5 h-3.5 -bottom-1.5 -left-1.5 bg-[var(--accent)] border border-white rounded-full cursor-nesw-resize"
                                         />
-                                        <div 
+                                        <div
                                             onMouseDown={(e) => startAction('br', e)}
                                             onTouchStart={(e) => startAction('br', e)}
                                             className="absolute w-3.5 h-3.5 -bottom-1.5 -right-1.5 bg-[var(--accent)] border border-white rounded-full cursor-nwse-resize"
@@ -431,8 +436,8 @@ export default function ImageCropper() {
                         )}
                     </div>
                 </div>
-            </div>
-        
+            </main>
+
             <ToolSEOContent toolName="Image Cropper Tools" toolDescription="Crop and cut your images online client-side. Aspect ratio templates, fully adjustable crop boxes with visual handles." />
             <Footer />
         </div>

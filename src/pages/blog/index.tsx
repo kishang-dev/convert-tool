@@ -50,7 +50,7 @@ export default function BlogPage() {
 
             <Navbar />
 
-            <main className="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
+            <main className="flex-1 max-w-6xl mx-auto px-6 py-12 w-full">
                 <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }]} />
 
                 <div className="text-center max-w-3xl mx-auto mb-16 mt-8 animate-fadeIn">
@@ -64,7 +64,7 @@ export default function BlogPage() {
 
                 {loading ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {[1,2,3].map(i => (
+                        {[1, 2, 3].map(i => (
                             <div key={i} className="bg-[var(--surface)] border border-[var(--border)] rounded-[20px] overflow-hidden animate-pulse">
                                 <div className="h-56 bg-[var(--surface-hover)]" />
                                 <div className="p-6 flex flex-col gap-3">

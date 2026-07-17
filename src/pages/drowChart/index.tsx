@@ -257,7 +257,7 @@ export default function ChartDashboard() {
                                                             className={`py-2 px-3 rounded border transition-all text-xs font-bold uppercase tracking-widest ${aiForm.platform === p
                                                                 ? 'bg-[var(--accent)] border-[var(--accent)] text-white'
                                                                 : 'bg-[var(--bg)] border-[var(--border)] text-[var(--text)] opacity-60 hover:opacity-100'
-                                                            }`}
+                                                                }`}
                                                         >
                                                             {p}
                                                         </button>
@@ -308,7 +308,7 @@ export default function ChartDashboard() {
             )}
 
             {/* ── Main Content ── */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
+            <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
                 {/* Page Header */}
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
                     <div>

@@ -8,6 +8,7 @@ import { LuCopy as Copy, LuTrash2 as Trash2, LuCheck as Check, LuPlus as Plus, L
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function SqlQueryBuilder() {
     const [action, setAction] = useState<'SELECT' | 'INSERT' | 'UPDATE' | 'DELETE'>('SELECT');
@@ -20,7 +21,7 @@ export default function SqlQueryBuilder() {
     const [orderBy, setOrderBy] = useState('created_at');
     const [orderDir, setOrderDir] = useState<'ASC' | 'DESC'>('DESC');
     const [limit, setLimit] = useState('10');
-    
+
     // Insert/Update fields
     const [insertData, setInsertData] = useState<{ key: string; val: string }[]>([
         { key: 'username', val: "'john_doe'" },
@@ -131,7 +132,7 @@ export default function SqlQueryBuilder() {
 
     }, [action, tableName, columns, whereConditions, joins, orderBy, orderDir, limit, insertData]);
 
-    
+
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
@@ -148,10 +149,10 @@ export default function SqlQueryBuilder() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
-            <SEO 
-                title="Visual SQL Query Builder Tools" 
-                description="Build SQL SELECT, INSERT, UPDATE, and DELETE queries visually. Enter tables, fields, wheres, and joins with instant code generation." 
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+            <SEO
+                title="Visual SQL Query Builder Tools"
+                description="Build SQL SELECT, INSERT, UPDATE, and DELETE queries visually. Enter tables, fields, wheres, and joins with instant code generation."
                 canonical="/sql-query-builder"
                 structuredData={structuredData}
             />
@@ -160,13 +161,13 @@ export default function SqlQueryBuilder() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-8">
-                <div className="text-center mb-10 animate-fadeIn">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
-                        <span className="gradient-text">SQL Query Builder</span>
-                    </h1>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
-                        Construct query statements visually using form panels. Support SELECT, INSERT, and joins.
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+                <Breadcrumbs items={[{ label: 'SQL Query Builder', href: '/sql-query-builder' }]} />
+
+                <div className="mb-8 animate-fadeIn">
+                    <h1 className="text-3xl font-bold text-[var(--text)] mb-2">SQL Query Builder</h1>
+                    <p className="text-[var(--text-muted)] text-sm max-w-2xl">
+                        Build queries visually, test schema, and export SQL.
                     </p>
                 </div>
 
@@ -426,8 +427,8 @@ export default function SqlQueryBuilder() {
                         </Card>
                     </div>
                 </div>
-            </div>
-        
+            </main>
+
             <ToolSEOContent toolName="Visual SQL Query Builder Tools" toolDescription="Build SQL SELECT, INSERT, UPDATE, and DELETE queries visually. Enter tables, fields, wheres, and joins with instant code generation." />
             <Footer />
         </div>

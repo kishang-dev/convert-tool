@@ -342,7 +342,7 @@ export default function GenericToolPage({ id, canonicalPath }: { id: string; can
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 
-            <main className="max-w-6xl mx-auto px-4 py-24 md:py-28">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
                 <Breadcrumbs
                     items={[
                         { label: tool.title, href: pagePath }

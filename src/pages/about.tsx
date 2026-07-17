@@ -100,14 +100,14 @@ export default function AboutPage() {
                                         <Globe size={20} className="text-[var(--accent)]" />
                                     </div>
                                     <span style={{ fontFamily: '"Sora", sans-serif', fontSize: 32, fontWeight: 800, color: 'var(--text)', display: 'block', marginBottom: 6 }}>100+</span>
-                                    <p style={{ fontSize: 12, color: 'var(--text-muted)', uppercase: 'uppercase', tracking: 'widest', fontWeight: 600, margin: 0 }}>Countries Reached</p>
+                                    <p style={{ fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: 'widest', fontWeight: 600, margin: 0 }}>Countries Reached</p>
                                 </div>
                                 <div style={{ background: 'linear-gradient(135deg, var(--accent), #8B5CF6)', border: '1.5px solid var(--accent)', borderRadius: 20, padding: 28, boxShadow: '0 18px 40px color-mix(in srgb,var(--accent) 30%,transparent)', color: '#fff' }}>
                                     <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'grid', placeItems: 'center', marginBottom: 16 }}>
                                         <Heart size={20} color="#fff" />
                                     </div>
                                     <span style={{ fontFamily: '"Sora", sans-serif', fontSize: 32, fontWeight: 800, display: 'block', marginBottom: 6 }}>10M+</span>
-                                    <p style={{ fontSize: 12, opacity: 0.9, textTransform: 'uppercase', tracking: 'widest', fontWeight: 600, margin: 0 }}>Files Converted</p>
+                                    <p style={{ fontSize: 12, opacity: 0.9, textTransform: 'uppercase', letterSpacing: 'widest', fontWeight: 600, margin: 0 }}>Files Converted</p>
                                 </div>
                             </div>
                         </div>

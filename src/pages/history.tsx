@@ -78,7 +78,7 @@ export default function HistoryPage() {
                 <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
             </div>
 
-            <div className="pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div className="pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
                 <div className="animate-fadeIn">
                     <div className="mb-8">
                         <div className="inline-flex items-center gap-2 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] px-4 py-2 rounded-full mb-4">

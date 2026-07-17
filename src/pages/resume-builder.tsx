@@ -11,6 +11,7 @@ import { LuUpload as Upload, LuFileText as FileText, LuDownload as Download, LuS
 import { useAuthStore } from '@/store/authStore';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 // const INITIAL_DATA: ResumeData = {
 //     personalInfo: { fullName: '', email: '', phone: '', address: '', summary: '', linkedin: '', github: '', website: '' },
@@ -461,7 +462,12 @@ export default function ResumeBuilder() {
             <Navbar />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-8">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+                <Breadcrumbs
+                    items={[
+                        { label: 'Resume Builder', href: '/resume-builder' }
+                    ]}
+                />
                 {/* Stepper */}
                 <div className="flex justify-center mb-12">
                     <div className="flex items-center gap-4 bg-gray-100 dark:bg-white/5 p-2 rounded-full border border-gray-200 dark:border-white/10">
@@ -1317,8 +1323,8 @@ export default function ResumeBuilder() {
                 )}
 
                 <ToolSEOContent toolName="Free Resume Builder — 50+ Professional Templates" toolDescription="Build a professional resume in minutes with ToolBasketAI" />
-            </div>
+            </main>
             <Footer />
-        </div >
+        </div>
     );
 }

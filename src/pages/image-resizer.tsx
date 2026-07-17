@@ -8,6 +8,7 @@ import { LuUpload as Upload, LuImage as ImageIcon, LuDownload as Download, LuArr
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function ImageResizer() {
     const [file, setFile] = useState<File | null>(null);
@@ -104,26 +105,26 @@ export default function ImageResizer() {
             const canvas = document.createElement('canvas');
             canvas.width = width;
             canvas.height = height;
-            
+
             const ctx = canvas.getContext('2d');
             if (!ctx) throw new Error('Could not get 2D canvas context');
 
             const img = new Image();
             img.onload = () => {
                 ctx.drawImage(img, 0, 0, width, height);
-                
+
                 // Export image at configured format and quality
                 const q = quality / 100;
                 const resizedDataUrl = canvas.toDataURL(format, format === 'image/png' ? undefined : q);
 
                 const link = document.createElement('a');
                 link.href = resizedDataUrl;
-                
+
                 // Construct output filename
                 const ext = format.split('/')[1] === 'jpeg' ? 'jpg' : format.split('/')[1];
                 const baseName = file.name.substring(0, file.name.lastIndexOf('.'));
                 link.download = `${baseName}_resized_${width}x${height}.${ext}`;
-                
+
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -140,7 +141,7 @@ export default function ImageResizer() {
         }
     };
 
-    
+
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
@@ -157,10 +158,10 @@ export default function ImageResizer() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
-            <SEO 
-                title="Image Resizer Tools" 
-                description="Resize JPG, PNG, and WEBP images in seconds client-side. Lock aspect ratio, select quality, and compress dimensions." 
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+            <SEO
+                title="Image Resizer Tools"
+                description="Resize JPG, PNG, and WEBP images in seconds client-side. Lock aspect ratio, select quality, and compress dimensions."
                 canonical="/image-resizer"
                 structuredData={structuredData}
             />
@@ -169,12 +170,12 @@ export default function ImageResizer() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-8">
-                <div className="text-center mb-10 animate-fadeIn">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
-                        <span className="gradient-text">Image Resizer</span>
-                    </h1>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+                <Breadcrumbs items={[{ label: 'Image Resizer', href: '/image-resizer' }]} />
+
+                <div className="mb-8 animate-fadeIn">
+                    <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Image Resizer</h1>
+                    <p className="text-[var(--text-muted)] text-sm max-w-2xl">
                         Compress, scale, and resize your images instantly right in your browser with zero server uploads.
                     </p>
                 </div>
@@ -333,8 +334,8 @@ export default function ImageResizer() {
                         )}
                     </div>
                 </div>
-            </div>
-        
+            </main>
+
             <ToolSEOContent toolName="Image Resizer Tools" toolDescription="Resize JPG, PNG, and WEBP images in seconds client-side. Lock aspect ratio, select quality, and compress dimensions." />
             <Footer />
         </div>

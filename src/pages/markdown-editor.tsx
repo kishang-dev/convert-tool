@@ -8,6 +8,7 @@ import { LuCopy as Copy, LuCheck as Check, LuFileText as FileText, LuCode as Cod
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function MarkdownEditor() {
     const [markdown, setMarkdown] = useState(`# ToolBasketAI Markdown Document
@@ -159,7 +160,7 @@ Feel free to paste your own *.md* files here!`);
     };
 
     return (
-        <div className="min-h-screen bg-[#0f172a] text-[var(--text)] dark:text-[var(--text)]">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
                 title="Markdown Editor & HTML Converter Tools"
                 description="Write, edit, and convert Markdown to HTML cleanly client-side. Side-by-side panels, tables support, and instant copying."
@@ -171,12 +172,16 @@ Feel free to paste your own *.md* files here!`);
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <div className="max-w-7xl mx-auto px-4 py-8">
-                <div className="text-center mb-10 animate-fadeIn">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
-                        <span className="gradient-text">Markdown Editor & Converter</span>
-                    </h1>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+                <Breadcrumbs 
+                    items={[
+                        { label: 'Markdown Editor', href: '/markdown-editor' }
+                    ]} 
+                />
+
+                <div className="mb-8 animate-fadeIn">
+                    <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Markdown Editor & Converter</h1>
+                    <p className="text-[var(--text-muted)] text-sm max-w-2xl">
                         Edit rich documents using Markdown syntax. Compile to styled HTML or retrieve raw code snippets.
                     </p>
                 </div>
@@ -269,7 +274,7 @@ Feel free to paste your own *.md* files here!`);
                         )}
                     </Card>
                 </div>
-            </div>
+            </main>
 
             <ToolSEOContent toolName="Markdown Editor & HTML Converter Tools" toolDescription="Write, edit, and convert Markdown to HTML cleanly client-side. Side-by-side panels, tables support, and instant copying." />
             <Footer />

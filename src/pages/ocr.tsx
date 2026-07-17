@@ -10,6 +10,7 @@ import Button from "@/components/Button";
 import SEO from "@/components/SEO";
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function OcrPage() {
     const [loading, setLoading] = useState(false);
@@ -78,7 +79,7 @@ export default function OcrPage() {
     };
 
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <SEO
                 title="Free OCR Tool — Extract Text from Images"
@@ -96,27 +97,13 @@ export default function OcrPage() {
             />
             <Navbar />
 
-            {/* Background */}
-            <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-pink-900/20 -z-10">
-                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-            </div>
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+                <Breadcrumbs items={[{ label: 'Image OCR', href: '/ocr' }]} />
 
-            {/* Floating Elements */}
-            <div className="fixed top-20 right-10 w-72 h-72 bg-blue-500/30 rounded-full blur-3xl animate-float -z-10"></div>
-            <div className="fixed bottom-20 left-10 w-96 h-96 bg-[var(--accent)]/30 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1.5s' }}></div>
-
-            <div className="max-w-7xl mx-auto px-4 py-8">
-                {/* Header */}
-                <div className="text-center mb-16 animate-fadeIn">
-                    <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-4">
-                        <Sparkles className="text-[var(--accent)]" size={16} />
-                        <span className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)]">AI-Powered OCR</span>
-                    </div>
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-                        <span className="gradient-text">Image OCR</span> Tool
-                    </h1>
-                    <p className="text-xl text-[var(--text-muted)] dark:text-[var(--text-muted)]">
-                        Extract text from images (English, Hindi, Gujarati)
+                <div className="mb-8 animate-fadeIn">
+                    <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Image OCR Tool</h1>
+                    <p className="text-[var(--text-muted)] text-sm max-w-2xl">
+                        Extract text from images (English, Hindi, Gujarati) instantly using AI-powered OCR.
                     </p>
                 </div>
 
@@ -215,7 +202,7 @@ export default function OcrPage() {
                         )}
                     </div>
                 )}
-            </div>
+            </main>
 
             <style jsx global>{`
                 .custom-scrollbar::-webkit-scrollbar {
