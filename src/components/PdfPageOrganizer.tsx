@@ -7,6 +7,7 @@ export interface PdfPreviewPage {
     fileName: string;
     pageIndex: number;
     imageUrl: string;
+    rotation?: number;
 }
 
 interface PdfPageOrganizerProps {
@@ -14,6 +15,7 @@ interface PdfPageOrganizerProps {
     loading?: boolean;
     onChange: (pages: PdfPreviewPage[]) => void;
     onRemovePage?: (pageId: string) => void;
+    onClearAll?: () => void;
 }
 
 export default function PdfPageOrganizer({
@@ -21,6 +23,7 @@ export default function PdfPageOrganizer({
     loading = false,
     onChange,
     onRemovePage,
+    onClearAll,
 }: PdfPageOrganizerProps) {
     const [draggedId, setDraggedId] = useState<string | null>(null);
     const [dragOverId, setDragOverId] = useState<string | null>(null);
@@ -48,6 +51,23 @@ export default function PdfPageOrganizer({
         setDragOverId(null);
     };
 
+    const handleRotate = (index: number) => {
+        const nextPages = [...pages];
+        nextPages[index] = { ...nextPages[index], rotation: ((nextPages[index].rotation || 0) + 90) % 360 };
+        onChange(nextPages);
+    };
+
+    const handleDuplicate = (index: number) => {
+        const nextPages = [...pages];
+        const newPage = { ...nextPages[index], id: `${nextPages[index].id}-copy-${Date.now()}` };
+        nextPages.splice(index + 1, 0, newPage);
+        onChange(nextPages);
+    };
+
+    const handleReverse = () => {
+        onChange([...pages].reverse());
+    };
+
     if (loading) {
         return (
             <div className="p-8 flex flex-col items-center justify-center gap-3 text-[var(--text-muted)]">
@@ -69,10 +89,28 @@ export default function PdfPageOrganizer({
         <div className="p-4 sm:p-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
                 <div>
-                    <h3 className="text-sm font-semibold text-[var(--text)]">Page order</h3>
-                    <p className="text-xs text-[var(--text-muted)]">Drag pages to change the final merged PDF order.</p>
+                    <h3 className="text-sm font-semibold text-[var(--text)]">Page order & Utilities</h3>
+                    <p className="text-xs text-[var(--text-muted)]">Drag pages, rotate, duplicate, or reverse the order.</p>
                 </div>
-                <div className="text-xs text-[var(--text-faint)]">{pages.length} pages selected</div>
+                <div className="flex items-center gap-2">
+                    <span className="text-xs text-[var(--text-faint)] mr-2">{pages.length} pages</span>
+                    <button
+                        onClick={handleReverse}
+                        className="px-2 py-1 bg-[var(--surface-hover)] border border-[var(--border)] rounded text-xs hover:bg-[var(--accent-soft)] hover:text-[var(--accent)] transition-colors"
+                        title="Reverse current page order"
+                    >
+                        Reverse Order
+                    </button>
+                    {onClearAll && (
+                        <button
+                            onClick={onClearAll}
+                            className="px-2 py-1 bg-[var(--surface-hover)] border border-[var(--border)] rounded text-xs hover:bg-red-500/10 hover:text-red-500 transition-colors"
+                            title="Clear all pages"
+                        >
+                            Clear All
+                        </button>
+                    )}
+                </div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -130,6 +168,24 @@ export default function PdfPageOrganizer({
                                     >
                                         <ArrowDown size={14} />
                                     </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleRotate(index)}
+                                        className="p-1 rounded text-[var(--text-muted)] hover:text-blue-400 hover:bg-blue-400/10"
+                                        title="Rotate page 90 degrees"
+                                        aria-label="Rotate page 90 degrees"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleDuplicate(index)}
+                                        className="p-1 rounded text-[var(--text-muted)] hover:text-green-500 hover:bg-green-500/10"
+                                        title="Duplicate page"
+                                        aria-label="Duplicate page"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                                    </button>
                                     {onRemovePage && (
                                         <button
                                             type="button"
@@ -148,7 +204,8 @@ export default function PdfPageOrganizer({
                                 <img
                                     src={page.imageUrl}
                                     alt={page.fileName + " page " + (page.pageIndex + 1)}
-                                    className="max-w-full max-h-full object-contain shadow-sm border border-[var(--border)] bg-white"
+                                    style={{ transform: `rotate(${page.rotation || 0}deg)` }}
+                                    className="max-w-full max-h-full object-contain shadow-sm border border-[var(--border)] bg-white transition-transform duration-300"
                                     draggable={false}
                                 />
                             </div>

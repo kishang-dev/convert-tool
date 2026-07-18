@@ -1,216 +1,218 @@
-import React, { useState, useRef } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import Card from '@/components/Card';
-import Button from '@/components/Button';
-import Toast from '@/components/Toast';
-import { LuUpload as Upload, LuLockOpen as Unlock, LuDownload as Download, LuArrowRight as ArrowRight, LuCircleCheck as CheckCircle, LuShieldAlert as ShieldAlert } from "react-icons/lu";
-import { fileAPI, FileData } from '@/lib/api';
-import SEO from '@/components/SEO';
-import * as gtag from '@/lib/gtag';
-import ToolSEOContent from '@/components/ToolSEOContent';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { LuFileText as FileText, LuTrash2 as Trash2, LuDownload as Download, LuKey as Unlock, LuCheck as Check, LuEye as Eye, LuEyeOff as EyeOff } from "react-icons/lu";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Button from "@/components/Button";
+import SEO from "@/components/SEO";
+import Toast from "@/components/Toast";
+import ToolSEOContent from "@/components/ToolSEOContent";
+import PdfUploadDropzone from "@/components/PdfUploadDropzone";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { fileAPI, FileData } from "@/lib/api";
+import * as gtag from "@/lib/gtag";
 
-export default function PdfUnlock() {
-    const [file, setFile] = useState<File | null>(null);
-    const [password, setPassword] = useState('');
-    const [unlockedFile, setUnlockedFile] = useState<FileData | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
-    const fileInputRef = useRef<HTMLInputElement>(null);
+export default function UnlockPdf() {
+    const router = useRouter();
+    const [files, setFiles] = useState<FileData[]>([]);
+    const [results, setResults] = useState<FileData[]>([]);
+    
+    const [uploading, setUploading] = useState(false);
+    const [processing, setProcessing] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
-    const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+
+    const showToast = (message: string, type: "success" | "error" = "success") => {
         setToast({ message, type });
         setTimeout(() => setToast(null), 3000);
     };
 
-    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const selectedFile = e.target.files[0];
-            if (selectedFile.type !== 'application/pdf') {
-                showToast('Please select a PDF file', 'error');
-                return;
-            }
-            setFile(selectedFile);
-            setUnlockedFile(null);
-            setPassword('');
-        }
-    };
-
-    const handleUnlock = async () => {
-        if (!file) return;
-        if (!password) {
-            showToast('Password is required to unlock this PDF', 'error');
+    const handleFilesSelected = async (selectedFiles: File[]) => {
+        if (selectedFiles.length === 0) return;
+        const pdfFiles = selectedFiles.filter(f => f.type === "application/pdf" || f.name.toLowerCase().endsWith(".pdf"));
+        
+        if (pdfFiles.length === 0) {
+            showToast("Please upload PDF files only.", "error");
             return;
         }
 
-        setLoading(true);
+        setUploading(true);
         try {
-            // Step 1: Upload the file
-            const uploadRes = await fileAPI.uploadFiles([file]);
-            const uploadedFile = uploadRes.files[0];
-            
-            // Step 2: Request backend to unlock it
-            const response = await fileAPI.unlockPDF(uploadedFile._id, password);
-            setUnlockedFile(response.file);
-            showToast('PDF unlocked and password removed successfully!', 'success');
+            const response = await fileAPI.uploadFiles(pdfFiles);
+            setFiles(prev => [...prev, ...response.files]);
+            showToast(`${response.files.length} file(s) uploaded successfully.`);
+            setResults([]);
         } catch (error: any) {
-            console.error(error);
-            showToast(error.response?.data?.error || 'Failed to unlock PDF. Please verify your password.', 'error');
+            showToast(error.response?.data?.error || "Upload failed.", "error");
         } finally {
-            setLoading(false);
+            setUploading(false);
         }
     };
 
-    const handleDownload = () => {
-        if (unlockedFile) {
-            window.open(fileAPI.getDownloadUrl(unlockedFile.filename), '_blank');
+    const removeFile = (id: string) => setFiles(files.filter(f => f._id !== id));
+
+    const handleUnlock = async () => {
+        if (files.length === 0) return;
+        if (!password) {
+            showToast("Please enter the password to unlock.", "error");
+            return;
+        }
+
+        setProcessing(true);
+        setResults([]);
+        try {
+            const unlockPromises = files.map(async (file) => {
+                const response = await fileAPI.unlockPDF(file._id, password);
+                return response.file;
+            });
+
+            const processed = await Promise.all(unlockPromises);
+            setResults(processed);
+            showToast(`Successfully unlocked ${processed.length} file(s).`);
+            
+            gtag.event({ action: "use_tool", category: "Tool", label: "pdf-unlock" });
+        } catch (error: any) {
+            showToast(error.message || error.response?.data?.error || "Unlock failed. Password might be incorrect.", "error");
+        } finally {
+            setProcessing(false);
         }
     };
 
-    
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "PDF Unlock & Password Remover Tools",
-        "description": "Unlock password protected PDFs and permanently remove passwords and restrictions.",
-        "applicationCategory": "BrowserApplication",
-        "operatingSystem": "All",
-        "url": `https://toolbasketai.com/pdf-unlock`,
-        "offers": {
-            "@type": "Offer",
-            "price": "0.00",
-            "priceCurrency": "USD"
-        }
+        name: "Unlock PDF",
+        description: "Remove passwords from secure PDFs and strip encryption instantly.",
+        applicationCategory: "BrowserApplication",
+        url: "https://toolbasketai.com/pdf-unlock",
     };
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-            <SEO 
-                title="PDF Unlock & Password Remover Tools" 
-                description="Unlock password protected PDFs and permanently remove passwords and restrictions." 
-                canonical="/pdf-unlock"
-                structuredData={structuredData}
-            />
-
+            <SEO title="Unlock PDF" description="Decrypt password protected PDFs and strip passwords in bulk easily." canonical="/pdf-unlock" structuredData={structuredData} />
+            {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 
-            {toast && <Toast {...toast} onClose={() => setToast(null)} />}
+            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+                <Breadcrumbs items={[{ label: 'Unlock PDF', href: '/pdf-unlock' }]} />
 
-            <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-                <Breadcrumbs 
-                    items={[
-                        { label: 'PDF Unlock', href: '/pdf-unlock' }
-                    ]} 
-                />
-
-                <div className="text-center mb-12 animate-fadeIn">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4">
-                        <span className="gradient-text">PDF Unlock & Password Remover</span>
-                    </h1>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-lg max-w-2xl mx-auto">
-                        Remove encryption, restrictions, and passwords from protected PDF files in seconds.
+                <div className="mb-8 animate-fadeIn">
+                    <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Unlock PDF</h1>
+                    <p className="text-[var(--text-muted)] text-sm max-w-2xl">
+                        Remove password security from your PDFs in bulk. Enter the password once and strip the protection from all uploaded files forever.
                     </p>
                 </div>
 
-                <div className="grid gap-8">
-                    <Card variant="elevated" className="p-8 md:p-12 relative overflow-hidden bg-[var(--surface)] border-[var(--border)]">
-                        <div className="absolute top-0 right-0 p-4 opacity-5">
-                            <Unlock size={120} className="text-[var(--text)] dark:text-[var(--text)]" />
+                <section className="bg-[var(--surface)] border border-[var(--border-strong)] rounded overflow-hidden animate-fadeIn flex flex-col md:flex-row min-h-[500px]">
+                    <div className="w-full md:w-80 border-b md:border-b-0 md:border-r border-[var(--border-strong)] bg-[var(--bg-elevated)] flex flex-col">
+                        <div className="p-6 flex-1 overflow-y-auto">
+                            <h3 className="text-xs font-semibold mb-3 uppercase tracking-wider text-[var(--text-muted)]">Decryption Key</h3>
+                            
+                            <div className="mb-6 relative">
+                                <label className="block text-sm font-medium mb-2">Current Password</label>
+                                <div className="relative flex items-center">
+                                    <Unlock size={16} className="absolute left-3 text-[var(--text-faint)]" />
+                                    <input 
+                                        type={showPassword ? "text" : "password"} 
+                                        value={password}
+                                        onChange={e => setPassword(e.target.value)}
+                                        placeholder="Type password..." 
+                                        className="w-full bg-[var(--bg)] border border-[var(--border-strong)] rounded pl-9 pr-10 py-2 text-sm focus:border-[var(--accent)] outline-none"
+                                    />
+                                    <button 
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 text-[var(--text-muted)] hover:text-[var(--text)]"
+                                    >
+                                        {showPassword ? <EyeOff size={16}/> : <Eye size={16}/>}
+                                    </button>
+                                </div>
+                                <p className="text-xs text-[var(--text-faint)] mt-2">
+                                    This password will be used to attempt decryption on all uploaded files.
+                                </p>
+                            </div>
+
+                            {files.length > 0 && (
+                                <div className="mt-6 border-t border-[var(--border)] pt-6">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <h3 className="text-sm font-medium">Locked Files</h3>
+                                        <span className="text-xs text-[var(--text-faint)]">{files.length}</span>
+                                    </div>
+                                    <div className="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                                        {files.map(f => (
+                                            <div key={f._id} className="flex items-center justify-between p-2 bg-[var(--bg)] border border-[var(--border)] rounded text-xs">
+                                                <span className="truncate max-w-[150px]">{f.originalName}</span>
+                                                <button onClick={() => removeFile(f._id)} className="text-red-400 hover:text-red-500"><Trash2 size={14}/></button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                        
-                        {!unlockedFile ? (
-                            <div className="flex flex-col items-center gap-6 relative z-10">
-                                <div className="w-20 h-20 bg-yellow-500/10 rounded flex items-center justify-center mb-2">
-                                    {file ? (
-                                        <Unlock size={40} className="text-yellow-400 animate-pulse" />
-                                    ) : (
-                                        <Upload size={40} className="text-yellow-400" />
-                                    )}
+
+                        <div className="p-6 border-t border-[var(--border-strong)]">
+                            <Button variant="accent" className="w-full flex items-center justify-center gap-2" onClick={handleUnlock} disabled={processing || uploading || files.length === 0 || !password} loading={processing}>
+                                {processing ? "Decrypting..." : <><Unlock size={16} /> Unlock PDFs</>}
+                            </Button>
+                        </div>
+                    </div>
+
+                    <div className="flex-1 bg-[var(--surface)] flex flex-col relative">
+                        {results.length > 0 ? (
+                            <div className="flex-1 p-6 overflow-y-auto">
+                                <div className="bg-green-500/10 border border-green-500/20 text-green-500 p-6 rounded-lg mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                    <div>
+                                        <h3 className="text-xl font-bold mb-1 flex items-center gap-2"><Check size={24} /> Unlocked Successfully!</h3>
+                                        <p className="text-sm opacity-90">Your files are now completely stripped of password protection.</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <Button size="sm" variant="secondary" onClick={() => setResults([])}>Unlock More</Button>
+                                        {results.length > 1 && (
+                                            <Button size="sm" variant="accent" onClick={() => results.forEach((r, i) => setTimeout(() => window.open(fileAPI.getDownloadUrl(r), "_blank"), i * 300))}>Download All</Button>
+                                        )}
+                                    </div>
                                 </div>
 
-                                {file ? (
-                                    <div className="w-full max-w-md text-center space-y-6">
-                                        <div>
-                                            <p className="text-xl font-semibold mb-1 truncate">{file.name}</p>
-                                            <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)]">{(file.size / 1024 / 1024).toFixed(2)} MB • Protected PDF</p>
+                                <div className="space-y-3">
+                                    {results.map((res, i) => (
+                                        <div key={i} className="p-4 border border-[var(--border-strong)] rounded bg-[var(--bg-elevated)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                            <div className="flex items-center gap-3 min-w-0">
+                                                <div className="p-2 bg-[var(--accent-soft)] text-[var(--accent)] rounded shrink-0"><Unlock size={20}/></div>
+                                                <div className="min-w-0">
+                                                    <p className="text-sm font-medium text-[var(--text)] truncate">{res.filename}</p>
+                                                    <p className="text-xs text-[var(--text-muted)] mt-1">Protection Removed</p>
+                                                </div>
+                                            </div>
+                                            <Button size="sm" variant="ghost" className="text-[var(--text-muted)] hover:text-[var(--accent)] shrink-0" onClick={() => window.open(fileAPI.getDownloadUrl(res), "_blank")}><Download size={16} /> Download</Button>
                                         </div>
-
-                                        <div className="space-y-2 text-left">
-                                            <label className="text-sm font-semibold text-[var(--text-muted)] dark:text-[var(--text-muted)] flex items-center gap-1.5">
-                                                <ShieldAlert size={16} className="text-yellow-500" />
-                                                Enter PDF Password
-                                            </label>
-                                            <input
-                                                type="password"
-                                                value={password}
-                                                onChange={(e) => setPassword(e.target.value)}
-                                                placeholder="Enter document open password"
-                                                className="w-full px-4 py-3 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] rounded focus:border-[var(--accent)] focus:bg-[var(--surface-hover)] outline-none transition-all text-[var(--text)] dark:text-[var(--text)] placeholder-[var(--text-faint)]"
-                                                autoFocus
-                                            />
-                                        </div>
-
-                                        <div className="flex gap-4 justify-center mt-8">
-                                            <Button variant="ghost" onClick={() => setFile(null)}>
-                                                Change File
-                                            </Button>
-                                            <Button 
-                                                onClick={handleUnlock} 
-                                                loading={loading}
-                                                className="bg-yellow-600 hover:bg-yellow-500 text-slate-950 font-bold"
-                                            >
-                                                Unlock PDF
-                                                <ArrowRight size={18} className="ml-2" />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className="text-center">
-                                        <p className="text-xl font-semibold mb-2">Upload Protected PDF</p>
-                                        <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-6 max-w-sm mx-auto">
-                                            Choose an encrypted PDF file to remove its protection and passwords
-                                        </p>
-                                        <Button onClick={() => fileInputRef.current?.click()} size="lg">
-                                            Choose File
-                                        </Button>
-                                    </div>
-                                )}
-
-                                <input
-                                    ref={fileInputRef}
-                                    type="file"
-                                    accept=".pdf"
-                                    onChange={handleFileSelect}
-                                    className="hidden"
-                                />
+                                    ))}
+                                </div>
                             </div>
                         ) : (
-                            <div className="flex flex-col items-center gap-6 animate-fadeIn relative z-10">
-                                <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mb-2">
-                                    <CheckCircle size={40} className="text-green-400" />
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-2xl font-bold mb-2">PDF Unlocked successfully!</p>
-                                    <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-8">All password protection and editing restrictions have been permanently removed.</p>
-                                    <div className="flex gap-4 justify-center">
-                                        <Button variant="ghost" onClick={() => { setFile(null); setUnlockedFile(null); setPassword(''); }}>
-                                            Unlock Another
-                                        </Button>
-                                        <Button onClick={handleDownload} className="bg-green-600 hover:bg-green-700">
-                                            Download PDF
-                                            <Download size={18} className="ml-2" />
-                                        </Button>
+                            <div className="flex-1 p-6">
+                                <PdfUploadDropzone maxFiles={50} loading={uploading} title="Upload Protected PDFs" description="Drop up to 50 password-protected PDF files here." onFilesSelected={handleFilesSelected} />
+                                
+                                {files.length === 0 && (
+                                    <div className="mt-12 text-center text-[var(--text-muted)]">
+                                        <Unlock size={48} className="mx-auto mb-4 opacity-20" />
+                                        <p className="text-sm">Upload locked files and enter the password to unlock them.</p>
                                     </div>
-                                </div>
+                                )}
                             </div>
                         )}
-                    </Card>
-                </div>
-            </div>
-        
-            <ToolSEOContent toolName="PDF Unlock & Password Remover Tools" toolDescription="Unlock password protected PDFs and permanently remove passwords and restrictions." />
+                    </div>
+                </section>
+                <ToolSEOContent toolName="Unlock PDF" toolDescription="Batch remove password protection from up to 50 PDFs instantly." />
+            </main>
             <Footer />
+            
+            <style jsx global>{`
+                .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+                .custom-scrollbar::-webkit-scrollbar-track { background: var(--bg); }
+                .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+            `}</style>
         </div>
     );
 }

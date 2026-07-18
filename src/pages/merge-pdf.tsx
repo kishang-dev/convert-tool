@@ -13,7 +13,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { fileAPI, FileData } from "@/lib/api";
 import * as gtag from "@/lib/gtag";
 
-const MAX_FILES = 2;
+const MAX_FILES = 50;
 
 const getAssetUrl = (url: string) => {
     if (!url) return "";
@@ -103,7 +103,7 @@ export default function MergePdf() {
         }
 
         if (files.length + pdfFiles.length > MAX_FILES) {
-            showToast("Please upload exactly 2 PDFs for this merge flow.", "error");
+            showToast(`Please upload up to ${MAX_FILES} PDFs for this merge flow.`, "error");
             return;
         }
 
@@ -137,8 +137,8 @@ export default function MergePdf() {
     };
 
     const handleMerge = async () => {
-        if (files.length !== MAX_FILES) {
-            showToast("Upload 2 PDFs before merging.", "error");
+        if (files.length < 2) {
+            showToast("Upload at least 2 PDFs before merging.", "error");
             return;
         }
 
@@ -163,7 +163,7 @@ export default function MergePdf() {
             if (response.file?._id) {
                 const reorderedPages = pages.map((page) => ({
                     index: filePageOffsets[page.fileId] + page.pageIndex,
-                    rotation: 0,
+                    rotation: page.rotation || 0,
                 }));
 
                 const reorderedResponse = await fileAPI.editPDF(response.file._id, reorderedPages);
@@ -199,7 +199,7 @@ export default function MergePdf() {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         name: "Merge PDF",
-        description: "Upload two PDFs, preview every page, reorder pages with drag and drop, then merge them into one PDF.",
+        description: "Upload multiple PDFs, preview every page, reorder pages with drag and drop, then merge them into one PDF.",
         applicationCategory: "BrowserApplication",
         operatingSystem: "All",
         url: "https://toolbasketai.com/merge-pdf",
@@ -214,7 +214,7 @@ export default function MergePdf() {
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
                 title="Merge PDF"
-                description="Upload two PDFs, preview all pages, reorder pages with drag and drop, and merge them into one PDF."
+                description="Upload multiple PDFs, preview all pages, reorder pages with drag and drop, and merge them into one PDF."
                 canonical="/merge-pdf"
                 structuredData={structuredData}
             />
@@ -231,7 +231,7 @@ export default function MergePdf() {
                 <div className="mb-8 animate-fadeIn">
                     <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Merge PDF</h1>
                     <p className="text-[var(--text-muted)] text-sm max-w-2xl">
-                        Upload 2 PDFs, preview every page from both files, drag pages into the order you want, then merge.
+                        Upload multiple PDFs, preview every page from all files, drag pages into the order you want, then merge.
                     </p>
                 </div>
 
@@ -241,7 +241,7 @@ export default function MergePdf() {
                             maxFiles={MAX_FILES}
                             loading={uploading}
                             disabled={processing || loadingPreviews}
-                            title={files.length === 0 ? "Upload 2 PDF files" : "Upload the second PDF"}
+                            title={files.length === 0 ? "Upload PDF files" : "Upload more PDFs"}
                             description="Click to upload or drag and drop PDF files here"
                             onFilesSelected={handleFilesSelected}
                         />
@@ -291,6 +291,11 @@ export default function MergePdf() {
                         loading={loadingPreviews}
                         onChange={setPages}
                         onRemovePage={(pageId) => setPages((prev) => prev.filter((page) => page.id !== pageId))}
+                        onClearAll={() => {
+                            setFiles([]);
+                            setPages([]);
+                            setPageCounts({});
+                        }}
                     />
 
                     <div className="p-4 sm:p-6 border-t border-[var(--border-strong)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -301,7 +306,7 @@ export default function MergePdf() {
                             variant="accent"
                             size="md"
                             onClick={handleMerge}
-                            disabled={files.length !== MAX_FILES || pages.length === 0 || uploading || loadingPreviews || processing}
+                            disabled={files.length < 2 || pages.length === 0 || uploading || loadingPreviews || processing}
                             loading={processing}
                             className="min-w-[160px]"
                         >
@@ -312,9 +317,9 @@ export default function MergePdf() {
 
                 <ToolSEOContent
                     toolName="Merge PDF"
-                    toolDescription="Upload two PDFs, preview every page, reorder pages with drag and drop, and create one merged PDF."
+                    toolDescription="Upload multiple PDFs, preview every page, reorder pages with drag and drop, and create one merged PDF."
                     steps={[
-                        { name: "Upload PDFs", text: "Upload the two PDF files you want to combine." },
+                        { name: "Upload PDFs", text: "Upload the PDF files you want to combine." },
                         { name: "Arrange Pages", text: "Preview every page and drag pages into the final order." },
                         { name: "Merge", text: "Create and download the merged PDF instantly." },
                     ]}
