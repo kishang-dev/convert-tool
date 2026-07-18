@@ -231,6 +231,7 @@ export default function ResumeBuilder() {
     const resumeRef = useRef<HTMLDivElement>(null);
     const previewContainerRef = useRef<HTMLDivElement>(null);
     const [previewScale, setPreviewScale] = useState(1);
+    const [resumeContentHeight, setResumeContentHeight] = useState(1123); // Default A4 height in px
     const [mobilePreviewOpen, setMobilePreviewOpen] = useState(false);
     const { user } = useAuthStore();
 
@@ -266,6 +267,20 @@ export default function ResumeBuilder() {
         if (previewContainerRef.current) observer.observe(previewContainerRef.current);
         return () => observer.disconnect();
     }, [step]);
+
+    // Track actual resume content height to prevent clipping
+    useEffect(() => {
+        if (!resumeRef.current) return;
+        const heightObserver = new ResizeObserver(() => {
+            if (resumeRef.current) {
+                setResumeContentHeight(resumeRef.current.scrollHeight);
+            }
+        });
+        heightObserver.observe(resumeRef.current);
+        // Measure immediately too
+        setResumeContentHeight(resumeRef.current.scrollHeight);
+        return () => heightObserver.disconnect();
+    }, [step, resumeData]);
 
     const fetchSavedResumes = async () => {
         try {
@@ -1037,7 +1052,7 @@ export default function ResumeBuilder() {
                         </div>
 
                         {/* Preview */}
-                        <div className="sticky top-28 hidden lg:block h-[calc(100vh-140px)]">
+                        <div className="sticky  hidden lg:block h-[calc(100vh-140px)]">
                             <div className="flex justify-between items-center mb-6 px-2">
                                 <div className="flex items-center gap-2">
                                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
@@ -1211,10 +1226,10 @@ export default function ResumeBuilder() {
                             <div className="lg:col-span-3 space-y-6">
                                 {/* The High-Def Preview */}
                                 <div className="relative group w-full" ref={previewContainerRef}>
-                                    {/* Bounding box: clip overflow so blank min-h space is hidden */}
+                                    {/* Bounding box: dynamically sized to match actual resume content height */}
                                     <div
-                                        className="relative w-full overflow-hidden shadow-xl border border-[var(--border)] rounded bg-white"
-                                        style={{ height: `${794 * 1.295 * previewScale}px` }}
+                                        className="relative w-full shadow-xl border border-[var(--border)] rounded bg-white"
+                                        style={{ height: `${resumeContentHeight * previewScale}px` }}
                                     >
                                         <div
                                             className="absolute top-0 left-0 origin-top-left"
