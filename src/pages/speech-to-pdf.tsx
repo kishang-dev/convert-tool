@@ -291,8 +291,17 @@ export default function SpeechToPdf() {
         
         try {
             if (recordMode === 'meeting') {
-                const displayStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
-                const micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                // Check if screen sharing is supported (fails on most mobile browsers)
+                if (!navigator.mediaDevices.getDisplayMedia) {
+                    throw new Error("Screen sharing is not supported on this device/browser (try using a desktop).");
+                }
+
+                const displayStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true }).catch(err => {
+                    throw new Error("Screen sharing permission denied or not supported.");
+                });
+                const micStream = await navigator.mediaDevices.getUserMedia({ audio: true }).catch(err => {
+                    throw new Error("Microphone permission denied.");
+                });
                 
                 displayStreamRef.current = displayStream;
                 micStreamRef.current = micStream;
@@ -332,47 +341,20 @@ export default function SpeechToPdf() {
 
                 // 2. Real-Time Audio Chunking loop for Remote Speaker Transcription
                 const mlStream = new MediaStream(dest.stream.getAudioTracks());
-                const loopSTT = () => {
-                    if (!isListeningRef.current) return;
-
-                    try {
-                        const sttRecorder = new MediaRecorder(mlStream, { mimeType: 'audio/webm' });
-                        sttRecorder.ondataavailable = async (e) => {
-                            if (e.data.size > 0 && isListeningRef.current) {
-                                try {
-                                    const formData = new FormData();
-                                    const blob = new Blob([e.data], { type: 'audio/webm' });
-                                    formData.append('audio', blob, 'chunk.webm');
-                                    
-                                    const res = await api.post('/transcribe-chunk', formData, {
-                                        headers: { 'Content-Type': 'multipart/form-data' }
-                                    });
-                                    if (res.data?.success && res.data.text) {
-                                        // Append the remote speech safely
-                                        setTranscript(prev => {
-                                            const newText = res.data.text;
-                                            // Optional: Avoid re-appending duplicate local words if Whisper caught them too
-                                            return prev ? `${prev} ${newText}` : newText;
-                                        });
-                                    }
-                                } catch (_) {}
-                            }
-                        };
-                        sttRecorder.start();
-                        sttTimeoutRef.current = setTimeout(() => {
-                            if (isListeningRef.current && sttRecorder.state !== 'inactive') {
-                                sttRecorder.stop();
-                                loopSTT();
-                            } else if (sttRecorder.state !== 'inactive') {
-                                sttRecorder.stop();
-                            }
-                        }, 6000); // Send an audio chunk every 6 seconds for live STT processing
-                    } catch (_) {}
-                };
-                loopSTT();
+                startCloudTranscriptionLoop(mlStream);
 
             } else {
-                startVolumeMonitor();
+                // AUDIO MODE (Mic Only)
+                const micStream = await navigator.mediaDevices.getUserMedia({ audio: true }).catch(err => {
+                    throw new Error("Microphone permission denied.");
+                });
+                startVolumeMonitor(micStream);
+
+                // If native SpeechRecognition is unsupported (e.g. iOS Safari < 14.5 or Firefox), fallback to Cloud AI!
+                if (!speechSupported) {
+                    console.log("Native STT not supported, falling back to Cloud AI...");
+                    startCloudTranscriptionLoop(micStream);
+                }
             }
         } catch (e: any) {
             setError('Failed to start media capturing: ' + e.message);
@@ -380,11 +362,53 @@ export default function SpeechToPdf() {
             return;
         }
 
-        try {
-            recognitionRef.current?.start();
-        } catch (_) { }
+        // Start native recognition if supported
+        if (speechSupported) {
+            try {
+                recognitionRef.current?.start();
+            } catch (_) { }
+        }
         setIsListening(true);
         setStatus('listening');
+    };
+
+    const startCloudTranscriptionLoop = (stream: MediaStream) => {
+        const loopSTT = () => {
+            if (!isListeningRef.current) return;
+
+            try {
+                const sttRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+                sttRecorder.ondataavailable = async (e) => {
+                    if (e.data.size > 0 && isListeningRef.current) {
+                        try {
+                            const formData = new FormData();
+                            const blob = new Blob([e.data], { type: 'audio/webm' });
+                            formData.append('audio', blob, 'chunk.webm');
+                            
+                            const res = await api.post('/transcribe-chunk', formData, {
+                                headers: { 'Content-Type': 'multipart/form-data' }
+                            });
+                            if (res.data?.success && res.data.text) {
+                                setTranscript(prev => {
+                                    const newText = res.data.text;
+                                    return prev ? `${prev} ${newText}` : newText;
+                                });
+                            }
+                        } catch (_) {}
+                    }
+                };
+                sttRecorder.start();
+                sttTimeoutRef.current = setTimeout(() => {
+                    if (isListeningRef.current && sttRecorder.state !== 'inactive') {
+                        sttRecorder.stop();
+                        loopSTT();
+                    } else if (sttRecorder.state !== 'inactive') {
+                        sttRecorder.stop();
+                    }
+                }, 6000); // 6s chunks
+            } catch (_) {}
+        };
+        loopSTT();
     };
 
     const stopListening = () => {
