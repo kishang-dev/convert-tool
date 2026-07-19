@@ -1,27 +1,47 @@
-import React, { useState, useRef, useEffect } from 'react';
+'use client';
+import React, { useState, useRef, useCallback } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import Card from '@/components/Card';
-import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { LuUpload as Upload, LuImage as ImageIcon, LuDownload as Download, LuArrowRight as ArrowRight, LuRefreshCw as RefreshCw, LuSparkles as Sparkles, LuCheck as Check, LuRatio as Ratio } from "react-icons/lu";
 import SEO from '@/components/SEO';
-import * as gtag from '@/lib/gtag';
-import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import ToolSEOContent from '@/components/ToolSEOContent';
+import { LuUpload, LuDownload, LuTrash2, LuZoomIn, LuZoomOut, LuRefreshCw, LuCheck } from 'react-icons/lu';
+
+// ── Client-side: no backend needed ───────────────────────────────────────────
+const PRESETS = [
+    { label: 'Custom', w: 0, h: 0 },
+    { label: 'HD 1280×720', w: 1280, h: 720 },
+    { label: 'Full HD 1920×1080', w: 1920, h: 1080 },
+    { label: '4K 3840×2160', w: 3840, h: 2160 },
+    { label: 'Square 1:1 1080×1080', w: 1080, h: 1080 },
+    { label: 'Twitter 1500×500', w: 1500, h: 500 },
+    { label: 'Instagram 1080×1350', w: 1080, h: 1350 },
+    { label: 'LinkedIn 1200×627', w: 1200, h: 627 },
+    { label: 'A4 Print 2480×3508', w: 2480, h: 3508 },
+];
+
+const FORMAT_OPTIONS = [
+    { label: 'JPEG', value: 'image/jpeg', ext: 'jpg' },
+    { label: 'PNG', value: 'image/png', ext: 'png' },
+    { label: 'WebP', value: 'image/webp', ext: 'webp' },
+];
 
 export default function ImageResizer() {
     const [file, setFile] = useState<File | null>(null);
-    const [previewUrl, setPreviewUrl] = useState<string>('');
-    const [width, setWidth] = useState<number>(0);
-    const [height, setHeight] = useState<number>(0);
-    const [originalWidth, setOriginalWidth] = useState<number>(0);
-    const [originalHeight, setOriginalHeight] = useState<number>(0);
-    const [aspectRatio, setAspectRatio] = useState<number>(1);
-    const [lockAspectRatio, setLockAspectRatio] = useState<boolean>(true);
-    const [quality, setQuality] = useState<number>(90);
-    const [format, setFormat] = useState<string>('image/jpeg');
+    const [preview, setPreview] = useState('');
+    const [origW, setOrigW] = useState(0);
+    const [origH, setOrigH] = useState(0);
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
+    const [lockAspect, setLockAspect] = useState(true);
+    const [quality, setQuality] = useState(90);
+    const [format, setFormat] = useState('image/jpeg');
+    const [outputUrl, setOutputUrl] = useState('');
+    const [outputSize, setOutputSize] = useState('');
+    const [origSize, setOrigSize] = useState('');
     const [loading, setLoading] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -30,313 +50,194 @@ export default function ImageResizer() {
         setTimeout(() => setToast(null), 3000);
     };
 
-    useEffect(() => {
-        if (!file) {
-            setPreviewUrl('');
-            return;
-        }
-
-        const url = URL.createObjectURL(file);
-        setPreviewUrl(url);
-
+    const loadFile = (f: File) => {
+        if (!f.type.startsWith('image/')) { showToast('Please upload an image file.', 'error'); return; }
+        setFile(f);
+        setOrigSize(`${(f.size / 1024).toFixed(1)} KB`);
+        const url = URL.createObjectURL(f);
+        setPreview(url);
         const img = new Image();
         img.onload = () => {
-            setOriginalWidth(img.width);
-            setOriginalHeight(img.height);
-            setWidth(img.width);
-            setHeight(img.height);
-            setAspectRatio(img.width / img.height);
-            // Auto detect format from original file type
-            if (file.type === 'image/png') {
-                setFormat('image/png');
-            } else if (file.type === 'image/webp') {
-                setFormat('image/webp');
-            } else {
-                setFormat('image/jpeg');
-            }
+            setOrigW(img.width); setOrigH(img.height);
+            setWidth(img.width); setHeight(img.height);
         };
         img.src = url;
-
-        return () => URL.revokeObjectURL(url);
-    }, [file]);
-
-    const handleWidthChange = (val: number) => {
-        setWidth(val);
-        if (lockAspectRatio && val > 0) {
-            setHeight(Math.round(val / aspectRatio));
-        }
+        setOutputUrl('');
     };
 
-    const handleHeightChange = (val: number) => {
-        setHeight(val);
-        if (lockAspectRatio && val > 0) {
-            setWidth(Math.round(val * aspectRatio));
-        }
+    const handleDrop = (e: React.DragEvent) => {
+        e.preventDefault(); setIsDragging(false);
+        const f = e.dataTransfer.files[0];
+        if (f) loadFile(f);
     };
 
-    const handlePercentScale = (percent: number) => {
-        const newW = Math.round(originalWidth * (percent / 100));
-        const newH = Math.round(originalHeight * (percent / 100));
-        setWidth(newW);
-        setHeight(newH);
+    const handleWidthChange = (v: number) => {
+        setWidth(v);
+        if (lockAspect && origW) setHeight(Math.round(v / (origW / origH)));
+    };
+    const handleHeightChange = (v: number) => {
+        setHeight(v);
+        if (lockAspect && origH) setWidth(Math.round(v / (origH / origW)));
     };
 
-    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const selectedFile = e.target.files[0];
-            if (!selectedFile.type.startsWith('image/')) {
-                showToast('Please select a valid image file', 'error');
-                return;
-            }
-            setFile(selectedFile);
-        }
+    const applyPreset = (p: typeof PRESETS[0]) => {
+        if (p.w === 0) return;
+        setWidth(p.w); setHeight(p.h);
+        setLockAspect(false);
     };
 
-    const handleResize = () => {
-        gtag.event({
-            action: 'use_tool',
-            category: 'Tool',
-            label: 'image-resizer'
-        });
-        if (!file || !previewUrl) return;
-
+    const resize = async () => {
+        if (!file || !width || !height) return;
         setLoading(true);
         try {
-            const canvas = document.createElement('canvas');
-            canvas.width = width;
-            canvas.height = height;
-
-            const ctx = canvas.getContext('2d');
-            if (!ctx) throw new Error('Could not get 2D canvas context');
-
             const img = new Image();
-            img.onload = () => {
-                ctx.drawImage(img, 0, 0, width, height);
-
-                // Export image at configured format and quality
-                const q = quality / 100;
-                const resizedDataUrl = canvas.toDataURL(format, format === 'image/png' ? undefined : q);
-
-                const link = document.createElement('a');
-                link.href = resizedDataUrl;
-
-                // Construct output filename
-                const ext = format.split('/')[1] === 'jpeg' ? 'jpg' : format.split('/')[1];
-                const baseName = file.name.substring(0, file.name.lastIndexOf('.'));
-                link.download = `${baseName}_resized_${width}x${height}.${ext}`;
-
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                showToast('Image resized and downloaded successfully!', 'success');
-                setLoading(false);
-            };
-            img.src = previewUrl;
-
-        } catch (error: any) {
-            console.error(error);
-            showToast(error.message || 'Resizing failed', 'error');
-            setLoading(false);
-        }
+            img.src = preview;
+            await new Promise(r => img.onload = r);
+            const canvas = document.createElement('canvas');
+            canvas.width = width; canvas.height = height;
+            const ctx = canvas.getContext('2d')!;
+            ctx.drawImage(img, 0, 0, width, height);
+            const blob = await new Promise<Blob>(res => canvas.toBlob(b => res(b!), format, quality / 100));
+            const url = URL.createObjectURL(blob);
+            setOutputUrl(url);
+            setOutputSize(`${(blob.size / 1024).toFixed(1)} KB`);
+            showToast('Image resized successfully!');
+        } catch { showToast('Resize failed.', 'error'); }
+        setLoading(false);
     };
 
+    const download = () => {
+        if (!outputUrl) return;
+        const ext = FORMAT_OPTIONS.find(f => f.value === format)?.ext || 'jpg';
+        const a = document.createElement('a');
+        a.href = outputUrl; a.download = `resized.${ext}`; a.click();
+    };
 
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Image Resizer Tools",
-        "description": "Resize JPG, PNG, and WEBP images in seconds client-side. Lock aspect ratio, select quality, and compress dimensions.",
-        "applicationCategory": "BrowserApplication",
-        "operatingSystem": "All",
-        "url": `https://toolbasketai.com/image-resizer`,
-        "offers": {
-            "@type": "Offer",
-            "price": "0.00",
-            "priceCurrency": "USD"
-        }
+    const reset = () => {
+        setFile(null); setPreview(''); setOutputUrl('');
+        setOrigW(0); setOrigH(0); setWidth(0); setHeight(0);
     };
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-            <SEO
-                title="Image Resizer Tools"
-                description="Resize JPG, PNG, and WEBP images in seconds client-side. Lock aspect ratio, select quality, and compress dimensions."
-                canonical="/image-resizer"
-                structuredData={structuredData}
-            />
-
+            <SEO title="Image Resizer – Free Online Tool" description="Resize images online for free. Supports JPEG, PNG, WebP. Set custom dimensions, lock aspect ratio, choose quality and format. Works on all devices." canonical="/image-resizer" />
             <Navbar />
-
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+            <main className="max-w-6xl mx-auto px-4 py-8">
                 <Breadcrumbs items={[{ label: 'Image Resizer', href: '/image-resizer' }]} />
 
-                <div className="mb-8 animate-fadeIn">
-                    <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Image Resizer</h1>
-                    <p className="text-[var(--text-muted)] text-sm max-w-2xl">
-                        Compress, scale, and resize your images instantly right in your browser with zero server uploads.
-                    </p>
-                </div>
+                <header className="text-center mb-8">
+                    <h1 className="text-3xl md:text-4xl font-bold mb-3">Image Resizer</h1>
+                    <p className="text-slate-400 max-w-xl mx-auto">Resize any image to exact dimensions or a preset size. Works 100% in your browser — no upload to server.</p>
+                </header>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                    {/* Left Panel: Preview/Upload */}
-                    <div className="lg:col-span-7 flex flex-col gap-4">
-                        <Card variant="elevated" className="p-6 h-full flex flex-col items-center justify-center min-h-[400px]">
-                            {previewUrl ? (
-                                <div className="w-full flex flex-col items-center gap-4 flex-grow justify-center">
-                                    <div className="relative border border-[var(--border)] dark:border-[var(--border)] rounded overflow-hidden max-h-[380px] bg-slate-950/60 p-2 flex items-center justify-center">
-                                        <img src={previewUrl} alt="Preview" loading="lazy" className="max-h-[350px] object-contain rounded" />
-                                    </div>
-                                    <div className="text-center">
-                                        <p className="text-sm font-semibold truncate max-w-xs">{file?.name}</p>
-                                        <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)]">Original Dimensions: {originalWidth} x {originalHeight} px</p>
-                                    </div>
-                                </div>
-                            ) : (
-                                <div className="text-center py-12 flex flex-col items-center">
-                                    <div className="w-20 h-20 bg-[var(--accent)]/10 rounded flex items-center justify-center mb-4">
-                                        <Upload size={40} className="text-[var(--accent)]" />
-                                    </div>
-                                    <p className="text-xl font-semibold mb-2">Upload Image File</p>
-                                    <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-6 max-w-sm">
-                                        Select JPEG, PNG, or WebP format to start scaling your images
-                                    </p>
-                                    <Button onClick={() => fileInputRef.current?.click()} size="lg">
-                                        Choose Image
-                                    </Button>
-                                </div>
-                            )}
-                            <input
-                                ref={fileInputRef}
-                                type="file"
-                                accept="image/*"
-                                onChange={handleFileSelect}
-                                className="hidden"
-                            />
-                        </Card>
-                    </div>
-
-                    {/* Right Panel: Settings */}
-                    <div className="lg:col-span-5 flex flex-col gap-6">
-                        {file ? (
-                            <Card variant="elevated" className="p-6 space-y-6 flex flex-col justify-between h-full">
-                                <div className="space-y-6">
-                                    <h3 className="text-lg font-bold text-[var(--text)] border-b border-[var(--border)] pb-2 flex items-center gap-2">
-                                        <Sparkles size={18} className="text-[var(--accent)]" />
-                                        Resize Settings
-                                    </h3>
-
-                                    {/* Dimensions */}
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <label className="text-xs font-bold text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">Width (px)</label>
-                                            <input
-                                                type="number"
-                                                value={width || ''}
-                                                onChange={(e) => handleWidthChange(Number(e.target.value))}
-                                                className="w-full px-4 py-2.5 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] rounded focus:border-[var(--accent-ring)] outline-none text-[var(--text)] dark:text-[var(--text)] font-mono text-sm"
-                                            />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="text-xs font-bold text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">Height (px)</label>
-                                            <input
-                                                type="number"
-                                                value={height || ''}
-                                                onChange={(e) => handleHeightChange(Number(e.target.value))}
-                                                className="w-full px-4 py-2.5 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] rounded focus:border-[var(--accent-ring)] outline-none text-[var(--text)] dark:text-[var(--text)] font-mono text-sm"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    {/* Lock Aspect Ratio */}
-                                    <label className="flex items-center gap-2.5 cursor-pointer group text-sm font-semibold text-[var(--text-muted)] dark:text-[var(--text-muted)]">
-                                        <input
-                                            type="checkbox"
-                                            checked={lockAspectRatio}
-                                            onChange={(e) => setLockAspectRatio(e.target.checked)}
-                                            className="w-4 h-4 rounded border-[var(--border)] dark:border-[var(--border)] bg-[var(--surface)] dark:bg-[var(--accent-soft)] text-[var(--accent)] focus:ring-0"
-                                        />
-                                        <Ratio size={16} className="text-[var(--accent)]" />
-                                        Lock Aspect Ratio
-                                    </label>
-
-                                    {/* Presets */}
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase block">Presets</label>
-                                        <div className="flex gap-2 flex-wrap">
-                                            {[25, 50, 75, 100, 150, 200].map(pct => (
-                                                <button
-                                                    key={pct}
-                                                    onClick={() => handlePercentScale(pct)}
-                                                    className="px-3 py-1.5 bg-[var(--surface)] dark:bg-[var(--accent-soft)] hover:bg-[var(--surface-hover)] border border-[var(--border)] rounded text-xs font-semibold font-mono transition-all"
-                                                >
-                                                    {pct}%
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Formats */}
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase block">Export Format</label>
-                                        <select
-                                            value={format}
-                                            onChange={(e) => setFormat(e.target.value)}
-                                            className="w-full px-4 py-2.5 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] rounded text-sm text-[var(--text)] outline-none"
-                                        >
-                                            <option value="image/jpeg" className="bg-[#0f172a]">JPEG / JPG</option>
-                                            <option value="image/png" className="bg-[#0f172a]">PNG</option>
-                                            <option value="image/webp" className="bg-[#0f172a]">WebP</option>
-                                        </select>
-                                    </div>
-
-                                    {/* Quality Slider (JPEG/WEBP) */}
-                                    {format !== 'image/png' && (
-                                        <div className="space-y-2">
-                                            <div className="flex items-center justify-between">
-                                                <label className="text-xs font-bold text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">Image Quality</label>
-                                                <span className="text-xs font-bold font-mono text-[var(--accent)]">{quality}%</span>
-                                            </div>
-                                            <input
-                                                type="range"
-                                                min="10"
-                                                max="100"
-                                                value={quality}
-                                                onChange={(e) => setQuality(Number(e.target.value))}
-                                                className="w-full h-1.5 bg-[var(--surface-hover)] rounded appearance-none cursor-pointer accent-indigo-500"
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="flex gap-3 pt-6 border-t border-[var(--border)]">
-                                    <Button variant="ghost" onClick={() => setFile(null)} className="w-1/3">
-                                        Clear
-                                    </Button>
-                                    <Button
-                                        onClick={handleResize}
-                                        loading={loading}
-                                        className="bg-[var(--accent)] hover:bg-[var(--accent)] font-bold flex-grow text-sm py-3"
-                                    >
-                                        Resize & Download
-                                        <Download size={16} className="ml-2" />
-                                    </Button>
-                                </div>
-                            </Card>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* ── Upload / Preview ── */}
+                    <div className="space-y-4">
+                        {!file ? (
+                            <div
+                                onDragOver={e => { e.preventDefault(); setIsDragging(true); }}
+                                onDragLeave={() => setIsDragging(false)}
+                                onDrop={handleDrop}
+                                onClick={() => fileInputRef.current?.click()}
+                                className={`border-2 border-dashed rounded-xl p-12 flex flex-col items-center justify-center cursor-pointer transition-all min-h-[300px] ${isDragging ? 'border-[var(--accent)] bg-[var(--accent)]/10' : 'border-[var(--border-strong)] hover:border-[var(--accent)]/50 bg-[var(--surface)]'}`}
+                            >
+                                <LuUpload className="w-12 h-12 text-slate-500 mb-4" />
+                                <p className="font-semibold text-slate-300 mb-1">Drop image here or click to browse</p>
+                                <p className="text-xs text-slate-500">PNG, JPG, WebP, GIF, AVIF</p>
+                                <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={e => e.target.files?.[0] && loadFile(e.target.files[0])} />
+                            </div>
                         ) : (
-                            <Card variant="elevated" className="p-8 flex flex-col items-center justify-center text-center h-full text-[var(--text-faint)] dark:text-[var(--text-faint)]">
-                                <ImageIcon size={48} className="opacity-10 mb-3" />
-                                <p className="text-base font-semibold">Resize properties</p>
-                                <p className="text-xs text-[var(--text-muted)] mt-1">Properties, percentages, and quality sliders will appear after uploading an image.</p>
-                            </Card>
+                            <div className="relative rounded-xl overflow-hidden border border-[var(--border-strong)] bg-[var(--surface)]">
+                                <img src={preview} alt="original" className="w-full object-contain max-h-64 md:max-h-80" />
+                                <div className="absolute top-2 right-2 flex gap-2">
+                                    <button onClick={reset} className="bg-red-600/90 text-white rounded-full p-2 hover:bg-red-600 transition-all shadow"><LuTrash2 className="w-4 h-4" /></button>
+                                </div>
+                                <div className="p-3 flex gap-4 text-xs text-slate-400 border-t border-[var(--border-strong)]">
+                                    <span>Original: <strong>{origW}×{origH}</strong></span>
+                                    <span>Size: <strong>{origSize}</strong></span>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Output preview */}
+                        {outputUrl && (
+                            <div className="rounded-xl overflow-hidden border border-green-500/40 bg-[var(--surface)]">
+                                <img src={outputUrl} alt="resized" className="w-full object-contain max-h-64" />
+                                <div className="p-3 flex items-center justify-between border-t border-[var(--border-strong)]">
+                                    <div className="text-xs text-slate-400">Output: <strong>{width}×{height}</strong> · <strong>{outputSize}</strong></div>
+                                    <button onClick={download} className="flex items-center gap-2 px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white rounded text-sm font-semibold transition-all">
+                                        <LuDownload className="w-4 h-4" /> Download
+                                    </button>
+                                </div>
+                            </div>
                         )}
                     </div>
-                </div>
-            </main>
 
-            <ToolSEOContent toolName="Image Resizer Tools" toolDescription="Resize JPG, PNG, and WEBP images in seconds client-side. Lock aspect ratio, select quality, and compress dimensions." />
+                    {/* ── Settings Panel ── */}
+                    <div className="space-y-4">
+                        {/* Preset Sizes */}
+                        <div className="bg-[var(--surface)] border border-[var(--border-strong)] rounded-xl p-5">
+                            <h2 className="text-sm font-semibold text-slate-300 mb-3">📐 Preset Sizes</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {PRESETS.slice(1).map(p => (
+                                    <button key={p.label} onClick={() => applyPreset(p)} className="px-3 py-1 bg-[var(--bg)] border border-[var(--border-strong)] rounded text-xs hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all">
+                                        {p.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Dimensions */}
+                        <div className="bg-[var(--surface)] border border-[var(--border-strong)] rounded-xl p-5">
+                            <h2 className="text-sm font-semibold text-slate-300 mb-4">📏 Dimensions</h2>
+                            <div className="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label className="text-xs text-slate-500 mb-1 block">Width (px)</label>
+                                    <input type="number" value={width || ''} onChange={e => handleWidthChange(parseInt(e.target.value) || 0)} className="w-full bg-[var(--bg)] border border-[var(--border-strong)] rounded px-3 py-2 text-sm outline-none focus:border-[var(--accent)]" />
+                                </div>
+                                <div>
+                                    <label className="text-xs text-slate-500 mb-1 block">Height (px)</label>
+                                    <input type="number" value={height || ''} onChange={e => handleHeightChange(parseInt(e.target.value) || 0)} className="w-full bg-[var(--bg)] border border-[var(--border-strong)] rounded px-3 py-2 text-sm outline-none focus:border-[var(--accent)]" />
+                                </div>
+                            </div>
+                            <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
+                                <input type="checkbox" checked={lockAspect} onChange={e => setLockAspect(e.target.checked)} className="accent-[var(--accent)] w-4 h-4" />
+                                <span className="text-slate-300">Lock aspect ratio</span>
+                            </label>
+                        </div>
+
+                        {/* Output Format & Quality */}
+                        <div className="bg-[var(--surface)] border border-[var(--border-strong)] rounded-xl p-5 space-y-4">
+                            <h2 className="text-sm font-semibold text-slate-300">🎨 Output Format & Quality</h2>
+                            <div className="flex gap-2">
+                                {FORMAT_OPTIONS.map(f => (
+                                    <button key={f.value} onClick={() => setFormat(f.value)} className={`flex-1 py-2 rounded text-sm font-medium border transition-all ${format === f.value ? 'border-[var(--accent)] bg-[var(--accent)]/10 text-[var(--accent)]' : 'border-[var(--border-strong)] text-slate-400 hover:border-slate-500'}`}>
+                                        {f.label}
+                                    </button>
+                                ))}
+                            </div>
+                            {format !== 'image/png' && (
+                                <div>
+                                    <label className="flex justify-between text-xs text-slate-500 mb-1"><span>Quality</span><span className="text-[var(--accent)] font-bold">{quality}%</span></label>
+                                    <input type="range" min={10} max={100} value={quality} onChange={e => setQuality(parseInt(e.target.value))} className="w-full accent-[var(--accent)]" />
+                                </div>
+                            )}
+                        </div>
+
+                        <button
+                            onClick={resize}
+                            disabled={!file || loading}
+                            className="w-full py-3 bg-[var(--accent)] text-white font-semibold rounded-xl hover:opacity-90 transition-all disabled:opacity-40 flex items-center justify-center gap-2"
+                        >
+                            {loading ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Resizing...</> : <><LuZoomOut className="w-4 h-4" />Resize Image</>}
+                        </button>
+                    </div>
+                </div>
+
+                <ToolSEOContent toolName="Image Resizer" toolDescription="Free client-side image resizer for PNG, JPG and WebP images." />
+            </main>
             <Footer />
         </div>
     );

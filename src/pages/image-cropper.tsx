@@ -1,444 +1,329 @@
-import React, { useState, useRef, useEffect } from 'react';
+'use client';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import Card from '@/components/Card';
-import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { LuUpload as Upload, LuCrop as Crop, LuDownload as Download, LuArrowRight as ArrowRight, LuRefreshCw as RefreshCw, LuRatio as Ratio, LuMaximize as Maximize, LuMove as Move } from "react-icons/lu";
 import SEO from '@/components/SEO';
-import * as gtag from '@/lib/gtag';
-import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import ToolSEOContent from '@/components/ToolSEOContent';
+import { LuUpload, LuDownload, LuTrash2, LuCrop, LuRotateCcw, LuFlipHorizontal } from 'react-icons/lu';
+
+type Preset = '16:9' | '9:16' | '4:3' | '3:4' | '1:1' | '2:3' | 'free';
+
+const ASPECT_PRESETS: { label: string; value: Preset; ratio: number | null }[] = [
+    { label: 'Free', value: 'free', ratio: null },
+    { label: '1:1', value: '1:1', ratio: 1 },
+    { label: '16:9', value: '16:9', ratio: 16 / 9 },
+    { label: '9:16', value: '9:16', ratio: 9 / 16 },
+    { label: '4:3', value: '4:3', ratio: 4 / 3 },
+    { label: '3:4', value: '3:4', ratio: 3 / 4 },
+    { label: '2:3', value: '2:3', ratio: 2 / 3 },
+];
+
+const FORMAT_OPTIONS = [
+    { label: 'JPEG', value: 'image/jpeg', ext: 'jpg' },
+    { label: 'PNG', value: 'image/png', ext: 'png' },
+    { label: 'WebP', value: 'image/webp', ext: 'webp' },
+];
 
 export default function ImageCropper() {
     const [file, setFile] = useState<File | null>(null);
-    const [previewUrl, setPreviewUrl] = useState<string>('');
-    const [loading, setLoading] = useState(false);
-    const [aspectPreset, setAspectPreset] = useState<'free' | '1:1' | '16:9' | '4:3'>('free');
+    const [imgSrc, setImgSrc] = useState('');
+    const [imgW, setImgW] = useState(0);
+    const [imgH, setImgH] = useState(0);
+    const [rotation, setRotation] = useState(0);
+    const [flipH, setFlipH] = useState(false);
+    const [flipV, setFlipV] = useState(false);
+    const [preset, setPreset] = useState<Preset>('free');
+    const [format, setFormat] = useState('image/jpeg');
+    const [quality, setQuality] = useState(92);
+    const [outputUrl, setOutputUrl] = useState('');
+    const [isDragging, setIsDragging] = useState(false);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
-    // Crop box state (percentages of container size to adapt responsively)
-    const [cropBox, setCropBox] = useState({ x: 10, y: 10, w: 80, h: 80 });
-
+    // Crop box: percentages of displayed image size
+    const [box, setBox] = useState({ x: 10, y: 10, w: 80, h: 80 });
     const containerRef = useRef<HTMLDivElement>(null);
-    const imageRef = useRef<HTMLImageElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const isDragging = useRef<boolean>(false);
-    const isResizing = useRef<string | null>(null); // 'tl', 'tr', 'bl', 'br', 'move'
-    const dragStart = useRef({ x: 0, y: 0, boxX: 0, boxY: 0, boxW: 0, boxH: 0 });
+    const dragRef = useRef<{ mode: string; startX: number; startY: number; startBox: typeof box } | null>(null);
 
-    const showToast = (message: string, type: 'success' | 'error' = 'success') => {
-        setToast({ message, type });
+    const showToast = (msg: string, type: 'success' | 'error' = 'success') => {
+        setToast({ message: msg, type });
         setTimeout(() => setToast(null), 3000);
     };
 
-    useEffect(() => {
-        if (file) {
-            const url = URL.createObjectURL(file);
-            setPreviewUrl(url);
-            setCropBox({ x: 15, y: 15, w: 70, h: 70 });
-            return () => URL.revokeObjectURL(url);
-        }
-        setPreviewUrl('');
-    }, [file]);
-
-    // Update crop aspect ratio preset changes
-    useEffect(() => {
-        if (aspectPreset === 'free') return;
-
-        let ratio = 1;
-        if (aspectPreset === '1:1') ratio = 1;
-        else if (aspectPreset === '16:9') ratio = 16 / 9;
-        else if (aspectPreset === '4:3') ratio = 4 / 3;
-
-        setCropBox(prev => {
-            const newW = prev.w;
-            let newH = newW / ratio;
-            // Bound checks
-            if (prev.y + newH > 100) {
-                newH = 100 - prev.y;
-            }
-            return { ...prev, h: newH };
-        });
-    }, [aspectPreset]);
-
-    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const selectedFile = e.target.files[0];
-            if (!selectedFile.type.startsWith('image/')) {
-                showToast('Please select a valid image file', 'error');
-                return;
-            }
-            setFile(selectedFile);
-        }
+    const loadFile = (f: File) => {
+        if (!f.type.startsWith('image/')) { showToast('Please upload an image file.', 'error'); return; }
+        setFile(f); setOutputUrl(''); setRotation(0); setFlipH(false); setFlipV(false);
+        const url = URL.createObjectURL(f);
+        setImgSrc(url);
+        const img = new Image();
+        img.onload = () => { setImgW(img.width); setImgH(img.height); };
+        img.src = url;
+        setBox({ x: 10, y: 10, w: 80, h: 80 });
     };
 
-    // Mouse and Touch crop handlers
-    const startAction = (type: string, e: React.MouseEvent | React.TouchEvent) => {
+    // Apply aspect ratio lock
+    const applyPreset = (p: Preset) => {
+        setPreset(p);
+        const preset = ASPECT_PRESETS.find(a => a.value === p);
+        if (!preset?.ratio) return;
+        const ratio = preset.ratio;
+        // Keep box centered, adjust height to match ratio
+        const newH = Math.min(80, box.w / ratio);
+        setBox(b => ({ ...b, h: newH }));
+    };
+
+    // Touch/mouse unified pointer handlers
+    const getEventPos = (e: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent) => {
+        if ('touches' in e) {
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+        return { x: (e as MouseEvent).clientX, y: (e as MouseEvent).clientY };
+    };
+
+    const startDrag = (e: React.MouseEvent | React.TouchEvent, mode: string) => {
         e.preventDefault();
-        const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-        const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-
-        if (type === 'move') {
-            isDragging.current = true;
-            isResizing.current = 'move';
-        } else {
-            isDragging.current = true;
-            isResizing.current = type;
-        }
-
-        dragStart.current = {
-            x: clientX,
-            y: clientY,
-            boxX: cropBox.x,
-            boxY: cropBox.y,
-            boxW: cropBox.w,
-            boxH: cropBox.h
-        };
-    };
-
-    const doAction = (e: MouseEvent | TouchEvent) => {
-        if (!isDragging.current || !containerRef.current) return;
-
-        const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-        const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-
-        const rect = containerRef.current.getBoundingClientRect();
-        const deltaX = ((clientX - dragStart.current.x) / rect.width) * 100;
-        const deltaY = ((clientY - dragStart.current.y) / rect.height) * 100;
-
-        let { boxX, boxY, boxW, boxH } = dragStart.current;
-
-        if (isResizing.current === 'move') {
-            let nextX = boxX + deltaX;
-            let nextY = boxY + deltaY;
-
-            // Bound checks
-            if (nextX < 0) nextX = 0;
-            if (nextY < 0) nextY = 0;
-            if (nextX + boxW > 100) nextX = 100 - boxW;
-            if (nextY + boxH > 100) nextY = 100 - boxH;
-
-            setCropBox({ x: nextX, y: nextY, w: boxW, h: boxH });
-        } else {
-            let nextX = boxX;
-            let nextY = boxY;
-            let nextW = boxW;
-            let nextH = boxH;
-
-            const type = isResizing.current;
-
-            if (type?.includes('r')) {
-                nextW = boxW + deltaX;
-                if (nextX + nextW > 100) nextW = 100 - nextX;
-            }
-            if (type?.includes('b')) {
-                nextH = boxH + deltaY;
-                if (nextY + nextH > 100) nextH = 100 - nextY;
-            }
-            if (type?.includes('l')) {
-                nextX = boxX + deltaX;
-                if (nextX < 0) {
-                    nextX = 0;
-                } else {
-                    nextW = boxW - deltaX;
-                }
-            }
-            if (type?.includes('t')) {
-                nextY = boxY + deltaY;
-                if (nextY < 0) {
-                    nextY = 0;
-                } else {
-                    nextH = boxH - deltaY;
-                }
-            }
-
-            // Aspect ratio constraint
-            if (aspectPreset !== 'free') {
-                let ratio = 1;
-                if (aspectPreset === '1:1') ratio = 1;
-                else if (aspectPreset === '16:9') ratio = 16 / 9;
-                else if (aspectPreset === '4:3') ratio = 4 / 3;
-
-                // Adjust based on the dominant scaling handle
-                if (type === 'br' || type === 'tr' || type === 'r') {
-                    nextH = nextW / ratio;
-                } else {
-                    nextW = nextH * ratio;
-                }
-
-                // Outer check
-                if (nextX + nextW > 100 || nextY + nextH > 100) return;
-            }
-
-            // Min size limit
-            if (nextW >= 10 && nextH >= 10) {
-                setCropBox({ x: nextX, y: nextY, w: nextW, h: nextH });
-            }
-        }
-    };
-
-    const stopAction = () => {
-        isDragging.current = false;
-        isResizing.current = null;
+        e.stopPropagation();
+        const pos = getEventPos(e);
+        dragRef.current = { mode, startX: pos.x, startY: pos.y, startBox: { ...box } };
     };
 
     useEffect(() => {
-        window.addEventListener('mousemove', doAction);
-        window.addEventListener('mouseup', stopAction);
-        window.addEventListener('touchmove', doAction);
-        window.addEventListener('touchend', stopAction);
-        return () => {
-            window.removeEventListener('mousemove', doAction);
-            window.removeEventListener('mouseup', stopAction);
-            window.removeEventListener('touchmove', doAction);
-            window.removeEventListener('touchend', stopAction);
+        const onMove = (e: MouseEvent | TouchEvent) => {
+            if (!dragRef.current || !containerRef.current) return;
+            const rect = containerRef.current.getBoundingClientRect();
+            const pos = getEventPos(e);
+            const dx = ((pos.x - dragRef.current.startX) / rect.width) * 100;
+            const dy = ((pos.y - dragRef.current.startY) / rect.height) * 100;
+            const sb = dragRef.current.startBox;
+            const ratio = ASPECT_PRESETS.find(a => a.value === preset)?.ratio || null;
+
+            setBox(prev => {
+                let { x, y, w, h } = { ...sb };
+                const { mode } = dragRef.current!;
+                const minS = 5;
+
+                if (mode === 'move') {
+                    x = Math.max(0, Math.min(100 - w, sb.x + dx));
+                    y = Math.max(0, Math.min(100 - h, sb.y + dy));
+                } else {
+                    if (mode.includes('r')) { w = Math.max(minS, Math.min(100 - sb.x, sb.w + dx)); }
+                    if (mode.includes('l')) { const nw = Math.max(minS, sb.w - dx); x = sb.x + (sb.w - nw); w = nw; }
+                    if (mode.includes('b')) { h = Math.max(minS, Math.min(100 - sb.y, sb.h + dy)); }
+                    if (mode.includes('t')) { const nh = Math.max(minS, sb.h - dy); y = sb.y + (sb.h - nh); h = nh; }
+                    if (ratio) { h = w / ratio; if (y + h > 100) { h = 100 - y; w = h * ratio; } }
+                }
+                return { x, y, w, h };
+            });
         };
-    }, [cropBox, aspectPreset]);
+        const onUp = () => { dragRef.current = null; };
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onUp);
+        window.addEventListener('touchmove', onMove, { passive: false });
+        window.addEventListener('touchend', onUp);
+        return () => {
+            window.removeEventListener('mousemove', onMove);
+            window.removeEventListener('mouseup', onUp);
+            window.removeEventListener('touchmove', onMove);
+            window.removeEventListener('touchend', onUp);
+        };
+    }, [preset]);
 
-    const handleCrop = () => {
-        gtag.event({
-            action: 'use_tool',
-            category: 'Tool',
-            label: 'image-cropper'
-        });
-        if (!file || !previewUrl || !imageRef.current) return;
+    const cropImage = async () => {
+        if (!imgSrc || !imgW || !imgH) return;
+        const img = new Image();
+        img.src = imgSrc;
+        await new Promise(r => img.onload = r);
 
-        setLoading(true);
-        try {
-            const img = imageRef.current;
+        const canvas = document.createElement('canvas');
+        const cropX = (box.x / 100) * imgW;
+        const cropY = (box.y / 100) * imgH;
+        const cropW = (box.w / 100) * imgW;
+        const cropH = (box.h / 100) * imgH;
 
-            // Calculate pixel dimensions relative to original image size
-            // imageRef.current holds the loaded dimensions, naturalWidth/naturalHeight are raw pixels
-            const naturalW = img.naturalWidth;
-            const naturalH = img.naturalHeight;
+        canvas.width = cropW; canvas.height = cropH;
+        const ctx = canvas.getContext('2d')!;
 
-            const pxX = (cropBox.x / 100) * naturalW;
-            const pxY = (cropBox.y / 100) * naturalH;
-            const pxW = (cropBox.w / 100) * naturalW;
-            const pxH = (cropBox.h / 100) * naturalH;
+        ctx.save();
+        ctx.translate(cropW / 2, cropH / 2);
+        ctx.rotate((rotation * Math.PI) / 180);
+        ctx.scale(flipH ? -1 : 1, flipV ? -1 : 1);
+        ctx.drawImage(img, cropX, cropY, cropW, cropH, -cropW / 2, -cropH / 2, cropW, cropH);
+        ctx.restore();
 
-            const canvas = document.createElement('canvas');
-            canvas.width = pxW;
-            canvas.height = pxH;
-
-            const ctx = canvas.getContext('2d');
-            if (!ctx) throw new Error('Could not initialize canvas context');
-
-            const sourceImg = new Image();
-            sourceImg.onload = () => {
-                ctx.drawImage(sourceImg, pxX, pxY, pxW, pxH, 0, 0, pxW, pxH);
-                const croppedUrl = canvas.toDataURL('image/png');
-
-                const link = document.createElement('a');
-                link.href = croppedUrl;
-                link.download = `cropped_${file.name}`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                showToast('Image cropped successfully!', 'success');
-                setLoading(false);
-            };
-            sourceImg.src = previewUrl;
-
-        } catch (e: any) {
-            showToast(e.message || 'Crop processing failed', 'error');
-            setLoading(false);
-        }
+        const blob = await new Promise<Blob>(res => canvas.toBlob(b => res(b!), format, quality / 100));
+        setOutputUrl(URL.createObjectURL(blob));
+        showToast('Image cropped!');
     };
 
-
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Image Cropper Tools",
-        "description": "Crop and cut your images online client-side. Aspect ratio templates, fully adjustable crop boxes with visual handles.",
-        "applicationCategory": "BrowserApplication",
-        "operatingSystem": "All",
-        "url": `https://toolbasketai.com/image-cropper`,
-        "offers": {
-            "@type": "Offer",
-            "price": "0.00",
-            "priceCurrency": "USD"
-        }
+    const download = () => {
+        const ext = FORMAT_OPTIONS.find(f => f.value === format)?.ext || 'jpg';
+        const a = document.createElement('a');
+        a.href = outputUrl; a.download = `cropped.${ext}`; a.click();
     };
+
+    const HANDLE_SIZE = 14;
+    const handles = [
+        { id: 'tl', top: `${box.y}%`, left: `${box.x}%` },
+        { id: 'tr', top: `${box.y}%`, left: `${box.x + box.w}%` },
+        { id: 'bl', top: `${box.y + box.h}%`, left: `${box.x}%` },
+        { id: 'br', top: `${box.y + box.h}%`, left: `${box.x + box.w}%` },
+        // Edge midpoints
+        { id: 'r', top: `${box.y + box.h / 2}%`, left: `${box.x + box.w}%` },
+        { id: 'l', top: `${box.y + box.h / 2}%`, left: `${box.x}%` },
+        { id: 'b', top: `${box.y + box.h}%`, left: `${box.x + box.w / 2}%` },
+        { id: 't', top: `${box.y}%`, left: `${box.x + box.w / 2}%` },
+    ];
+
+    const CURSOR_MAP: Record<string, string> = { tl: 'nwse-resize', tr: 'nesw-resize', bl: 'nesw-resize', br: 'nwse-resize', r: 'ew-resize', l: 'ew-resize', t: 'ns-resize', b: 'ns-resize', move: 'move' };
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-            <SEO
-                title="Image Cropper Tools"
-                description="Crop and cut your images online client-side. Aspect ratio templates, fully adjustable crop boxes with visual handles."
-                canonical="/image-cropper"
-                structuredData={structuredData}
-            />
-
+            <SEO title="Image Cropper – Free Online Tool" description="Crop images with custom ratios (1:1, 16:9, 4:3, free) directly in browser. Rotate, flip, and export as JPEG, PNG or WebP." canonical="/image-cropper" />
             <Navbar />
-
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-                <Breadcrumbs
-                    items={[
-                        { label: 'Image Cropper', href: '/image-cropper' }
-                    ]}
-                />
+            <main className="max-w-6xl mx-auto px-4 py-8">
+                <Breadcrumbs items={[{ label: 'Image Cropper', href: '/image-cropper' }]} />
 
-                <div className="mb-8 animate-fadeIn">
-                    <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Image Cropper</h1>
-                    <p className="text-[var(--text-muted)] text-sm max-w-2xl">
-                        Drag, adjust, and crop your images instantly. 100% private execution inside your browser.
-                    </p>
-                </div>
+                <header className="text-center mb-8">
+                    <h1 className="text-3xl md:text-4xl font-bold mb-3">Image Cropper</h1>
+                    <p className="text-slate-400 max-w-xl mx-auto">Drag the crop box to your perfect frame. All processing stays in your browser — zero upload.</p>
+                </header>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                    {/* Left Frame: Live interactive crop overlay */}
-                    <div className="lg:col-span-8 flex flex-col gap-4">
-                        <Card variant="elevated" className="p-6 h-full flex flex-col items-center justify-center min-h-[450px] relative overflow-hidden select-none">
-                            {previewUrl ? (
+                {!file ? (
+                    <div
+                        onClick={() => fileInputRef.current?.click()}
+                        onDragOver={e => { e.preventDefault(); setIsDragging(true); }}
+                        onDragLeave={() => setIsDragging(false)}
+                        onDrop={e => { e.preventDefault(); setIsDragging(false); const f = e.dataTransfer.files[0]; if (f) loadFile(f); }}
+                        className={`border-2 border-dashed rounded-xl p-16 flex flex-col items-center justify-center cursor-pointer transition-all ${isDragging ? 'border-[var(--accent)] bg-[var(--accent)]/10' : 'border-[var(--border-strong)] hover:border-[var(--accent)]/50 bg-[var(--surface)]'}`}
+                    >
+                        <LuUpload className="w-14 h-14 text-slate-500 mb-4" />
+                        <p className="font-semibold text-slate-300 text-lg mb-1">Drop image or click to browse</p>
+                        <p className="text-sm text-slate-500">PNG, JPG, WebP, GIF supported</p>
+                        <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={e => e.target.files?.[0] && loadFile(e.target.files[0])} />
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        {/* Canvas */}
+                        <div className="lg:col-span-2 space-y-3">
+                            <div
+                                ref={containerRef}
+                                className="relative w-full overflow-hidden rounded-xl border border-[var(--border-strong)] bg-[var(--surface)] select-none"
+                                style={{ userSelect: 'none', touchAction: 'none' }}
+                            >
+                                <img
+                                    src={imgSrc} alt="Crop Preview"
+                                    className="w-full block pointer-events-none"
+                                    style={{ transform: `rotate(${rotation}deg) scaleX(${flipH ? -1 : 1}) scaleY(${flipV ? -1 : 1})` }}
+                                    draggable={false}
+                                />
+                                {/* Dark overlay outside crop box */}
+                                <div className="absolute inset-0 pointer-events-none">
+                                    <div className="absolute inset-0 bg-black/50" style={{ clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${box.x}% ${box.y}%, ${box.x}% ${box.y + box.h}%, ${box.x + box.w}% ${box.y + box.h}%, ${box.x + box.w}% ${box.y}%, ${box.x}% ${box.y}%)` }} />
+                                </div>
+                                {/* Crop box border */}
                                 <div
-                                    ref={containerRef}
-                                    className="relative max-h-[420px] max-w-full border border-[var(--border)] dark:border-[var(--border)] rounded overflow-hidden bg-slate-950/40 cursor-crosshair"
-                                    style={{ display: 'inline-block' }}
+                                    className="absolute border-2 border-white/90"
+                                    style={{ top: `${box.y}%`, left: `${box.x}%`, width: `${box.w}%`, height: `${box.h}%`, cursor: 'move' }}
+                                    onMouseDown={e => startDrag(e, 'move')}
+                                    onTouchStart={e => startDrag(e, 'move')}
                                 >
-                                    <img
-                                        ref={imageRef}
-                                        src={previewUrl}
-                                        alt="Crop Source"
-                                        loading="lazy"
-                                        className="max-h-[400px] object-contain block"
-                                        draggable="false"
-                                    />
-
-                                    {/* Crop overlay cutout and handles */}
-                                    <div
-                                        className="absolute border border-indigo-400/80 shadow-[0_0_15px_rgba(99,102,241,0.2)] bg-black/30 backdrop-blur-[0.5px]"
-                                        style={{
-                                            left: `${cropBox.x}%`,
-                                            top: `${cropBox.y}%`,
-                                            width: `${cropBox.w}%`,
-                                            height: `${cropBox.h}%`
-                                        }}
-                                    >
-                                        {/* Drag Box Area */}
-                                        <div
-                                            onMouseDown={(e) => startAction('move', e)}
-                                            onTouchStart={(e) => startAction('move', e)}
-                                            className="w-full h-full cursor-move flex items-center justify-center opacity-30 group"
-                                        >
-                                            <Move size={20} className="text-indigo-200 group-hover:scale-110 transition-all" />
-                                        </div>
-
-                                        {/* Drag Corner Handles */}
-                                        <div
-                                            onMouseDown={(e) => startAction('tl', e)}
-                                            onTouchStart={(e) => startAction('tl', e)}
-                                            className="absolute w-3.5 h-3.5 -top-1.5 -left-1.5 bg-[var(--accent)] border border-white rounded-full cursor-nwse-resize"
-                                        />
-                                        <div
-                                            onMouseDown={(e) => startAction('tr', e)}
-                                            onTouchStart={(e) => startAction('tr', e)}
-                                            className="absolute w-3.5 h-3.5 -top-1.5 -right-1.5 bg-[var(--accent)] border border-white rounded-full cursor-nesw-resize"
-                                        />
-                                        <div
-                                            onMouseDown={(e) => startAction('bl', e)}
-                                            onTouchStart={(e) => startAction('bl', e)}
-                                            className="absolute w-3.5 h-3.5 -bottom-1.5 -left-1.5 bg-[var(--accent)] border border-white rounded-full cursor-nesw-resize"
-                                        />
-                                        <div
-                                            onMouseDown={(e) => startAction('br', e)}
-                                            onTouchStart={(e) => startAction('br', e)}
-                                            className="absolute w-3.5 h-3.5 -bottom-1.5 -right-1.5 bg-[var(--accent)] border border-white rounded-full cursor-nwse-resize"
-                                        />
+                                    {/* Rule of thirds grid */}
+                                    <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 pointer-events-none">
+                                        {Array(9).fill(0).map((_, i) => <div key={i} className="border border-white/20" />)}
                                     </div>
                                 </div>
-                            ) : (
-                                <div className="text-center py-12 flex flex-col items-center">
-                                    <div className="w-20 h-20 bg-emerald-500/10 rounded flex items-center justify-center mb-4">
-                                        <Crop size={40} className="text-emerald-400" />
+                                {/* Resize handles */}
+                                {handles.map(h => (
+                                    <div
+                                        key={h.id}
+                                        className="absolute bg-white border-2 border-[var(--accent)] rounded-full z-10"
+                                        style={{ top: h.top, left: h.left, width: HANDLE_SIZE, height: HANDLE_SIZE, transform: 'translate(-50%,-50%)', cursor: CURSOR_MAP[h.id] }}
+                                        onMouseDown={e => startDrag(e, h.id)}
+                                        onTouchStart={e => startDrag(e, h.id)}
+                                    />
+                                ))}
+                            </div>
+
+                            {outputUrl && (
+                                <div className="rounded-xl overflow-hidden border border-green-500/40 bg-[var(--surface)]">
+                                    <img src={outputUrl} alt="cropped" className="w-full object-contain max-h-48" />
+                                    <div className="p-3 flex items-center justify-between border-t border-[var(--border-strong)]">
+                                        <span className="text-xs text-slate-400">Cropped result</span>
+                                        <button onClick={download} className="flex items-center gap-2 px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white rounded text-sm font-semibold">
+                                            <LuDownload className="w-4 h-4" /> Download
+                                        </button>
                                     </div>
-                                    <p className="text-xl font-semibold mb-2">Upload Photo to Crop</p>
-                                    <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-6 max-w-sm">
-                                        Support JPG, PNG, and WEBP formats. Crop instantly with visual dimensions.
-                                    </p>
-                                    <Button onClick={() => fileInputRef.current?.click()} size="lg">
-                                        Choose File
-                                    </Button>
                                 </div>
                             )}
-                            <input
-                                ref={fileInputRef}
-                                type="file"
-                                accept="image/*"
-                                onChange={handleFileSelect}
-                                className="hidden"
-                            />
-                        </Card>
-                    </div>
+                        </div>
 
-                    {/* Right Panel: Presets & Controls */}
-                    <div className="lg:col-span-4 flex flex-col gap-6">
-                        {file ? (
-                            <Card variant="elevated" className="p-6 space-y-6 flex flex-col justify-between h-full">
-                                <div className="space-y-6">
-                                    <h3 className="text-lg font-bold text-[var(--text)] border-b border-[var(--border)] pb-2 flex items-center gap-2">
-                                        <Ratio size={18} className="text-emerald-400" />
-                                        Crop Presets
-                                    </h3>
-
-                                    {/* Aspect Ratio Buttons */}
-                                    <div className="grid grid-cols-2 gap-3">
-                                        {[
-                                            { key: 'free', label: 'Free Aspect', desc: 'Custom boundaries' },
-                                            { key: '1:1', label: 'Square 1:1', desc: 'Avatar / Profile' },
-                                            { key: '16:9', label: 'Wide 16:9', desc: 'Youtube / Presentation' },
-                                            { key: '4:3', label: 'Classic 4:3', desc: 'Retro Photo' }
-                                        ].map(preset => (
-                                            <button
-                                                key={preset.key}
-                                                onClick={() => setAspectPreset(preset.key as any)}
-                                                className={`p-3 rounded border text-left transition-all ${aspectPreset === preset.key ? 'border-emerald-500 bg-emerald-500/5 text-[var(--text)] dark:text-[var(--text)]' : 'border-[var(--border)] dark:border-[var(--border)] hover:border-[var(--border)] bg-[var(--surface)] dark:bg-[var(--accent-soft)] text-[var(--text-muted)] dark:text-[var(--text-muted)]'}`}
-                                            >
-                                                <span className="text-xs font-bold font-mono block">{preset.label}</span>
-                                                <span className="text-[10px] text-[var(--text-muted)] dark:text-[var(--text-muted)] block mt-0.5">{preset.desc}</span>
-                                            </button>
-                                        ))}
-                                    </div>
-
-                                    {/* Interactive instruction box */}
-                                    <div className="p-3 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] rounded text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] leading-relaxed">
-                                        <p className="font-semibold text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-1">How to Crop:</p>
-                                        1. Click and drag the <span className="font-bold text-emerald-400">Center Compass icon</span> to reposition the crop window.<br />
-                                        2. Drag the <span className="font-bold text-emerald-400">corner circle handles</span> to scale boundaries.
-                                    </div>
+                        {/* Settings */}
+                        <div className="space-y-4">
+                            {/* Aspect presets */}
+                            <div className="bg-[var(--surface)] border border-[var(--border-strong)] rounded-xl p-5">
+                                <h2 className="text-sm font-semibold text-slate-300 mb-3">Aspect Ratio</h2>
+                                <div className="grid grid-cols-4 gap-2">
+                                    {ASPECT_PRESETS.map(p => (
+                                        <button key={p.value} onClick={() => applyPreset(p.value)} className={`py-1.5 rounded text-xs font-medium border transition-all ${preset === p.value ? 'border-[var(--accent)] text-[var(--accent)] bg-[var(--accent)]/10' : 'border-[var(--border-strong)] text-slate-400 hover:border-slate-500'}`}>
+                                            {p.label}
+                                        </button>
+                                    ))}
                                 </div>
+                            </div>
 
-                                <div className="flex gap-3 pt-6 border-t border-[var(--border)]">
-                                    <Button variant="ghost" onClick={() => setFile(null)} className="w-1/3">
-                                        Clear
-                                    </Button>
-                                    <Button
-                                        onClick={handleCrop}
-                                        loading={loading}
-                                        className="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold flex-grow text-sm py-3"
-                                    >
-                                        Crop & Download
-                                        <Crop size={16} className="ml-2" />
-                                    </Button>
+                            {/* Transform */}
+                            <div className="bg-[var(--surface)] border border-[var(--border-strong)] rounded-xl p-5">
+                                <h2 className="text-sm font-semibold text-slate-300 mb-3">Transform</h2>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <button onClick={() => setRotation(r => (r - 90 + 360) % 360)} className="flex items-center justify-center gap-2 py-2 border border-[var(--border-strong)] rounded text-sm text-slate-300 hover:border-slate-500">
+                                        <LuRotateCcw className="w-4 h-4" /> Rotate L
+                                    </button>
+                                    <button onClick={() => setRotation(r => (r + 90) % 360)} className="flex items-center justify-center gap-2 py-2 border border-[var(--border-strong)] rounded text-sm text-slate-300 hover:border-slate-500">
+                                        <LuRotateCcw className="w-4 h-4 scale-x-[-1]" /> Rotate R
+                                    </button>
+                                    <button onClick={() => setFlipH(h => !h)} className={`flex items-center justify-center gap-2 py-2 border rounded text-sm transition-all ${flipH ? 'border-[var(--accent)] text-[var(--accent)]' : 'border-[var(--border-strong)] text-slate-300 hover:border-slate-500'}`}>
+                                        <LuFlipHorizontal className="w-4 h-4" /> Flip H
+                                    </button>
+                                    <button onClick={() => setFlipV(v => !v)} className={`flex items-center justify-center gap-2 py-2 border rounded text-sm transition-all ${flipV ? 'border-[var(--accent)] text-[var(--accent)]' : 'border-[var(--border-strong)] text-slate-300 hover:border-slate-500'}`}>
+                                        <LuFlipHorizontal className="w-4 h-4 rotate-90" /> Flip V
+                                    </button>
                                 </div>
-                            </Card>
-                        ) : (
-                            <Card variant="elevated" className="p-8 flex flex-col items-center justify-center text-center h-full text-[var(--text-faint)] dark:text-[var(--text-faint)]">
-                                <Crop size={48} className="opacity-10 mb-3" />
-                                <p className="text-base font-semibold">Cropping Presets</p>
-                                <p className="text-xs text-[var(--text-muted)] mt-1">Aspect ratio configurations, square sizing, and action crop buttons will show up here.</p>
-                            </Card>
-                        )}
+                            </div>
+
+                            {/* Format */}
+                            <div className="bg-[var(--surface)] border border-[var(--border-strong)] rounded-xl p-5 space-y-3">
+                                <h2 className="text-sm font-semibold text-slate-300">Output Format</h2>
+                                <div className="flex gap-2">
+                                    {FORMAT_OPTIONS.map(f => (
+                                        <button key={f.value} onClick={() => setFormat(f.value)} className={`flex-1 py-1.5 rounded text-xs font-medium border transition-all ${format === f.value ? 'border-[var(--accent)] text-[var(--accent)] bg-[var(--accent)]/10' : 'border-[var(--border-strong)] text-slate-400'}`}>
+                                            {f.label}
+                                        </button>
+                                    ))}
+                                </div>
+                                {format !== 'image/png' && (
+                                    <div>
+                                        <label className="flex justify-between text-xs text-slate-500 mb-1"><span>Quality</span><span className="text-[var(--accent)] font-bold">{quality}%</span></label>
+                                        <input type="range" min={10} max={100} value={quality} onChange={e => setQuality(parseInt(e.target.value))} className="w-full accent-[var(--accent)]" />
+                                    </div>
+                                )}
+                            </div>
+
+                            <button onClick={cropImage} className="w-full py-3 bg-[var(--accent)] text-white font-semibold rounded-xl hover:opacity-90 flex items-center justify-center gap-2">
+                                <LuCrop className="w-5 h-5" /> Crop Image
+                            </button>
+                            <button onClick={() => { setFile(null); setImgSrc(''); setOutputUrl(''); }} className="w-full py-2 border border-[var(--border-strong)] text-slate-400 rounded-xl hover:border-red-500 hover:text-red-400 text-sm">
+                                <LuTrash2 className="inline w-4 h-4 mr-2" /> Remove Image
+                            </button>
+                        </div>
                     </div>
-                </div>
+                )}
+
+                <ToolSEOContent toolName="Image Cropper" toolDescription="Free online image cropper with aspect ratio presets and rotate/flip support." />
             </main>
-
-            <ToolSEOContent toolName="Image Cropper Tools" toolDescription="Crop and cut your images online client-side. Aspect ratio templates, fully adjustable crop boxes with visual handles." />
             <Footer />
         </div>
     );
