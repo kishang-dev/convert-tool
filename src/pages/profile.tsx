@@ -4,6 +4,7 @@ import { useAuthStore } from '@/store/authStore';
 import { authApi } from '@/services/api';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Image from 'next/image';
 import SEO from '@/components/SEO';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
@@ -116,7 +117,7 @@ export default function ProfilePage() {
                                     onClick={() => fileInputRef.current?.click()}
                                 >
                                     {avatarPreview ? (
-                                        <img src={avatarPreview} alt="Avatar Preview" loading="lazy" className="w-full h-full object-cover" />
+                                        <Image src={avatarPreview} alt="Avatar Preview" fill className="object-cover" />
                                     ) : (
                                         <User className="text-[var(--text-faint)] dark:text-[var(--text-faint)]" size={40} />
                                     )}

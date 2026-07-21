@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Toast from '@/components/Toast';
@@ -56,7 +57,7 @@ export default function ImageResizer() {
         setOrigSize(`${(f.size / 1024).toFixed(1)} KB`);
         const url = URL.createObjectURL(f);
         setPreview(url);
-        const img = new Image();
+        const img = new window.Image();
         img.onload = () => {
             setOrigW(img.width); setOrigH(img.height);
             setWidth(img.width); setHeight(img.height);
@@ -90,7 +91,7 @@ export default function ImageResizer() {
         if (!file || !width || !height) return;
         setLoading(true);
         try {
-            const img = new Image();
+            const img = new window.Image();
             img.src = preview;
             await new Promise(r => img.onload = r);
             const canvas = document.createElement('canvas');
@@ -150,7 +151,7 @@ export default function ImageResizer() {
                             </div>
                         ) : (
                             <div className="relative rounded-xl overflow-hidden border border-[var(--border-strong)] bg-[var(--surface)]">
-                                <img src={preview} alt="original" className="w-full object-contain max-h-64 md:max-h-80" />
+                                <Image src={preview} alt="original" width={800} height={800} className="w-full object-contain max-h-64 md:max-h-80" />
                                 <div className="absolute top-2 right-2 flex gap-2">
                                     <button onClick={reset} className="bg-red-600/90 text-white rounded-full p-2 hover:bg-red-600 transition-all shadow"><LuTrash2 className="w-4 h-4" /></button>
                                 </div>
@@ -164,7 +165,7 @@ export default function ImageResizer() {
                         {/* Output preview */}
                         {outputUrl && (
                             <div className="rounded-xl overflow-hidden border border-green-500/40 bg-[var(--surface)]">
-                                <img src={outputUrl} alt="resized" className="w-full object-contain max-h-64" />
+                                <Image src={outputUrl} alt="resized" width={800} height={800} className="w-full object-contain max-h-64" />
                                 <div className="p-3 flex items-center justify-between border-t border-[var(--border-strong)]">
                                     <div className="text-xs text-slate-400">Output: <strong>{width}×{height}</strong> · <strong>{outputSize}</strong></div>
                                     <button onClick={download} className="flex items-center gap-2 px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white rounded text-sm font-semibold transition-all">

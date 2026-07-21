@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
 import { LuSave as Save, LuLoader as Loader2, LuChevronLeft as ChevronLeft, LuUndo2 as Undo2, LuCircleAlert as AlertCircle, LuFileText as FileText, LuLayoutPanelLeft as Columns, LuLayers as Layers, LuPenLine as Edit3, LuAlignLeft as AlignLeft, LuCheck as Check, LuX as X, LuRefreshCw as RefreshCw, LuEye as Eye } from "react-icons/lu";
+import Image from "next/image";
 import { fileAPI } from "@/lib/api";
 
 // ─────────────────────────────────────────────
@@ -542,7 +543,7 @@ function FullDocMode({
             <div className="w-56 flex-shrink-0 bg-[#0d0f18] border-r border-[var(--border)] dark:border-[var(--border)] overflow-y-auto flex flex-col items-center py-6 gap-3">
                 <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">PDF Preview</p>
                 <div className="w-44 shadow-xl rounded overflow-hidden border border-[var(--border)] dark:border-[var(--border)]">
-                    <img src={imageUrl} alt="PDF" loading="lazy" className="w-full h-auto block" />
+                    <Image src={imageUrl} alt="PDF" width={800} height={1131} className="w-full h-auto block" />
                 </div>
                 <div className="mt-2 px-4 w-full space-y-2">
                     <div className="flex justify-between text-[10px] text-slate-500">
@@ -623,7 +624,7 @@ function SplitViewMode({
                     <Eye size={11} /> Original PDF
                 </div>
                 <div className="shadow-2xl rounded overflow-hidden border border-[var(--border)] dark:border-[var(--border)]" style={{ width: pdfDims ? pdfDims.width * scale * 0.8 : "auto" }}>
-                    <img ref={imageRef} src={imageUrl} alt="PDF" loading="lazy" className="w-full h-auto block" />
+                    <Image ref={imageRef} src={imageUrl} alt="PDF" width={800} height={1131} className="w-full h-auto block" />
                 </div>
             </div>
 
@@ -699,7 +700,7 @@ function ParagraphMode({
                 ref={containerRef}
                 style={{ width: pdfDims ? pdfDims.width * scale : "auto" }}
             >
-                <img ref={imageRef} src={imageUrl} alt="PDF" loading="lazy" className="block w-full h-auto select-none pointer-events-none" />
+                <Image ref={imageRef} src={imageUrl} alt="PDF" width={800} height={1131} className="block w-full h-auto select-none pointer-events-none" />
 
                 {/* Paragraph overlays */}
                 {pdfDims && paragraphs.map((para: Paragraph) => {
@@ -813,12 +814,7 @@ function OverlayMode({
                 style={{ width: pdfDims ? pdfDims.width * scale : "auto" }}
             >
                 {/* PDF base */}
-                <img
-                    ref={imageRef}
-                    src={imageUrl}
-                    alt="PDF"
-                    className={`block w-full h-auto select-none transition-all duration-300 ${showOverlay ? "opacity-25" : "opacity-100"}`}
-                />
+                <Image ref={imageRef} src={imageUrl} alt="PDF" width={800} height={1131} className={`block w-full h-auto select-none transition-all duration-300 ${showOverlay ? "opacity-25" : "opacity-100"}`} />
 
                 {/* Overlay textarea */}
                 {showOverlay && (
@@ -901,7 +897,7 @@ function LineMode({
                 className="relative shadow-2xl bg-[var(--surface)] rounded overflow-hidden border border-[var(--border)] dark:border-[var(--border)]"
                 style={{ width: pdfDims ? pdfDims.width * scale : "auto" }}
             >
-                <img ref={imageRef} src={imageUrl} alt="PDF" loading="lazy" className="block w-full h-auto select-none pointer-events-none" />
+                <Image ref={imageRef} src={imageUrl} alt="PDF" width={800} height={1131} className="block w-full h-auto select-none pointer-events-none" />
 
                 {pdfDims && (
                     <div className="absolute inset-0 z-30">
@@ -950,3 +946,5 @@ function LineMode({
         </div>
     );
 }
+
+

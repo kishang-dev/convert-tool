@@ -3,11 +3,14 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { blogApi } from '@/services/api';
 import { FiArrowRight, FiCalendar, FiClock } from 'react-icons/fi';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function BlogPage() {
+    const router = useRouter();
     const [blogs, setBlogs] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -82,9 +85,9 @@ export default function BlogPage() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {blogs.map((blog, idx) => (
-                            <Link href={`/blog/${blog.slug}`} key={blog.slug || blog._id} className="group flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-[20px] overflow-hidden hover:shadow-[0_20px_50px_rgba(20,20,43,0.12)] hover:border-[var(--accent)] transition-all duration-300 transform hover:-translate-y-1 animate-fadeIn" style={{ animationDelay: `${idx * 0.1}s` }}>
+                            <div onClick={() => router.push(`/blog/${blog.slug}`)} key={blog.slug || blog._id} className="cursor-pointer group flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-[20px] overflow-hidden hover:shadow-[0_20px_50px_rgba(20,20,43,0.12)] hover:border-[var(--accent)] transition-all duration-300 transform hover:-translate-y-1 animate-fadeIn" style={{ animationDelay: `${idx * 0.1}s` }}>
                                 <div className="relative h-56 overflow-hidden">
-                                    <img src={blog.image} alt={blog.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                    <Image src={blog.image} alt={blog.title} width={400} height={300} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                                     <div className="absolute top-4 left-4 bg-[rgba(0,0,0,0.6)] backdrop-blur-md border border-[rgba(255,255,255,0.1)] text-white text-[12px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
                                         {blog.category}
                                     </div>
@@ -105,7 +108,7 @@ export default function BlogPage() {
                                         Read Article <FiArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
                                     </div>
                                 </div>
-                            </Link>
+                            </div>
                         ))}
                     </div>
                 )}

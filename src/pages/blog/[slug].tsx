@@ -8,6 +8,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { blogApi } from '@/services/api';
 import { FiCalendar, FiClock, FiUser, FiArrowLeft } from 'react-icons/fi';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function BlogPost() {
     const router = useRouter();
@@ -131,7 +132,7 @@ export default function BlogPost() {
                     </div>
 
                     <div className="rounded-[24px] overflow-hidden mb-12 shadow-[0_20px_50px_rgba(20,20,43,0.12)] border border-[var(--border)]">
-                        <img src={blog.image} alt={blog.title} className="w-full h-auto max-h-[500px] object-cover" />
+                        <Image src={blog.image} alt={blog.title} width={1200} height={500} className="w-full h-auto max-h-[500px] object-cover" />
                     </div>
 
                     <div className="max-w-3xl mx-auto">

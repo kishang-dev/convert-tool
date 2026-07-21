@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { blogApi } from '@/services/api';
 import { FiEdit, FiTrash2, FiUpload, FiImage, FiX } from 'react-icons/fi';
+import Image from 'next/image';
 import Button from '@/components/Button';
 
 const emptyForm = {
@@ -141,7 +142,7 @@ export default function AdminBlogs() {
                                 />
                                 {imagePreview ? (
                                     <div className="relative rounded-xl overflow-hidden border border-[var(--border)]">
-                                        <img src={imagePreview} alt="Preview" className="w-full h-40 object-cover" />
+                                        <Image src={imagePreview} alt="Preview" width={800} height={160} className="w-full h-40 object-cover" />
                                         {uploading && (
                                             <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white text-sm font-semibold">
                                                 Uploading...
@@ -193,7 +194,7 @@ export default function AdminBlogs() {
                                 {blogs.map(blog => (
                                     <div key={blog._id} className="bg-[var(--surface)] p-4 rounded-2xl border border-[var(--border)] flex justify-between items-center hover:border-[var(--accent)] transition-colors gap-4">
                                         <div className="flex gap-4 items-center flex-1 min-w-0">
-                                            <img src={blog.image} alt={blog.title} className="w-16 h-16 rounded-xl object-cover shrink-0 border border-[var(--border)]" />
+                                            <Image src={blog.image} alt={blog.title} width={64} height={64} className="w-16 h-16 rounded-xl object-cover shrink-0 border border-[var(--border)]" />
                                             <div className="min-w-0">
                                                 <h3 className="font-semibold font-['Sora',sans-serif] truncate text-[var(--text)]">{blog.title}</h3>
                                                 <p className="text-xs text-[var(--text-muted)] mt-1 font-['Poppins',sans-serif]">/{blog.slug}</p>

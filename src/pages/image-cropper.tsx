@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import SEO from '@/components/SEO';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ToolSEOContent from '@/components/ToolSEOContent';
+import Image from 'next/image';
 import { LuUpload, LuDownload, LuTrash2, LuCrop, LuRotateCcw, LuFlipHorizontal } from 'react-icons/lu';
 
 type Preset = '16:9' | '9:16' | '4:3' | '3:4' | '1:1' | '2:3' | 'free';
@@ -57,7 +58,7 @@ export default function ImageCropper() {
         setFile(f); setOutputUrl(''); setRotation(0); setFlipH(false); setFlipV(false);
         const url = URL.createObjectURL(f);
         setImgSrc(url);
-        const img = new Image();
+        const img = new window.Image();
         img.onload = () => { setImgW(img.width); setImgH(img.height); };
         img.src = url;
         setBox({ x: 10, y: 10, w: 80, h: 80 });
@@ -98,10 +99,10 @@ export default function ImageCropper() {
             const dy = ((pos.y - dragRef.current.startY) / rect.height) * 100;
             const sb = dragRef.current.startBox;
             const ratio = ASPECT_PRESETS.find(a => a.value === preset)?.ratio || null;
+            const mode = dragRef.current.mode;
 
             setBox(prev => {
                 let { x, y, w, h } = { ...sb };
-                const { mode } = dragRef.current!;
                 const minS = 5;
 
                 if (mode === 'move') {
@@ -132,7 +133,7 @@ export default function ImageCropper() {
 
     const cropImage = async () => {
         if (!imgSrc || !imgW || !imgH) return;
-        const img = new Image();
+        const img = new window.Image();
         img.src = imgSrc;
         await new Promise(r => img.onload = r);
 
@@ -250,7 +251,7 @@ export default function ImageCropper() {
 
                             {outputUrl && (
                                 <div className="rounded-xl overflow-hidden border border-green-500/40 bg-[var(--surface)]">
-                                    <img src={outputUrl} alt="cropped" className="w-full object-contain max-h-48" />
+                                    <Image src={outputUrl} alt="cropped" width={800} height={800} className="w-full object-contain max-h-48" />
                                     <div className="p-3 flex items-center justify-between border-t border-[var(--border-strong)]">
                                         <span className="text-xs text-slate-400">Cropped result</span>
                                         <button onClick={download} className="flex items-center gap-2 px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white rounded text-sm font-semibold">

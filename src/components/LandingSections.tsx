@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { FiCheck, FiArrowRight, FiShield, FiZap, FiGlobe, FiClock, FiUsers, FiChevronRight } from 'react-icons/fi';
 import {
-    LuFiles, LuScissors, LuPackage, LuPenLine, LuLock, LuLockOpen, LuRotateCcw, LuImage,
-    LuFileText, LuFileOutput, LuTable, LuMonitor, LuCode, LuGlobe, LuFilePlus, LuFileDown,
-    LuVolume2, LuMic, LuVideo, LuHeadphones, LuMaximize2, LuCrop, LuRefreshCw, LuPenTool,
-    LuBriefcase, LuChartBar, LuKey, LuBraces, LuSquareCheck, LuArrowLeftRight,
-    LuSearch, LuFileCode, LuDatabase, LuLayoutGrid, LuScanText, LuSparkles, LuArrowRight,
+    LuArrowRight,
 } from 'react-icons/lu';
 import Button from './Button';
 import { C, allTools, toolIcons, catIcons, benefits, freeFeatures } from '../data/landingData';
@@ -341,6 +338,7 @@ export function LandingCTA() {
     );
 }
 export function LandingBlogs() {
+    const router = useRouter();
     const [blogs, setBlogs] = useState<any[]>([]);
 
     useEffect(() => {
@@ -369,16 +367,16 @@ export function LandingBlogs() {
                             Latest from the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-[#8B5CF6]">Blog</span>
                         </h2>
                     </div>
-                    <Button variant="secondary" onClick={() => document.location.href = '/blog'} className="mt-6 md:mt-0">
+                    <Button variant="secondary" onClick={() => router.push('/blog')} className="mt-6 md:mt-0">
                         View All Articles
                     </Button>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {blogs.map((blog: any, idx: number) => (
-                        <a href={`/blog/${blog.slug}`} key={blog.slug} className="group flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-[20px] overflow-hidden hover:shadow-[0_20px_50px_rgba(20,20,43,0.12)] hover:border-[var(--accent)] transition-all duration-300 transform hover:-translate-y-1">
+                        <div onClick={() => router.push(`/blog/${blog.slug}`)} key={blog.slug} className="cursor-pointer group flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-[20px] overflow-hidden hover:shadow-[0_20px_50px_rgba(20,20,43,0.12)] hover:border-[var(--accent)] transition-all duration-300 transform hover:-translate-y-1">
                             <div className="relative h-52 overflow-hidden">
-                                <img src={blog.image} alt={blog.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                <Image src={blog.image} alt={blog.title} width={400} height={300} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                                 <div className="absolute top-4 left-4 bg-[rgba(0,0,0,0.6)] backdrop-blur-md border border-[rgba(255,255,255,0.1)] text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
                                     {blog.category}
                                 </div>
@@ -400,7 +398,7 @@ export function LandingBlogs() {
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     ))}
                 </div>
             </div>

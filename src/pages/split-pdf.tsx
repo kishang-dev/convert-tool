@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { LuArrowLeft as ArrowLeft, LuFileText as FileText, LuTrash2 as Trash2, LuScissors as Scissors, LuCheck as Check, LuX as X, LuDownload as Download } from "react-icons/lu";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -320,7 +321,7 @@ export default function SplitPdf() {
                                                     )}
 
                                                     <div className="aspect-[3/4] p-3 flex items-center justify-center bg-[var(--bg-elevated)] relative z-0">
-                                                        <img src={page.imageUrl} alt={`Page ${page.pageIndex + 1}`} className="max-w-full max-h-full object-contain shadow-sm border border-[var(--border)] bg-white" />
+                                                        <Image src={page.imageUrl} alt={`Page ${page.pageIndex + 1}`} width={800} height={1131} className="max-w-full max-h-full object-contain shadow-sm border border-[var(--border)] bg-white" />
                                                     </div>
                                                     <div className="p-2 text-center border-t border-[var(--border)] bg-[var(--surface)] text-xs font-medium text-[var(--text-muted)]">
                                                         Page {page.pageIndex + 1}
