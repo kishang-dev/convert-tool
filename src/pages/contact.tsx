@@ -66,9 +66,9 @@ export default function ContactPage() {
 
                             <div className="space-y-4">
                                 {[
-                                    { icon: Mail, label: "Email Support", value: "support@toolbasketai.com" },
-                                    { icon: MessageCircle, label: "Real-time Chat", value: "@toolbasket_support" },
-                                    { icon: MapPin, label: "Office Location", value: "Ahmedabad, Gujarat, IN" }
+                                    { icon: Mail, label: "Email Support", value: "toolbasketai@gmail.com" },
+                                    // { icon: MessageCircle, label: "Real-time Chat", value: "@toolbasket_support" },
+                                    { icon: MapPin, label: "Office Location", value: "Gujarat, IN" }
                                 ].map((item, idx) => (
                                     <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: 16, background: 'var(--surface)', border: '1.5px solid var(--border)', borderRadius: 16, padding: '20px 24px', transition: 'all 0.3s ease' }} className="hover:-translate-y-1 hover:shadow-lg hover:border-[var(--accent)]">
                                         <div style={{ background: 'var(--accent-soft)', border: '1px solid var(--border)', width: 48, height: 48, borderRadius: 12, display: 'grid', placeItems: 'center', flexShrink: 0 }}>
