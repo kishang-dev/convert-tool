@@ -36,14 +36,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         </Head>
-        {/* Google AdSense */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4813321349853858"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
-
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script
           strategy="afterInteractive"

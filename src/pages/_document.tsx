@@ -22,6 +22,13 @@ export default function Document() {
 
         {/* Global site verification (add your actual codes here) */}
         <meta name="google-site-verification" content="iNd_jJnkjOmSB-Al-BEjoMnfRz4q_Zsp7zr5HVSmAeM" />
+
+        {/* Google AdSense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4813321349853858"
+          crossOrigin="anonymous"
+        ></script>
       </Head>
       <body className="antialiased bg-[var(--bg)] text-[var(--text)]">
         <Main />
