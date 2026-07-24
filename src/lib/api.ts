@@ -278,7 +278,7 @@ export const fileAPI = {
   // Get download URL
   getDownloadUrl: (fileOrFilename: string | FileData | { filename: string, operation?: string }): string => {
     if (typeof fileOrFilename === 'string') {
-        return `${process.env.NEXT_PUBLIC_ASSETS_URL}/outputs/${fileOrFilename}`;
+      return `${process.env.NEXT_PUBLIC_ASSETS_URL}/outputs/${fileOrFilename}`;
     }
     const isUpload = fileOrFilename.operation === 'upload' || fileOrFilename.operation === 'UPLOAD';
     const folder = isUpload ? 'uploads' : 'outputs';
@@ -472,6 +472,25 @@ export interface ResumeData {
     date: string;
   }>;
   interests?: string[];
+  references?: Array<{
+    name: string;
+    position: string;
+    company: string;
+    contact: string;
+  }>;
+  publications?: Array<{
+    title: string;
+    publisher: string;
+    date: string;
+    url?: string;
+  }>;
+  volunteer?: Array<{
+    organization: string;
+    role: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+  }>;
   template: string;
   color: string;
   font: string;
@@ -486,7 +505,15 @@ export interface ResumeData {
       headings: string;
       body: string;
     };
+    lineHeight?: number;
+    margins?: 'compact' | 'normal' | 'spacious';
+    pageSize?: 'A4' | 'LETTER';
   };
+  softSkills?: string[];
+  coursework?: string[];
+  patents?: Array<{ title: string; date: string; url?: string; description: string; }>;
+  speakingEngagements?: Array<{ title: string; event: string; date: string; url?: string; }>;
+  testimonials?: Array<{ name: string; quote: string; position: string; }>;
 }
 
 export const resumeAPI = {
