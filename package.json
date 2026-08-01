@@ -14,6 +14,7 @@
     "axios": "^1.13.2",
     "clsx": "^2.1.1",
     "html-to-image": "^1.11.13",
+    "js-yaml": "^5.2.3",
     "jspdf": "^4.2.1",
     "lucide-react": "^0.562.0",
     "next": "16.1.4",
@@ -27,6 +28,7 @@
     "zustand": "^5.0.10"
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

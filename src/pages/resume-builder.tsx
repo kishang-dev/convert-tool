@@ -10,6 +10,7 @@ import SEO from '@/components/SEO';
 import ResumeTemplate from '@/components/ResumeTemplate';
 import { resumeAPI, ResumeData } from '@/lib/api';
 import { LuUpload as Upload, LuFileText as FileText, LuDownload as Download, LuSave as Save, LuPalette as Palette, LuUser as User, LuBriefcase as Briefcase, LuGraduationCap as GraduationCap, LuCode as Code, LuGlobe as Globe, LuPlus as Plus, LuTrash2 as Trash2, LuPenLine as Edit3, LuChevronRight as ChevronRight, LuCircleCheck as CheckCircle, LuLayoutDashboard as Layout, LuEye as Eye, LuX as X, LuClock as Clock, LuUsers as Users, LuBookOpen as BookOpen, LuHeart as Heart } from "react-icons/lu";
+import { LuTriangleAlert as AlertTriangle } from "react-icons/lu";
 import { useAuthStore } from '@/store/authStore';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';

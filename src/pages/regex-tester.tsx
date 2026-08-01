@@ -4,7 +4,17 @@ import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { LuSettings as Settings, LuSparkles as Sparkles, LuCircleCheck as CheckCircle2, LuCircleAlert as AlertCircle, LuCircleHelp as HelpCircle } from "react-icons/lu";
+import { 
+    LuSettings as Settings, 
+    LuSparkles as Sparkles, 
+    LuCircleCheck as CheckCircle2, 
+    LuCircleAlert as AlertCircle, 
+    LuCircleHelp as HelpCircle,
+    LuDownload as Download,
+    LuFileCode as FileCode,
+    LuBookOpen as BookOpen,
+    LuSearch as SearchIcon
+} from "react-icons/lu";
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
@@ -12,19 +22,25 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 
 export default function RegexTester() {
     const [pattern, setPattern] = useState('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}');
-    const [flags, setFlags] = useState({ g: true, i: true, m: false });
+    const [flags, setFlags] = useState({ g: true, i: true, m: false, s: false, u: false });
     const [testText, setTestText] = useState('Contact us at support@toolbasket.com or admin@domain.org for help!');
     const [matches, setMatches] = useState<any[]>([]);
     const [error, setError] = useState<string>('');
     const [highlightedHtml, setHighlightedHtml] = useState<string>('');
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
+    // 5+ Premium states
+    const [replacePattern, setReplacePattern] = useState('');
+    const [replacedText, setReplacedText] = useState('');
+    const [showCheatSheet, setShowCheatSheet] = useState(false);
+    const [matchMode, setMatchMode] = useState<'match' | 'replace'>('match');
+
     const showToast = (message: string, type: 'success' | 'error' = 'success') => {
         setToast({ message, type });
         setTimeout(() => setToast(null), 3000);
     };
 
-    const handleFlagToggle = (flagKey: 'g' | 'i' | 'm') => {
+    const handleFlagToggle = (flagKey: 'g' | 'i' | 'm' | 's' | 'u') => {
         setFlags(prev => ({ ...prev, [flagKey]: !prev[flagKey] }));
     };
 
@@ -33,6 +49,7 @@ export default function RegexTester() {
             setMatches([]);
             setError('');
             setHighlightedHtml(escapeHtml(testText));
+            setReplacedText('');
             return;
         }
 
@@ -42,12 +59,18 @@ export default function RegexTester() {
             if (flags.g) flagsStr += 'g';
             if (flags.i) flagsStr += 'i';
             if (flags.m) flagsStr += 'm';
+            if (flags.s) flagsStr += 's';
+            if (flags.u) flagsStr += 'u';
 
             const regex = new RegExp(pattern, flagsStr);
             setError('');
 
             const foundMatches: any[] = [];
             let htmlResult = escapeHtml(testText);
+
+            // Calculate Replaced string
+            const replacement = testText.replace(regex, replacePattern);
+            setReplacedText(replacement);
 
             if (flags.g) {
                 let match;
@@ -100,8 +123,9 @@ export default function RegexTester() {
             setError(e.message);
             setMatches([]);
             setHighlightedHtml(escapeHtml(testText));
+            setReplacedText('');
         }
-    }, [pattern, flags, testText]);
+    }, [pattern, flags, testText, replacePattern]);
 
     const escapeHtml = (text: string): string => {
         return text
@@ -113,7 +137,45 @@ export default function RegexTester() {
             .replace(/\n/g, '<br/>');
     };
 
-    
+    // Feature 1: Export match report
+    const handleDownloadReport = () => {
+        const report = `Regex Validation Report\nPattern: /${pattern}/\nMatches Found: ${matches.length}\nMatches:\n` + 
+            matches.map((m, i) => `${i+1}. Value: "${m.value}" at Index: ${m.index}`).join('\n');
+        const blob = new Blob([report], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'regex_report.txt';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast('Regex report downloaded!', 'success');
+    };
+
+    // Feature 2: Code Snippets Generator
+    const handleCopyCodeSnippet = (lang: 'js' | 'python') => {
+        let snippet = '';
+        if (lang === 'js') {
+            snippet = `const regex = /${pattern}/${flags.g?'g':''}${flags.i?'i':''}${flags.m?'m':''};\nconst text = \`${testText}\`;\nlet match;\nwhile ((match = regex.exec(text)) !== null) {\n  console.log("Match: " + match[0] + " at " + match.index);\n}`;
+        } else {
+            snippet = `import re\npattern = r"${pattern}"\ntext = "${testText}"\nmatches = re.finditer(pattern, text)\nfor match in matches:\n    print(f"Match: {match.group()} at {match.start()}")`;
+        }
+        navigator.clipboard.writeText(snippet);
+        showToast(`Copied ${lang.toUpperCase()} snippet!`, 'success');
+    };
+
+    const cheatSheet = [
+        { regex: "\\d", desc: "Any digit (0-9)" },
+        { regex: "\\w", desc: "Alphanumeric character [a-zA-Z0-9_]" },
+        { regex: "\\s", desc: "Whitespace (space, tab, newline)" },
+        { regex: ".", desc: "Any character except newline" },
+        { regex: "^", desc: "Start of string / line" },
+        { regex: "$", desc: "End of string / line" },
+        { regex: "*", desc: "0 or more occurrences" },
+        { regex: "+", desc: "1 or more occurrences" },
+        { regex: "?", desc: "0 or 1 occurrence" }
+    ];
+
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
@@ -142,7 +204,7 @@ export default function RegexTester() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+            <main className="max-w-7xl mx-auto px-4 py-8 md:py-12">
                 <Breadcrumbs
                     items={[
                         { label: 'Regex Tester', href: '/regex-tester' }
@@ -151,12 +213,56 @@ export default function RegexTester() {
 
                 <div className="text-center mb-10 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
-                        <span className="gradient-text">Regex Tester</span>
+                        <span className="gradient-text">Regex Tester Pro</span>
                     </h1>
                     <p className="text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
-                        Validate regular expressions, extract capturing groups, and inspect visual match highlighting instantly.
+                        Verify expressions, capture matched indices, replace text inline, and export code snippet scripts instantly.
                     </p>
                 </div>
+
+                {/* Match Mode Toolbar */}
+                <Card variant="elevated" className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded">
+                    <div className="flex gap-2">
+                        <Button
+                            variant={matchMode === 'match' ? 'primary' : 'secondary'}
+                            size="sm"
+                            onClick={() => setMatchMode('match')}
+                        >
+                            Match Mode
+                        </Button>
+                        <Button
+                            variant={matchMode === 'replace' ? 'primary' : 'secondary'}
+                            size="sm"
+                            onClick={() => setMatchMode('replace')}
+                        >
+                            Replace Mode
+                        </Button>
+                    </div>
+
+                    <div className="flex gap-2 text-xs">
+                        <Button variant="ghost" size="sm" onClick={() => handleCopyCodeSnippet('js')}>
+                            Copy JS Code
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={() => handleCopyCodeSnippet('python')}>
+                            Copy Python Code
+                        </Button>
+                        <Button variant="secondary" size="sm" onClick={() => setShowCheatSheet(!showCheatSheet)}>
+                            Cheat Sheet
+                        </Button>
+                    </div>
+                </Card>
+
+                {/* Cheat Sheet */}
+                {showCheatSheet && (
+                    <Card className="mb-6 p-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 text-xs">
+                        {cheatSheet.map((item, idx) => (
+                            <div key={idx} className="p-2 bg-[var(--bg)] border border-[var(--border-strong)] rounded">
+                                <code className="text-[var(--accent)] font-bold">{item.regex}</code>
+                                <span className="block text-[var(--text-muted)] mt-0.5">{item.desc}</span>
+                            </div>
+                        ))}
+                    </Card>
+                )}
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                     {/* Left: Editor & RegEx inputs */}
@@ -183,7 +289,9 @@ export default function RegexTester() {
                                     {[
                                         { key: 'g', label: 'g (global)', desc: 'Find all matches' },
                                         { key: 'i', label: 'i (case insensitive)', desc: 'Ignore capitalization' },
-                                        { key: 'm', label: 'm (multiline)', desc: '^ & $ match start/end of lines' }
+                                        { key: 'm', label: 'm (multiline)', desc: '^ & $ match start/end of lines' },
+                                        { key: 's', label: 's (dotAll)', desc: 'Dot matches newlines' },
+                                        { key: 'u', label: 'u (unicode)', desc: 'Enable unicode support' }
                                     ].map(flag => (
                                         <button
                                             key={flag.key}
@@ -197,6 +305,20 @@ export default function RegexTester() {
                                 </div>
                             </div>
                         </Card>
+
+                        {/* Replace Pattern Input */}
+                        {matchMode === 'replace' && (
+                            <Card variant="elevated" className="p-6 bg-[var(--surface)] border-[var(--border)]">
+                                <h2 className="text-base font-bold text-[var(--text)] uppercase tracking-wider mb-2">Replace with</h2>
+                                <input
+                                    type="text"
+                                    value={replacePattern}
+                                    onChange={(e) => setReplacePattern(e.target.value)}
+                                    placeholder="Enter replacement string (e.g. $1)"
+                                    className="w-full px-4 py-2.5 bg-[var(--bg)] border border-[var(--border-strong)] rounded text-sm font-mono focus:border-[var(--accent)] outline-none text-[var(--text)]"
+                                />
+                            </Card>
+                        )}
 
                         {/* Test string input */}
                         <Card variant="elevated" className="p-6 flex flex-col flex-grow min-h-[300px] bg-[var(--surface)] border-[var(--border)]">
@@ -224,7 +346,7 @@ export default function RegexTester() {
                         )}
 
                         {/* Match Highlight Box */}
-                        {!error && (
+                        {!error && matchMode === 'match' && (
                             <Card variant="elevated" className="p-6 flex-grow flex flex-col">
                                 <h3 className="text-sm font-bold tracking-wider text-[var(--text-muted)] uppercase mb-3">Visual Matches Highlight</h3>
                                 <div 
@@ -234,10 +356,25 @@ export default function RegexTester() {
                             </Card>
                         )}
 
+                        {/* Replace Output Box */}
+                        {!error && matchMode === 'replace' && (
+                            <Card variant="elevated" className="p-6 flex-grow flex flex-col">
+                                <h3 className="text-sm font-bold tracking-wider text-[var(--text-muted)] uppercase mb-3">Replaced Output Result</h3>
+                                <div className="p-4 bg-[var(--bg)] border border-[var(--border-strong)] rounded font-mono text-sm text-emerald-400 leading-relaxed overflow-y-auto max-h-[220px] flex-grow break-all">
+                                    {replacedText || 'Replacement result will appear here...'}
+                                </div>
+                            </Card>
+                        )}
+
                         {/* Capturing Groups / Match Details */}
                         <Card variant="elevated" className="p-6 max-h-[300px] overflow-y-auto">
                             <div className="flex justify-between items-center mb-4">
                                 <h3 className="text-sm font-bold tracking-wider text-[var(--text-muted)] dark:text-[var(--text-muted)] uppercase">Match Metrics ({matches.length})</h3>
+                                {matches.length > 0 && (
+                                    <Button size="sm" variant="secondary" onClick={handleDownloadReport}>
+                                        <Download size={12} className="mr-1" /> Report
+                                    </Button>
+                                )}
                             </div>
                             
                             {matches.length > 0 ? (

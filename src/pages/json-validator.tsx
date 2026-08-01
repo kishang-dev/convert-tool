@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Toast from '@/components/Toast';
-import { LuShieldCheck as ShieldCheck, LuCircleAlert as AlertCircle, LuSparkles as Sparkles, LuCircleCheck as CheckCircle2, LuChevronRight as ChevronRight } from "react-icons/lu";
+import { 
+    LuShieldCheck as ShieldCheck, 
+    LuCircleAlert as AlertCircle, 
+    LuSparkles as Sparkles, 
+    LuCircleCheck as CheckCircle2, 
+    LuChevronRight as ChevronRight,
+    LuFileCode as FileCode,
+    LuDownload as Download,
+    LuFolderOpen as FolderOpen,
+    LuSettings as SettingsIcon,
+    LuListChecks as ListChecksIcon
+} from "react-icons/lu";
 import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
@@ -22,6 +33,14 @@ export default function JsonValidator() {
         type: 'Object' | 'Array' | 'Primitive';
     } | null>(null);
     const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+    // 5+ Premium features state
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [schemaValidation, setSchemaValidation] = useState(false);
+    const [schemaText, setSchemaText] = useState('{\n  "type": "object",\n  "properties": {\n    "name": { "type": "string" }\n  }\n}');
+    const [showSchema, setShowSchema] = useState(false);
+    const [strictMode, setStrictMode] = useState(false); // e.g. forbid duplicate keys
+    const [customRuleKeys, setCustomRuleKeys] = useState(false); // e.g. enforce camelCase keys
 
     const showToast = (message: string, type: 'success' | 'error' = 'success') => {
         setToast({ message, type });
@@ -56,6 +75,27 @@ export default function JsonValidator() {
         return count;
     };
 
+    // Rule Validator helper
+    const checkCustomRules = (obj: any): string[] => {
+        const errors: string[] = [];
+        const validateObj = (o: any) => {
+            if (o === null || typeof o !== 'object') return;
+            if (Array.isArray(o)) {
+                o.forEach(validateObj);
+            } else {
+                Object.keys(o).forEach(k => {
+                    // Feature 4: Enforce camelCase rule check
+                    if (customRuleKeys && !/^[a-z][a-zA-Z0-9]*$/.test(k)) {
+                        errors.push(`Key "${k}" does not follow camelCase convention.`);
+                    }
+                    validateObj(o[k]);
+                });
+            }
+        };
+        validateObj(obj);
+        return errors;
+    };
+
     const handleValidate = () => {
         gtag.event({
             action: 'use_tool',
@@ -68,7 +108,45 @@ export default function JsonValidator() {
         }
 
         try {
+            // Feature 1: Strict duplicate keys validation
+            if (strictMode) {
+                const keys: string[] = [];
+                // Simple regex key scanner
+                const matches = input.match(/"([^"]+)"\s*:/g);
+                if (matches) {
+                    const parsedKeys = matches.map(m => m.replace(/"/g, '').replace(/:/g, '').trim());
+                    const dupes = parsedKeys.filter((item, index) => parsedKeys.indexOf(item) !== index);
+                    if (dupes.length > 0) {
+                        throw new Error(`Strict Mode Check Failed: Duplicate key found: "${dupes[0]}"`);
+                    }
+                }
+            }
+
             const parsed = JSON.parse(input);
+
+            // Feature 2: Custom structural rule warnings
+            const ruleErrors = checkCustomRules(parsed);
+            if (ruleErrors.length > 0) {
+                throw new Error(`Rule convention failure: ${ruleErrors.join(', ')}`);
+            }
+
+            // Feature 3: Schema validation mock/check if toggled
+            if (schemaValidation && schemaText.trim()) {
+                const schema = JSON.parse(schemaText);
+                if (schema.type === 'object' && Array.isArray(parsed)) {
+                    throw new Error("Schema Mismatch: Expected Object root but found Array");
+                }
+                if (schema.properties) {
+                    Object.keys(schema.properties).forEach(prop => {
+                        if (schema.properties[prop].type && parsed[prop] !== undefined) {
+                            if (typeof parsed[prop] !== schema.properties[prop].type) {
+                                throw new Error(`Schema Mismatch: Property "${prop}" should be of type ${schema.properties[prop].type}`);
+                            }
+                        }
+                    });
+                }
+            }
+
             setStatus('valid');
             setErrorMsg('');
             setErrorPos({});
@@ -91,8 +169,6 @@ export default function JsonValidator() {
             setStatus('invalid');
             setErrorMsg(error.message);
 
-            // Attempt to parse line/column numbers from JS JSON.parse error message
-            // Example: "Unexpected token } in JSON at position 134" or "JSON.parse: unexpected character at line 4 column 5 of the JSON data"
             const positionMatch = error.message.match(/position (\d+)/i);
             const lineColMatch = error.message.match(/line (\d+) column (\d+)/i);
             
@@ -104,7 +180,6 @@ export default function JsonValidator() {
                 column = parseInt(lineColMatch[2]);
             } else if (positionMatch) {
                 const pos = parseInt(positionMatch[1]);
-                // Compute line & column from raw position index
                 const substring = input.substring(0, pos);
                 const lines = substring.split('\n');
                 line = lines.length;
@@ -134,7 +209,35 @@ export default function JsonValidator() {
         setMetrics(null);
     };
 
-    
+    // Feature 5: File Upload
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const text = event.target?.result as string;
+                setInput(text);
+                setStatus('idle');
+                showToast(`Loaded ${file.name} successfully!`, 'success');
+            };
+            reader.readAsText(file);
+        }
+    };
+
+    // Feature 6: Download Report
+    const handleDownloadReport = () => {
+        const report = `JSON Validation Report\nStatus: ${status.toUpperCase()}\nError details: ${errorMsg || 'None'}\nKeys: ${metrics?.keysCount || 'N/A'}\nDepth: ${metrics?.maxDepth || 'N/A'}`;
+        const blob = new Blob([report], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'validation_report.txt';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast('Report downloaded!', 'success');
+    };
+
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
@@ -163,7 +266,7 @@ export default function JsonValidator() {
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
-            <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
+            <main className="max-w-7xl mx-auto px-4 py-8 md:py-12">
                 <Breadcrumbs
                     items={[
                         { label: 'JSON Validator', href: '/json-validator' }
@@ -172,12 +275,88 @@ export default function JsonValidator() {
 
                 <div className="text-center mb-10 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
-                        <span className="gradient-text">JSON Validator & Debugger</span>
+                        <span className="gradient-text">JSON Validator & Debugger Pro</span>
                     </h1>
                     <p className="text-[var(--text-muted)] text-base sm:text-lg max-w-xl mx-auto">
-                        Validate JSON structure, detect syntax formatting anomalies, and find line-by-line debugging indices.
+                        Validate JSON structure against schemas, inspect keys, apply naming convention checks, and download audit reports.
                     </p>
                 </div>
+
+                {/* Validation Toolbar Rules */}
+                <Card variant="elevated" className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded">
+                    <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-[var(--text-muted)]">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={strictMode}
+                                onChange={(e) => setStrictMode(e.target.checked)}
+                                className="rounded border-[var(--border-strong)] text-[var(--accent)] focus:ring-[var(--accent)]"
+                            />
+                            STRICT DUPES CHECK
+                        </label>
+
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={customRuleKeys}
+                                onChange={(e) => setCustomRuleKeys(e.target.checked)}
+                                className="rounded border-[var(--border-strong)] text-[var(--accent)] focus:ring-[var(--accent)]"
+                            />
+                            ENFORCE camelCase KEYS
+                        </label>
+
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={schemaValidation}
+                                onChange={(e) => setSchemaValidation(e.target.checked)}
+                                className="rounded border-[var(--border-strong)] text-[var(--accent)] focus:ring-[var(--accent)]"
+                            />
+                            SCHEMA CONSTRAINTS
+                        </label>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        {schemaValidation && (
+                            <Button
+                                variant="secondary"
+                                size="sm"
+                                onClick={() => setShowSchema(!showSchema)}
+                            >
+                                {showSchema ? 'Hide Schema' : 'Edit Schema'}
+                            </Button>
+                        )}
+                        <Button
+                            onClick={() => fileInputRef.current?.click()}
+                            variant="ghost"
+                            size="sm"
+                            className="text-[var(--text-muted)] hover:text-[var(--text)]"
+                        >
+                            <FolderOpen size={16} className="mr-1.5" />
+                            Upload File
+                        </Button>
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            accept=".json,.txt"
+                            onChange={handleFileUpload}
+                            className="hidden"
+                        />
+                    </div>
+                </Card>
+
+                {/* Optional Schema View */}
+                {showSchema && schemaValidation && (
+                    <Card variant="elevated" className="mb-6 p-4 bg-[var(--surface)] border border-[var(--border)]">
+                        <span className="block text-xs font-bold text-[var(--text-muted)] mb-2 uppercase">Validation Schema Constraints JSON</span>
+                        <textarea
+                            value={schemaText}
+                            onChange={(e) => setSchemaText(e.target.value)}
+                            rows={4}
+                            className="w-full p-2 bg-[var(--bg)] border border-[var(--border-strong)] rounded font-mono text-xs text-[var(--text)] focus:outline-none"
+                        />
+                    </Card>
+                )}
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                     {/* Left: Input */}
@@ -240,6 +419,15 @@ export default function JsonValidator() {
                                     </div>
                                     <h3 className="text-xl font-bold text-green-400 mb-1">Valid JSON Structure</h3>
                                     <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)]">All characters align cleanly to the JSON standard specs.</p>
+                                    <Button
+                                        onClick={handleDownloadReport}
+                                        variant="secondary"
+                                        size="sm"
+                                        className="mt-4 border border-green-500/30 text-green-400 hover:bg-green-500/10"
+                                    >
+                                        <Download size={14} className="mr-1.5" />
+                                        Download Audit Report
+                                    </Button>
                                 </Card>
 
                                 {/* Object Metrics */}
@@ -280,6 +468,15 @@ export default function JsonValidator() {
                                             <p className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)] leading-relaxed">A parsing syntax error was detected in the document schema.</p>
                                         </div>
                                     </div>
+                                    <Button
+                                        onClick={handleDownloadReport}
+                                        variant="secondary"
+                                        size="sm"
+                                        className="mt-4 border border-red-500/30 text-red-400 hover:bg-red-500/10 w-full"
+                                    >
+                                        <Download size={14} className="mr-1.5" />
+                                        Download Error Log Report
+                                    </Button>
                                 </Card>
 
                                 {/* Syntax Details */}
@@ -305,7 +502,7 @@ export default function JsonValidator() {
 
                                         {errorPos.char && (
                                             <div className="p-3.5 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] rounded flex items-center justify-between">
-                                                <span className="text-xs text-[var(--text-muted)] dark:text-[var(--text-muted)]">FAILLING CHARACTER</span>
+                                                <span className="text-xs text-[var(--text-muted)] dark:text(--text-muted)">FAILING CHARACTER</span>
                                                 <span className="font-mono text-base font-bold bg-red-500/10 text-red-400 px-2 py-0.5 rounded border border-red-500/20">"{errorPos.char}"</span>
                                             </div>
                                         )}
