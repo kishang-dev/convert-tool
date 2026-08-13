@@ -15,7 +15,7 @@ const GlobalStyles = () => (
             .resume-page { box-shadow:none!important;margin:0!important;width:100%!important; }
             * { -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important; }
         }
-        .resume-page { -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;background:white;overflow:visible; padding-bottom: 40px !important; }
+        .resume-page { -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;background:white;box-sizing:border-box; }
         `
     }} />
 );
@@ -29,21 +29,21 @@ const Dot = ({ color }: { color: string }) => (
 // ─── Template 1: MODERN PROFESSIONAL ─────────────────────────────────────────
 // Two-column layout, colored top border, clean Inter typography
 const T_Modern = ({ data, primaryColor: c }: any) => (
-    <div className="bg-white w-[794px] min-h-[1123px] resume-page" style={{ fontFamily: 'DM Sans, sans-serif', borderTop: `6px solid ${c}` }}>
-        <header className="px-14 pt-10 pb-8 flex justify-between items-end border-b border-gray-100">
+    <div className="bg-white w-[794px] min-h-[1123px] resume-page box-sizing-border" style={{ fontFamily: 'DM Sans, sans-serif', borderTop: `6px solid ${c}` }}>
+        <header className="px-12 pt-8 pb-6 flex justify-between items-end border-b border-gray-100">
             <div>
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900">{data.personalInfo.fullName}</h1>
-                <p className="text-sm font-medium mt-1" style={{ color: c }}>{data.experience[0]?.position}</p>
+                <h1 className="text-3xl font-bold tracking-tight text-gray-900">{data.personalInfo.fullName}</h1>
+                <p className="text-sm font-medium mt-0.5" style={{ color: c }}>{data.experience[0]?.position}</p>
             </div>
-            <div className="text-right text-[10px] text-gray-600  space-y-0.5">
+            <div className="text-right text-[10px] text-gray-600 space-y-0.5">
                 <div>{data.personalInfo.email}</div>
                 <div>{data.personalInfo.phone}</div>
                 <div>{data.personalInfo.address}</div>
                 {data.personalInfo.linkedin && <div>{data.personalInfo.linkedin}</div>}
             </div>
         </header>
-        <div className="flex px-14 py-8 gap-10">
-            <main className="flex-1 space-y-7">
+        <div className="flex px-12 py-6 gap-8">
+            <main className="flex-1 space-y-5">
                 <section>
                     <h2 className="text-[9px] font-bold uppercase tracking-[0.2em] mb-3 text-gray-600 ">Profile</h2>
                     <p className="text-[11px] text-gray-600 leading-relaxed">{data.personalInfo.summary}</p>
