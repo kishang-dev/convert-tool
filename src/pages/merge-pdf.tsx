@@ -10,6 +10,7 @@ import ToolSEOContent from "@/components/ToolSEOContent";
 import PdfUploadDropzone from "@/components/PdfUploadDropzone";
 import PdfPageOrganizer, { PdfPreviewPage } from "@/components/PdfPageOrganizer";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import AdBanner from "@/components/AdBanner";
 import { fileAPI, FileData } from "@/lib/api";
 import * as gtag from "@/lib/gtag";
 
@@ -222,18 +223,21 @@ export default function MergePdf() {
             <Navbar />
 
             <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-                <Breadcrumbs 
+                <Breadcrumbs
                     items={[
                         { label: 'Merge PDF', href: '/merge-pdf' }
-                    ]} 
+                    ]}
                 />
 
-                <div className="mb-8 animate-fadeIn">
+                <div className="mb-6 animate-fadeIn">
                     <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Merge PDF</h1>
                     <p className="text-[var(--text-muted)] text-sm max-w-2xl">
                         Upload multiple PDFs, preview every page from all files, drag pages into the order you want, then merge.
                     </p>
                 </div>
+
+                {/* Top Responsive Leaderboard Ad Banner (SEO Friendly Header Placement) */}
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
 
                 <section className="bg-[var(--surface)] border border-[var(--border-strong)] rounded overflow-hidden animate-fadeIn">
                     {files.length < MAX_FILES && (
@@ -315,6 +319,9 @@ export default function MergePdf() {
                     </div>
                 </section>
 
+                {/* Native In-Article Ad Banner (Between Tool & SEO Instructions) */}
+                {/* <AdBanner adFormat="in-article" className="my-8" /> */}
+
                 <ToolSEOContent
                     toolName="Merge PDF"
                     toolDescription="Upload multiple PDFs, preview every page, reorder pages with drag and drop, and create one merged PDF."
@@ -324,6 +331,9 @@ export default function MergePdf() {
                         { name: "Merge", text: "Create and download the merged PDF instantly." },
                     ]}
                 />
+
+                {/* Bottom Multiplex Grid Ad Banner */}
+                {/* <AdBanner adFormat="multiplex" label="Recommended Content" className="mt-8" /> */}
             </main>
             <Footer />
         </div>
