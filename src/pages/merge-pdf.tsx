@@ -236,7 +236,6 @@ export default function MergePdf() {
                     </p>
                 </div>
 
-                {/* Top Responsive Leaderboard Ad Banner (SEO Friendly Header Placement) */}
                 <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
 
                 <section className="bg-[var(--surface)] border border-[var(--border-strong)] rounded overflow-hidden animate-fadeIn">
@@ -319,9 +318,6 @@ export default function MergePdf() {
                     </div>
                 </section>
 
-                {/* Native In-Article Ad Banner (Between Tool & SEO Instructions) */}
-                {/* <AdBanner adFormat="in-article" className="my-8" /> */}
-
                 <ToolSEOContent
                     toolName="Merge PDF"
                     toolDescription="Upload multiple PDFs, preview every page, reorder pages with drag and drop, and create one merged PDF."
@@ -331,9 +327,6 @@ export default function MergePdf() {
                         { name: "Merge", text: "Create and download the merged PDF instantly." },
                     ]}
                 />
-
-                {/* Bottom Multiplex Grid Ad Banner */}
-                {/* <AdBanner adFormat="multiplex" label="Recommended Content" className="mt-8" /> */}
             </main>
             <Footer />
         </div>
