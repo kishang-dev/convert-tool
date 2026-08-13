@@ -7,7 +7,7 @@ import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
-import { LuFileText as FileText, LuPlus as Plus, LuTrash2 as Trash2, LuPenLine as Edit3, LuDownload as Download, LuSparkles as Sparkles, LuSearch as Search, LuClock as Clock, LuUser as User, LuBriefcase as Briefcase, LuChevronRight as ChevronRight } from "react-icons/lu";
+import { LuFileText as FileText, LuPlus as Plus, LuTrash2 as Trash2, LuPenLine as Edit3, LuSparkles as Sparkles, LuSearch as Search, LuClock as Clock, LuUser as User, LuBriefcase as Briefcase, LuChevronRight as ChevronRight } from "react-icons/lu";
 
 export default function MyResumesPage() {
     const { user, _hasHydrated } = useAuthStore();
@@ -18,7 +18,7 @@ export default function MyResumesPage() {
     const [deletingId, setDeletingId] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!_hasHydrated) return; // Wait for hydration before checking auth state
+        if (!_hasHydrated) return;
 
         if (!user) {
             router.push('/login?redirect=/my-resumes');
@@ -55,7 +55,6 @@ export default function MyResumesPage() {
     };
 
     const handleEdit = (resume: ResumeData) => {
-        // Store in session so resume-builder can pick it up
         sessionStorage.setItem('editResume', JSON.stringify(resume));
         router.push('/resume-builder?edit=' + resume._id);
     };
@@ -64,21 +63,25 @@ export default function MyResumesPage() {
         const q = searchQuery.toLowerCase();
         return (
             (r.title || '').toLowerCase().includes(q) ||
-            r.personalInfo.fullName.toLowerCase().includes(q) ||
-            r.personalInfo.email.toLowerCase().includes(q)
+            (r.personalInfo?.fullName || '').toLowerCase().includes(q) ||
+            (r.personalInfo?.email || '').toLowerCase().includes(q)
         );
     });
 
     const formatDate = (dateStr: string) => {
-        return new Date(dateStr).toLocaleDateString('en-US', {
-            year: 'numeric', month: 'short', day: 'numeric'
-        });
+        try {
+            return new Date(dateStr).toLocaleDateString('en-US', {
+                year: 'numeric', month: 'short', day: 'numeric'
+            });
+        } catch (e) {
+            return dateStr;
+        }
     };
 
     if (!_hasHydrated || !user) return null;
 
     return (
-        <div className="min-h-screen bg-[var(--surface)] dark:bg-[#0a0a0f] text-[var(--text)] dark:text-[var(--text)]">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">
             <SEO
                 title="My Resumes — Manage Your Saved Resumes"
                 description="Manage, edit, download, and export all your saved resumes in one place. Built with ToolBasketAI's free AI-powered resume builder."
@@ -89,38 +92,36 @@ export default function MyResumesPage() {
 
             <Navbar />
 
-            {/* Background */}
-            <div className="fixed inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-pink-900/20 -z-10">
-                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+            {/* Ambient Lighting Backdrops */}
+            <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+                <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-transparent blur-3xl opacity-60 rounded-full"></div>
             </div>
-            <div className="fixed top-20 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-float -z-10"></div>
-            <div className="fixed bottom-20 right-10 w-96 h-96 bg-[var(--accent)]/20 rounded-full blur-3xl animate-float -z-10" style={{ animationDelay: '1.5s' }}></div>
 
-            <div className="pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+            <main className="pt-8 sm:pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
                 {/* Header */}
-                <div className="animate-fadeIn mb-10">
-                    <div className="inline-flex items-center gap-2 bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] px-4 py-2 rounded-full mb-4">
-                        <Sparkles className="text-blue-400" size={16} />
-                        <span className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)]">Resume Library</span>
+                <div className="animate-fadeIn mb-8 sm:mb-10">
+                    <div className="inline-flex items-center gap-2 bg-[var(--accent-soft)] border border-[var(--accent-ring)] px-3.5 py-1.5 rounded-full mb-4 shadow-sm">
+                        <Sparkles className="text-[var(--accent)]" size={15} />
+                        <span className="text-xs font-bold text-[var(--accent)]">RESUME CLOUD LIBRARY</span>
                     </div>
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
-                            <h1 className="text-4xl sm:text-5xl font-black gradient-text tracking-tight mb-2">
+                            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[var(--text)]">
                                 My Resumes
                             </h1>
-                            <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] text-base">
+                            <p className="text-[var(--text-muted)] text-sm sm:text-base mt-1.5 font-normal">
                                 {resumes.length > 0
-                                    ? `${resumes.length} resume${resumes.length > 1 ? 's' : ''} saved to your account`
-                                    : 'Create your first professional resume'}
+                                    ? `${resumes.length} professional resume${resumes.length > 1 ? 's' : ''} saved to your cloud account`
+                                    : 'Create your first ATS-friendly professional resume'}
                             </p>
                         </div>
                         <Button
                             onClick={() => router.push('/resume-builder')}
                             size="lg"
-                            className="shrink-0"
+                            className="shrink-0 font-bold shadow-lg shadow-blue-500/20 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white rounded-xl py-3 px-5 flex items-center gap-2"
                         >
-                            <Plus size={20} />
-                            New Resume
+                            <Plus size={18} />
+                            <span>Create New Resume</span>
                         </Button>
                     </div>
                 </div>
@@ -128,49 +129,50 @@ export default function MyResumesPage() {
                 {/* Search Bar */}
                 {resumes.length > 0 && (
                     <div className="relative mb-8 max-w-md">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-faint)] dark:text-[var(--text-faint)]" size={18} />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-faint)]" size={18} />
                         <input
                             type="text"
-                            placeholder="Search resumes..."
+                            placeholder="Search by title, name or email..."
                             value={searchQuery}
                             onChange={e => setSearchQuery(e.target.value)}
-                            className="w-full bg-[var(--surface)] dark:bg-[var(--accent-soft)] border border-[var(--border)] dark:border-[var(--border)] pl-12 pr-4 py-3 rounded outline-none focus:border-[var(--accent)] focus:bg-[var(--surface-hover)] transition-all text-[var(--text)] dark:text-[var(--text)] placeholder-[var(--text-faint)]"
+                            className="w-full bg-[var(--surface)] border border-[var(--border)] pl-11 pr-4 py-3 rounded-xl outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-ring)] transition-all text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] shadow-sm"
                         />
                     </div>
                 )}
 
                 {/* Content */}
                 {loading ? (
-                    <div className="flex justify-center items-center py-32">
-                        <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                    <div className="flex flex-col justify-center items-center py-32 gap-3">
+                        <div className="w-10 h-10 border-3 border-[var(--accent)] border-t-transparent rounded-full animate-spin"></div>
+                        <p className="text-xs text-[var(--text-muted)] font-medium">Loading your cloud resumes...</p>
                     </div>
                 ) : resumes.length === 0 ? (
                     /* Empty State */
-                    <Card variant="elevated" className="p-16 text-center bg-[var(--surface-hover)] border-dashed border-[var(--border)] dark:border-[var(--border)]">
-                        <div className="w-24 h-24 bg-blue-500/10 rounded flex items-center justify-center mx-auto mb-8">
-                            <FileText size={48} className="text-blue-400/60" />
+                    <Card variant="elevated" className="p-10 sm:p-16 text-center bg-[var(--surface)] border-2 border-dashed border-[var(--border)] rounded-3xl shadow-sm">
+                        <div className="w-20 h-20 bg-[var(--accent-soft)] rounded-2xl flex items-center justify-center mx-auto mb-6 border border-[var(--accent-ring)]">
+                            <FileText size={40} className="text-[var(--accent)]" />
                         </div>
-                        <h2 className="text-2xl font-bold mb-3 text-[var(--text-muted)] dark:text-[var(--text-muted)]">No resumes yet</h2>
-                        <p className="text-[var(--text-faint)] dark:text-[var(--text-faint)] mb-8 max-w-sm mx-auto">
-                            Create your first professional resume using our AI-powered builder.
+                        <h2 className="text-2xl font-bold mb-2 text-[var(--text)]">No saved resumes found</h2>
+                        <p className="text-[var(--text-muted)] text-sm mb-8 max-w-md mx-auto leading-relaxed">
+                            Start fresh or upload an existing PDF/Word file to automatically create a stunning ATS-friendly resume.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Button onClick={() => router.push('/resume-builder')} size="lg">
-                                <Plus size={20} />
+                        <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+                            <Button onClick={() => router.push('/resume-builder')} size="lg" className="w-full py-3 text-sm font-bold bg-[var(--accent)] text-white rounded-xl shadow-md">
+                                <Plus size={18} />
                                 Build from Scratch
                             </Button>
-                            <Button variant="secondary" size="lg" onClick={() => router.push('/resume-builder')}>
-                                <FileText size={20} />
-                                Upload & Convert
+                            <Button variant="secondary" size="lg" onClick={() => router.push('/resume-builder')} className="w-full py-3 text-sm font-bold bg-[var(--surface-hover)] border-[var(--border)] text-[var(--text)] rounded-xl">
+                                <FileText size={18} />
+                                Upload PDF / Word
                             </Button>
                         </div>
                     </Card>
                 ) : filteredResumes.length === 0 ? (
-                    <div className="text-center py-20">
-                        <Search className="mx-auto text-[var(--text-muted)] mb-4" size={40} />
-                        <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)]">No resumes match &quot;{searchQuery}&quot;</p>
-                        <button onClick={() => setSearchQuery('')} className="text-blue-400 hover:text-blue-300 mt-2 text-sm">
-                            Clear search
+                    <div className="text-center py-20 bg-[var(--surface)] rounded-2xl border border-[var(--border)] p-8">
+                        <Search className="mx-auto text-[var(--text-muted)] mb-3" size={36} />
+                        <p className="text-[var(--text)] font-semibold">No resumes found matching &quot;{searchQuery}&quot;</p>
+                        <button onClick={() => setSearchQuery('')} className="text-[var(--accent)] hover:underline mt-2 text-xs font-bold">
+                            Clear search filter
                         </button>
                     </div>
                 ) : (
@@ -187,21 +189,21 @@ export default function MyResumesPage() {
                         ))}
 
                         {/* Add New Card */}
-                        <button
+                        <div
                             onClick={() => router.push('/resume-builder')}
-                            className="group relative p-8 rounded border-2 border-dashed border-[var(--border)] dark:border-[var(--border)] hover:border-blue-500/40 bg-[var(--surface-hover)] hover:bg-[var(--surface)] dark:bg-[var(--accent-soft)] transition-all duration-300 flex flex-col items-center justify-center gap-4 min-h-[280px]"
+                            className="group relative p-6 rounded-2xl border-2 border-dashed border-[var(--border)] hover:border-[var(--accent)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] transition-all duration-300 flex flex-col items-center justify-center text-center gap-4 min-h-[260px] cursor-pointer shadow-sm"
                         >
-                            <div className="w-16 h-16 bg-blue-500/10 rounded flex items-center justify-center group-hover:scale-110 transition-transform">
-                                <Plus size={32} className="text-blue-400/70 group-hover:text-blue-400" />
+                            <div className="w-14 h-14 bg-[var(--accent-soft)] rounded-2xl flex items-center justify-center border border-[var(--accent-ring)] group-hover:scale-110 transition-transform">
+                                <Plus size={28} className="text-[var(--accent)]" />
                             </div>
-                            <div className="text-center">
-                                <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] font-semibold group-hover:text-[var(--text-muted)] dark:text-[var(--text-muted)] transition-colors">New Resume</p>
-                                <p className="text-[var(--text-muted)] text-sm mt-1">Create from scratch or upload</p>
+                            <div>
+                                <p className="text-[var(--text)] font-bold text-base group-hover:text-[var(--accent)] transition-colors">Create New Resume</p>
+                                <p className="text-[var(--text-muted)] text-xs mt-1">Start fresh or import document</p>
                             </div>
-                        </button>
+                        </div>
                     </div>
                 )}
-            </div>
+            </main>
             <Footer />
         </div>
     );
@@ -224,81 +226,79 @@ function ResumeCard({
     const skillCount = resume.skills?.length || 0;
 
     return (
-        <Card
-            variant="elevated"
-            className="group relative p-6 bg-[var(--surface-hover)] border border-[var(--border)] hover:border-blue-500/30 hover:bg-[var(--surface-hover)] transition-all duration-300 cursor-pointer flex flex-col gap-4"
+        <div
+            className="group relative p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--accent)] hover:shadow-[var(--shadow-lift)] transition-all duration-300 cursor-pointer flex flex-col justify-between gap-5"
             onClick={onEdit}
         >
-            {/* Header */}
-            <div className="flex justify-between items-start">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-600/30 to-purple-600/30 rounded flex items-center justify-center border border-[var(--border)] dark:border-[var(--border)]">
-                    <FileText size={22} className="text-blue-300" />
+            <div>
+                {/* Header */}
+                <div className="flex justify-between items-start mb-4">
+                    <div className="w-12 h-12 bg-[var(--accent-soft)] rounded-xl flex items-center justify-center border border-[var(--accent-ring)] text-[var(--accent)]">
+                        <FileText size={22} />
+                    </div>
+                    <button
+                        onClick={e => { e.stopPropagation(); onDelete(); }}
+                        disabled={isDeleting}
+                        className="text-[var(--text-muted)] hover:text-red-500 hover:bg-red-500/10 transition-colors p-2 rounded-lg"
+                        title="Delete resume"
+                    >
+                        {isDeleting
+                            ? <div className="w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+                            : <Trash2 size={16} />
+                        }
+                    </button>
                 </div>
-                <button
-                    onClick={e => { e.stopPropagation(); onDelete(); }}
-                    disabled={isDeleting}
-                    className="text-[var(--text-muted)] hover:text-red-400 transition-colors p-1.5 rounded hover:bg-red-500/10 opacity-0 group-hover:opacity-100"
-                    title="Delete resume"
-                >
-                    {isDeleting
-                        ? <div className="w-4 h-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
-                        : <Trash2 size={16} />
-                    }
-                </button>
-            </div>
 
-            {/* Title & Name */}
-            <div className="flex-1">
-                <h3 className="font-bold text-lg leading-tight mb-1 text-[var(--text)] dark:text-[var(--text)] group-hover:text-blue-200 transition-colors truncate">
-                    {resume.title || resume.personalInfo.fullName || 'Untitled Resume'}
+                {/* Title & Personal Info */}
+                <h3 className="font-bold text-lg leading-snug mb-1 text-[var(--text)] group-hover:text-[var(--accent)] transition-colors truncate">
+                    {resume.title || resume.personalInfo?.fullName || 'Untitled Resume'}
                 </h3>
-                {resume.title && (
-                    <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)] mb-2 flex items-center gap-1">
-                        <User size={12} />
-                        {resume.personalInfo.fullName}
+                {resume.personalInfo?.fullName && (
+                    <p className="text-xs font-semibold text-[var(--text-muted)] mb-2 flex items-center gap-1.5 truncate">
+                        <User size={13} className="text-[var(--text-faint)] shrink-0" />
+                        <span>{resume.personalInfo.fullName}</span>
                     </p>
                 )}
-                <p className="text-xs text-[var(--text-faint)] dark:text-[var(--text-faint)] line-clamp-2 leading-relaxed">
-                    {resume.personalInfo.summary || 'No summary provided.'}
+                <p className="text-xs text-[var(--text-faint)] line-clamp-2 leading-relaxed mt-1">
+                    {resume.personalInfo?.summary || 'No professional summary provided.'}
                 </p>
             </div>
 
-            {/* Stats */}
-            <div className="flex gap-3">
-                {expCount > 0 && (
-                    <span className="flex items-center gap-1 text-xs text-[var(--text-faint)] dark:text-[var(--text-faint)] bg-[var(--surface)] dark:bg-[var(--accent-soft)] px-2 py-1 rounded-full">
-                        <Briefcase size={10} />
-                        {expCount} job{expCount > 1 ? 's' : ''}
-                    </span>
-                )}
-                {skillCount > 0 && (
-                    <span className="text-xs text-[var(--text-faint)] dark:text-[var(--text-faint)] bg-[var(--surface)] dark:bg-[var(--accent-soft)] px-2 py-1 rounded-full">
-                        {skillCount} skills
-                    </span>
-                )}
-                {(resume as any).createdAt && (
-                    <span className="flex items-center gap-1 text-xs text-[var(--text-muted)] ml-auto">
-                        <Clock size={10} />
-                        {formatDate((resume as any).createdAt)}
-                    </span>
-                )}
-            </div>
+            {/* Bottom Meta & Actions */}
+            <div className="space-y-4 pt-2 border-t border-[var(--border)]">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                        {expCount > 0 && (
+                            <span className="flex items-center gap-1 text-[11px] font-medium text-[var(--text-muted)] bg-[var(--surface-hover)] border border-[var(--border)] px-2.5 py-1 rounded-md">
+                                <Briefcase size={11} className="text-[var(--accent)]" />
+                                {expCount} job{expCount > 1 ? 's' : ''}
+                            </span>
+                        )}
+                        {skillCount > 0 && (
+                            <span className="text-[11px] font-medium text-[var(--text-muted)] bg-[var(--surface-hover)] border border-[var(--border)] px-2.5 py-1 rounded-md">
+                                {skillCount} skills
+                            </span>
+                        )}
+                    </div>
+                    {(resume as any).createdAt && (
+                        <span className="flex items-center gap-1 text-[11px] font-medium text-[var(--text-faint)]">
+                            <Clock size={11} />
+                            {formatDate((resume as any).createdAt)}
+                        </span>
+                    )}
+                </div>
 
-            {/* Action Bar */}
-            <div className="flex gap-2 pt-2 border-t border-[var(--border)]">
-                <Button
-                    size="sm"
-                    className="flex-1 text-sm py-2"
-                    onClick={e => { e.stopPropagation(); onEdit(); }}
-                >
-                    <Edit3 size={14} />
-                    Edit
-                </Button>
-                <div className="flex items-center gap-1 text-xs text-[var(--text-faint)] dark:text-[var(--text-faint)] bg-[var(--surface)] dark:bg-[var(--accent-soft)] px-3 py-2 rounded">
-                    <ChevronRight size={12} className="text-[var(--text-muted)] dark:text-[var(--text-muted)]" />
-                    Open
+                <div className="flex gap-2">
+                    <Button
+                        size="sm"
+                        className="w-full text-xs font-bold py-2.5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white rounded-xl flex items-center justify-center gap-1.5 shadow-sm"
+                        onClick={e => { e.stopPropagation(); onEdit(); }}
+                    >
+                        <Edit3 size={14} />
+                        <span>Edit Details</span>
+                    </Button>
                 </div>
             </div>
-        </Card>
+        </div>
     );
 }

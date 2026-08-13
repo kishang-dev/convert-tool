@@ -77,7 +77,7 @@ export default function ProfilePage() {
     if (!_hasHydrated || !user) return null;
 
     return (
-        <div className="min-h-screen bg-[var(--surface)] dark:bg-[#0a0a0f]">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">
             <SEO
                 title="My Profile — Account Settings"
                 description="Update your ToolBasketAI account details, profile photo, and contact information."

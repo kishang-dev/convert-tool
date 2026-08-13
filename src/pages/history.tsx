@@ -64,7 +64,7 @@ export default function HistoryPage() {
     // Allow guests to see history
 
     return (
-        <div className="min-h-screen bg-[var(--surface)] dark:bg-[#0a0a0f]">
+        <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">
             <SEO
                 title="File History — Your Conversion Activity"
                 description="View and download all your previously converted and processed files on ToolBasketAI."

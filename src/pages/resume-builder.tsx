@@ -9,7 +9,7 @@ import Toast from '@/components/Toast';
 import SEO from '@/components/SEO';
 import ResumeTemplate from '@/components/ResumeTemplate';
 import { resumeAPI, ResumeData } from '@/lib/api';
-import { LuUpload as Upload, LuFileText as FileText, LuDownload as Download, LuSave as Save, LuPalette as Palette, LuUser as User, LuBriefcase as Briefcase, LuGraduationCap as GraduationCap, LuCode as Code, LuGlobe as Globe, LuPlus as Plus, LuTrash2 as Trash2, LuPenLine as Edit3, LuChevronRight as ChevronRight, LuCircleCheck as CheckCircle, LuLayoutDashboard as Layout, LuEye as Eye, LuX as X, LuClock as Clock, LuUsers as Users, LuBookOpen as BookOpen, LuHeart as Heart } from "react-icons/lu";
+import { LuUpload as Upload, LuFileText as FileText, LuDownload as Download, LuSave as Save, LuPalette as Palette, LuUser as User, LuBriefcase as Briefcase, LuGraduationCap as GraduationCap, LuCode as Code, LuGlobe as Globe, LuPlus as Plus, LuTrash2 as Trash2, LuPenLine as Edit3, LuChevronRight as ChevronRight, LuCircleCheck as CheckCircle, LuLayoutDashboard as Layout, LuEye as Eye, LuX as X, LuClock as Clock, LuUsers as Users, LuBookOpen as BookOpen, LuHeart as Heart, LuSparkles as Sparkles, LuChevronDown as ChevronDown, LuSearch as Search } from "react-icons/lu";
 import { LuTriangleAlert as AlertTriangle } from "react-icons/lu";
 import { useAuthStore } from '@/store/authStore';
 import * as gtag from '@/lib/gtag';
@@ -227,7 +227,20 @@ export default function ResumeBuilder() {
     const [previewScale, setPreviewScale] = useState(1);
     const [resumeContentHeight, setResumeContentHeight] = useState(1123); // Default A4 height in px
     const [mobilePreviewOpen, setMobilePreviewOpen] = useState(false);
+    const [templateDropdownOpen, setTemplateDropdownOpen] = useState(false);
+    const [templateSearch, setTemplateSearch] = useState('');
+    const templateDropdownRef = useRef<HTMLDivElement>(null);
     const { user } = useAuthStore();
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (templateDropdownRef.current && !templateDropdownRef.current.contains(e.target as Node)) {
+                setTemplateDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     useEffect(() => {
         if (user) {
@@ -492,18 +505,29 @@ export default function ResumeBuilder() {
                         { label: 'Resume Builder', href: '/resume-builder' }
                     ]}
                 />
-                {/* Stepper */}
-                <div className="flex justify-center mb-12">
-                    <div className="flex items-center gap-4 bg-gray-100 dark:bg-white/5 p-2 rounded-full border border-gray-200 dark:border-white/10">
-                        {[1, 2, 3].map(s => (
+                {/* Responsive Stepper */}
+                <div className="flex justify-center mb-8 md:mb-12">
+                    <div className="flex items-center gap-1.5 sm:gap-3 bg-[var(--surface)] p-2 rounded-2xl border border-[var(--border)] shadow-sm max-w-full overflow-x-auto no-scrollbar">
+                        {[
+                            { num: 1, label: "Start", desc: "Upload / New" },
+                            { num: 2, label: "Edit Details", desc: "Form Editor" },
+                            { num: 3, label: "Style & Export", desc: "Templates & PDF" },
+                        ].map((item) => (
                             <button
-                                key={s}
-                                onClick={() => step > s && setStep(s)}
-                                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${step === s ? 'bg-blue-600 text-gray-900 dark:text-white' :
-                                    step > s ? 'bg-green-600 text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-500'
+                                key={item.num}
+                                onClick={() => (step >= item.num || step > 1) && setStep(item.num)}
+                                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${step === item.num
+                                        ? "bg-blue-600 text-white shadow-md"
+                                        : step > item.num
+                                            ? "bg-emerald-600/20 text-emerald-500 hover:bg-emerald-600/30"
+                                            : "text-[var(--text-muted)] hover:text-[var(--text)]"
                                     }`}
                             >
-                                {step > s ? <CheckCircle size={20} /> : s}
+                                <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black ${step === item.num ? "bg-white text-blue-600" : step > item.num ? "bg-emerald-600 text-white" : "bg-[var(--border)] text-[var(--text-muted)]"
+                                    }`}>
+                                    {step > item.num ? <CheckCircle size={14} /> : item.num}
+                                </span>
+                                <span>{item.label}</span>
                             </button>
                         ))}
                     </div>
@@ -575,28 +599,37 @@ export default function ResumeBuilder() {
 
                         {/* Saved Resumes Section */}
                         {user && savedResumes.length > 0 && (
-                            <div className="mt-20 max-w-5xl mx-auto text-left">
-                                <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                                    <Clock className="text-blue-400" />
-                                    Your Saved Resumes
+                            <div className="mt-16 max-w-5xl mx-auto text-left">
+                                <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-[var(--text)]">
+                                    <Clock className="text-[var(--accent)]" />
+                                    Your Saved Cloud Resumes
                                 </h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                                     {savedResumes.map(resume => (
-                                        <Card key={resume._id} variant="elevated" className="p-6 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-blue-500/30 transition-all group cursor-pointer" onClick={() => handleEditResume(resume)}>
-                                            <div className="flex justify-between items-start mb-4">
-                                                <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-400">
-                                                    <FileText size={24} />
+                                        <div
+                                            key={resume._id}
+                                            className="group relative p-6 bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--accent)] hover:shadow-[var(--shadow-lift)] rounded-2xl transition-all cursor-pointer flex flex-col justify-between"
+                                            onClick={() => handleEditResume(resume)}
+                                        >
+                                            <div>
+                                                <div className="flex justify-between items-start mb-4">
+                                                    <div className="w-12 h-12 bg-[var(--accent-soft)] rounded-xl flex items-center justify-center text-[var(--accent)] border border-[var(--accent-ring)]">
+                                                        <FileText size={22} />
+                                                    </div>
+                                                    <button
+                                                        onClick={(e) => handleDeleteResume(resume._id as string, e)}
+                                                        className="text-[var(--text-muted)] hover:text-red-500 transition-colors p-1.5 rounded-lg hover:bg-red-500/10 opacity-0 group-hover:opacity-100"
+                                                    >
+                                                        <Trash2 size={16} />
+                                                    </button>
                                                 </div>
-                                                <button onClick={(e) => handleDeleteResume(resume._id as string, e)} className="text-gray-500 dark:text-gray-500 hover:text-red-500 transition-colors p-1 opacity-0 group-hover:opacity-100">
-                                                    <Trash2 size={18} />
-                                                </button>
+                                                <h4 className="font-bold text-lg mb-1 truncate text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">{resume.title || resume.personalInfo.fullName || 'Untitled Resume'}</h4>
+                                                <p className="text-xs text-[var(--text-muted)] mb-4 line-clamp-2">{resume.personalInfo.summary || 'No summary provided.'}</p>
                                             </div>
-                                            <h4 className="font-bold text-lg mb-1 truncate">{resume.title || resume.personalInfo.fullName || 'Untitled Resume'}</h4>
-                                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 truncate">{resume.personalInfo.summary || 'No summary provided.'}</p>
-                                            <Button variant="ghost" size="sm" className="w-full text-blue-400 hover:text-blue-300 bg-blue-500/5 hover:bg-blue-500/10">
+                                            <Button variant="secondary" size="sm" className="w-full text-xs font-bold py-2 bg-[var(--surface-hover)] border-[var(--border)] text-[var(--text)]">
                                                 Edit Resume
                                             </Button>
-                                        </Card>
+                                        </div>
                                     ))}
                                 </div>
                             </div>
@@ -605,63 +638,128 @@ export default function ResumeBuilder() {
                 )}
 
                 {step === 2 && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-slideIn">
-                        <div className="space-y-6 max-h-[80vh] overflow-y-auto pr-4 scrollbar-hide">
-                            <div className="flex items-center gap-4 mb-2">
+                    <div className="flex flex-col gap-6 animate-slideIn pb-20 lg:pb-0">
+                        {/* Top Control Toolbar */}
+                        <div className="flex flex-wrap items-center justify-between gap-3 bg-[var(--surface)] p-3.5 rounded-2xl border border-[var(--border)] shadow-sm">
+                            <div className="flex items-center gap-2">
                                 <button
                                     onClick={() => setStep(1)}
-                                    className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white transition-colors flex items-center gap-2 text-sm bg-gray-100 dark:bg-white/5 hover:bg-white/10 px-3 py-2 rounded-lg"
+                                    className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors flex items-center gap-1.5 text-xs bg-[var(--surface-hover)] border border-[var(--border)] px-3 py-1.5 rounded-xl font-semibold"
                                 >
-                                    <ChevronRight size={16} className="rotate-180" />
+                                    <ChevronRight size={14} className="rotate-180" />
                                     My Resumes
                                 </button>
-                                <span className="text-gray-600">/</span>
-                                <span className="text-sm text-gray-700 dark:text-gray-300 truncate max-w-[180px]">{resumeData.title || resumeData.personalInfo.fullName || 'New Resume'}</span>
+                                <span className="text-[var(--text-faint)] text-xs">/</span>
+                                <span className="text-xs font-bold text-[var(--text)] truncate max-w-[140px] sm:max-w-[200px]">{resumeData.title || resumeData.personalInfo.fullName || 'New Resume'}</span>
                             </div>
 
-                            <h2 className="text-3xl font-bold mb-2 flex items-center gap-3">
-                                <Edit3 className="text-blue-500" />
-                                Edit Your Details
-                            </h2>
+                            <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                                <div className="flex items-center gap-2 relative w-full sm:w-auto" ref={templateDropdownRef}>
+                                    <span className="text-[11px] font-bold uppercase text-[var(--text-muted)] shrink-0">Template:</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => setTemplateDropdownOpen(!templateDropdownOpen)}
+                                        className="flex items-center justify-between gap-2 bg-[var(--bg)] text-xs font-bold px-3 py-1.5 rounded-xl border border-[var(--border)] text-[var(--text)] hover:border-[var(--accent)] transition-all flex-1 sm:flex-initial sm:min-w-[170px] shadow-sm"
+                                    >
+                                        <span className="truncate max-w-[140px] sm:max-w-[160px]">{TEMPLATES.find(t => t.id === resumeData.template)?.name || 'Select Template'}</span>
+                                        <ChevronDown size={14} className={`text-[var(--text-muted)] shrink-0 transition-transform duration-200 ${templateDropdownOpen ? 'rotate-180 text-[var(--accent)]' : ''}`} />
+                                    </button>
+
+                                    {templateDropdownOpen && (
+                                        <div className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-[calc(100vw-40px)] max-w-[320px] sm:w-72 bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-2xl z-50 p-2.5 animate-fadeIn backdrop-blur-xl">
+                                            <div className="p-1.5 border-b border-[var(--border)] mb-2">
+                                                <div className="relative">
+                                                    <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-faint)]" />
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Search 50+ templates..."
+                                                        value={templateSearch}
+                                                        onChange={(e) => setTemplateSearch(e.target.value)}
+                                                        className="w-full bg-[var(--bg)] text-xs pl-8 pr-3 py-2 rounded-xl border border-[var(--border)] text-[var(--text)] placeholder:text-[var(--text-faint)] outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)]"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="max-h-60 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
+                                                {TEMPLATES.filter(t => t.name.toLowerCase().includes(templateSearch.toLowerCase())).map((t) => (
+                                                    <button
+                                                        key={t.id}
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setResumeData({ ...resumeData, template: t.id });
+                                                            setTemplateDropdownOpen(false);
+                                                        }}
+                                                        className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all flex items-center justify-between ${
+                                                            resumeData.template === t.id
+                                                                ? 'bg-[var(--accent-soft)] text-[var(--accent)] border border-[var(--accent-ring)] font-bold'
+                                                                : 'text-[var(--text)] hover:bg-[var(--surface-hover)] font-medium'
+                                                        }`}
+                                                    >
+                                                        <span className="truncate">{t.name}</span>
+                                                        {resumeData.template === t.id && <CheckCircle size={14} className="shrink-0 text-[var(--accent)]" />}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Two-column layout for Form Editor & Live Preview */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div className="space-y-6 max-h-[80vh] overflow-y-auto pr-2 sm:pr-4 scrollbar-hide">
+                                <div className="flex items-center justify-between mb-2">
+                                    <h2 className="text-2xl sm:text-3xl font-bold flex items-center gap-3 text-[var(--text)]">
+                                        <Edit3 className="text-[var(--accent)]" />
+                                        Edit Details
+                                    </h2>
+                                    <Button
+                                        size="sm"
+                                        onClick={() => setStep(3)}
+                                        className="lg:hidden bg-[var(--accent)] text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-md"
+                                    >
+                                        Style & Export →
+                                    </Button>
+                                </div>
 
                             {/* Resume Title */}
-                            <Card className="p-4">
-                                <div className="flex items-center gap-3 mb-3 text-gray-600 dark:text-gray-400 font-bold border-b border-white/5 pb-2 text-sm">
-                                    <FileText size={16} />
+                            <div className="p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                                <div className="flex items-center gap-2 mb-3 text-[var(--text-muted)] font-extrabold border-b border-[var(--border)] pb-2 text-xs tracking-wider uppercase">
+                                    <FileText size={15} className="text-[var(--accent)]" />
                                     Resume Title (for your reference)
                                 </div>
                                 <input
                                     value={resumeData.title || ''}
                                     onChange={e => setResumeData({ ...resumeData, title: e.target.value })}
-                                    placeholder={`e.g. "Software Engineer — Google 2026"`}
-                                    className="w-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-3 rounded-lg focus:border-blue-500 outline-none text-gray-900 dark:text-white placeholder-gray-600"
+                                    placeholder={`e.g. "Senior Software Engineer — 2026"`}
+                                    className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
                                 />
-                            </Card>
+                            </div>
 
                             {/* Personal Info */}
-                            <Card className="p-6">
-                                <div className="flex items-center gap-3 mb-6 text-blue-400 font-bold border-b border-white/5 pb-2">
-                                    <User size={20} />
+                            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                                <div className="flex items-center gap-2.5 mb-6 text-[var(--accent)] font-extrabold border-b border-[var(--border)] pb-3 text-sm tracking-wide">
+                                    <User size={18} />
                                     Personal Information
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="col-span-2">
-                                        <label className="text-xs text-gray-600 dark:text-gray-400 uppercase font-bold">Full Name</label>
+                                        <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Full Name</label>
                                         <input
                                             value={resumeData.personalInfo.fullName}
                                             onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, fullName: e.target.value } })}
-                                            className="w-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-3 rounded-lg mt-1 focus:border-blue-500 outline-none"
+                                            className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
                                         />
                                     </div>
                                     <div className="col-span-2">
-                                        <label className="text-xs text-gray-600 dark:text-gray-400 uppercase font-bold">Photo (Optional)</label>
+                                        <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Photo (Optional)</label>
                                         <div className="flex items-center gap-4 mt-2">
                                             {resumeData.personalInfo.photo && (
                                                 <div className="relative group">
-                                                    <Image src={resumeData.personalInfo.photo} width={64} height={64} className="w-16 h-16 rounded-xl object-cover border-2 border-gray-200 dark:border-white/10" alt="Avatar" />
+                                                    <Image src={resumeData.personalInfo.photo} width={64} height={64} className="w-16 h-16 rounded-xl object-cover border-2 border-[var(--border)]" alt="Avatar" />
                                                     <button
                                                         onClick={() => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, photo: '' } })}
-                                                        className="absolute -top-2 -right-2 bg-red-500 text-gray-900 dark:text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                                        className="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                                                     >
                                                         <Trash2 size={12} />
                                                     </button>
@@ -681,121 +779,120 @@ export default function ResumeBuilder() {
                                                             reader.readAsDataURL(file);
                                                         }
                                                     }}
-                                                    className="w-full bg-gray-100 dark:bg-white/5 border border-dashed border-white/20 p-4 rounded-xl text-xs text-gray-600 dark:text-gray-400 hover:border-blue-500 transition-colors cursor-pointer"
+                                                    className="w-full bg-[var(--bg)] border border-dashed border-[var(--border)] p-3.5 rounded-xl text-xs text-[var(--text-muted)] hover:border-[var(--accent)] transition-colors cursor-pointer"
                                                 />
-                                                <p className="text-[10px] text-gray-500 dark:text-gray-500 mt-2">Recommended: Square Aspect Ratio, Base64 embedded</p>
+                                                <p className="text-[10px] text-[var(--text-faint)] mt-1.5">Recommended: Square Aspect Ratio, PNG or JPG</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div>
-                                        <label className="text-xs text-gray-600 dark:text-gray-400 uppercase font-bold text-blue-400">Email Address</label>
+                                        <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Email Address</label>
                                         <input
                                             value={resumeData.personalInfo.email}
                                             onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, email: e.target.value } })}
-                                            className="w-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-3 rounded-lg mt-1 focus:border-blue-500 outline-none"
+                                            className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
                                         />
                                     </div>
                                     <div>
-                                        <label className="text-xs text-gray-600 dark:text-gray-400 uppercase font-bold">Phone</label>
+                                        <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Phone</label>
                                         <input
                                             value={resumeData.personalInfo.phone}
                                             onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, phone: e.target.value } })}
-                                            className="w-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-3 rounded-lg mt-1 focus:border-blue-500 outline-none"
+                                            className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
                                         />
                                     </div>
                                     <div className="col-span-2">
-                                        <label className="text-xs text-gray-600 dark:text-gray-400 uppercase font-bold">Address</label>
+                                        <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Address</label>
                                         <input
                                             value={resumeData.personalInfo.address}
                                             onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, address: e.target.value } })}
-                                            className="w-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-3 rounded-lg mt-1 focus:border-blue-500 outline-none"
+                                            className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
                                             placeholder="City, State / Full Address"
                                         />
                                     </div>
-                                    <div className="col-span-2 grid grid-cols-3 gap-4">
+                                    <div className="col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         <div>
-                                            <label className="text-xs text-gray-600 dark:text-gray-400 uppercase font-bold">LinkedIn</label>
+                                            <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">LinkedIn</label>
                                             <input
                                                 value={resumeData.personalInfo.linkedin}
                                                 onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, linkedin: e.target.value } })}
-                                                className="w-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-3 rounded-lg mt-1 focus:border-blue-500 outline-none"
+                                                className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
                                                 placeholder="linkedin.com/in/..."
                                             />
                                         </div>
                                         <div>
-                                            <label className="text-xs text-gray-600 dark:text-gray-400 uppercase font-bold">GitHub</label>
+                                            <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">GitHub</label>
                                             <input
                                                 value={resumeData.personalInfo.github}
                                                 onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, github: e.target.value } })}
-                                                className="w-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-3 rounded-lg mt-1 focus:border-blue-500 outline-none"
+                                                className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
                                                 placeholder="github.com/..."
                                             />
                                         </div>
                                         <div>
-                                            <label className="text-xs text-gray-600 dark:text-gray-400 uppercase font-bold">Website</label>
+                                            <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Website</label>
                                             <input
                                                 value={resumeData.personalInfo.website}
                                                 onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, website: e.target.value } })}
-                                                className="w-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-3 rounded-lg mt-1 focus:border-blue-500 outline-none"
+                                                className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
                                                 placeholder="portfolio.com"
                                             />
                                         </div>
                                     </div>
                                     <div className="col-span-2">
-                                        <label className="text-xs text-gray-600 dark:text-gray-400 uppercase font-bold">Summary</label>
+                                        <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Summary</label>
                                         <textarea
                                             rows={4}
                                             value={resumeData.personalInfo.summary}
                                             onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, summary: e.target.value } })}
-                                            className="w-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-3 rounded-lg mt-1 focus:border-blue-500 outline-none resize-none"
+                                            className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all resize-none"
                                         />
                                     </div>
                                 </div>
-                            </Card>
-
+                            </div>
                             {/* Experience */}
-                            <Card className="p-6">
-                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
-                                    <div className="flex items-center gap-3 text-green-400 font-bold">
-                                        <Briefcase size={20} />
+                            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                                <div className="flex justify-between items-center mb-6 border-b border-[var(--border)] pb-3">
+                                    <div className="flex items-center gap-2.5 text-[var(--accent)] font-extrabold text-sm tracking-wide">
+                                        <Briefcase size={18} />
                                         Work Experience
                                     </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('experience', { company: '', position: '', startDate: '', endDate: '', description: '', current: false })}>
+                                    <Button size="sm" variant="ghost" onClick={() => addListItem('experience', { company: '', position: '', startDate: '', endDate: '', description: '', current: false })} className="text-[var(--accent)] hover:bg-[var(--accent-soft)]">
                                         <Plus size={16} />
                                     </Button>
                                 </div>
                                 {resumeData.experience.map((exp, i) => (
-                                    <div key={i} className="mb-6 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
+                                    <div key={i} className="mb-6 p-4 bg-[var(--surface-hover)] rounded-xl border border-[var(--border)] relative">
                                         <button
                                             onClick={() => removeListItem('experience', i)}
-                                            className="absolute top-4 right-4 text-gray-500 dark:text-gray-500 hover:text-red-500 transition-colors"
+                                            className="absolute top-4 right-4 text-[var(--text-muted)] hover:text-red-500 transition-colors"
                                         >
                                             <Trash2 size={16} />
                                         </button>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <input placeholder="Company" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={exp.company} onChange={e => {
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <input placeholder="Company" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={exp.company} onChange={e => {
                                                 const newExp = [...resumeData.experience];
                                                 newExp[i].company = e.target.value;
                                                 setResumeData({ ...resumeData, experience: newExp });
                                             }} />
-                                            <input placeholder="Position" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={exp.position} onChange={e => {
+                                            <input placeholder="Position" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={exp.position} onChange={e => {
                                                 const newExp = [...resumeData.experience];
                                                 newExp[i].position = e.target.value;
                                                 setResumeData({ ...resumeData, experience: newExp });
                                             }} />
-                                            <div className="grid grid-cols-2 gap-4 col-span-2">
-                                                <input placeholder="Start Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={exp.startDate} onChange={e => {
+                                            <div className="grid grid-cols-2 gap-4 col-span-1 sm:col-span-2">
+                                                <input placeholder="Start Date" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={exp.startDate} onChange={e => {
                                                     const newExp = [...resumeData.experience];
                                                     newExp[i].startDate = e.target.value;
                                                     setResumeData({ ...resumeData, experience: newExp });
                                                 }} />
-                                                <input placeholder="End Date (or 'Present')" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={exp.endDate} onChange={e => {
+                                                <input placeholder="End Date (or 'Present')" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={exp.endDate} onChange={e => {
                                                     const newExp = [...resumeData.experience];
                                                     newExp[i].endDate = e.target.value;
                                                     setResumeData({ ...resumeData, experience: newExp });
                                                 }} />
                                             </div>
-                                            <textarea placeholder="Description" rows={3} className="col-span-2 bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500 resize-none mt-2" value={exp.description} onChange={e => {
+                                            <textarea placeholder="Description..." rows={3} className="col-span-1 sm:col-span-2 bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)] resize-none" value={exp.description} onChange={e => {
                                                 const newExp = [...resumeData.experience];
                                                 newExp[i].description = e.target.value;
                                                 setResumeData({ ...resumeData, experience: newExp });
@@ -803,41 +900,41 @@ export default function ResumeBuilder() {
                                         </div>
                                     </div>
                                 ))}
-                            </Card>
+                            </div>
 
                             {/* Education */}
-                            <Card className="p-6">
-                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
-                                    <div className="flex items-center gap-3 text-orange-400 font-bold">
-                                        <GraduationCap size={20} />
+                            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                                <div className="flex justify-between items-center mb-6 border-b border-[var(--border)] pb-3">
+                                    <div className="flex items-center gap-2.5 text-[var(--accent)] font-extrabold text-sm tracking-wide">
+                                        <GraduationCap size={18} />
                                         Education
                                     </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('education', { school: '', degree: '', fieldOfStudy: '', location: '', startDate: '', endDate: '', description: '' })}>
+                                    <Button size="sm" variant="ghost" onClick={() => addListItem('education', { school: '', degree: '', fieldOfStudy: '', location: '', startDate: '', endDate: '', description: '' })} className="text-[var(--accent)] hover:bg-[var(--accent-soft)]">
                                         <Plus size={16} />
                                     </Button>
                                 </div>
                                 {resumeData.education.map((edu, i) => (
-                                    <div key={i} className="mb-6 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
-                                        <button onClick={() => removeListItem('education', i)} className="absolute top-4 right-4 text-gray-500 dark:text-gray-500 hover:text-red-500">
+                                    <div key={i} className="mb-6 p-4 bg-[var(--surface-hover)] rounded-xl border border-[var(--border)] relative">
+                                        <button onClick={() => removeListItem('education', i)} className="absolute top-4 right-4 text-[var(--text-muted)] hover:text-red-500 transition-colors">
                                             <Trash2 size={16} />
                                         </button>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <input placeholder="School/University" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={edu.school} onChange={e => {
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <input placeholder="School/University" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={edu.school} onChange={e => {
                                                 const newEdu = [...resumeData.education];
                                                 newEdu[i].school = e.target.value;
                                                 setResumeData({ ...resumeData, education: newEdu });
                                             }} />
-                                            <input placeholder="Degree" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={edu.degree} onChange={e => {
+                                            <input placeholder="Degree" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={edu.degree} onChange={e => {
                                                 const newEdu = [...resumeData.education];
                                                 newEdu[i].degree = e.target.value;
                                                 setResumeData({ ...resumeData, education: newEdu });
                                             }} />
-                                            <input placeholder="Start Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={edu.startDate} onChange={e => {
+                                            <input placeholder="Start Date" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={edu.startDate} onChange={e => {
                                                 const newEdu = [...resumeData.education];
                                                 newEdu[i].startDate = e.target.value;
                                                 setResumeData({ ...resumeData, education: newEdu });
                                             }} />
-                                            <input placeholder="End Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={edu.endDate} onChange={e => {
+                                            <input placeholder="End Date" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={edu.endDate} onChange={e => {
                                                 const newEdu = [...resumeData.education];
                                                 newEdu[i].endDate = e.target.value;
                                                 setResumeData({ ...resumeData, education: newEdu });
@@ -845,36 +942,36 @@ export default function ResumeBuilder() {
                                         </div>
                                     </div>
                                 ))}
-                            </Card>
+                            </div>
 
                             {/* Projects */}
-                            <Card className="p-6">
-                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
-                                    <div className="flex items-center gap-3 text-cyan-400 font-bold">
-                                        <Globe size={20} />
+                            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                                <div className="flex justify-between items-center mb-6 border-b border-[var(--border)] pb-3">
+                                    <div className="flex items-center gap-2.5 text-[var(--accent)] font-extrabold text-sm tracking-wide">
+                                        <Globe size={18} />
                                         Featured Projects
                                     </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('projects', { name: '', description: '', link: '', technologies: [] })}>
+                                    <Button size="sm" variant="ghost" onClick={() => addListItem('projects', { name: '', description: '', link: '', technologies: [] })} className="text-[var(--accent)] hover:bg-[var(--accent-soft)]">
                                         <Plus size={16} />
                                     </Button>
                                 </div>
                                 {resumeData.projects.map((proj, i) => (
-                                    <div key={i} className="mb-6 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
-                                        <button onClick={() => removeListItem('projects', i)} className="absolute top-4 right-4 text-gray-500 dark:text-gray-500 hover:text-red-500">
+                                    <div key={i} className="mb-6 p-4 bg-[var(--surface-hover)] rounded-xl border border-[var(--border)] relative">
+                                        <button onClick={() => removeListItem('projects', i)} className="absolute top-4 right-4 text-[var(--text-muted)] hover:text-red-500 transition-colors">
                                             <Trash2 size={16} />
                                         </button>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <input placeholder="Project Name" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={proj.name} onChange={e => {
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <input placeholder="Project Name" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={proj.name} onChange={e => {
                                                 const newProj = [...resumeData.projects];
                                                 newProj[i].name = e.target.value;
                                                 setResumeData({ ...resumeData, projects: newProj });
                                             }} />
-                                            <input placeholder="Project Link" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={proj.link} onChange={e => {
+                                            <input placeholder="Project Link" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={proj.link} onChange={e => {
                                                 const newProj = [...resumeData.projects];
                                                 newProj[i].link = e.target.value;
                                                 setResumeData({ ...resumeData, projects: newProj });
                                             }} />
-                                            <textarea placeholder="Key Contributions..." rows={2} className="col-span-2 bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500 resize-none" value={proj.description} onChange={e => {
+                                            <textarea placeholder="Key Contributions..." rows={2} className="col-span-1 sm:col-span-2 bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)] resize-none" value={proj.description} onChange={e => {
                                                 const newProj = [...resumeData.projects];
                                                 newProj[i].description = e.target.value;
                                                 setResumeData({ ...resumeData, projects: newProj });
@@ -882,9 +979,35 @@ export default function ResumeBuilder() {
                                         </div>
                                     </div>
                                 ))}
-                            </Card>
+                            </div>
 
-                            {/* Certifications */}
+                            {/* Skills */}
+                            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                                <div className="flex items-center gap-2.5 mb-6 text-[var(--accent)] font-extrabold text-sm tracking-wide border-b border-[var(--border)] pb-3">
+                                    <Code size={18} />
+                                    Skills & Expertise
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {resumeData.skills.map((skill, i) => (
+                                        <div key={i} className="bg-[var(--surface-hover)] border border-[var(--border)] px-3 py-1.5 rounded-full flex items-center gap-2 text-xs font-semibold text-[var(--text)]">
+                                            <span>{skill}</span>
+                                            <button onClick={() => removeListItem('skills', i)} className="text-[var(--text-muted)] hover:text-red-500 transition-colors">
+                                                <Trash2 size={13} />
+                                            </button>
+                                        </div>
+                                    ))}
+                                    <input
+                                        placeholder="Add skill (Press Enter)"
+                                        onKeyDown={e => {
+                                            if (e.key === 'Enter' && e.currentTarget.value) {
+                                                addListItem('skills', e.currentTarget.value);
+                                                e.currentTarget.value = '';
+                                            }
+                                        }}
+                                        className="bg-[var(--bg)] border border-[var(--border)] px-3 py-1 rounded-full outline-none focus:border-[var(--accent)] text-xs text-[var(--text)] w-36"
+                                    />
+                                </div>
+                            </div>                {/* Certifications */}
                             <Card className="p-6">
                                 <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
                                     <div className="flex items-center gap-3 text-amber-400 font-bold">
@@ -1290,6 +1413,7 @@ export default function ResumeBuilder() {
                             </div>
                         </div>
                     </div>
+                </div>
                 )}
 
                 {step === 3 && (
@@ -1337,15 +1461,15 @@ export default function ResumeBuilder() {
                                     </div>
                                 </Card>
 
-                                <Card className="p-6 bg-[var(--surface)] border-[var(--border)] rounded">
-                                    <label className="text-[10px] text-gray-500 dark:text-gray-500 uppercase font-black tracking-widest block mb-6">Master Typography</label>
-                                    <div className="space-y-8">
-                                        <div className="space-y-3">
-                                            <p className="text-[9px] text-gray-600 uppercase font-black tracking-tighter">Primary Glyph (Name)</p>
+                                <div className="p-6 bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-sm space-y-6">
+                                    <label className="text-[10px] text-[var(--text-muted)] uppercase font-extrabold tracking-widest block">Master Typography</label>
+                                    <div className="space-y-6">
+                                        <div className="space-y-2">
+                                            <p className="text-[10px] text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Primary Glyph (Name)</p>
                                             <div className="flex gap-2">
                                                 <input
                                                     type="number"
-                                                    className="bg-black/20 border border-white/5 rounded-lg px-3 py-2 text-sm w-20 focus:border-blue-500 outline-none"
+                                                    className="bg-[var(--bg)] border border-[var(--border)] rounded-xl px-3 py-2 text-sm w-20 outline-none text-[var(--text)] focus:border-[var(--accent)]"
                                                     value={resumeData.styling?.fontSize.name}
                                                     onChange={e => setResumeData(prev => ({
                                                         ...prev,
@@ -1353,7 +1477,7 @@ export default function ResumeBuilder() {
                                                     }))}
                                                 />
                                                 <select
-                                                    className="bg-black/20 border border-white/5 rounded-lg px-3 py-2 text-sm flex-1 outline-none"
+                                                    className="bg-[var(--bg)] border border-[var(--border)] rounded-xl px-3 py-2 text-sm flex-1 outline-none text-[var(--text)] focus:border-[var(--accent)]"
                                                     value={resumeData.styling?.sectionFonts.name}
                                                     onChange={e => setResumeData(prev => ({
                                                         ...prev,
@@ -1368,12 +1492,12 @@ export default function ResumeBuilder() {
                                             </div>
                                         </div>
 
-                                        <div className="space-y-3">
-                                            <p className="text-[9px] text-gray-600 uppercase font-black tracking-tighter">Headings Interface</p>
+                                        <div className="space-y-2">
+                                            <p className="text-[10px] text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Headings Interface</p>
                                             <div className="flex gap-2">
                                                 <input
                                                     type="number"
-                                                    className="bg-black/20 border border-white/5 rounded-lg px-3 py-2 text-sm w-20 focus:border-blue-500 outline-none"
+                                                    className="bg-[var(--bg)] border border-[var(--border)] rounded-xl px-3 py-2 text-sm w-20 outline-none text-[var(--text)] focus:border-[var(--accent)]"
                                                     value={resumeData.styling?.fontSize.headings}
                                                     onChange={e => setResumeData(prev => ({
                                                         ...prev,
@@ -1381,7 +1505,7 @@ export default function ResumeBuilder() {
                                                     }))}
                                                 />
                                                 <select
-                                                    className="bg-black/20 border border-white/5 rounded-lg px-3 py-2 text-sm flex-1 outline-none"
+                                                    className="bg-[var(--bg)] border border-[var(--border)] rounded-xl px-3 py-2 text-sm flex-1 outline-none text-[var(--text)] focus:border-[var(--accent)]"
                                                     value={resumeData.styling?.sectionFonts.headings}
                                                     onChange={e => setResumeData(prev => ({
                                                         ...prev,
@@ -1396,12 +1520,12 @@ export default function ResumeBuilder() {
                                             </div>
                                         </div>
 
-                                        <div className="space-y-3">
-                                            <p className="text-[9px] text-gray-600 uppercase font-black tracking-tighter">Core Data (Body)</p>
+                                        <div className="space-y-2">
+                                            <p className="text-[10px] text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Core Data (Body)</p>
                                             <div className="flex gap-2">
                                                 <input
                                                     type="number"
-                                                    className="bg-black/20 border border-white/5 rounded-lg px-3 py-2 text-sm w-20 focus:border-blue-500 outline-none"
+                                                    className="bg-[var(--bg)] border border-[var(--border)] rounded-xl px-3 py-2 text-sm w-20 outline-none text-[var(--text)] focus:border-[var(--accent)]"
                                                     value={resumeData.styling?.fontSize.body}
                                                     onChange={e => setResumeData(prev => ({
                                                         ...prev,
@@ -1409,7 +1533,7 @@ export default function ResumeBuilder() {
                                                     }))}
                                                 />
                                                 <select
-                                                    className="bg-black/20 border border-white/5 rounded-lg px-3 py-2 text-sm flex-1 outline-none"
+                                                    className="bg-[var(--bg)] border border-[var(--border)] rounded-xl px-3 py-2 text-sm flex-1 outline-none text-[var(--text)] focus:border-[var(--accent)]"
                                                     value={resumeData.styling?.sectionFonts.body}
                                                     onChange={e => setResumeData(prev => ({
                                                         ...prev,
@@ -1424,11 +1548,11 @@ export default function ResumeBuilder() {
                                             </div>
                                         </div>
                                     </div>
-                                </Card>
+                                </div>
 
-                                <div className="space-y-3 pt-6">
-                                    <Button variant="ghost" className="w-full text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:text-white" onClick={handleSave}>
-                                        <Save size={18} className="mr-2" /> Save to Cloud
+                                <div className="space-y-3 pt-4">
+                                    <Button variant="secondary" className="w-full text-xs font-bold py-3 bg-[var(--surface)] border-[var(--border)] text-[var(--text)] hover:border-[var(--accent)]" onClick={handleSave}>
+                                        <Save size={16} className="mr-2 text-[var(--accent)]" /> Save Cloud Backup
                                     </Button>
                                 </div>
                             </div>
@@ -1439,7 +1563,7 @@ export default function ResumeBuilder() {
                                 <div className="relative group w-full" ref={previewContainerRef}>
                                     {/* Bounding box: dynamically sized to match actual resume content height */}
                                     <div
-                                        className="relative w-full shadow-xl border border-[var(--border)] rounded bg-white"
+                                        className="relative w-full shadow-xl border border-[var(--border)] rounded-2xl bg-white overflow-hidden"
                                         style={{ height: `${resumeContentHeight * previewScale}px` }}
                                     >
                                         <div
@@ -1457,26 +1581,25 @@ export default function ResumeBuilder() {
                                 <div className="space-y-4 pt-6 border-t border-[var(--border)]">
                                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                                         <div>
-                                            <h3 className="text-3xl font-black italic tracking-tighter uppercase mb-2">Luxury Style Library</h3>
-                                            <p className="text-gray-500 dark:text-gray-500 text-sm">Select a high-performance design to represent your brand.</p>
+                                            <h3 className="text-2xl font-black uppercase tracking-tight text-[var(--text)]">Design Template Library</h3>
+                                            <p className="text-[var(--text-muted)] text-xs sm:text-sm">Select a high-performance ATS template layout.</p>
                                         </div>
-                                        <div className="text-[10px] font-black text-gray-500 dark:text-gray-500 uppercase tracking-widest bg-gray-100 dark:bg-white/5 px-4 py-2 rounded-full border border-white/5">
-                                            {TEMPLATES.length} Designs Live
+                                        <div className="text-[10px] font-extrabold text-[var(--text-muted)] uppercase tracking-widest bg-[var(--surface-hover)] px-4 py-2 rounded-full border border-[var(--border)]">
+                                            {TEMPLATES.length} Live Layouts
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6">
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
                                         {TEMPLATES.map(t => (
                                             <div
                                                 key={t.id}
                                                 onClick={() => {
                                                     setResumeData({ ...resumeData, template: t.id });
-                                                    // Smooth scroll to top preview
                                                     window.scrollTo({ top: 0, behavior: 'smooth' });
                                                 }}
-                                                className={`group cursor-pointer relative rounded overflow-hidden border-2 transition-all duration-500 ${resumeData.template === t.id
-                                                    ? 'border-blue-500 ring-4 ring-blue-500/20 scale-105 shadow-2xl z-10'
-                                                    : 'border-white/5 hover:border-white/20 hover:scale-[1.03]'
+                                                className={`group cursor-pointer relative rounded-xl overflow-hidden border-2 transition-all duration-300 ${resumeData.template === t.id
+                                                    ? 'border-blue-500 ring-4 ring-blue-500/20 scale-[1.03] shadow-xl z-10'
+                                                    : 'border-[var(--border)] hover:border-[var(--accent)] hover:scale-[1.02]'
                                                     }`}
                                             >
                                                 {/* Thumbnail Rendering */}
@@ -1509,42 +1632,54 @@ export default function ResumeBuilder() {
                 )}
                 {/* Mobile Preview Modal */}
                 {mobilePreviewOpen && (
-                    <div className="fixed inset-0 z-50 lg:hidden animate-fadeIn">
-                        <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" onClick={() => setMobilePreviewOpen(false)}></div>
-                        <div className="relative h-full flex flex-col p-6 pointer-events-none">
-                            <div className="flex justify-between items-center mb-6 pointer-events-auto">
-                                <h3 className="text-xl font-bold tracking-tight">Live Render</h3>
-                                <button
-                                    onClick={() => setMobilePreviewOpen(false)}
-                                    className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-gray-900 dark:text-white hover:bg-white/20 transition-all"
-                                >
-                                    <X size={20} />
-                                </button>
+                    <div className="fixed inset-0 z-50 lg:hidden animate-fadeIn flex flex-col bg-black/90 backdrop-blur-xl">
+                        <div className="flex justify-between items-center px-4 py-3 bg-[var(--surface)] border-b border-[var(--border)]">
+                            <div className="flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <h3 className="text-sm font-bold tracking-tight text-[var(--text)]">Live Resume Preview</h3>
                             </div>
-                            <div className="flex-1 flex justify-center items-center overflow-hidden">
-                                <div className="scale-[0.4] sm:scale-[0.6] origin-center shadow-2xl">
-                                    <div className="bg-white pointer-events-auto">
-                                        <ResumeTemplate data={resumeData} template={resumeData.template} primaryColor={resumeData.color} />
-                                    </div>
-                                </div>
+                            <button
+                                onClick={() => setMobilePreviewOpen(false)}
+                                className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-[var(--text)] hover:bg-white/20 transition-all"
+                            >
+                                <X size={18} />
+                            </button>
+                        </div>
+                        <div className="flex-1 overflow-y-auto p-4 flex flex-col items-center justify-start">
+                            <div className="w-full max-w-[400px] overflow-hidden rounded-xl shadow-2xl border border-[var(--border)] bg-white my-2" style={{ transform: 'scale(0.85)', transformOrigin: 'top center' }}>
+                                <ResumeTemplate data={resumeData} template={resumeData.template} primaryColor={resumeData.color} />
                             </div>
-                            <div className="py-6 pointer-events-auto">
-                                <Button onClick={() => setMobilePreviewOpen(false)} className="w-full py-4 bg-white/10 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white">
-                                    Back to Editing
-                                </Button>
-                            </div>
+                        </div>
+                        <div className="p-4 bg-[var(--surface)] border-t border-[var(--border)]">
+                            <Button onClick={() => setMobilePreviewOpen(false)} className="w-full py-3 bg-blue-600 text-white font-bold text-xs rounded-xl shadow-lg">
+                                Back to Editing
+                            </Button>
                         </div>
                     </div>
                 )}
-                {/* Floating Preview Button (Mobile) */}
+
+                {/* Mobile Bottom Navigation Bar (Step 2) */}
                 {step === 2 && (
-                    <div className="fixed bottom-8 right-8 z-40 lg:hidden animate-bounce-subtle">
-                        <button
+                    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[var(--surface)]/95 border-t border-[var(--border)] backdrop-blur-md p-3 shadow-2xl flex items-center justify-between gap-3">
+                        <Button
+                            variant="secondary"
+                            size="md"
                             onClick={() => setMobilePreviewOpen(true)}
-                            className="w-16 h-16 bg-blue-600 text-gray-900 dark:text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-blue-700 transition-all border-4 border-[#0f172a]"
+                            className="flex-1 py-3 text-xs font-bold flex items-center justify-center gap-2 bg-[var(--bg)] border-[var(--border)] text-[var(--text)] rounded-xl"
                         >
-                            <Eye size={28} />
-                        </button>
+                            <Eye size={16} />
+                            Preview Resume
+                        </Button>
+
+                        <Button
+                            variant="accent"
+                            size="md"
+                            onClick={() => setStep(3)}
+                            className="flex-1 py-3 text-xs font-bold flex items-center justify-center gap-2 bg-blue-600 text-white shadow-lg rounded-xl"
+                        >
+                            <Palette size={16} />
+                            Next: Style & Export →
+                        </Button>
                     </div>
                 )}
 
