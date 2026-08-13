@@ -22,6 +22,7 @@ import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import AdBanner from "@/components/AdBanner";
 
 type Lang = 'HTML' | 'CSS' | 'JS' | 'JSON' | 'TypeScript';
 
@@ -326,6 +327,8 @@ export default function CodeMinifier() {
                         Compress HTML, CSS, JS, JSON, and TypeScript. See byte savings, compression ratio, and download minified output.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 {/* Metrics Banner */}
                 {metrics && (

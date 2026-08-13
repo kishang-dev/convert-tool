@@ -8,6 +8,7 @@ import SEO from '@/components/SEO';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import { LuUpload, LuDownload, LuTrash2, LuZoomIn, LuZoomOut, LuRefreshCw, LuCheck } from 'react-icons/lu';
+import AdBanner from "@/components/AdBanner";
 
 // ── Client-side: no backend needed ───────────────────────────────────────────
 const PRESETS = [
@@ -155,6 +156,8 @@ export default function ImageResizer() {
                                 <div className="absolute top-2 right-2 flex gap-2">
                                     <button onClick={reset} className="bg-red-600/90 text-white rounded-full p-2 hover:bg-red-600 transition-all shadow"><LuTrash2 className="w-4 h-4" /></button>
                                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
                                 <div className="p-3 flex gap-4 text-xs text-slate-400 border-t border-[var(--border-strong)]">
                                     <span>Original: <strong>{origW}×{origH}</strong></span>
                                     <span>Size: <strong>{origSize}</strong></span>

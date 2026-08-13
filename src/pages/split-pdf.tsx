@@ -12,6 +12,7 @@ import PdfUploadDropzone from "@/components/PdfUploadDropzone";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { fileAPI, FileData } from "@/lib/api";
 import * as gtag from "@/lib/gtag";
+import AdBanner from "@/components/AdBanner";
 
 export interface PdfPreviewPage {
     id: string;
@@ -194,6 +195,8 @@ export default function SplitPdf() {
                         Separate one page or a whole set for easy conversion into independent PDF files. Extract or delete pages visually.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 <section className="bg-[var(--surface)] border border-[var(--border-strong)] rounded overflow-hidden animate-fadeIn flex flex-col md:flex-row min-h-[500px]">
                     {!file ? (

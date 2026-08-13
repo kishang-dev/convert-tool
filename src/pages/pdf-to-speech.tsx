@@ -8,6 +8,7 @@ import { LuFileAudio, LuPlay, LuPause, LuSquare, LuDownload, LuSettings, LuFileT
 import api from '@/services/api';
 import { fileAPI } from '@/lib/api';
 import Toast from '@/components/Toast';
+import AdBanner from "@/components/AdBanner";
 
 export default function PdfToSpeech() {
     const [file, setFile] = useState<File | null>(null);
@@ -159,6 +160,8 @@ export default function PdfToSpeech() {
                     <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">PDF to Speech</h1>
                     <p className="text-slate-400 max-w-2xl mx-auto">Listen to your PDF documents instantly or export them as MP3 audio files.</p>
                 </header>
+
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Left Settings Panel */}

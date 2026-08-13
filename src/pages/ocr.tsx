@@ -11,6 +11,7 @@ import SEO from "@/components/SEO";
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import AdBanner from "@/components/AdBanner";
 
 export default function OcrPage() {
     const [loading, setLoading] = useState(false);
@@ -106,6 +107,8 @@ export default function OcrPage() {
                         Extract text from images (English, Hindi, Gujarati) instantly using AI-powered OCR.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 {/* Upload Area */}
                 <Card

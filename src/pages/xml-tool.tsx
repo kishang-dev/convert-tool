@@ -23,6 +23,7 @@ import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import AdBanner from "@/components/AdBanner";
 
 interface XmlStats {
     elements: number;
@@ -367,6 +368,8 @@ export default function XmlTool() {
                         Format, minify, validate, explore tree structure, convert to JSON, and search elements — all client-side instantly.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 {/* Main Toolbar */}
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded-lg">

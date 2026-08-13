@@ -20,6 +20,7 @@ import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import * as yaml from 'js-yaml';
+import AdBanner from "@/components/AdBanner";
 
 export default function YamlJsonConverter() {
     const [input, setInput] = useState('');
@@ -191,6 +192,8 @@ export default function YamlJsonConverter() {
                         Convert YAML to formatted JSON and back completely client-side. Adjust indentation layout and download results.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 {/* Toolbar */}
                 <Card variant="elevated" className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded">

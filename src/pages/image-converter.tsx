@@ -8,6 +8,7 @@ import SEO from '@/components/SEO';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import { LuUpload, LuDownload, LuTrash2, LuArrowRight, LuCheck, LuRefreshCw, LuImage } from 'react-icons/lu';
+import AdBanner from "@/components/AdBanner";
 
 const CONVERSIONS = [
     { from: 'any', to: 'image/jpeg', ext: 'jpg', label: 'Convert to JPG' },
@@ -168,6 +169,8 @@ export default function ImageConverter() {
                                             <p className="text-sm font-medium truncate text-slate-200">{cf.file.name}</p>
                                             <p className="text-xs text-slate-500">{(cf.file.size / 1024).toFixed(1)} KB → {cf.outputSize || '—'}</p>
                                         </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
                                         <div className="flex items-center gap-2 shrink-0">
                                             {cf.status === 'done' && (
                                                 <>

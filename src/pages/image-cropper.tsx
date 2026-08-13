@@ -8,6 +8,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Image from 'next/image';
 import { LuUpload, LuDownload, LuTrash2, LuCrop, LuRotateCcw, LuFlipHorizontal } from 'react-icons/lu';
+import AdBanner from "@/components/AdBanner";
 
 type Preset = '16:9' | '9:16' | '4:3' | '3:4' | '1:1' | '2:3' | 'free';
 
@@ -258,6 +259,8 @@ export default function ImageCropper() {
                                             <LuDownload className="w-4 h-4" /> Download
                                         </button>
                                     </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
                                 </div>
                             )}
                         </div>

@@ -12,6 +12,7 @@ import PdfUploadDropzone from "@/components/PdfUploadDropzone";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { fileAPI, FileData } from "@/lib/api";
 import * as gtag from "@/lib/gtag";
+import AdBanner from "@/components/AdBanner";
 
 export interface PdfPreviewPage {
     id: string;
@@ -166,6 +167,8 @@ export default function RotatePdf() {
                         Hover over any page to rotate it. Use the sidebar to rotate all pages, just odd/even pages, or even delete unwanted pages before saving.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 <section className="bg-[var(--surface)] border border-[var(--border-strong)] rounded overflow-hidden animate-fadeIn flex flex-col md:flex-row min-h-[500px]">
                     {!file ? (

@@ -10,6 +10,7 @@ import ToolSEOContent from '@/components/ToolSEOContent';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Navbar from '@/components/Navbar';
+import AdBanner from "@/components/AdBanner";
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -585,6 +586,8 @@ export default function SpeechToPdf() {
                             <h1 className="text-2xl font-bold tracking-tight text-[var(--text)] dark:text-[var(--text)]">VoicePDF</h1>
                             <p className="text-slate-400 text-xs">Real-time speech → formatted document</p>
                         </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
                     </div>
 
                     {/* Auto-save status */}

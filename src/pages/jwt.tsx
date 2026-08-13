@@ -22,6 +22,7 @@ import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import AdBanner from "@/components/AdBanner";
 
 export default function JwtDecoder() {
     const [token, setToken] = useState('');
@@ -316,6 +317,8 @@ export default function JwtDecoder() {
                         Decode, analyze, signature-verify, and construct JSON Web Tokens securely. Done completely client-side.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                     {/* Left: Input & Builder */}

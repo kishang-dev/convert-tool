@@ -21,6 +21,7 @@ import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import AdBanner from "@/components/AdBanner";
 
 export default function CsvJsonConverter() {
     const [input, setInput] = useState('');
@@ -247,6 +248,8 @@ export default function CsvJsonConverter() {
                         Convert CSV spreadsheets to structured JSON arrays, parse custom delimiters, and preview your data interactively.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 {/* Settings Panel */}
                 <Card variant="elevated" className="flex flex-wrap items-center justify-between gap-6 mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded">

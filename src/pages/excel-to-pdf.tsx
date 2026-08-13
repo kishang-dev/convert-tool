@@ -10,6 +10,7 @@ import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import AdBanner from "@/components/AdBanner";
 
 export default function ExcelToPdf() {
     const [file, setFile] = useState<File | null>(null);
@@ -108,6 +109,8 @@ export default function ExcelToPdf() {
                         Convert your Excel spreadsheets to professional PDF documents.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 <div className="grid gap-8">
                     <Card variant="elevated" className="p-8 md:p-12 bg-[var(--surface)] border-[var(--border)]">

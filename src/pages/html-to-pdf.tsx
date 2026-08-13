@@ -11,6 +11,7 @@ import PdfUploadDropzone from "@/components/PdfUploadDropzone";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { fileAPI, FileData } from "@/lib/api";
 import * as gtag from "@/lib/gtag";
+import AdBanner from "@/components/AdBanner";
 
 export default function HtmlToPdf() {
     const router = useRouter();
@@ -100,6 +101,8 @@ export default function HtmlToPdf() {
                         Convert raw HTML files or live website URLs into high-quality PDF documents with full control over layout, margins, and page sizes.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 <section className="bg-[var(--surface)] border border-[var(--border-strong)] rounded overflow-hidden animate-fadeIn flex flex-col md:flex-row min-h-[500px]">
                     <div className="w-full md:w-80 border-b md:border-b-0 md:border-r border-[var(--border-strong)] bg-[var(--bg-elevated)] flex flex-col">

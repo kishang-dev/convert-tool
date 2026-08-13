@@ -11,6 +11,7 @@ import PdfUploadDropzone from "@/components/PdfUploadDropzone";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { fileAPI, FileData } from "@/lib/api";
 import * as gtag from "@/lib/gtag";
+import AdBanner from "@/components/AdBanner";
 
 const formatSize = (bytes: number) => {
     if (bytes < 1024) return bytes + " B";
@@ -120,6 +121,8 @@ export default function CompressPdf() {
                         Batch compress up to 50 PDFs at once. Significantly reduce file size for easy emailing and sharing without losing quality.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 <section className="bg-[var(--surface)] border border-[var(--border-strong)] rounded overflow-hidden animate-fadeIn flex flex-col md:flex-row min-h-[500px]">
                     <div className="w-full md:w-80 border-b md:border-b-0 md:border-r border-[var(--border-strong)] bg-[var(--bg-elevated)] flex flex-col">

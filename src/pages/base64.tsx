@@ -10,6 +10,7 @@ import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import AdBanner from "@/components/AdBanner";
 
 export default function Base64Tool() {
     const [input, setInput] = useState('');
@@ -280,6 +281,8 @@ export default function Base64Tool() {
                         Encode plain text and files to Base64, or decode base64 representations back to string text or downloads.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 {/* URL Loader panel */}
                 <div className="mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded flex flex-col md:flex-row gap-4 items-center justify-between">

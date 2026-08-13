@@ -20,6 +20,7 @@ import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import AdBanner from "@/components/AdBanner";
 
 export default function JsonValidator() {
     const [input, setInput] = useState('');
@@ -281,6 +282,8 @@ export default function JsonValidator() {
                         Validate JSON structure against schemas, inspect keys, apply naming convention checks, and download audit reports.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 {/* Validation Toolbar Rules */}
                 <Card variant="elevated" className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded">

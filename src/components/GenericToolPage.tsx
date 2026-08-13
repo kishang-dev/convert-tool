@@ -11,6 +11,7 @@ import * as gtag from "@/lib/gtag";
 import SEO from "@/components/SEO";
 import ToolSEOContent from "@/components/ToolSEOContent";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import AdBanner from "@/components/AdBanner";
 import Toast from "./Toast";
 
 const TOOL_CONFIGS: Record<string, { title: string, description: string, minFiles: number, maxFiles: number, run: (files: FileData[], password?: string) => Promise<any>, needsPassword?: boolean, accepts: string, openEditor?: boolean }> = {
@@ -353,6 +354,8 @@ export default function GenericToolPage({ id, canonicalPath }: { id: string; can
                     <h1 className="text-3xl font-bold text-[var(--text)] dark:text-[var(--text)] mb-2">{tool.title}</h1>
                     <p className="text-[var(--text-muted)] text-sm">{tool.description}</p>
                 </div>
+
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
 
                 <section className="bg-[var(--surface)] border border-[var(--border-strong)] rounded overflow-hidden animate-fadeIn" style={{ animationDelay: '0.1s' }}>
                     {/* Upload Section */}

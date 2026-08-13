@@ -8,6 +8,7 @@ import SEO from '@/components/SEO';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import { LuUpload, LuDownload, LuTrash2, LuSlidersHorizontal } from 'react-icons/lu';
+import AdBanner from "@/components/AdBanner";
 
 interface ConvFile {
     file: File;
@@ -98,6 +99,8 @@ export default function ConvertToPng() {
                                     <span className="text-sm text-slate-300 group-hover:text-white">Preserve Transparency</span>
                                     <p className="text-xs text-slate-500 mt-0.5">Keep alpha channel in the PNG output (enables transparent backgrounds).</p>
                                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
                             </label>
 
                             <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">

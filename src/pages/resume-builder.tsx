@@ -15,6 +15,7 @@ import { useAuthStore } from '@/store/authStore';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import AdBanner from "@/components/AdBanner";
 
 const INITIAL_DATA: ResumeData = {
     _id: undefined,
@@ -892,6 +893,8 @@ export default function ResumeBuilder() {
                                                     setResumeData({ ...resumeData, experience: newExp });
                                                 }} />
                                             </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
                                             <textarea placeholder="Description..." rows={3} className="col-span-1 sm:col-span-2 bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)] resize-none" value={exp.description} onChange={e => {
                                                 const newExp = [...resumeData.experience];
                                                 newExp[i].description = e.target.value;

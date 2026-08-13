@@ -21,6 +21,7 @@ import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import AdBanner from "@/components/AdBanner";
 
 const DEFAULT_CONTENT = `# ToolBasketAI Markdown Document
 
@@ -286,6 +287,8 @@ export default function MarkdownEditor() {
                         Write Markdown with live HTML preview. Export to .md or .html, see word counts, and insert snippets.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 {/* Stats Bar */}
                 {showStats && (

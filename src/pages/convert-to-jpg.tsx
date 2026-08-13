@@ -8,6 +8,7 @@ import SEO from '@/components/SEO';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import { LuUpload, LuDownload, LuTrash2, LuCheck, LuSlidersHorizontal } from 'react-icons/lu';
+import AdBanner from "@/components/AdBanner";
 
 interface ConvFile {
     file: File;
@@ -143,6 +144,8 @@ export default function ConvertToJpg() {
                                         <p className="text-sm font-medium truncate text-slate-200">{cf.file.name}</p>
                                         <p className="text-xs text-slate-500">{cf.origSize} {cf.outputSize && `→ ${cf.outputSize}`}</p>
                                     </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
                                     <div className="flex items-center gap-2 shrink-0">
                                         {cf.status === 'done' && <button onClick={() => downloadFile(cf)} className="p-2 bg-green-600/20 text-green-400 rounded hover:bg-green-600/40"><LuDownload className="w-4 h-4" /></button>}
                                         {cf.status === 'error' && <span className="text-red-400 text-xs">Error</span>}

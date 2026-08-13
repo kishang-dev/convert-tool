@@ -22,6 +22,7 @@ import SEO from '@/components/SEO';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import AdBanner from "@/components/AdBanner";
 
 type Dialect = 'generic' | 'mysql' | 'postgresql' | 'mssql' | 'oracle';
 type ActiveTab = 'output' | 'stats' | 'tables' | 'keywords';
@@ -226,6 +227,8 @@ export default function SqlFormatter() {
                         Format, minify, analyze and download SQL queries. Detect table names, view stats, browse keywords.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 {/* Toolbar */}
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded-lg">

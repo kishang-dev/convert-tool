@@ -10,6 +10,7 @@ import ToolSEOContent from "@/components/ToolSEOContent";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { fileAPI, FileData } from "@/lib/api";
 import * as gtag from "@/lib/gtag";
+import AdBanner from "@/components/AdBanner";
 
 export default function CsvToPdf() {
     const router = useRouter();
@@ -108,6 +109,8 @@ export default function CsvToPdf() {
                         Turn raw comma-separated values into beautifully formatted, highly readable PDF tables instantly.
                     </p>
                 </div>
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
+
 
                 <section className="bg-[var(--surface)] border border-[var(--border-strong)] rounded overflow-hidden animate-fadeIn flex flex-col md:flex-row min-h-[500px]">
                     <div className="w-full md:w-80 border-b md:border-b-0 md:border-r border-[var(--border-strong)] bg-[var(--bg-elevated)] flex flex-col">
