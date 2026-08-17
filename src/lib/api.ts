@@ -577,4 +577,21 @@ export const devToolsAPI = {
   minifyCode: async (code: string, type: string) => (await api.post("/devtools/code/minify", { code, type })).data,
 };
 
+export const pdfToolsApi = {
+  watermark: async (fileId: string, options: { text: string; opacity?: number; size?: number; rotation?: number; color?: string }) => (await api.post("/files/watermark", { fileId, ...options })).data,
+  addPageNumbers: async (fileId: string, options: { position?: string; startNumber?: number; fontSize?: number; format?: string }) => (await api.post("/files/add-numbers", { fileId, ...options })).data,
+};
+
+export const devToolsApi = {
+  generateHashes: async (text: string) => (await api.post("/devtools/hash/generate", { text })).data,
+  processUrl: async (url: string) => (await api.post("/devtools/url/process", { url })).data,
+  jsonToXml: async (json: string | object) => (await api.post("/devtools/xml/from-json", { json })).data,
+};
+
+export const conversionApi = {
+  svgToImage: async (fileId: string, targetFormat: string, density?: number) => (await api.post("/conversion/svg-to-image", { fileId, targetFormat, density })).data,
+  watermarkImage: async (fileId: string, options: { text: string; color?: string; opacity?: number; fontSize?: number }) => (await api.post("/conversion/image-watermark", { fileId, ...options })).data,
+};
+
 export default api;
+

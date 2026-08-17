@@ -61,6 +61,13 @@ export const allTools = [
     ['Markdown Editor & HTML Converter', 'dev', 'Write rich Markdown and compile it into styled visual HTML codes instantly.', '/markdown-editor'],
     ['Unified Code Minifier', 'dev', 'Compress HTML codes, CSS stylesheets, and Javascript files client-side.', '/code-minifier'],
     ['Precision OCR', 'ocr', 'Extract text from scans in 100+ languages.', '/ocr'],
+    ['PDF Watermark', 'pdf', 'Add custom text watermarks with opacity and rotation to PDF pages.', '/pdf-watermark'],
+    ['PDF Page Numberer', 'pdf', 'Automatically insert formatted page numbers into PDF files.', '/pdf-number'],
+    ['SVG to Image', 'image', 'Convert vector SVG files into high-res PNG, JPG, or WebP images.', '/svg-to-image'],
+    ['Image Watermark', 'image', 'Stamp text overlays and branding onto uploaded images.', '/image-watermark'],
+    ['UUID & Hash Generator', 'dev', 'Generate MD5, SHA-256, SHA-512 hashes, and UUID v4 identifiers.', '/hash-generator'],
+    ['URL Encoder & Parser', 'dev', 'Encode, decode URI strings, and inspect URL query parameters.', '/url-encoder'],
+    ['JSON to XML Converter', 'dev', 'Transform JSON object payloads into clean XML document markup.', '/json-to-xml'],
 ];
 
 export const toolIcons: Record<string, any> = {
@@ -108,7 +115,15 @@ export const toolIcons: Record<string, any> = {
     'Markdown Editor & HTML Converter': LuFileText,
     'Unified Code Minifier': LuCode,
     'Precision OCR': LuScanText,
+    'PDF Watermark': LuPenLine,
+    'PDF Page Numberer': LuFilePlus,
+    'SVG to Image': LuImage,
+    'Image Watermark': LuPenTool,
+    'UUID & Hash Generator': LuKey,
+    'URL Encoder & Parser': LuGlobe,
+    'JSON to XML Converter': LuFileCode,
 };
+
 
 export const catIcons: Record<keyof typeof C, any> = {
     pdf: LuFileText,
