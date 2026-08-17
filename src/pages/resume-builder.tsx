@@ -15,7 +15,7 @@ import { useAuthStore } from '@/store/authStore';
 import * as gtag from '@/lib/gtag';
 import ToolSEOContent from '@/components/ToolSEOContent';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import AdBanner from "@/components/AdBanner";
+import AdBanner from '@/components/AdBanner';
 
 const INITIAL_DATA: ResumeData = {
     _id: undefined,
@@ -518,10 +518,10 @@ export default function ResumeBuilder() {
                                 key={item.num}
                                 onClick={() => (step >= item.num || step > 1) && setStep(item.num)}
                                 className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${step === item.num
-                                        ? "bg-blue-600 text-white shadow-md"
-                                        : step > item.num
-                                            ? "bg-emerald-600/20 text-emerald-500 hover:bg-emerald-600/30"
-                                            : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                                    ? "bg-blue-600 text-white shadow-md"
+                                    : step > item.num
+                                        ? "bg-emerald-600/20 text-emerald-500 hover:bg-emerald-600/30"
+                                        : "text-[var(--text-muted)] hover:text-[var(--text)]"
                                     }`}
                             >
                                 <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black ${step === item.num ? "bg-white text-blue-600" : step > item.num ? "bg-emerald-600 text-white" : "bg-[var(--border)] text-[var(--text-muted)]"
@@ -533,6 +533,9 @@ export default function ResumeBuilder() {
                         ))}
                     </div>
                 </div>
+
+
+                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
 
                 {step === 1 && (
                     <div className="max-w-6xl mx-auto text-center animate-fadeIn py-8 md:py-12">
@@ -689,11 +692,10 @@ export default function ResumeBuilder() {
                                                             setResumeData({ ...resumeData, template: t.id });
                                                             setTemplateDropdownOpen(false);
                                                         }}
-                                                        className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all flex items-center justify-between ${
-                                                            resumeData.template === t.id
-                                                                ? 'bg-[var(--accent-soft)] text-[var(--accent)] border border-[var(--accent-ring)] font-bold'
-                                                                : 'text-[var(--text)] hover:bg-[var(--surface-hover)] font-medium'
-                                                        }`}
+                                                        className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all flex items-center justify-between ${resumeData.template === t.id
+                                                            ? 'bg-[var(--accent-soft)] text-[var(--accent)] border border-[var(--accent-ring)] font-bold'
+                                                            : 'text-[var(--text)] hover:bg-[var(--surface-hover)] font-medium'
+                                                            }`}
                                                     >
                                                         <span className="truncate">{t.name}</span>
                                                         {resumeData.template === t.id && <CheckCircle size={14} className="shrink-0 text-[var(--accent)]" />}
@@ -723,700 +725,699 @@ export default function ResumeBuilder() {
                                     </Button>
                                 </div>
 
-                            {/* Resume Title */}
-                            <div className="p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
-                                <div className="flex items-center gap-2 mb-3 text-[var(--text-muted)] font-extrabold border-b border-[var(--border)] pb-2 text-xs tracking-wider uppercase">
-                                    <FileText size={15} className="text-[var(--accent)]" />
-                                    Resume Title (for your reference)
-                                </div>
-                                <input
-                                    value={resumeData.title || ''}
-                                    onChange={e => setResumeData({ ...resumeData, title: e.target.value })}
-                                    placeholder={`e.g. "Senior Software Engineer — 2026"`}
-                                    className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
-                                />
-                            </div>
-
-                            {/* Personal Info */}
-                            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
-                                <div className="flex items-center gap-2.5 mb-6 text-[var(--accent)] font-extrabold border-b border-[var(--border)] pb-3 text-sm tracking-wide">
-                                    <User size={18} />
-                                    Personal Information
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="col-span-2">
-                                        <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Full Name</label>
-                                        <input
-                                            value={resumeData.personalInfo.fullName}
-                                            onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, fullName: e.target.value } })}
-                                            className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
-                                        />
+                                {/* Resume Title */}
+                                <div className="p-5 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                                    <div className="flex items-center gap-2 mb-3 text-[var(--text-muted)] font-extrabold border-b border-[var(--border)] pb-2 text-xs tracking-wider uppercase">
+                                        <FileText size={15} className="text-[var(--accent)]" />
+                                        Resume Title (for your reference)
                                     </div>
-                                    <div className="col-span-2">
-                                        <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Photo (Optional)</label>
-                                        <div className="flex items-center gap-4 mt-2">
-                                            {resumeData.personalInfo.photo && (
-                                                <div className="relative group">
-                                                    <Image src={resumeData.personalInfo.photo} width={64} height={64} className="w-16 h-16 rounded-xl object-cover border-2 border-[var(--border)]" alt="Avatar" />
-                                                    <button
-                                                        onClick={() => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, photo: '' } })}
-                                                        className="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                                                    >
-                                                        <Trash2 size={12} />
-                                                    </button>
+                                    <input
+                                        value={resumeData.title || ''}
+                                        onChange={e => setResumeData({ ...resumeData, title: e.target.value })}
+                                        placeholder={`e.g. "Senior Software Engineer — 2026"`}
+                                        className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
+                                    />
+                                </div>
+
+                                {/* Personal Info */}
+                                <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                                    <div className="flex items-center gap-2.5 mb-6 text-[var(--accent)] font-extrabold border-b border-[var(--border)] pb-3 text-sm tracking-wide">
+                                        <User size={18} />
+                                        Personal Information
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="col-span-2">
+                                            <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Full Name</label>
+                                            <input
+                                                value={resumeData.personalInfo.fullName}
+                                                onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, fullName: e.target.value } })}
+                                                className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
+                                            />
+                                        </div>
+                                        <div className="col-span-2">
+                                            <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Photo (Optional)</label>
+                                            <div className="flex items-center gap-4 mt-2">
+                                                {resumeData.personalInfo.photo && (
+                                                    <div className="relative group">
+                                                        <Image src={resumeData.personalInfo.photo} width={64} height={64} className="w-16 h-16 rounded-xl object-cover border-2 border-[var(--border)]" alt="Avatar" />
+                                                        <button
+                                                            onClick={() => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, photo: '' } })}
+                                                            className="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                                                        >
+                                                            <Trash2 size={12} />
+                                                        </button>
+                                                    </div>
+                                                )}
+                                                <div className="flex-1">
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={e => {
+                                                            const file = e.target.files?.[0];
+                                                            if (file) {
+                                                                const reader = new FileReader();
+                                                                reader.onloadend = () => {
+                                                                    setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, photo: reader.result as string } });
+                                                                };
+                                                                reader.readAsDataURL(file);
+                                                            }
+                                                        }}
+                                                        className="w-full bg-[var(--bg)] border border-dashed border-[var(--border)] p-3.5 rounded-xl text-xs text-[var(--text-muted)] hover:border-[var(--accent)] transition-colors cursor-pointer"
+                                                    />
+                                                    <p className="text-[10px] text-[var(--text-faint)] mt-1.5">Recommended: Square Aspect Ratio, PNG or JPG</p>
                                                 </div>
-                                            )}
-                                            <div className="flex-1">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Email Address</label>
+                                            <input
+                                                value={resumeData.personalInfo.email}
+                                                onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, email: e.target.value } })}
+                                                className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Phone</label>
+                                            <input
+                                                value={resumeData.personalInfo.phone}
+                                                onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, phone: e.target.value } })}
+                                                className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
+                                            />
+                                        </div>
+                                        <div className="col-span-2">
+                                            <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Address</label>
+                                            <input
+                                                value={resumeData.personalInfo.address}
+                                                onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, address: e.target.value } })}
+                                                className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
+                                                placeholder="City, State / Full Address"
+                                            />
+                                        </div>
+                                        <div className="col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                            <div>
+                                                <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">LinkedIn</label>
                                                 <input
-                                                    type="file"
-                                                    accept="image/*"
-                                                    onChange={e => {
-                                                        const file = e.target.files?.[0];
-                                                        if (file) {
-                                                            const reader = new FileReader();
-                                                            reader.onloadend = () => {
-                                                                setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, photo: reader.result as string } });
-                                                            };
-                                                            reader.readAsDataURL(file);
-                                                        }
-                                                    }}
-                                                    className="w-full bg-[var(--bg)] border border-dashed border-[var(--border)] p-3.5 rounded-xl text-xs text-[var(--text-muted)] hover:border-[var(--accent)] transition-colors cursor-pointer"
+                                                    value={resumeData.personalInfo.linkedin}
+                                                    onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, linkedin: e.target.value } })}
+                                                    className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
+                                                    placeholder="linkedin.com/in/..."
                                                 />
-                                                <p className="text-[10px] text-[var(--text-faint)] mt-1.5">Recommended: Square Aspect Ratio, PNG or JPG</p>
+                                            </div>
+                                            <div>
+                                                <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">GitHub</label>
+                                                <input
+                                                    value={resumeData.personalInfo.github}
+                                                    onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, github: e.target.value } })}
+                                                    className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
+                                                    placeholder="github.com/..."
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Website</label>
+                                                <input
+                                                    value={resumeData.personalInfo.website}
+                                                    onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, website: e.target.value } })}
+                                                    className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
+                                                    placeholder="portfolio.com"
+                                                />
                                             </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Email Address</label>
-                                        <input
-                                            value={resumeData.personalInfo.email}
-                                            onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, email: e.target.value } })}
-                                            className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Phone</label>
-                                        <input
-                                            value={resumeData.personalInfo.phone}
-                                            onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, phone: e.target.value } })}
-                                            className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
-                                        />
-                                    </div>
-                                    <div className="col-span-2">
-                                        <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Address</label>
-                                        <input
-                                            value={resumeData.personalInfo.address}
-                                            onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, address: e.target.value } })}
-                                            className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
-                                            placeholder="City, State / Full Address"
-                                        />
-                                    </div>
-                                    <div className="col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                        <div>
-                                            <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">LinkedIn</label>
-                                            <input
-                                                value={resumeData.personalInfo.linkedin}
-                                                onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, linkedin: e.target.value } })}
-                                                className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
-                                                placeholder="linkedin.com/in/..."
+                                        <div className="col-span-2">
+                                            <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Summary</label>
+                                            <textarea
+                                                rows={4}
+                                                value={resumeData.personalInfo.summary}
+                                                onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, summary: e.target.value } })}
+                                                className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all resize-none"
                                             />
                                         </div>
-                                        <div>
-                                            <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">GitHub</label>
-                                            <input
-                                                value={resumeData.personalInfo.github}
-                                                onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, github: e.target.value } })}
-                                                className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
-                                                placeholder="github.com/..."
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Website</label>
-                                            <input
-                                                value={resumeData.personalInfo.website}
-                                                onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, website: e.target.value } })}
-                                                className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all"
-                                                placeholder="portfolio.com"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="col-span-2">
-                                        <label className="text-xs text-[var(--text-muted)] uppercase font-extrabold tracking-wider">Summary</label>
-                                        <textarea
-                                            rows={4}
-                                            value={resumeData.personalInfo.summary}
-                                            onChange={e => setResumeData({ ...resumeData, personalInfo: { ...resumeData.personalInfo, summary: e.target.value } })}
-                                            className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl mt-1 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent-ring)] outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] transition-all resize-none"
-                                        />
                                     </div>
                                 </div>
-                            </div>
-                            {/* Experience */}
-                            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
-                                <div className="flex justify-between items-center mb-6 border-b border-[var(--border)] pb-3">
-                                    <div className="flex items-center gap-2.5 text-[var(--accent)] font-extrabold text-sm tracking-wide">
-                                        <Briefcase size={18} />
-                                        Work Experience
+                                {/* Experience */}
+                                <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                                    <div className="flex justify-between items-center mb-6 border-b border-[var(--border)] pb-3">
+                                        <div className="flex items-center gap-2.5 text-[var(--accent)] font-extrabold text-sm tracking-wide">
+                                            <Briefcase size={18} />
+                                            Work Experience
+                                        </div>
+                                        <Button size="sm" variant="ghost" onClick={() => addListItem('experience', { company: '', position: '', startDate: '', endDate: '', description: '', current: false })} className="text-[var(--accent)] hover:bg-[var(--accent-soft)]">
+                                            <Plus size={16} />
+                                        </Button>
                                     </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('experience', { company: '', position: '', startDate: '', endDate: '', description: '', current: false })} className="text-[var(--accent)] hover:bg-[var(--accent-soft)]">
-                                        <Plus size={16} />
-                                    </Button>
-                                </div>
-                                {resumeData.experience.map((exp, i) => (
-                                    <div key={i} className="mb-6 p-4 bg-[var(--surface-hover)] rounded-xl border border-[var(--border)] relative">
-                                        <button
-                                            onClick={() => removeListItem('experience', i)}
-                                            className="absolute top-4 right-4 text-[var(--text-muted)] hover:text-red-500 transition-colors"
-                                        >
-                                            <Trash2 size={16} />
-                                        </button>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <input placeholder="Company" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={exp.company} onChange={e => {
-                                                const newExp = [...resumeData.experience];
-                                                newExp[i].company = e.target.value;
-                                                setResumeData({ ...resumeData, experience: newExp });
-                                            }} />
-                                            <input placeholder="Position" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={exp.position} onChange={e => {
-                                                const newExp = [...resumeData.experience];
-                                                newExp[i].position = e.target.value;
-                                                setResumeData({ ...resumeData, experience: newExp });
-                                            }} />
-                                            <div className="grid grid-cols-2 gap-4 col-span-1 sm:col-span-2">
-                                                <input placeholder="Start Date" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={exp.startDate} onChange={e => {
+                                    {resumeData.experience.map((exp, i) => (
+                                        <div key={i} className="mb-6 p-4 bg-[var(--surface-hover)] rounded-xl border border-[var(--border)] relative">
+                                            <button
+                                                onClick={() => removeListItem('experience', i)}
+                                                className="absolute top-4 right-4 text-[var(--text-muted)] hover:text-red-500 transition-colors"
+                                            >
+                                                <Trash2 size={16} />
+                                            </button>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                <input placeholder="Company" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={exp.company} onChange={e => {
                                                     const newExp = [...resumeData.experience];
-                                                    newExp[i].startDate = e.target.value;
+                                                    newExp[i].company = e.target.value;
                                                     setResumeData({ ...resumeData, experience: newExp });
                                                 }} />
-                                                <input placeholder="End Date (or 'Present')" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={exp.endDate} onChange={e => {
+                                                <input placeholder="Position" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={exp.position} onChange={e => {
                                                     const newExp = [...resumeData.experience];
-                                                    newExp[i].endDate = e.target.value;
+                                                    newExp[i].position = e.target.value;
+                                                    setResumeData({ ...resumeData, experience: newExp });
+                                                }} />
+                                                <div className="grid grid-cols-2 gap-4 col-span-1 sm:col-span-2">
+                                                    <input placeholder="Start Date" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={exp.startDate} onChange={e => {
+                                                        const newExp = [...resumeData.experience];
+                                                        newExp[i].startDate = e.target.value;
+                                                        setResumeData({ ...resumeData, experience: newExp });
+                                                    }} />
+                                                    <input placeholder="End Date (or 'Present')" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={exp.endDate} onChange={e => {
+                                                        const newExp = [...resumeData.experience];
+                                                        newExp[i].endDate = e.target.value;
+                                                        setResumeData({ ...resumeData, experience: newExp });
+                                                    }} />
+                                                </div>
+
+                                                <textarea placeholder="Description..." rows={3} className="col-span-1 sm:col-span-2 bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)] resize-none" value={exp.description} onChange={e => {
+                                                    const newExp = [...resumeData.experience];
+                                                    newExp[i].description = e.target.value;
                                                     setResumeData({ ...resumeData, experience: newExp });
                                                 }} />
                                             </div>
-                <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
-
-                                            <textarea placeholder="Description..." rows={3} className="col-span-1 sm:col-span-2 bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)] resize-none" value={exp.description} onChange={e => {
-                                                const newExp = [...resumeData.experience];
-                                                newExp[i].description = e.target.value;
-                                                setResumeData({ ...resumeData, experience: newExp });
-                                            }} />
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Education */}
-                            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
-                                <div className="flex justify-between items-center mb-6 border-b border-[var(--border)] pb-3">
-                                    <div className="flex items-center gap-2.5 text-[var(--accent)] font-extrabold text-sm tracking-wide">
-                                        <GraduationCap size={18} />
-                                        Education
-                                    </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('education', { school: '', degree: '', fieldOfStudy: '', location: '', startDate: '', endDate: '', description: '' })} className="text-[var(--accent)] hover:bg-[var(--accent-soft)]">
-                                        <Plus size={16} />
-                                    </Button>
-                                </div>
-                                {resumeData.education.map((edu, i) => (
-                                    <div key={i} className="mb-6 p-4 bg-[var(--surface-hover)] rounded-xl border border-[var(--border)] relative">
-                                        <button onClick={() => removeListItem('education', i)} className="absolute top-4 right-4 text-[var(--text-muted)] hover:text-red-500 transition-colors">
-                                            <Trash2 size={16} />
-                                        </button>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <input placeholder="School/University" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={edu.school} onChange={e => {
-                                                const newEdu = [...resumeData.education];
-                                                newEdu[i].school = e.target.value;
-                                                setResumeData({ ...resumeData, education: newEdu });
-                                            }} />
-                                            <input placeholder="Degree" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={edu.degree} onChange={e => {
-                                                const newEdu = [...resumeData.education];
-                                                newEdu[i].degree = e.target.value;
-                                                setResumeData({ ...resumeData, education: newEdu });
-                                            }} />
-                                            <input placeholder="Start Date" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={edu.startDate} onChange={e => {
-                                                const newEdu = [...resumeData.education];
-                                                newEdu[i].startDate = e.target.value;
-                                                setResumeData({ ...resumeData, education: newEdu });
-                                            }} />
-                                            <input placeholder="End Date" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={edu.endDate} onChange={e => {
-                                                const newEdu = [...resumeData.education];
-                                                newEdu[i].endDate = e.target.value;
-                                                setResumeData({ ...resumeData, education: newEdu });
-                                            }} />
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Projects */}
-                            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
-                                <div className="flex justify-between items-center mb-6 border-b border-[var(--border)] pb-3">
-                                    <div className="flex items-center gap-2.5 text-[var(--accent)] font-extrabold text-sm tracking-wide">
-                                        <Globe size={18} />
-                                        Featured Projects
-                                    </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('projects', { name: '', description: '', link: '', technologies: [] })} className="text-[var(--accent)] hover:bg-[var(--accent-soft)]">
-                                        <Plus size={16} />
-                                    </Button>
-                                </div>
-                                {resumeData.projects.map((proj, i) => (
-                                    <div key={i} className="mb-6 p-4 bg-[var(--surface-hover)] rounded-xl border border-[var(--border)] relative">
-                                        <button onClick={() => removeListItem('projects', i)} className="absolute top-4 right-4 text-[var(--text-muted)] hover:text-red-500 transition-colors">
-                                            <Trash2 size={16} />
-                                        </button>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <input placeholder="Project Name" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={proj.name} onChange={e => {
-                                                const newProj = [...resumeData.projects];
-                                                newProj[i].name = e.target.value;
-                                                setResumeData({ ...resumeData, projects: newProj });
-                                            }} />
-                                            <input placeholder="Project Link" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={proj.link} onChange={e => {
-                                                const newProj = [...resumeData.projects];
-                                                newProj[i].link = e.target.value;
-                                                setResumeData({ ...resumeData, projects: newProj });
-                                            }} />
-                                            <textarea placeholder="Key Contributions..." rows={2} className="col-span-1 sm:col-span-2 bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)] resize-none" value={proj.description} onChange={e => {
-                                                const newProj = [...resumeData.projects];
-                                                newProj[i].description = e.target.value;
-                                                setResumeData({ ...resumeData, projects: newProj });
-                                            }} />
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Skills */}
-                            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
-                                <div className="flex items-center gap-2.5 mb-6 text-[var(--accent)] font-extrabold text-sm tracking-wide border-b border-[var(--border)] pb-3">
-                                    <Code size={18} />
-                                    Skills & Expertise
-                                </div>
-                                <div className="flex flex-wrap gap-2">
-                                    {resumeData.skills.map((skill, i) => (
-                                        <div key={i} className="bg-[var(--surface-hover)] border border-[var(--border)] px-3 py-1.5 rounded-full flex items-center gap-2 text-xs font-semibold text-[var(--text)]">
-                                            <span>{skill}</span>
-                                            <button onClick={() => removeListItem('skills', i)} className="text-[var(--text-muted)] hover:text-red-500 transition-colors">
-                                                <Trash2 size={13} />
-                                            </button>
-                                        </div>
-                                    ))}
-                                    <input
-                                        placeholder="Add skill (Press Enter)"
-                                        onKeyDown={e => {
-                                            if (e.key === 'Enter' && e.currentTarget.value) {
-                                                addListItem('skills', e.currentTarget.value);
-                                                e.currentTarget.value = '';
-                                            }
-                                        }}
-                                        className="bg-[var(--bg)] border border-[var(--border)] px-3 py-1 rounded-full outline-none focus:border-[var(--accent)] text-xs text-[var(--text)] w-36"
-                                    />
-                                </div>
-                            </div>                {/* Certifications */}
-                            <Card className="p-6">
-                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
-                                    <div className="flex items-center gap-3 text-amber-400 font-bold">
-                                        <CheckCircle size={20} />
-                                        Certifications
-                                    </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('certifications', { name: '', issuer: '', date: '' })}>
-                                        <Plus size={16} />
-                                    </Button>
-                                </div>
-                                {resumeData.certifications?.map((cert, i) => (
-                                    <div key={i} className="mb-4 grid grid-cols-3 gap-4 bg-gray-100 dark:bg-white/5 p-3 rounded-lg relative">
-                                        <button onClick={() => removeListItem('certifications', i)} className="absolute -top-2 -right-2 bg-red-500/20 text-red-500 rounded-full p-1 opacity-100 group-hover:opacity-100 transition-opacity">
-                                            <Trash2 size={12} />
-                                        </button>
-                                        <input placeholder="Certification" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none" value={cert.name} onChange={e => {
-                                            const newCert = [...(resumeData.certifications || [])];
-                                            newCert[i].name = e.target.value;
-                                            setResumeData({ ...resumeData, certifications: newCert });
-                                        }} />
-                                        <input placeholder="Issuer" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none" value={cert.issuer} onChange={e => {
-                                            const newCert = [...(resumeData.certifications || [])];
-                                            newCert[i].issuer = e.target.value;
-                                            setResumeData({ ...resumeData, certifications: newCert });
-                                        }} />
-                                        <input placeholder="Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none" value={cert.date} onChange={e => {
-                                            const newCert = [...(resumeData.certifications || [])];
-                                            newCert[i].date = e.target.value;
-                                            setResumeData({ ...resumeData, certifications: newCert });
-                                        }} />
-                                    </div>
-                                ))}
-                            </Card>
-
-                            {/* Awards */}
-                            <Card className="p-6">
-                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
-                                    <div className="flex items-center gap-3 text-yellow-500 font-bold">
-                                        <Plus size={20} />
-                                        Awards & Honors
-                                    </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('awards', { title: '', issuer: '', date: '' })}>
-                                        <Plus size={16} />
-                                    </Button>
-                                </div>
-                                {resumeData.awards?.map((award, i) => (
-                                    <div key={i} className="mb-4 grid grid-cols-3 gap-4 bg-gray-100 dark:bg-white/5 p-3 rounded-lg relative group">
-                                        <button onClick={() => removeListItem('awards', i)} className="absolute -top-2 -right-2 bg-red-500/20 text-red-500 rounded-full p-1 opacity-100 group-hover:opacity-100 transition-opacity">
-                                            <Trash2 size={12} />
-                                        </button>
-                                        <input placeholder="Award Title" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none" value={award.title} onChange={e => {
-                                            const newAwards = [...(resumeData.awards || [])];
-                                            newAwards[i].title = e.target.value;
-                                            setResumeData({ ...resumeData, awards: newAwards });
-                                        }} />
-                                        <input placeholder="Issuer" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none" value={award.issuer} onChange={e => {
-                                            const newAwards = [...(resumeData.awards || [])];
-                                            newAwards[i].issuer = e.target.value;
-                                            setResumeData({ ...resumeData, awards: newAwards });
-                                        }} />
-                                        <input placeholder="Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none" value={award.date} onChange={e => {
-                                            const newAwards = [...(resumeData.awards || [])];
-                                            newAwards[i].date = e.target.value;
-                                            setResumeData({ ...resumeData, awards: newAwards });
-                                        }} />
-                                    </div>
-                                ))}
-                            </Card>
-
-                            {/* Languages */}
-                            <Card className="p-6">
-                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
-                                    <div className="flex items-center gap-3 text-pink-400 font-bold">
-                                        <Globe size={20} />
-                                        Languages
-                                    </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('languages', { language: '', proficiency: '' })}>
-                                        <Plus size={16} />
-                                    </Button>
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    {resumeData.languages.map((lang, i) => (
-                                        <div key={i} className="flex gap-2 bg-gray-100 dark:bg-white/5 p-2 rounded-lg relative group">
-                                            <input placeholder="Language" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none flex-1" value={lang.language} onChange={e => {
-                                                const newLang = [...resumeData.languages];
-                                                newLang[i].language = e.target.value;
-                                                setResumeData({ ...resumeData, languages: newLang });
-                                            }} />
-                                            <select className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-xs outline-none focus:bg-gray-800" value={lang.proficiency} onChange={e => {
-                                                const newLang = [...resumeData.languages];
-                                                newLang[i].proficiency = e.target.value;
-                                                setResumeData({ ...resumeData, languages: newLang });
-                                            }}>
-                                                <option value="">Level</option>
-                                                <option value="Native">Native</option>
-                                                <option value="Fluent">Fluent</option>
-                                                <option value="Professional">Professional</option>
-                                                <option value="Conversational">Conversational</option>
-                                                <option value="Beginner">Beginner</option>
-                                            </select>
-                                            <button onClick={() => removeListItem('languages', i)} className="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <Trash2 size={14} />
-                                            </button>
                                         </div>
                                     ))}
                                 </div>
-                            </Card>
 
-                            {/* Skills */}
-                            <Card className="p-6">
-                                <div className="flex items-center gap-3 mb-6 text-purple-400 font-bold border-b border-white/5 pb-2">
-                                    <Code size={20} />
-                                    Skills & Expertise
-                                </div>
-                                <div className="flex flex-wrap gap-2">
-                                    {resumeData.skills.map((skill, i) => (
-                                        <div key={i} className="bg-white/10 px-3 py-1 rounded-full flex items-center gap-2 group border border-white/5">
-                                            <span>{skill}</span>
-                                            <button onClick={() => removeListItem('skills', i)} className="opacity-0 group-hover:opacity-100 text-red-400 transition-all">
-                                                <Trash2 size={14} />
+                                {/* Education */}
+                                <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                                    <div className="flex justify-between items-center mb-6 border-b border-[var(--border)] pb-3">
+                                        <div className="flex items-center gap-2.5 text-[var(--accent)] font-extrabold text-sm tracking-wide">
+                                            <GraduationCap size={18} />
+                                            Education
+                                        </div>
+                                        <Button size="sm" variant="ghost" onClick={() => addListItem('education', { school: '', degree: '', fieldOfStudy: '', location: '', startDate: '', endDate: '', description: '' })} className="text-[var(--accent)] hover:bg-[var(--accent-soft)]">
+                                            <Plus size={16} />
+                                        </Button>
+                                    </div>
+                                    {resumeData.education.map((edu, i) => (
+                                        <div key={i} className="mb-6 p-4 bg-[var(--surface-hover)] rounded-xl border border-[var(--border)] relative">
+                                            <button onClick={() => removeListItem('education', i)} className="absolute top-4 right-4 text-[var(--text-muted)] hover:text-red-500 transition-colors">
+                                                <Trash2 size={16} />
                                             </button>
-                                        </div>
-                                    ))}
-                                    <input
-                                        placeholder="Add skill (Press Enter)"
-                                        onKeyDown={e => {
-                                            if (e.key === 'Enter' && e.currentTarget.value) {
-                                                addListItem('skills', e.currentTarget.value);
-                                                e.currentTarget.value = '';
-                                            }
-                                        }}
-                                        className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 outline-none focus:border-blue-500 text-sm w-32"
-                                    />
-                                </div>
-                            </Card>
-
-                            {/* Interests */}
-                            <Card className="p-6">
-                                <div className="flex items-center gap-3 mb-6 text-emerald-400 font-bold border-b border-white/5 pb-2">
-                                    <Globe size={20} />
-                                    Interests & Hobbies
-                                </div>
-                                <div className="flex flex-wrap gap-2">
-                                    {resumeData.interests?.map((interest, i) => (
-                                        <div key={i} className="bg-white/10 px-3 py-1 rounded-full flex items-center gap-2 group border border-white/5">
-                                            <span>{interest}</span>
-                                            <button onClick={() => removeListItem('interests', i)} className="text-red-400 transition-all">
-                                                <Trash2 size={14} />
-                                            </button>
-                                        </div>
-                                    ))}
-                                    <input
-                                        placeholder="Add interest (Press Enter)"
-                                        onKeyDown={e => {
-                                            if (e.key === 'Enter' && e.currentTarget.value) {
-                                                addListItem('interests', e.currentTarget.value);
-                                                e.currentTarget.value = '';
-                                            }
-                                        }}
-                                        className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 outline-none focus:border-blue-500 text-sm w-32"
-                                    />
-                                </div>
-                            </Card>
-
-                            {/* Publications */}
-                            <Card className="p-6">
-                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
-                                    <div className="flex items-center gap-3 text-cyan-400 font-bold">
-                                        <BookOpen size={20} />
-                                        Publications
-                                    </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('publications', { title: '', publisher: '', date: '', url: '' })}>
-                                        <Plus size={16} />
-                                    </Button>
-                                </div>
-                                {resumeData.publications?.map((pub, i) => (
-                                    <div key={i} className="mb-4 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
-                                        <button onClick={() => removeListItem('publications', i)} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <input placeholder="Title" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pub.title} onChange={e => {
-                                                const newPubs = [...(resumeData.publications || [])]; newPubs[i].title = e.target.value; setResumeData({ ...resumeData, publications: newPubs });
-                                            }} />
-                                            <input placeholder="Publisher / Journal" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pub.publisher} onChange={e => {
-                                                const newPubs = [...(resumeData.publications || [])]; newPubs[i].publisher = e.target.value; setResumeData({ ...resumeData, publications: newPubs });
-                                            }} />
-                                            <input placeholder="Date (e.g., Aug 2024)" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pub.date} onChange={e => {
-                                                const newPubs = [...(resumeData.publications || [])]; newPubs[i].date = e.target.value; setResumeData({ ...resumeData, publications: newPubs });
-                                            }} />
-                                            <input placeholder="URL" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pub.url || ''} onChange={e => {
-                                                const newPubs = [...(resumeData.publications || [])]; newPubs[i].url = e.target.value; setResumeData({ ...resumeData, publications: newPubs });
-                                            }} />
-                                        </div>
-                                    </div>
-                                ))}
-                            </Card>
-
-                            {/* Volunteer Experience */}
-                            <Card className="p-6">
-                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
-                                    <div className="flex items-center gap-3 text-red-400 font-bold">
-                                        <Heart size={20} />
-                                        Volunteer Experience
-                                    </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('volunteer', { organization: '', role: '', startDate: '', endDate: '', description: '' })}>
-                                        <Plus size={16} />
-                                    </Button>
-                                </div>
-                                {resumeData.volunteer?.map((vol, i) => (
-                                    <div key={i} className="mb-4 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
-                                        <button onClick={() => removeListItem('volunteer', i)} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <input placeholder="Organization" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={vol.organization} onChange={e => {
-                                                const newVols = [...(resumeData.volunteer || [])]; newVols[i].organization = e.target.value; setResumeData({ ...resumeData, volunteer: newVols });
-                                            }} />
-                                            <input placeholder="Role" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={vol.role} onChange={e => {
-                                                const newVols = [...(resumeData.volunteer || [])]; newVols[i].role = e.target.value; setResumeData({ ...resumeData, volunteer: newVols });
-                                            }} />
-                                            <input placeholder="Start Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={vol.startDate} onChange={e => {
-                                                const newVols = [...(resumeData.volunteer || [])]; newVols[i].startDate = e.target.value; setResumeData({ ...resumeData, volunteer: newVols });
-                                            }} />
-                                            <input placeholder="End Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={vol.endDate} onChange={e => {
-                                                const newVols = [...(resumeData.volunteer || [])]; newVols[i].endDate = e.target.value; setResumeData({ ...resumeData, volunteer: newVols });
-                                            }} />
-                                            <div className="col-span-2">
-                                                <textarea placeholder="Description" rows={3} className="w-full bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500 resize-none" value={vol.description} onChange={e => {
-                                                    const newVols = [...(resumeData.volunteer || [])]; newVols[i].description = e.target.value; setResumeData({ ...resumeData, volunteer: newVols });
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                <input placeholder="School/University" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={edu.school} onChange={e => {
+                                                    const newEdu = [...resumeData.education];
+                                                    newEdu[i].school = e.target.value;
+                                                    setResumeData({ ...resumeData, education: newEdu });
+                                                }} />
+                                                <input placeholder="Degree" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={edu.degree} onChange={e => {
+                                                    const newEdu = [...resumeData.education];
+                                                    newEdu[i].degree = e.target.value;
+                                                    setResumeData({ ...resumeData, education: newEdu });
+                                                }} />
+                                                <input placeholder="Start Date" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={edu.startDate} onChange={e => {
+                                                    const newEdu = [...resumeData.education];
+                                                    newEdu[i].startDate = e.target.value;
+                                                    setResumeData({ ...resumeData, education: newEdu });
+                                                }} />
+                                                <input placeholder="End Date" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={edu.endDate} onChange={e => {
+                                                    const newEdu = [...resumeData.education];
+                                                    newEdu[i].endDate = e.target.value;
+                                                    setResumeData({ ...resumeData, education: newEdu });
                                                 }} />
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </Card>
-
-                            {/* References */}
-                            <Card className="p-6">
-                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
-                                    <div className="flex items-center gap-3 text-orange-400 font-bold">
-                                        <Users size={20} />
-                                        References
-                                    </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('references', { name: '', position: '', company: '', contact: '' })}>
-                                        <Plus size={16} />
-                                    </Button>
-                                </div>
-                                {resumeData.references?.map((ref, i) => (
-                                    <div key={i} className="mb-4 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
-                                        <button onClick={() => removeListItem('references', i)} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <input placeholder="Name" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={ref.name} onChange={e => {
-                                                const newRefs = [...(resumeData.references || [])]; newRefs[i].name = e.target.value; setResumeData({ ...resumeData, references: newRefs });
-                                            }} />
-                                            <input placeholder="Position" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={ref.position} onChange={e => {
-                                                const newRefs = [...(resumeData.references || [])]; newRefs[i].position = e.target.value; setResumeData({ ...resumeData, references: newRefs });
-                                            }} />
-                                            <input placeholder="Company" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={ref.company} onChange={e => {
-                                                const newRefs = [...(resumeData.references || [])]; newRefs[i].company = e.target.value; setResumeData({ ...resumeData, references: newRefs });
-                                            }} />
-                                            <input placeholder="Contact Info" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={ref.contact} onChange={e => {
-                                                const newRefs = [...(resumeData.references || [])]; newRefs[i].contact = e.target.value; setResumeData({ ...resumeData, references: newRefs });
-                                            }} />
-                                        </div>
-                                    </div>
-                                ))}
-                            </Card>
-
-                            {/* Soft Skills */}
-                            <Card className="p-6">
-                                <div className="flex items-center gap-3 mb-6 text-indigo-400 font-bold border-b border-white/5 pb-2">
-                                    <Globe size={20} />
-                                    Soft Skills
-                                </div>
-                                <div className="flex flex-wrap gap-2">
-                                    {resumeData.softSkills?.map((skill, i) => (
-                                        <div key={i} className="bg-white/10 px-3 py-1 rounded-full flex items-center gap-2 group border border-white/5">
-                                            <span>{skill}</span>
-                                            <button onClick={() => removeListItem('softSkills', i)} className="text-red-400 transition-all"><Trash2 size={14} /></button>
-                                        </div>
                                     ))}
-                                    <input placeholder="Add soft skill (Press Enter)" onKeyDown={e => { if (e.key === 'Enter' && e.currentTarget.value) { addListItem('softSkills', e.currentTarget.value); e.currentTarget.value = ''; } }} className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 outline-none focus:border-blue-500 text-sm w-32" />
                                 </div>
-                            </Card>
 
-                            {/* Coursework */}
-                            <Card className="p-6">
-                                <div className="flex items-center gap-3 mb-6 text-fuchsia-400 font-bold border-b border-white/5 pb-2">
-                                    <GraduationCap size={20} />
-                                    Relevant Coursework
-                                </div>
-                                <div className="flex flex-wrap gap-2">
-                                    {resumeData.coursework?.map((course, i) => (
-                                        <div key={i} className="bg-white/10 px-3 py-1 rounded-full flex items-center gap-2 group border border-white/5">
-                                            <span>{course}</span>
-                                            <button onClick={() => removeListItem('coursework', i)} className="text-red-400 transition-all"><Trash2 size={14} /></button>
+                                {/* Projects */}
+                                <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                                    <div className="flex justify-between items-center mb-6 border-b border-[var(--border)] pb-3">
+                                        <div className="flex items-center gap-2.5 text-[var(--accent)] font-extrabold text-sm tracking-wide">
+                                            <Globe size={18} />
+                                            Featured Projects
                                         </div>
-                                    ))}
-                                    <input placeholder="Add coursework (Press Enter)" onKeyDown={e => { if (e.key === 'Enter' && e.currentTarget.value) { addListItem('coursework', e.currentTarget.value); e.currentTarget.value = ''; } }} className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 outline-none focus:border-blue-500 text-sm w-32" />
-                                </div>
-                            </Card>
-
-                            {/* Patents */}
-                            <Card className="p-6">
-                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
-                                    <div className="flex items-center gap-3 text-yellow-400 font-bold">
-                                        <FileText size={20} />
-                                        Patents
+                                        <Button size="sm" variant="ghost" onClick={() => addListItem('projects', { name: '', description: '', link: '', technologies: [] })} className="text-[var(--accent)] hover:bg-[var(--accent-soft)]">
+                                            <Plus size={16} />
+                                        </Button>
                                     </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('patents', { title: '', date: '', url: '', description: '' })}><Plus size={16} /></Button>
-                                </div>
-                                {resumeData.patents?.map((pat, i) => (
-                                    <div key={i} className="mb-4 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
-                                        <button onClick={() => removeListItem('patents', i)} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <input placeholder="Title" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pat.title} onChange={e => { const newPats = [...(resumeData.patents || [])]; newPats[i].title = e.target.value; setResumeData({ ...resumeData, patents: newPats }); }} />
-                                            <input placeholder="Date (e.g. 2025)" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pat.date} onChange={e => { const newPats = [...(resumeData.patents || [])]; newPats[i].date = e.target.value; setResumeData({ ...resumeData, patents: newPats }); }} />
-                                            <div className="col-span-2">
-                                                <input placeholder="Description" className="w-full bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pat.description} onChange={e => { const newPats = [...(resumeData.patents || [])]; newPats[i].description = e.target.value; setResumeData({ ...resumeData, patents: newPats }); }} />
+                                    {resumeData.projects.map((proj, i) => (
+                                        <div key={i} className="mb-6 p-4 bg-[var(--surface-hover)] rounded-xl border border-[var(--border)] relative">
+                                            <button onClick={() => removeListItem('projects', i)} className="absolute top-4 right-4 text-[var(--text-muted)] hover:text-red-500 transition-colors">
+                                                <Trash2 size={16} />
+                                            </button>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                <input placeholder="Project Name" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={proj.name} onChange={e => {
+                                                    const newProj = [...resumeData.projects];
+                                                    newProj[i].name = e.target.value;
+                                                    setResumeData({ ...resumeData, projects: newProj });
+                                                }} />
+                                                <input placeholder="Project Link" className="bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)]" value={proj.link} onChange={e => {
+                                                    const newProj = [...resumeData.projects];
+                                                    newProj[i].link = e.target.value;
+                                                    setResumeData({ ...resumeData, projects: newProj });
+                                                }} />
+                                                <textarea placeholder="Key Contributions..." rows={2} className="col-span-1 sm:col-span-2 bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-lg outline-none focus:border-[var(--accent)] text-sm text-[var(--text)] resize-none" value={proj.description} onChange={e => {
+                                                    const newProj = [...resumeData.projects];
+                                                    newProj[i].description = e.target.value;
+                                                    setResumeData({ ...resumeData, projects: newProj });
+                                                }} />
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </Card>
+                                    ))}
+                                </div>
 
-                            {/* Speaking Engagements */}
-                            <Card className="p-6">
-                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
-                                    <div className="flex items-center gap-3 text-pink-400 font-bold">
+                                {/* Skills */}
+                                <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                                    <div className="flex items-center gap-2.5 mb-6 text-[var(--accent)] font-extrabold text-sm tracking-wide border-b border-[var(--border)] pb-3">
+                                        <Code size={18} />
+                                        Skills & Expertise
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {resumeData.skills.map((skill, i) => (
+                                            <div key={i} className="bg-[var(--surface-hover)] border border-[var(--border)] px-3 py-1.5 rounded-full flex items-center gap-2 text-xs font-semibold text-[var(--text)]">
+                                                <span>{skill}</span>
+                                                <button onClick={() => removeListItem('skills', i)} className="text-[var(--text-muted)] hover:text-red-500 transition-colors">
+                                                    <Trash2 size={13} />
+                                                </button>
+                                            </div>
+                                        ))}
+                                        <input
+                                            placeholder="Add skill (Press Enter)"
+                                            onKeyDown={e => {
+                                                if (e.key === 'Enter' && e.currentTarget.value) {
+                                                    addListItem('skills', e.currentTarget.value);
+                                                    e.currentTarget.value = '';
+                                                }
+                                            }}
+                                            className="bg-[var(--bg)] border border-[var(--border)] px-3 py-1 rounded-full outline-none focus:border-[var(--accent)] text-xs text-[var(--text)] w-36"
+                                        />
+                                    </div>
+                                </div>                {/* Certifications */}
+                                <Card className="p-6">
+                                    <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
+                                        <div className="flex items-center gap-3 text-amber-400 font-bold">
+                                            <CheckCircle size={20} />
+                                            Certifications
+                                        </div>
+                                        <Button size="sm" variant="ghost" onClick={() => addListItem('certifications', { name: '', issuer: '', date: '' })}>
+                                            <Plus size={16} />
+                                        </Button>
+                                    </div>
+                                    {resumeData.certifications?.map((cert, i) => (
+                                        <div key={i} className="mb-4 grid grid-cols-3 gap-4 bg-gray-100 dark:bg-white/5 p-3 rounded-lg relative">
+                                            <button onClick={() => removeListItem('certifications', i)} className="absolute -top-2 -right-2 bg-red-500/20 text-red-500 rounded-full p-1 opacity-100 group-hover:opacity-100 transition-opacity">
+                                                <Trash2 size={12} />
+                                            </button>
+                                            <input placeholder="Certification" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none" value={cert.name} onChange={e => {
+                                                const newCert = [...(resumeData.certifications || [])];
+                                                newCert[i].name = e.target.value;
+                                                setResumeData({ ...resumeData, certifications: newCert });
+                                            }} />
+                                            <input placeholder="Issuer" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none" value={cert.issuer} onChange={e => {
+                                                const newCert = [...(resumeData.certifications || [])];
+                                                newCert[i].issuer = e.target.value;
+                                                setResumeData({ ...resumeData, certifications: newCert });
+                                            }} />
+                                            <input placeholder="Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none" value={cert.date} onChange={e => {
+                                                const newCert = [...(resumeData.certifications || [])];
+                                                newCert[i].date = e.target.value;
+                                                setResumeData({ ...resumeData, certifications: newCert });
+                                            }} />
+                                        </div>
+                                    ))}
+                                </Card>
+
+                                {/* Awards */}
+                                <Card className="p-6">
+                                    <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
+                                        <div className="flex items-center gap-3 text-yellow-500 font-bold">
+                                            <Plus size={20} />
+                                            Awards & Honors
+                                        </div>
+                                        <Button size="sm" variant="ghost" onClick={() => addListItem('awards', { title: '', issuer: '', date: '' })}>
+                                            <Plus size={16} />
+                                        </Button>
+                                    </div>
+                                    {resumeData.awards?.map((award, i) => (
+                                        <div key={i} className="mb-4 grid grid-cols-3 gap-4 bg-gray-100 dark:bg-white/5 p-3 rounded-lg relative group">
+                                            <button onClick={() => removeListItem('awards', i)} className="absolute -top-2 -right-2 bg-red-500/20 text-red-500 rounded-full p-1 opacity-100 group-hover:opacity-100 transition-opacity">
+                                                <Trash2 size={12} />
+                                            </button>
+                                            <input placeholder="Award Title" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none" value={award.title} onChange={e => {
+                                                const newAwards = [...(resumeData.awards || [])];
+                                                newAwards[i].title = e.target.value;
+                                                setResumeData({ ...resumeData, awards: newAwards });
+                                            }} />
+                                            <input placeholder="Issuer" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none" value={award.issuer} onChange={e => {
+                                                const newAwards = [...(resumeData.awards || [])];
+                                                newAwards[i].issuer = e.target.value;
+                                                setResumeData({ ...resumeData, awards: newAwards });
+                                            }} />
+                                            <input placeholder="Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none" value={award.date} onChange={e => {
+                                                const newAwards = [...(resumeData.awards || [])];
+                                                newAwards[i].date = e.target.value;
+                                                setResumeData({ ...resumeData, awards: newAwards });
+                                            }} />
+                                        </div>
+                                    ))}
+                                </Card>
+
+                                {/* Languages */}
+                                <Card className="p-6">
+                                    <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
+                                        <div className="flex items-center gap-3 text-pink-400 font-bold">
+                                            <Globe size={20} />
+                                            Languages
+                                        </div>
+                                        <Button size="sm" variant="ghost" onClick={() => addListItem('languages', { language: '', proficiency: '' })}>
+                                            <Plus size={16} />
+                                        </Button>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {resumeData.languages.map((lang, i) => (
+                                            <div key={i} className="flex gap-2 bg-gray-100 dark:bg-white/5 p-2 rounded-lg relative group">
+                                                <input placeholder="Language" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-sm outline-none flex-1" value={lang.language} onChange={e => {
+                                                    const newLang = [...resumeData.languages];
+                                                    newLang[i].language = e.target.value;
+                                                    setResumeData({ ...resumeData, languages: newLang });
+                                                }} />
+                                                <select className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 text-xs outline-none focus:bg-gray-800" value={lang.proficiency} onChange={e => {
+                                                    const newLang = [...resumeData.languages];
+                                                    newLang[i].proficiency = e.target.value;
+                                                    setResumeData({ ...resumeData, languages: newLang });
+                                                }}>
+                                                    <option value="">Level</option>
+                                                    <option value="Native">Native</option>
+                                                    <option value="Fluent">Fluent</option>
+                                                    <option value="Professional">Professional</option>
+                                                    <option value="Conversational">Conversational</option>
+                                                    <option value="Beginner">Beginner</option>
+                                                </select>
+                                                <button onClick={() => removeListItem('languages', i)} className="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <Trash2 size={14} />
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </Card>
+
+                                {/* Skills */}
+                                <Card className="p-6">
+                                    <div className="flex items-center gap-3 mb-6 text-purple-400 font-bold border-b border-white/5 pb-2">
                                         <Code size={20} />
-                                        Speaking Engagements
+                                        Skills & Expertise
                                     </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('speakingEngagements', { title: '', event: '', date: '', url: '' })}><Plus size={16} /></Button>
-                                </div>
-                                {resumeData.speakingEngagements?.map((speak, i) => (
-                                    <div key={i} className="mb-4 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
-                                        <button onClick={() => removeListItem('speakingEngagements', i)} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <input placeholder="Talk Title" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={speak.title} onChange={e => { const newSpk = [...(resumeData.speakingEngagements || [])]; newSpk[i].title = e.target.value; setResumeData({ ...resumeData, speakingEngagements: newSpk }); }} />
-                                            <input placeholder="Event Name" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={speak.event} onChange={e => { const newSpk = [...(resumeData.speakingEngagements || [])]; newSpk[i].event = e.target.value; setResumeData({ ...resumeData, speakingEngagements: newSpk }); }} />
-                                            <input placeholder="Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={speak.date} onChange={e => { const newSpk = [...(resumeData.speakingEngagements || [])]; newSpk[i].date = e.target.value; setResumeData({ ...resumeData, speakingEngagements: newSpk }); }} />
-                                            <input placeholder="Video URL" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={speak.url || ''} onChange={e => { const newSpk = [...(resumeData.speakingEngagements || [])]; newSpk[i].url = e.target.value; setResumeData({ ...resumeData, speakingEngagements: newSpk }); }} />
-                                        </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {resumeData.skills.map((skill, i) => (
+                                            <div key={i} className="bg-white/10 px-3 py-1 rounded-full flex items-center gap-2 group border border-white/5">
+                                                <span>{skill}</span>
+                                                <button onClick={() => removeListItem('skills', i)} className="opacity-0 group-hover:opacity-100 text-red-400 transition-all">
+                                                    <Trash2 size={14} />
+                                                </button>
+                                            </div>
+                                        ))}
+                                        <input
+                                            placeholder="Add skill (Press Enter)"
+                                            onKeyDown={e => {
+                                                if (e.key === 'Enter' && e.currentTarget.value) {
+                                                    addListItem('skills', e.currentTarget.value);
+                                                    e.currentTarget.value = '';
+                                                }
+                                            }}
+                                            className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 outline-none focus:border-blue-500 text-sm w-32"
+                                        />
                                     </div>
-                                ))}
-                            </Card>
+                                </Card>
 
-                            {/* Testimonials */}
-                            <Card className="p-6">
-                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
-                                    <div className="flex items-center gap-3 text-sky-400 font-bold">
-                                        <User size={20} />
-                                        Testimonials
+                                {/* Interests */}
+                                <Card className="p-6">
+                                    <div className="flex items-center gap-3 mb-6 text-emerald-400 font-bold border-b border-white/5 pb-2">
+                                        <Globe size={20} />
+                                        Interests & Hobbies
                                     </div>
-                                    <Button size="sm" variant="ghost" onClick={() => addListItem('testimonials', { name: '', quote: '', position: '' })}><Plus size={16} /></Button>
+                                    <div className="flex flex-wrap gap-2">
+                                        {resumeData.interests?.map((interest, i) => (
+                                            <div key={i} className="bg-white/10 px-3 py-1 rounded-full flex items-center gap-2 group border border-white/5">
+                                                <span>{interest}</span>
+                                                <button onClick={() => removeListItem('interests', i)} className="text-red-400 transition-all">
+                                                    <Trash2 size={14} />
+                                                </button>
+                                            </div>
+                                        ))}
+                                        <input
+                                            placeholder="Add interest (Press Enter)"
+                                            onKeyDown={e => {
+                                                if (e.key === 'Enter' && e.currentTarget.value) {
+                                                    addListItem('interests', e.currentTarget.value);
+                                                    e.currentTarget.value = '';
+                                                }
+                                            }}
+                                            className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 outline-none focus:border-blue-500 text-sm w-32"
+                                        />
+                                    </div>
+                                </Card>
+
+                                {/* Publications */}
+                                <Card className="p-6">
+                                    <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
+                                        <div className="flex items-center gap-3 text-cyan-400 font-bold">
+                                            <BookOpen size={20} />
+                                            Publications
+                                        </div>
+                                        <Button size="sm" variant="ghost" onClick={() => addListItem('publications', { title: '', publisher: '', date: '', url: '' })}>
+                                            <Plus size={16} />
+                                        </Button>
+                                    </div>
+                                    {resumeData.publications?.map((pub, i) => (
+                                        <div key={i} className="mb-4 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
+                                            <button onClick={() => removeListItem('publications', i)} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <input placeholder="Title" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pub.title} onChange={e => {
+                                                    const newPubs = [...(resumeData.publications || [])]; newPubs[i].title = e.target.value; setResumeData({ ...resumeData, publications: newPubs });
+                                                }} />
+                                                <input placeholder="Publisher / Journal" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pub.publisher} onChange={e => {
+                                                    const newPubs = [...(resumeData.publications || [])]; newPubs[i].publisher = e.target.value; setResumeData({ ...resumeData, publications: newPubs });
+                                                }} />
+                                                <input placeholder="Date (e.g., Aug 2024)" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pub.date} onChange={e => {
+                                                    const newPubs = [...(resumeData.publications || [])]; newPubs[i].date = e.target.value; setResumeData({ ...resumeData, publications: newPubs });
+                                                }} />
+                                                <input placeholder="URL" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pub.url || ''} onChange={e => {
+                                                    const newPubs = [...(resumeData.publications || [])]; newPubs[i].url = e.target.value; setResumeData({ ...resumeData, publications: newPubs });
+                                                }} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </Card>
+
+                                {/* Volunteer Experience */}
+                                <Card className="p-6">
+                                    <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
+                                        <div className="flex items-center gap-3 text-red-400 font-bold">
+                                            <Heart size={20} />
+                                            Volunteer Experience
+                                        </div>
+                                        <Button size="sm" variant="ghost" onClick={() => addListItem('volunteer', { organization: '', role: '', startDate: '', endDate: '', description: '' })}>
+                                            <Plus size={16} />
+                                        </Button>
+                                    </div>
+                                    {resumeData.volunteer?.map((vol, i) => (
+                                        <div key={i} className="mb-4 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
+                                            <button onClick={() => removeListItem('volunteer', i)} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <input placeholder="Organization" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={vol.organization} onChange={e => {
+                                                    const newVols = [...(resumeData.volunteer || [])]; newVols[i].organization = e.target.value; setResumeData({ ...resumeData, volunteer: newVols });
+                                                }} />
+                                                <input placeholder="Role" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={vol.role} onChange={e => {
+                                                    const newVols = [...(resumeData.volunteer || [])]; newVols[i].role = e.target.value; setResumeData({ ...resumeData, volunteer: newVols });
+                                                }} />
+                                                <input placeholder="Start Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={vol.startDate} onChange={e => {
+                                                    const newVols = [...(resumeData.volunteer || [])]; newVols[i].startDate = e.target.value; setResumeData({ ...resumeData, volunteer: newVols });
+                                                }} />
+                                                <input placeholder="End Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={vol.endDate} onChange={e => {
+                                                    const newVols = [...(resumeData.volunteer || [])]; newVols[i].endDate = e.target.value; setResumeData({ ...resumeData, volunteer: newVols });
+                                                }} />
+                                                <div className="col-span-2">
+                                                    <textarea placeholder="Description" rows={3} className="w-full bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500 resize-none" value={vol.description} onChange={e => {
+                                                        const newVols = [...(resumeData.volunteer || [])]; newVols[i].description = e.target.value; setResumeData({ ...resumeData, volunteer: newVols });
+                                                    }} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </Card>
+
+                                {/* References */}
+                                <Card className="p-6">
+                                    <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
+                                        <div className="flex items-center gap-3 text-orange-400 font-bold">
+                                            <Users size={20} />
+                                            References
+                                        </div>
+                                        <Button size="sm" variant="ghost" onClick={() => addListItem('references', { name: '', position: '', company: '', contact: '' })}>
+                                            <Plus size={16} />
+                                        </Button>
+                                    </div>
+                                    {resumeData.references?.map((ref, i) => (
+                                        <div key={i} className="mb-4 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
+                                            <button onClick={() => removeListItem('references', i)} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <input placeholder="Name" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={ref.name} onChange={e => {
+                                                    const newRefs = [...(resumeData.references || [])]; newRefs[i].name = e.target.value; setResumeData({ ...resumeData, references: newRefs });
+                                                }} />
+                                                <input placeholder="Position" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={ref.position} onChange={e => {
+                                                    const newRefs = [...(resumeData.references || [])]; newRefs[i].position = e.target.value; setResumeData({ ...resumeData, references: newRefs });
+                                                }} />
+                                                <input placeholder="Company" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={ref.company} onChange={e => {
+                                                    const newRefs = [...(resumeData.references || [])]; newRefs[i].company = e.target.value; setResumeData({ ...resumeData, references: newRefs });
+                                                }} />
+                                                <input placeholder="Contact Info" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={ref.contact} onChange={e => {
+                                                    const newRefs = [...(resumeData.references || [])]; newRefs[i].contact = e.target.value; setResumeData({ ...resumeData, references: newRefs });
+                                                }} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </Card>
+
+                                {/* Soft Skills */}
+                                <Card className="p-6">
+                                    <div className="flex items-center gap-3 mb-6 text-indigo-400 font-bold border-b border-white/5 pb-2">
+                                        <Globe size={20} />
+                                        Soft Skills
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {resumeData.softSkills?.map((skill, i) => (
+                                            <div key={i} className="bg-white/10 px-3 py-1 rounded-full flex items-center gap-2 group border border-white/5">
+                                                <span>{skill}</span>
+                                                <button onClick={() => removeListItem('softSkills', i)} className="text-red-400 transition-all"><Trash2 size={14} /></button>
+                                            </div>
+                                        ))}
+                                        <input placeholder="Add soft skill (Press Enter)" onKeyDown={e => { if (e.key === 'Enter' && e.currentTarget.value) { addListItem('softSkills', e.currentTarget.value); e.currentTarget.value = ''; } }} className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 outline-none focus:border-blue-500 text-sm w-32" />
+                                    </div>
+                                </Card>
+
+                                {/* Coursework */}
+                                <Card className="p-6">
+                                    <div className="flex items-center gap-3 mb-6 text-fuchsia-400 font-bold border-b border-white/5 pb-2">
+                                        <GraduationCap size={20} />
+                                        Relevant Coursework
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {resumeData.coursework?.map((course, i) => (
+                                            <div key={i} className="bg-white/10 px-3 py-1 rounded-full flex items-center gap-2 group border border-white/5">
+                                                <span>{course}</span>
+                                                <button onClick={() => removeListItem('coursework', i)} className="text-red-400 transition-all"><Trash2 size={14} /></button>
+                                            </div>
+                                        ))}
+                                        <input placeholder="Add coursework (Press Enter)" onKeyDown={e => { if (e.key === 'Enter' && e.currentTarget.value) { addListItem('coursework', e.currentTarget.value); e.currentTarget.value = ''; } }} className="bg-transparent border-b border-gray-200 dark:border-white/10 p-1 outline-none focus:border-blue-500 text-sm w-32" />
+                                    </div>
+                                </Card>
+
+                                {/* Patents */}
+                                <Card className="p-6">
+                                    <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
+                                        <div className="flex items-center gap-3 text-yellow-400 font-bold">
+                                            <FileText size={20} />
+                                            Patents
+                                        </div>
+                                        <Button size="sm" variant="ghost" onClick={() => addListItem('patents', { title: '', date: '', url: '', description: '' })}><Plus size={16} /></Button>
+                                    </div>
+                                    {resumeData.patents?.map((pat, i) => (
+                                        <div key={i} className="mb-4 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
+                                            <button onClick={() => removeListItem('patents', i)} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <input placeholder="Title" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pat.title} onChange={e => { const newPats = [...(resumeData.patents || [])]; newPats[i].title = e.target.value; setResumeData({ ...resumeData, patents: newPats }); }} />
+                                                <input placeholder="Date (e.g. 2025)" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pat.date} onChange={e => { const newPats = [...(resumeData.patents || [])]; newPats[i].date = e.target.value; setResumeData({ ...resumeData, patents: newPats }); }} />
+                                                <div className="col-span-2">
+                                                    <input placeholder="Description" className="w-full bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={pat.description} onChange={e => { const newPats = [...(resumeData.patents || [])]; newPats[i].description = e.target.value; setResumeData({ ...resumeData, patents: newPats }); }} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </Card>
+
+                                {/* Speaking Engagements */}
+                                <Card className="p-6">
+                                    <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
+                                        <div className="flex items-center gap-3 text-pink-400 font-bold">
+                                            <Code size={20} />
+                                            Speaking Engagements
+                                        </div>
+                                        <Button size="sm" variant="ghost" onClick={() => addListItem('speakingEngagements', { title: '', event: '', date: '', url: '' })}><Plus size={16} /></Button>
+                                    </div>
+                                    {resumeData.speakingEngagements?.map((speak, i) => (
+                                        <div key={i} className="mb-4 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
+                                            <button onClick={() => removeListItem('speakingEngagements', i)} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <input placeholder="Talk Title" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={speak.title} onChange={e => { const newSpk = [...(resumeData.speakingEngagements || [])]; newSpk[i].title = e.target.value; setResumeData({ ...resumeData, speakingEngagements: newSpk }); }} />
+                                                <input placeholder="Event Name" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={speak.event} onChange={e => { const newSpk = [...(resumeData.speakingEngagements || [])]; newSpk[i].event = e.target.value; setResumeData({ ...resumeData, speakingEngagements: newSpk }); }} />
+                                                <input placeholder="Date" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={speak.date} onChange={e => { const newSpk = [...(resumeData.speakingEngagements || [])]; newSpk[i].date = e.target.value; setResumeData({ ...resumeData, speakingEngagements: newSpk }); }} />
+                                                <input placeholder="Video URL" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={speak.url || ''} onChange={e => { const newSpk = [...(resumeData.speakingEngagements || [])]; newSpk[i].url = e.target.value; setResumeData({ ...resumeData, speakingEngagements: newSpk }); }} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </Card>
+
+                                {/* Testimonials */}
+                                <Card className="p-6">
+                                    <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-2">
+                                        <div className="flex items-center gap-3 text-sky-400 font-bold">
+                                            <User size={20} />
+                                            Testimonials
+                                        </div>
+                                        <Button size="sm" variant="ghost" onClick={() => addListItem('testimonials', { name: '', quote: '', position: '' })}><Plus size={16} /></Button>
+                                    </div>
+                                    {resumeData.testimonials?.map((test, i) => (
+                                        <div key={i} className="mb-4 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
+                                            <button onClick={() => removeListItem('testimonials', i)} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <input placeholder="Reviewer Name" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={test.name} onChange={e => { const newTest = [...(resumeData.testimonials || [])]; newTest[i].name = e.target.value; setResumeData({ ...resumeData, testimonials: newTest }); }} />
+                                                <input placeholder="Position (e.g. CEO at ACME)" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={test.position} onChange={e => { const newTest = [...(resumeData.testimonials || [])]; newTest[i].position = e.target.value; setResumeData({ ...resumeData, testimonials: newTest }); }} />
+                                                <div className="col-span-2">
+                                                    <textarea placeholder="Quote" rows={2} className="w-full bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500 resize-none" value={test.quote} onChange={e => { const newTest = [...(resumeData.testimonials || [])]; newTest[i].quote = e.target.value; setResumeData({ ...resumeData, testimonials: newTest }); }} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </Card>
+                                {/* Mobile Preview FAB */}
+                                <div className="lg:hidden fixed bottom-6 right-6 z-40">
+                                    <Button
+                                        onClick={() => setMobilePreviewOpen(true)}
+                                        className="rounded-full w-16 h-16 shadow-2xl shadow-blue-500/40 p-0 flex items-center justify-center bg-blue-600"
+                                    >
+                                        <Eye size={24} />
+                                    </Button>
                                 </div>
-                                {resumeData.testimonials?.map((test, i) => (
-                                    <div key={i} className="mb-4 p-4 bg-gray-100 dark:bg-white/5 rounded-xl border border-white/5 relative">
-                                        <button onClick={() => removeListItem('testimonials', i)} className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <input placeholder="Reviewer Name" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={test.name} onChange={e => { const newTest = [...(resumeData.testimonials || [])]; newTest[i].name = e.target.value; setResumeData({ ...resumeData, testimonials: newTest }); }} />
-                                            <input placeholder="Position (e.g. CEO at ACME)" className="bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500" value={test.position} onChange={e => { const newTest = [...(resumeData.testimonials || [])]; newTest[i].position = e.target.value; setResumeData({ ...resumeData, testimonials: newTest }); }} />
-                                            <div className="col-span-2">
-                                                <textarea placeholder="Quote" rows={2} className="w-full bg-transparent border-b border-gray-200 dark:border-white/10 p-2 outline-none focus:border-blue-500 resize-none" value={test.quote} onChange={e => { const newTest = [...(resumeData.testimonials || [])]; newTest[i].quote = e.target.value; setResumeData({ ...resumeData, testimonials: newTest }); }} />
+                            </div>
+
+                            {/* Preview */}
+                            <div className="sticky  hidden lg:block h-[calc(100vh-140px)]">
+                                <div className="flex justify-between items-center mb-6 px-2">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                        <h3 className="font-bold text-gray-700 dark:text-gray-300 uppercase text-[10px] tracking-widest">Live Rendering</h3>
+                                    </div>
+                                    <Button size="sm" onClick={() => setStep(3)} className="shadow-lg shadow-blue-600/20 bg-blue-600 hover:bg-blue-700">
+                                        Next: Style <ChevronRight size={14} className="ml-1" />
+                                    </Button>
+                                </div>
+
+                                <div className="bg-[var(--surface)] rounded border border-[var(--border)] p-8 h-full flex justify-center items-start overflow-hidden relative group">
+                                    {/* The Wrapper: Fixed dimensions to match the scaled resume (794 * 0.45 = ~357) */}
+                                    <div className="relative w-[357px] h-[505px] transition-all duration-500 group-hover:scale-[1.02]">
+                                        <div className="absolute top-0 left-0 origin-top-left scale-[0.45] pointer-events-none shadow-xl border border-[var(--border)] rounded overflow-hidden">
+                                            <div className="bg-white">
+                                                <ResumeTemplate data={resumeData} template={resumeData.template} primaryColor={resumeData.color} />
                                             </div>
                                         </div>
                                     </div>
-                                ))}
-                            </Card>
-                            {/* Mobile Preview FAB */}
-                            <div className="lg:hidden fixed bottom-6 right-6 z-40">
-                                <Button
-                                    onClick={() => setMobilePreviewOpen(true)}
-                                    className="rounded-full w-16 h-16 shadow-2xl shadow-blue-500/40 p-0 flex items-center justify-center bg-blue-600"
-                                >
-                                    <Eye size={24} />
-                                </Button>
-                            </div>
-                        </div>
 
-                        {/* Preview */}
-                        <div className="sticky  hidden lg:block h-[calc(100vh-140px)]">
-                            <div className="flex justify-between items-center mb-6 px-2">
-                                <div className="flex items-center gap-2">
-                                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                                    <h3 className="font-bold text-gray-700 dark:text-gray-300 uppercase text-[10px] tracking-widest">Live Rendering</h3>
-                                </div>
-                                <Button size="sm" onClick={() => setStep(3)} className="shadow-lg shadow-blue-600/20 bg-blue-600 hover:bg-blue-700">
-                                    Next: Style <ChevronRight size={14} className="ml-1" />
-                                </Button>
-                            </div>
-
-                            <div className="bg-[var(--surface)] rounded border border-[var(--border)] p-8 h-full flex justify-center items-start overflow-hidden relative group">
-                                {/* The Wrapper: Fixed dimensions to match the scaled resume (794 * 0.45 = ~357) */}
-                                <div className="relative w-[357px] h-[505px] transition-all duration-500 group-hover:scale-[1.02]">
-                                    <div className="absolute top-0 left-0 origin-top-left scale-[0.45] pointer-events-none shadow-xl border border-[var(--border)] rounded overflow-hidden">
-                                        <div className="bg-white">
-                                            <ResumeTemplate data={resumeData} template={resumeData.template} primaryColor={resumeData.color} />
-                                        </div>
+                                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-6 py-2 bg-[var(--accent)] text-white rounded shadow-lg text-[9px] uppercase tracking-[0.3em] font-black z-20">
+                                        Live Rendering
                                     </div>
-                                </div>
-
-                                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-6 py-2 bg-[var(--accent)] text-white rounded shadow-lg text-[9px] uppercase tracking-[0.3em] font-black z-20">
-                                    Live Rendering
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 )}
 
                 {step === 3 && (
