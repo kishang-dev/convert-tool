@@ -18,7 +18,7 @@ export function LandingHero({ query, setQuery, rotIdx, wcolors, words }: any) {
             <div className="max-w-[900px] mx-auto text-center relative">
                 <div className="inline-flex items-center gap-2 px-[15px] py-[7px] rounded-full bg-[var(--surface)] border border-[var(--border)] text-[13px] font-medium text-[var(--text-muted)] mb-[26px]">
                     <span className="w-[7px] h-[7px] rounded-full bg-[#22C55E] shadow-[0_0_0_3px_color-mix(in_srgb,#22C55E_25%,transparent)]"></span>
-                    40+ free tools · no sign-up required
+                    75+ free tools · no sign-up required
                 </div>
                 <h1 className="font-['Sora',sans-serif] font-extrabold text-[clamp(38px,6vw,66px)] leading-[1.05] tracking-[-.03em] m-0 mb-5 text-[var(--text)]">
                     Smarter Tools for<br />
@@ -32,7 +32,7 @@ export function LandingHero({ query, setQuery, rotIdx, wcolors, words }: any) {
                 </p>
                 <div id="tb-search" className="max-w-[620px] mx-auto flex items-center gap-2 bg-[var(--surface)] border-[1.5px] border-[var(--border)] rounded-[16px] p-[8px_8px_8px_18px] shadow-[0_18px_50px_rgba(0,0,0,.10)]">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--text-muted)" strokeWidth="2" strokeLinecap="round" className="shrink-0"><circle cx="11" cy="11" r="7" /><path d="m20 20-3-3" /></svg>
-                    <input value={query} onChange={(e) => { setQuery(e.target.value); }} placeholder='Search 40+ tools — try "merge", "resize", "OCR"…' className="flex-1 border-none outline-none bg-transparent text-[var(--text)] font-['Poppins',sans-serif] text-[16px] p-[10px_4px] min-w-0" />
+                    <input value={query} onChange={(e) => { setQuery(e.target.value); }} placeholder='Search 75+ tools — try "merge", "resize", "OCR"…' className="flex-1 border-none outline-none bg-transparent text-[var(--text)] font-['Poppins',sans-serif] text-[16px] p-[10px_4px] min-w-0" />
                     <button onClick={() => { document.getElementById('tb-tools')?.scrollIntoView({ behavior: 'smooth' }); }} className="h-11 px-[22px] rounded-[11px] border-none bg-gradient-to-br from-[var(--accent)] to-[#8B5CF6] text-white font-['Poppins',sans-serif] font-semibold text-[15px] cursor-pointer shrink-0">Search</button>
                 </div>
             </div>
@@ -137,7 +137,7 @@ export function LandingStats() {
                 {[
                     { num: '1K+', label: 'Active Users' },
                     { num: '5K+', label: 'Files Processed' },
-                    { num: '40+', label: 'Free Tools' },
+                    { num: '75+', label: 'Free Tools' },
                     { num: '99.9%', label: 'OCR Accuracy' }
                 ].map((s) => (
                     <div key={s.label} className="text-center text-white">

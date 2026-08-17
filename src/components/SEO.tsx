@@ -15,7 +15,7 @@ const SITE_NAME = 'ToolBasketAI';
 const BASE_URL = 'https://toolbasketai.com';
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.png`;
 const DEFAULT_DESCRIPTION =
-  'ToolBasketAI is your all-in-one online toolkit. Convert PDFs, resize images, format JSON, build resumes, and 40+ more free tools — no sign-up required.';
+  'ToolBasketAI is your all-in-one online toolkit. Convert PDFs, resize images, format JSON, build resumes, and 75+ more free tools — no sign-up required.';
 const DEFAULT_KEYWORDS =
   'PDF converter, image resizer, JSON formatter, free online tools, PDF to Word, Word to PDF, image converter, resume builder, merge PDF, compress PDF, OCR tool, ToolBasketAI';
 

@@ -34,7 +34,7 @@ export default function Home() {
     <>
       <SEO
         title="ToolBasketAI — Free Online Document & PDF Tools"
-        description="Convert, merge, split, compress, and edit PDFs, images, and documents entirely free right in your browser. 40+ free tools, no sign-up required."
+        description="Convert, merge, split, compress, and edit PDFs, images, and documents entirely free right in your browser. 75+ free tools, no sign-up required."
         canonical="/"
         keywords="free PDF tools, PDF converter online, image resizer, JSON formatter, resume builder, OCR online, merge PDF, compress PDF, ToolBasketAI"
         structuredData={homeStructuredData}

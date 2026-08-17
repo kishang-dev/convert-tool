@@ -8,12 +8,12 @@ import {
 } from 'react-icons/lu';
 
 export const C = {
-    pdf: { label: 'PDF Tools', color: '#FF5C7A', tint: 'rgba(255,92,122,.14)', grad: 'linear-gradient(135deg,#FF5C7A,#FF8A5C)', count: '17+ tools', desc: 'Merge, split, compress, convert, watermark and edit PDF files.', featured: 'Merge PDF' },
+    pdf: { label: 'PDF Tools', color: '#FF5C7A', tint: 'rgba(255,92,122,.14)', grad: 'linear-gradient(135deg,#FF5C7A,#FF8A5C)', count: '15+ tools', desc: 'Merge, split, compress, convert, watermark and edit PDF files.', featured: 'Merge PDF' },
     image: { label: 'Image Tools', color: '#22C55E', tint: 'rgba(34,197,94,.14)', grad: 'linear-gradient(135deg,#22C55E,#12B8A0)', count: '14+ tools', desc: 'Resize, crop, compress, watermark and convert images fast.', featured: 'Resize Image' },
-    docs: { label: 'Documents', color: '#3B82F6', tint: 'rgba(59,130,246,.14)', grad: 'linear-gradient(135deg,#3B82F6,#6366F1)', count: '12+ tools', desc: 'Convert Word, Excel, CSV, HTML and PowerPoint to/from PDF.', featured: 'Word to PDF' },
-    ai: { label: 'AI Suite', color: '#8B5CF6', tint: 'rgba(139,92,246,.14)', grad: 'linear-gradient(135deg,#8B5CF6,#C026D3)', count: '5+ tools', desc: 'Build resumes, charts and diagrams with AI.', featured: 'AI Resume' },
-    dev: { label: 'Developer', color: '#F59E0B', tint: 'rgba(245,158,11,.16)', grad: 'linear-gradient(135deg,#F59E0B,#EF4444)', count: '14+ tools', desc: 'Format JSON, XML, HTML, CSS, SQL, test regex and generate hashes.', featured: 'JSON Formatter' },
-    ocr: { label: 'OCR', color: '#EC4899', tint: 'rgba(236,72,153,.14)', grad: 'linear-gradient(135deg,#EC4899,#8B5CF6)', count: '9+ tools', desc: 'Extract text from scans, handwriting, receipts, and PDFs.', featured: 'Precision OCR' },
+    docs: { label: 'Documents', color: '#3B82F6', tint: 'rgba(59,130,246,.14)', grad: 'linear-gradient(135deg,#3B82F6,#6366F1)', count: '19+ tools', desc: 'Convert Word, Excel, CSV, HTML and PowerPoint to/from PDF.', featured: 'Word to PDF' },
+    ai: { label: 'AI Suite', color: '#8B5CF6', tint: 'rgba(139,92,246,.14)', grad: 'linear-gradient(135deg,#8B5CF6,#C026D3)', count: '2+ tools', desc: 'Build resumes, charts and diagrams with AI.', featured: 'AI Resume' },
+    dev: { label: 'Developer', color: '#F59E0B', tint: 'rgba(245,158,11,.16)', grad: 'linear-gradient(135deg,#F59E0B,#EF4444)', count: '21+ tools', desc: 'Format JSON, XML, HTML, CSS, SQL, test regex and generate hashes.', featured: 'JSON Formatter' },
+    ocr: { label: 'OCR', color: '#EC4899', tint: 'rgba(236,72,153,.14)', grad: 'linear-gradient(135deg,#EC4899,#8B5CF6)', count: '6+ tools', desc: 'Extract text from scans, handwriting, receipts, and PDFs.', featured: 'Precision OCR' },
 };
 
 export const allTools = [
@@ -224,5 +224,5 @@ export const freeFeatures = [
     'AI Diagram Generator',
     '24h File Retention',
     'No Account Required',
-    'All 40+ Tools Included',
+    'All 75+ Tools Included',
 ];

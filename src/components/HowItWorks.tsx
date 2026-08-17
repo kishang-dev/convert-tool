@@ -12,7 +12,7 @@ const steps = [
         num: '02',
         icon: Settings,
         title: 'Choose a Tool',
-        description: 'Pick from 40+ tools — convert, compress, merge, split, protect, and more.',
+        description: 'Pick from 75+ tools — convert, compress, merge, split, protect, and more.',
     },
     {
         num: '03',

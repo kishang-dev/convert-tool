@@ -48,7 +48,7 @@ const highlights = [
 ];
 
 const stats = [
-    { label: 'Total Tools', value: '40+', icon: Layers },
+    { label: 'Total Tools', value: '75+', icon: Layers },
     { label: 'Formats Supported', value: '25+', icon: FileText },
     { label: 'Client-Side Private', value: '100%', icon: Shield },
     { label: 'Processing Speed', value: 'Instant', icon: Zap },

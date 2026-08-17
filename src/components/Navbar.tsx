@@ -82,7 +82,7 @@ export default function Navbar() {
 
     const handleShare = (target: string) => {
         const url = encodeURIComponent('https://toolbasketai.com');
-        const text = encodeURIComponent('Check out ToolBasketAI - 40+ Free Online Document & PDF Tools!');
+        const text = encodeURIComponent('Check out ToolBasketAI - 75+ Free Online Document & PDF Tools!');
         let shareUrl = '';
 
         switch (target) {

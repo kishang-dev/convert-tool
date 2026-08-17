@@ -47,7 +47,7 @@ export default function LandingPage() {
         <div className="min-h-screen bg-[var(--bg)]">
             <Head>
                 <title>ToolBasketAI | Free Online PDF, Image, and Document Tools</title>
-                <meta name="description" content="Convert, merge, split, compress and process your PDFs, images and documents — entirely free, right in your browser. 40+ free tools with no sign-up required." />
+                <meta name="description" content="Convert, merge, split, compress and process your PDFs, images and documents — entirely free, right in your browser. 75+ free tools with no sign-up required." />
                 <meta name="keywords" content="PDF tools, image resizer, document converter, free OCR, AI tools, online tools, file converter" />
                 <meta property="og:title" content="ToolBasketAI | Free Online PDF, Image, and Document Tools" />
                 <meta property="og:description" content="Convert, merge, split, compress and process your PDFs, images and documents — entirely free, right in your browser." />
