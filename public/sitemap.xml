@@ -361,5 +361,35 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- 25 Newly Added Tools -->
+  <url><loc>https://toolbasketai.com/pdf-extract-pages</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/pdf-delete-pages</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/pdf-grayscale</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/pdf-metadata</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/pdf-reorder</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/image-compressor</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/png-to-webp</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/jpg-to-webp</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/image-palette</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/svg-optimizer</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/word-to-text</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/excel-to-csv</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/csv-to-excel</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/text-to-word</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/html-to-word</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/html-formatter</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/css-formatter</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/js-formatter</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/case-converter</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/text-diff</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/image-to-text</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/handwriting-ocr</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/receipt-ocr</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/pdf-ocr-text</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/multilingual-ocr</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolbasketai.com/text-to-image</loc><lastmod>2026-08-17</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+
+
 </urlset>
+
 

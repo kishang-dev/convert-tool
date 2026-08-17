@@ -8,12 +8,12 @@ import {
 } from 'react-icons/lu';
 
 export const C = {
-    pdf: { label: 'PDF Tools', color: '#FF5C7A', tint: 'rgba(255,92,122,.14)', grad: 'linear-gradient(135deg,#FF5C7A,#FF8A5C)', count: '12+ tools', desc: 'Merge, split, compress, convert and edit PDF files.', featured: 'Merge PDF' },
-    image: { label: 'Image Tools', color: '#22C55E', tint: 'rgba(34,197,94,.14)', grad: 'linear-gradient(135deg,#22C55E,#12B8A0)', count: '9+ tools', desc: 'Resize, crop, compress and convert images fast.', featured: 'Resize Image' },
-    docs: { label: 'Documents', color: '#3B82F6', tint: 'rgba(59,130,246,.14)', grad: 'linear-gradient(135deg,#3B82F6,#6366F1)', count: '7+ tools', desc: 'Convert Word, Excel and PowerPoint to and from PDF.', featured: 'Word to PDF' },
+    pdf: { label: 'PDF Tools', color: '#FF5C7A', tint: 'rgba(255,92,122,.14)', grad: 'linear-gradient(135deg,#FF5C7A,#FF8A5C)', count: '17+ tools', desc: 'Merge, split, compress, convert, watermark and edit PDF files.', featured: 'Merge PDF' },
+    image: { label: 'Image Tools', color: '#22C55E', tint: 'rgba(34,197,94,.14)', grad: 'linear-gradient(135deg,#22C55E,#12B8A0)', count: '14+ tools', desc: 'Resize, crop, compress, watermark and convert images fast.', featured: 'Resize Image' },
+    docs: { label: 'Documents', color: '#3B82F6', tint: 'rgba(59,130,246,.14)', grad: 'linear-gradient(135deg,#3B82F6,#6366F1)', count: '12+ tools', desc: 'Convert Word, Excel, CSV, HTML and PowerPoint to/from PDF.', featured: 'Word to PDF' },
     ai: { label: 'AI Suite', color: '#8B5CF6', tint: 'rgba(139,92,246,.14)', grad: 'linear-gradient(135deg,#8B5CF6,#C026D3)', count: '5+ tools', desc: 'Build resumes, charts and diagrams with AI.', featured: 'AI Resume' },
-    dev: { label: 'Developer', color: '#F59E0B', tint: 'rgba(245,158,11,.16)', grad: 'linear-gradient(135deg,#F59E0B,#EF4444)', count: '6+ tools', desc: 'Format JSON, test regex, validate XML and more.', featured: 'JSON Formatter' },
-    ocr: { label: 'OCR', color: '#EC4899', tint: 'rgba(236,72,153,.14)', grad: 'linear-gradient(135deg,#EC4899,#8B5CF6)', count: '4+ tools', desc: 'Extract text from scans, images and PDFs.', featured: 'Precision OCR' },
+    dev: { label: 'Developer', color: '#F59E0B', tint: 'rgba(245,158,11,.16)', grad: 'linear-gradient(135deg,#F59E0B,#EF4444)', count: '14+ tools', desc: 'Format JSON, XML, HTML, CSS, SQL, test regex and generate hashes.', featured: 'JSON Formatter' },
+    ocr: { label: 'OCR', color: '#EC4899', tint: 'rgba(236,72,153,.14)', grad: 'linear-gradient(135deg,#EC4899,#8B5CF6)', count: '9+ tools', desc: 'Extract text from scans, handwriting, receipts, and PDFs.', featured: 'Precision OCR' },
 };
 
 export const allTools = [
@@ -68,6 +68,43 @@ export const allTools = [
     ['UUID & Hash Generator', 'dev', 'Generate MD5, SHA-256, SHA-512 hashes, and UUID v4 identifiers.', '/hash-generator'],
     ['URL Encoder & Parser', 'dev', 'Encode, decode URI strings, and inspect URL query parameters.', '/url-encoder'],
     ['JSON to XML Converter', 'dev', 'Transform JSON object payloads into clean XML document markup.', '/json-to-xml'],
+
+    // PDF Tools (+5)
+    ['PDF Page Extractor', 'pdf', 'Extract specific pages or page ranges into a standalone PDF document.', '/pdf-extract-pages'],
+    ['PDF Page Delete', 'pdf', 'Remove unwanted pages or page ranges from your PDF document.', '/pdf-delete-pages'],
+    ['PDF Grayscale Converter', 'pdf', 'Convert color PDF documents into black & white grayscale for print.', '/pdf-grayscale'],
+    ['PDF Metadata Editor', 'pdf', 'Edit PDF metadata tags like Title, Author, Subject, and Keywords.', '/pdf-metadata'],
+    ['PDF Page Reorder', 'pdf', 'Rearrange and re-index PDF page sequences visually.', '/pdf-reorder'],
+
+    // Image Tools (+5)
+    ['Image Compressor', 'image', 'Shrink PNG, JPG, and WebP image sizes with customizable quality.', '/image-compressor'],
+    ['PNG to WEBP Converter', 'image', 'Convert transparent PNG images into lightweight WebP format.', '/png-to-webp'],
+    ['JPG to WEBP Converter', 'image', 'Convert JPEG photos into modern optimized WebP format.', '/jpg-to-webp'],
+    ['Image Color Palette Extractor', 'image', 'Extract primary color palettes and hex codes from uploaded images.', '/image-palette'],
+    ['SVG Optimizer', 'image', 'Minify raw SVG markup and strip metadata comments.', '/svg-optimizer'],
+    ['Text to Image Generator', 'image', 'Generate high-resolution PNG, JPG, or WebP images from custom styled text.', '/text-to-image'],
+
+
+    // Documents (+5)
+    ['Word to Text Converter', 'docs', 'Extract clean unformatted plain text from Word .docx documents.', '/word-to-text'],
+    ['Excel to CSV Converter', 'docs', 'Convert multi-sheet Excel workbooks (.xlsx) into CSV tabular format.', '/excel-to-csv'],
+    ['CSV to Excel Converter', 'docs', 'Convert tabular CSV data files into formatted Excel spreadsheets.', '/csv-to-excel'],
+    ['Text to Word Converter', 'docs', 'Create formatted Microsoft Word .docx files from plain text notes.', '/text-to-word'],
+    ['HTML to Word Converter', 'docs', 'Convert HTML markup pages into editable Microsoft Word documents.', '/html-to-word'],
+
+    // Developer Tools (+5)
+    ['HTML Formatter & Sanitizer', 'dev', 'Pretty-print, format, and sanitize unindented HTML markup code.', '/html-formatter'],
+    ['CSS Formatter & Beautifier', 'dev', 'Beautify, format, and indent stylesheet CSS code.', '/css-formatter'],
+    ['JS/TS Formatter', 'dev', 'Format and clean up JavaScript and TypeScript code snippets.', '/js-formatter'],
+    ['String Case Converter', 'dev', 'Convert text between camelCase, PascalCase, snake_case, and UPPERCASE.', '/case-converter'],
+    ['Text Difference Checker', 'dev', 'Compare two text documents side-by-side with line diff highlights.', '/text-diff'],
+
+    // OCR Tools (+5)
+    ['Image to Text OCR', 'ocr', 'Extract editable text from scanned documents and photos.', '/image-to-text'],
+    ['Handwriting OCR Scanner', 'ocr', 'Recognize and convert handwritten notes into digital text.', '/handwriting-ocr'],
+    ['Receipt & Invoice OCR', 'ocr', 'Extract totals, dates, and line items from receipts and invoices.', '/receipt-ocr'],
+    ['PDF Text OCR Scanner', 'ocr', 'Extract text from scanned non-searchable PDF files using OCR.', '/pdf-ocr-text'],
+    ['Multi-Language OCR Engine', 'ocr', 'Recognize text across 100+ global languages using advanced OCR.', '/multilingual-ocr'],
 ];
 
 export const toolIcons: Record<string, any> = {
@@ -122,7 +159,45 @@ export const toolIcons: Record<string, any> = {
     'UUID & Hash Generator': LuKey,
     'URL Encoder & Parser': LuGlobe,
     'JSON to XML Converter': LuFileCode,
+
+    // PDF Tools (+5)
+    'PDF Page Extractor': LuScissors,
+    'PDF Page Delete': LuFiles,
+    'PDF Grayscale Converter': LuFileText,
+    'PDF Metadata Editor': LuPenLine,
+    'PDF Page Reorder': LuRotateCcw,
+
+    // Image Tools (+5)
+    'Image Compressor': LuMaximize2,
+    'PNG to WEBP Converter': LuImage,
+    'JPG to WEBP Converter': LuImage,
+    'Image Color Palette Extractor': LuPenTool,
+    'SVG Optimizer': LuCode,
+    'Text to Image Generator': LuImage,
+
+
+    // Documents (+5)
+    'Word to Text Converter': LuFileText,
+    'Excel to CSV Converter': LuTable,
+    'CSV to Excel Converter': LuTable,
+    'Text to Word Converter': LuFileOutput,
+    'HTML to Word Converter': LuFileCode,
+
+    // Developer Tools (+5)
+    'HTML Formatter & Sanitizer': LuFileCode,
+    'CSS Formatter & Beautifier': LuCode,
+    'JS/TS Formatter': LuCode,
+    'String Case Converter': LuBraces,
+    'Text Difference Checker': LuArrowLeftRight,
+
+    // OCR Tools (+5)
+    'Image to Text OCR': LuScanText,
+    'Handwriting OCR Scanner': LuScanText,
+    'Receipt & Invoice OCR': LuTable,
+    'PDF Text OCR Scanner': LuFileText,
+    'Multi-Language OCR Engine': LuGlobe,
 };
+
 
 
 export const catIcons: Record<keyof typeof C, any> = {

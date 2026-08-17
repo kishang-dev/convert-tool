@@ -580,18 +580,70 @@ export const devToolsAPI = {
 export const pdfToolsApi = {
   watermark: async (fileId: string, options: { text: string; opacity?: number; size?: number; rotation?: number; color?: string }) => (await api.post("/files/watermark", { fileId, ...options })).data,
   addPageNumbers: async (fileId: string, options: { position?: string; startNumber?: number; fontSize?: number; format?: string }) => (await api.post("/files/add-numbers", { fileId, ...options })).data,
+  extractPages: async (fileId: string, pages: number[]) => (await api.post("/files/extract-pages", { fileId, pages })).data,
+  deletePages: async (fileId: string, pages: number[]) => (await api.post("/files/delete-pages", { fileId, pages })).data,
+  convertToGrayscale: async (fileId: string) => (await api.post("/files/grayscale", { fileId })).data,
+  updateMetadata: async (fileId: string, metadata: { title?: string; author?: string; subject?: string; keywords?: string }) => (await api.post("/files/metadata", { fileId, ...metadata })).data,
+  reorderPages: async (fileId: string, pageOrder: number[]) => (await api.post("/files/reorder-pages", { fileId, pageOrder })).data,
 };
 
 export const devToolsApi = {
   generateHashes: async (text: string) => (await api.post("/devtools/hash/generate", { text })).data,
   processUrl: async (url: string) => (await api.post("/devtools/url/process", { url })).data,
   jsonToXml: async (json: string | object) => (await api.post("/devtools/xml/from-json", { json })).data,
+  formatHtml: async (code: string) => (await api.post("/devtools/html/format", { code })).data,
+  formatCss: async (code: string) => (await api.post("/devtools/css/format", { code })).data,
+  formatJs: async (code: string) => (await api.post("/devtools/js/format", { code })).data,
+  convertCase: async (text: string) => (await api.post("/devtools/case/convert", { text })).data,
+  compareTextDiff: async (original: string, modified: string) => (await api.post("/devtools/text/diff", { original, modified })).data,
 };
 
 export const conversionApi = {
   svgToImage: async (fileId: string, targetFormat: string, density?: number) => (await api.post("/conversion/svg-to-image", { fileId, targetFormat, density })).data,
   watermarkImage: async (fileId: string, options: { text: string; color?: string; opacity?: number; fontSize?: number }) => (await api.post("/conversion/image-watermark", { fileId, ...options })).data,
+  compressImage: async (fileId: string, quality?: number) => (await api.post("/conversion/image-compress", { fileId, quality })).data,
+  pngToWebp: async (fileId: string, quality?: number) => (await api.post("/conversion/png-to-webp", { fileId, quality })).data,
+  jpgToWebp: async (fileId: string, quality?: number) => (await api.post("/conversion/jpg-to-webp", { fileId, quality })).data,
+  extractPalette: async (fileId: string) => (await api.post("/conversion/image-palette", { fileId })).data,
+  optimizeSvg: async (fileId: string) => (await api.post("/conversion/optimize-svg", { fileId })).data,
+  wordToText: async (fileId: string) => (await api.post("/conversion/word-to-text", { fileId })).data,
+  excelToCsv: async (fileId: string) => (await api.post("/conversion/excel-to-csv", { fileId })).data,
+  csvToExcel: async (fileId: string) => (await api.post("/conversion/csv-to-excel", { fileId })).data,
+  textToWord: async (payload: { text?: string; fileId?: string }) => (await api.post("/conversion/text-to-word", payload)).data,
+  htmlToWord: async (payload: { html?: string; fileId?: string }) => (await api.post("/conversion/html-to-word", payload)).data,
+  textToImage: async (options: { text: string; bgColor?: string; textColor?: string; fontSize?: number; width?: number; height?: number; format?: string }) => (await api.post("/conversion/text-to-image", options)).data,
+};
+
+
+export const ocrApi = {
+  imageToText: async (file: File) => {
+    const formData = new FormData();
+    formData.append("image", file);
+    return (await api.post("/image-to-text", formData, { headers: { "Content-Type": "multipart/form-data" } })).data;
+  },
+  handwriting: async (file: File) => {
+    const formData = new FormData();
+    formData.append("image", file);
+    return (await api.post("/handwriting", formData, { headers: { "Content-Type": "multipart/form-data" } })).data;
+  },
+  receipt: async (file: File) => {
+    const formData = new FormData();
+    formData.append("image", file);
+    return (await api.post("/receipt", formData, { headers: { "Content-Type": "multipart/form-data" } })).data;
+  },
+  pdfText: async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    return (await api.post("/pdf-text", formData, { headers: { "Content-Type": "multipart/form-data" } })).data;
+  },
+  multilingual: async (file: File, lang: string) => {
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("lang", lang);
+    return (await api.post("/multilingual", formData, { headers: { "Content-Type": "multipart/form-data" } })).data;
+  },
 };
 
 export default api;
+
 
