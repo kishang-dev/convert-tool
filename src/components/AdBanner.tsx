@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 
 export type AdFormatType =
   | "responsive"     // Horizontal / Leaderboard (728x90 or Fluid)
@@ -33,58 +34,80 @@ export default function AdBanner({
   label,
   forcePreview = false,
 }: AdBannerProps) {
+  const router = useRouter();
   const adRef = useRef<HTMLModElement | null>(null);
   const pushedRef = useRef<boolean>(false);
-  const [adError, setAdError] = useState<boolean>(false);
   const [blocked, setBlocked] = useState<boolean>(false);
+
+  // Track route changes so SPA navigation generates a clean, fresh ad element
+  const currentPath = router?.asPath || "";
 
   useEffect(() => {
     if (forcePreview) return;
 
-    // Detect if the AdSense script itself failed to load (ad blocker, network, etc.)
+    pushedRef.current = false;
+    let timerId: NodeJS.Timeout | null = null;
+    let rafId: number | null = null;
+
+    // Detect if the AdSense script failed to load (ad blocker, network error, etc.)
     const blockCheckTimer = setTimeout(() => {
       if (typeof window !== "undefined" && !(window as any).adsbygoogle?.loaded) {
         setBlocked(true);
       }
-    }, 2500);
+    }, 3000);
 
-    try {
-      if (typeof window !== "undefined") {
-        // Prevent duplicate pushes on re-render / double mount in React 18/19
-        if (!pushedRef.current && adRef.current) {
-          // Guard against pushing into a zero-width container, which is the
-          // #1 cause of "code looks right but no ad shows" on Next.js sites.
-          const width = adRef.current.offsetWidth;
-          if (width === 0) {
-            console.warn(
-              `AdSense slot ${adSlot} has 0 width at push time — check parent layout (flex/grid alignment, hidden overflow, etc).`
-            );
-          }
-          ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
-          pushedRef.current = true;
-        }
+    const tryPushAd = () => {
+      if (typeof window === "undefined" || !adRef.current || pushedRef.current) {
+        return;
       }
-    } catch (err) {
-      console.warn("AdSense push error:", err);
-      setAdError(true);
-    }
 
-    return () => clearTimeout(blockCheckTimer);
-  }, [forcePreview, adSlot]);
+      // Check if this specific DOM node was already processed by Google AdSense
+      const status = adRef.current.getAttribute("data-adsbygoogle-status");
+      if (status) {
+        pushedRef.current = true;
+        return;
+      }
+
+      // Guard against pushing into a zero-width container during initial hydration/render
+      const width = adRef.current.offsetWidth;
+      if (width === 0) {
+        rafId = requestAnimationFrame(tryPushAd);
+        return;
+      }
+
+      try {
+        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+        pushedRef.current = true;
+      } catch (err) {
+        console.warn("AdSense push warning:", err);
+      }
+    };
+
+    // Defer push slightly to ensure Next.js route transition and layout settlement are finished
+    timerId = setTimeout(() => {
+      rafId = requestAnimationFrame(tryPushAd);
+    }, 150);
+
+    return () => {
+      if (timerId) clearTimeout(timerId);
+      if (rafId) cancelAnimationFrame(rafId);
+      clearTimeout(blockCheckTimer);
+    };
+  }, [forcePreview, adSlot, currentPath]);
 
   // Dimension helpers for preview blueprints
   const getFormatSpecs = () => {
     switch (adFormat) {
       case "rectangle":
-        return { name: "Medium Rectangle Ad", size: "300 x 250", height: "h-[250px]", width: "w-full max-w-[300px]" };
+        return { name: "Medium Rectangle Ad", size: "300 x 250", height: "min-h-[250px]", width: "w-full max-w-[300px]" };
       case "in-article":
         return { name: "In-Article Native Ad", size: "Fluid Content Flow", height: "min-h-[120px]", width: "w-full" };
       case "vertical":
-        return { name: "Skyscraper / Vertical Ad", size: "160 x 600 or 300 x 600", height: "h-[600px]", width: "w-full max-w-[300px]" };
+        return { name: "Skyscraper / Vertical Ad", size: "160 x 600 or 300 x 600", height: "min-h-[600px]", width: "w-full max-w-[300px]" };
       case "multiplex":
         return { name: "Multiplex Content Grid", size: "Grid Recommendations", height: "min-h-[280px]", width: "w-full" };
       case "sticky-bottom":
-        return { name: "Sticky Bottom Anchor Ad", size: "728 x 90 Fixed Footer", height: "h-[90px]", width: "w-full" };
+        return { name: "Sticky Bottom Anchor Ad", size: "728 x 90 Fixed Footer", height: "min-h-[90px]", width: "w-full" };
       case "responsive":
       default:
         return { name: "Display Leaderboard Banner", size: "728 x 90 or Responsive", height: "min-h-[90px]", width: "w-full" };
@@ -129,9 +152,10 @@ export default function AdBanner({
       <div className="fixed bottom-0 left-0 right-0 z-40 bg-[var(--surface)]/95 border-t border-[var(--border)] backdrop-blur-md py-2 px-4 shadow-lg flex justify-center items-center w-full">
         <div className="w-full max-w-[1200px] flex justify-center">
           <ins
+            key={`sticky-${adSlot}-${currentPath}`}
             ref={adRef}
             className="adsbygoogle block w-full"
-            style={style || { display: "block", width: "100%", height: "90px" }}
+            style={style || { display: "block", width: "100%", height: "90px", minHeight: "90px" }}
             data-ad-client={client}
             data-ad-slot={adSlot}
             data-ad-format="horizontal"
@@ -151,17 +175,18 @@ export default function AdBanner({
         </span>
       )}
 
-      {/* This wrapper guarantees a non-zero width is available BEFORE adsbygoogle.js measures it */}
-      <div className="w-full flex justify-center">
+      {/* Guarantees a non-zero width & height container before adsbygoogle.js measures layout */}
+      <div className={`w-full flex justify-center ${specs.height}`}>
         <ins
+          key={`${adSlot}-${currentPath}`}
           ref={adRef}
           className="adsbygoogle block w-full"
           style={
             style ||
             (adFormat === "rectangle"
-              ? { display: "inline-block", width: "300px", height: "250px" }
+              ? { display: "inline-block", width: "300px", height: "250px", minHeight: "250px" }
               : adFormat === "vertical"
-                ? { display: "inline-block", width: "300px", height: "600px" }
+                ? { display: "inline-block", width: "300px", height: "600px", minHeight: "600px" }
                 : { display: "block", width: "100%", minHeight: "90px" })
           }
           data-ad-client={client}
