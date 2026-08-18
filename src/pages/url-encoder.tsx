@@ -109,9 +109,28 @@ export default function UrlEncoder() {
                 </code>
               </div>
 
+              {result.base64Url && (
+                <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)]">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-extrabold text-sm text-amber-500 uppercase tracking-wider">Base64 URL-Safe Output</h3>
+                    <Button size="sm" variant="ghost" onClick={() => copyText(result.base64Url, "Base64 URL-Safe")} className="gap-1 text-xs">
+                      {copied === "Base64 URL-Safe" ? <LuCheck className="text-emerald-500" /> : <LuCopy />} Copy
+                    </Button>
+                  </div>
+                  <code className="text-xs font-mono break-all text-[var(--text)] block bg-[var(--bg)] p-3 rounded-xl border border-[var(--border)]">
+                    {result.base64Url}
+                  </code>
+                </div>
+              )}
+
               {result.parsed && (
                 <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)]">
-                  <h3 className="font-extrabold text-sm text-amber-500 uppercase tracking-wider mb-3">Parsed URL Breakdown</h3>
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-extrabold text-sm text-amber-500 uppercase tracking-wider">Parsed URL Breakdown</h3>
+                    <a href={inputUrl.startsWith("http") ? inputUrl : `https://${inputUrl}`} target="_blank" rel="noopener noreferrer" className="text-xs text-amber-500 hover:underline font-bold">
+                      Open Target Link ↗
+                    </a>
+                  </div>
                   <pre className="text-xs font-mono bg-[var(--bg)] p-4 rounded-xl border border-[var(--border)] overflow-x-auto text-[var(--text)]">
                     {JSON.stringify(result.parsed, null, 2)}
                   </pre>

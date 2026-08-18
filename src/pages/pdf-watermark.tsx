@@ -126,9 +126,24 @@ export default function PdfWatermark() {
                       type="text"
                       value={watermarkText}
                       onChange={(e) => setWatermarkText(e.target.value)}
-                      className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl outline-none text-sm focus:border-pink-500"
+                      className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl outline-none text-sm focus:border-pink-500 mb-2"
                       placeholder="e.g. CONFIDENTIAL / DRAFT"
                     />
+                    <div className="flex flex-wrap gap-1.5">
+                      {["CONFIDENTIAL", "DRAFT", "DO NOT COPY", "SAMPLE", "TOP SECRET"].map((preset) => (
+                        <button
+                          key={preset}
+                          type="button"
+                          onClick={() => setWatermarkText(preset)}
+                          className={`text-[10px] px-2 py-0.5 rounded border transition ${watermarkText === preset
+                            ? "bg-pink-500/20 border-pink-500 text-pink-400 font-bold"
+                            : "bg-[var(--bg)] border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text)]"
+                            }`}
+                        >
+                          {preset}
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">

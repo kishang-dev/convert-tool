@@ -61,6 +61,7 @@ export const allTools = [
     ['Markdown Editor & HTML Converter', 'dev', 'Write rich Markdown and compile it into styled visual HTML codes instantly.', '/markdown-editor'],
     ['Unified Code Minifier', 'dev', 'Compress HTML codes, CSS stylesheets, and Javascript files client-side.', '/code-minifier'],
     ['Precision OCR', 'ocr', 'Extract text from scans in 100+ languages.', '/ocr'],
+
     ['PDF Watermark', 'pdf', 'Add custom text watermarks with opacity and rotation to PDF pages.', '/pdf-watermark'],
     ['PDF Page Numberer', 'pdf', 'Automatically insert formatted page numbers into PDF files.', '/pdf-number'],
     ['SVG to Image', 'image', 'Convert vector SVG files into high-res PNG, JPG, or WebP images.', '/svg-to-image'],

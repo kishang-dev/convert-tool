@@ -588,24 +588,24 @@ export const pdfToolsApi = {
 };
 
 export const devToolsApi = {
-  generateHashes: async (text: string) => (await api.post("/devtools/hash/generate", { text })).data,
+  generateHashes: async (text: string, options?: { secretKey?: string; isUppercase?: boolean }) => (await api.post("/devtools/hash/generate", { text, ...options })).data,
   processUrl: async (url: string) => (await api.post("/devtools/url/process", { url })).data,
-  jsonToXml: async (json: string | object) => (await api.post("/devtools/xml/from-json", { json })).data,
+  jsonToXml: async (json: string | object, options?: { rootName?: string; itemName?: string; attrPrefix?: string; indent?: number }) => (await api.post("/devtools/xml/from-json", { json, ...options })).data,
   formatHtml: async (code: string) => (await api.post("/devtools/html/format", { code })).data,
   formatCss: async (code: string) => (await api.post("/devtools/css/format", { code })).data,
   formatJs: async (code: string) => (await api.post("/devtools/js/format", { code })).data,
   convertCase: async (text: string) => (await api.post("/devtools/case/convert", { text })).data,
-  compareTextDiff: async (original: string, modified: string) => (await api.post("/devtools/text/diff", { original, modified })).data,
+  compareTextDiff: async (original: string, modified: string, options?: { ignoreWhitespace?: boolean; ignoreCase?: boolean }) => (await api.post("/devtools/text/diff", { original, modified, ...options })).data,
 };
 
 export const conversionApi = {
-  svgToImage: async (fileId: string, targetFormat: string, density?: number) => (await api.post("/conversion/svg-to-image", { fileId, targetFormat, density })).data,
-  watermarkImage: async (fileId: string, options: { text: string; color?: string; opacity?: number; fontSize?: number }) => (await api.post("/conversion/image-watermark", { fileId, ...options })).data,
-  compressImage: async (fileId: string, quality?: number) => (await api.post("/conversion/image-compress", { fileId, quality })).data,
+  svgToImage: async (fileId: string, targetFormat: string, density?: number, options?: { scale?: number; bgColor?: string }) => (await api.post("/conversion/svg-to-image", { fileId, targetFormat, density, ...options })).data,
+  watermarkImage: async (fileId: string, options: { text: string; color?: string; strokeColor?: string; opacity?: number; fontSize?: number; rotation?: number; position?: string }) => (await api.post("/conversion/image-watermark", { fileId, ...options })).data,
+  compressImage: async (fileId: string, quality?: number, options?: { targetFormat?: string; maxWidth?: number; maxHeight?: number }) => (await api.post("/conversion/image-compress", { fileId, quality, ...options })).data,
   pngToWebp: async (fileId: string, quality?: number) => (await api.post("/conversion/png-to-webp", { fileId, quality })).data,
   jpgToWebp: async (fileId: string, quality?: number) => (await api.post("/conversion/jpg-to-webp", { fileId, quality })).data,
-  extractPalette: async (fileId: string) => (await api.post("/conversion/image-palette", { fileId })).data,
-  optimizeSvg: async (fileId: string) => (await api.post("/conversion/optimize-svg", { fileId })).data,
+  extractPalette: async (fileId: string, count?: number) => (await api.post("/conversion/image-palette", { fileId, count })).data,
+  optimizeSvg: async (fileId: string, options?: { removeComments?: boolean; stripMetadata?: boolean }) => (await api.post("/conversion/optimize-svg", { fileId, ...options })).data,
   wordToText: async (fileId: string) => (await api.post("/conversion/word-to-text", { fileId })).data,
   excelToCsv: async (fileId: string) => (await api.post("/conversion/excel-to-csv", { fileId })).data,
   csvToExcel: async (fileId: string) => (await api.post("/conversion/csv-to-excel", { fileId })).data,

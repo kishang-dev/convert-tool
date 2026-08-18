@@ -158,6 +158,37 @@ export default function TextToImagePage() {
                   />
                 </div>
 
+                {/* Dimension Presets */}
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                    Dimension Presets
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { label: "YouTube (1280x720)", w: 1280, h: 720 },
+                      { label: "Twitter/X (1500x500)", w: 1500, h: 500 },
+                      { label: "Instagram (1080x1080)", w: 1080, h: 1080 },
+                      { label: "Story (1080x1920)", w: 1080, h: 1920 },
+                      { label: "FB Cover (820x312)", w: 820, h: 312 },
+                    ].map((preset) => (
+                      <button
+                        key={preset.label}
+                        type="button"
+                        onClick={() => {
+                          setWidth(preset.w);
+                          setHeight(preset.h);
+                        }}
+                        className={`text-[11px] px-2.5 py-1 rounded-lg border transition ${width === preset.w && height === preset.h
+                          ? "bg-emerald-500/20 border-emerald-500 text-emerald-300 font-semibold"
+                          : "bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200"
+                          }`}
+                      >
+                        {preset.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">

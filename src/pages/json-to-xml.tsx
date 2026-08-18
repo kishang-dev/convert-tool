@@ -12,6 +12,8 @@ import { LuFileCode, LuCopy, LuCheck, LuCode } from "react-icons/lu";
 
 export default function JsonToXml() {
   const [jsonInput, setJsonInput] = useState(`{\n  "user": {\n    "name": "Kishang",\n    "role": "Developer",\n    "skills": ["JavaScript", "TypeScript", "Node.js"]\n  }\n}`);
+  const [rootName, setRootName] = useState("root");
+  const [indent, setIndent] = useState(2);
   const [xmlResult, setXmlResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -26,7 +28,7 @@ export default function JsonToXml() {
     if (!jsonInput.trim()) return;
     setLoading(true);
     try {
-      const res = await devToolsApi.jsonToXml(jsonInput);
+      const res = await devToolsApi.jsonToXml(jsonInput, { rootName, indent });
       if (res.result) {
         setXmlResult(res.result);
         showToast("Converted to XML successfully!");

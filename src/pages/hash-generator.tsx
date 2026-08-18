@@ -12,6 +12,8 @@ import { LuKey, LuCopy, LuCheck, LuRefreshCw } from "react-icons/lu";
 
 export default function HashGenerator() {
   const [inputText, setInputText] = useState("ToolBasketAI");
+  const [secretKey, setSecretKey] = useState("");
+  const [isUppercase, setIsUppercase] = useState(false);
   const [hashes, setHashes] = useState<{ md5: string; sha1: string; sha256: string; sha512: string; uuid: string } | null>(null);
   const [loading, setLoading] = useState(false);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -25,7 +27,7 @@ export default function HashGenerator() {
   const handleGenerate = async () => {
     setLoading(true);
     try {
-      const res = await devToolsApi.generateHashes(inputText);
+      const res = await devToolsApi.generateHashes(inputText, { secretKey, isUppercase });
       if (res.result) {
         setHashes(res.result);
       }
@@ -38,7 +40,7 @@ export default function HashGenerator() {
 
   useEffect(() => {
     handleGenerate();
-  }, [inputText]);
+  }, [inputText, secretKey, isUppercase]);
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);

@@ -36,11 +36,14 @@ export default function SvgOptimizer() {
     }
   };
 
+  const [removeComments, setRemoveComments] = useState(true);
+  const [stripMetadata, setStripMetadata] = useState(true);
+
   const handleOptimize = async () => {
     if (!file) return;
     setProcessing(true);
     try {
-      const result = await conversionApi.optimizeSvg(file._id);
+      const result = await conversionApi.optimizeSvg(file._id, { removeComments, stripMetadata });
       setDownloadUrl(result.downloadUrl);
       showToast("SVG optimized!");
     } catch (err: any) {
@@ -96,6 +99,27 @@ export default function SvgOptimizer() {
                     </div>
                   </div>
                   <Button variant="ghost" size="sm" onClick={() => { setFile(null); setDownloadUrl(null); }}>Change</Button>
+                </div>
+
+                <div className="space-y-3 py-2 border-t border-b border-[var(--border)]">
+                  <label className="flex items-center gap-2 text-xs font-semibold cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={removeComments}
+                      onChange={(e) => setRemoveComments(e.target.checked)}
+                      className="rounded accent-emerald-500"
+                    />
+                    Remove SVG Comments & Annotations
+                  </label>
+                  <label className="flex items-center gap-2 text-xs font-semibold cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={stripMetadata}
+                      onChange={(e) => setStripMetadata(e.target.checked)}
+                      className="rounded accent-emerald-500"
+                    />
+                    Strip Editor Metadata Tags (<code className="text-[10px]">&lt;metadata&gt;</code>)
+                  </label>
                 </div>
 
                 <Button onClick={handleOptimize} disabled={processing} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl">

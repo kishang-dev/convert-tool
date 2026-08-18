@@ -79,25 +79,49 @@ export default function CaseConverter() {
           </div>
 
           {results && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                { label: "camelCase", key: "camelCase", val: results.camelCase },
-                { label: "PascalCase", key: "PascalCase", val: results.pascalCase },
-                { label: "snake_case", key: "snake_case", val: results.snakeCase },
-                { label: "kebab-case", key: "kebab-case", val: results.kebabCase },
-                { label: "UPPERCASE", key: "UPPERCASE", val: results.upperCase },
-                { label: "lowercase", key: "lowercase", val: results.lowerCase },
-              ].map((item) => (
-                <div key={item.key} className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-between gap-2">
+            <div className="space-y-6">
+              {results.stats && (
+                <div className="grid grid-cols-3 gap-4 text-center p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)]">
                   <div>
-                    <span className="text-xs font-bold text-amber-500 uppercase tracking-wider block mb-0.5">{item.label}</span>
-                    <code className="text-xs font-mono text-[var(--text)]">{item.val}</code>
+                    <span className="text-[11px] font-semibold text-[var(--text-muted)] uppercase block">Characters</span>
+                    <span className="text-sm font-extrabold text-amber-500 font-mono">{results.stats.charCount}</span>
                   </div>
-                  <Button size="sm" variant="ghost" onClick={() => copyVal(item.val, item.label)} className="gap-1 text-xs">
-                    {copiedKey === item.label ? <LuCheck className="text-emerald-500" /> : <LuCopy />} {copiedKey === item.label ? "Copied" : "Copy"}
-                  </Button>
+                  <div>
+                    <span className="text-[11px] font-semibold text-[var(--text-muted)] uppercase block">Words</span>
+                    <span className="text-sm font-extrabold text-amber-500 font-mono">{results.stats.wordCount}</span>
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-semibold text-[var(--text-muted)] uppercase block">Lines</span>
+                    <span className="text-sm font-extrabold text-amber-500 font-mono">{results.stats.lineCount}</span>
+                  </div>
                 </div>
-              ))}
+              )}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  { label: "camelCase", key: "camelCase", val: results.camelCase },
+                  { label: "PascalCase", key: "PascalCase", val: results.pascalCase },
+                  { label: "snake_case", key: "snake_case", val: results.snakeCase },
+                  { label: "kebab-case", key: "kebab-case", val: results.kebabCase },
+                  { label: "CONSTANT_CASE", key: "constantCase", val: results.constantCase },
+                  { label: "Title Case", key: "titleCase", val: results.titleCase },
+                  { label: "Sentence case", key: "sentenceCase", val: results.sentenceCase },
+                  { label: "UPPERCASE", key: "upperCase", val: results.upperCase },
+                  { label: "lowercase", key: "lowerCase", val: results.lowerCase },
+                  { label: "tOGGLE cASE", key: "toggleCase", val: results.toggleCase },
+                  { label: "dot.case", key: "dotCase", val: results.dotCase },
+                ].filter(item => item.val).map((item) => (
+                  <div key={item.key} className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-between gap-2">
+                    <div>
+                      <span className="text-xs font-bold text-amber-500 uppercase tracking-wider block mb-0.5">{item.label}</span>
+                      <code className="text-xs font-mono text-[var(--text)] break-all">{item.val}</code>
+                    </div>
+                    <Button size="sm" variant="ghost" onClick={() => copyVal(item.val, item.label)} className="gap-1 text-xs shrink-0">
+                      {copiedKey === item.label ? <LuCheck className="text-emerald-500" /> : <LuCopy />} {copiedKey === item.label ? "Copied" : "Copy"}
+                    </Button>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>

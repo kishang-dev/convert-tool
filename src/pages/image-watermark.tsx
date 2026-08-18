@@ -15,6 +15,9 @@ export default function ImageWatermark() {
   const [file, setFile] = useState<FileData | null>(null);
   const [text, setText] = useState("WATERMARK");
   const [color, setColor] = useState("#ffffff");
+  const [rotation, setRotation] = useState(0);
+  const [position, setPosition] = useState("center");
+  const [strokeColor, setStrokeColor] = useState("#000000");
   const [opacity, setOpacity] = useState(0.5);
   const [fontSize, setFontSize] = useState(36);
 
@@ -55,8 +58,11 @@ export default function ImageWatermark() {
       const res = await conversionApi.watermarkImage(file._id, {
         text,
         color,
+        strokeColor,
         opacity,
         fontSize,
+        rotation,
+        position,
       });
 
       const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
@@ -155,12 +161,51 @@ export default function ImageWatermark() {
                   </div>
 
                   <div>
-                    <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block mb-1">Text Color</label>
-                    <input
-                      type="color" value={color}
-                      onChange={(e) => setColor(e.target.value)}
-                      className="w-full h-10 bg-transparent border border-[var(--border)] rounded-xl cursor-pointer p-1"
-                    />
+                    <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block mb-2">Watermark Position</label>
+                    <div className="grid grid-cols-3 gap-2 max-w-[240px]">
+                      {[
+                        { pos: "top-left", label: "↖ TL" },
+                        { pos: "top-center", label: "↑ TC" },
+                        { pos: "top-right", label: "↗ TR" },
+                        { pos: "center-left", label: "← CL" },
+                        { pos: "center", label: "• Center" },
+                        { pos: "center-right", label: "→ CR" },
+                        { pos: "bottom-left", label: "↙ BL" },
+                        { pos: "bottom-center", label: "↓ BC" },
+                        { pos: "bottom-right", label: "↘ BR" },
+                      ].map((item) => (
+                        <button
+                          key={item.pos}
+                          type="button"
+                          onClick={() => setPosition(item.pos)}
+                          className={`p-2 rounded-lg border text-xs font-bold transition ${position === item.pos
+                            ? "bg-emerald-500/20 border-emerald-500 text-emerald-400"
+                            : "bg-[var(--bg)] border-[var(--border)] text-[var(--text-muted)] hover:text-white"
+                            }`}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block mb-1">Text Color</label>
+                      <input
+                        type="color" value={color}
+                        onChange={(e) => setColor(e.target.value)}
+                        className="w-full h-10 bg-transparent border border-[var(--border)] rounded-xl cursor-pointer p-1"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block mb-1">Outline Color</label>
+                      <input
+                        type="color" value={strokeColor}
+                        onChange={(e) => setStrokeColor(e.target.value)}
+                        className="w-full h-10 bg-transparent border border-[var(--border)] rounded-xl cursor-pointer p-1"
+                      />
+                    </div>
                   </div>
 
                   <Button onClick={handleApplyWatermark} disabled={processing || !text} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl mt-4">

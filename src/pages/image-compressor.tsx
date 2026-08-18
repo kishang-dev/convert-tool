@@ -23,6 +23,8 @@ export default function ImageCompressor() {
     setTimeout(() => setToast(null), 3000);
   };
 
+  const [targetFormat, setTargetFormat] = useState<string>("original");
+
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
     setUploading(true);
@@ -41,7 +43,9 @@ export default function ImageCompressor() {
     if (!file) return;
     setProcessing(true);
     try {
-      const result = await conversionApi.compressImage(file._id, quality);
+      const result = await conversionApi.compressImage(file._id, quality, {
+        targetFormat: targetFormat === "original" ? undefined : targetFormat
+      });
       setDownloadUrl(result.downloadUrl);
       showToast("Image compressed successfully!");
     } catch (err: any) {
@@ -100,8 +104,54 @@ export default function ImageCompressor() {
                 </div>
 
                 <div>
-                  <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block mb-1">Compression Quality ({quality}%)</label>
-                  <input type="range" min="10" max="95" value={quality} onChange={(e) => setQuality(Number(e.target.value))} className="w-full accent-emerald-500" />
+                  <div className="flex items-center justify-between text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mb-1">
+                    <span>Compression Quality</span>
+                    <span className="text-emerald-500 font-mono">{quality}%</span>
+                  </div>
+                  <input type="range" min="10" max="95" value={quality} onChange={(e) => setQuality(Number(e.target.value))} className="w-full accent-emerald-500 mb-2" />
+                  <div className="flex gap-2">
+                    {[
+                      { label: "Best Quality (90%)", q: 90 },
+                      { label: "Balanced (75%)", q: 75 },
+                      { label: "Max Compression (40%)", q: 40 },
+                    ].map((p) => (
+                      <button
+                        key={p.q}
+                        type="button"
+                        onClick={() => setQuality(p.q)}
+                        className={`text-[10px] px-2 py-1 rounded border transition ${quality === p.q
+                          ? "bg-emerald-500/20 border-emerald-500 text-emerald-400 font-bold"
+                          : "bg-[var(--bg)] border-[var(--border)] text-[var(--text-muted)] hover:text-white"
+                          }`}
+                      >
+                        {p.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block mb-1">Convert Format (Optional)</label>
+                  <div className="grid grid-cols-4 gap-2">
+                    {[
+                      { label: "Keep Original", fmt: "original" },
+                      { label: "WEBP", fmt: "webp" },
+                      { label: "PNG", fmt: "png" },
+                      { label: "JPG", fmt: "jpg" },
+                    ].map((item) => (
+                      <button
+                        key={item.fmt}
+                        type="button"
+                        onClick={() => setTargetFormat(item.fmt)}
+                        className={`py-2 rounded-xl border text-xs font-bold transition ${targetFormat === item.fmt
+                          ? "border-emerald-500 bg-emerald-500/10 text-emerald-500"
+                          : "border-[var(--border)] bg-[var(--bg)] hover:border-[var(--accent)]"
+                          }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
                 <Button onClick={handleCompress} disabled={processing} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl">

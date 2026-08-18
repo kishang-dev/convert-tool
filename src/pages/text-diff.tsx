@@ -13,6 +13,8 @@ import { LuArrowLeftRight } from "react-icons/lu";
 export default function TextDiff() {
   const [original, setOriginal] = useState("Hello World\nLine 2 text\nLine 3 original");
   const [modified, setModified] = useState("Hello World\nLine 2 modified text\nLine 3 original");
+  const [ignoreWhitespace, setIgnoreWhitespace] = useState(false);
+  const [ignoreCase, setIgnoreCase] = useState(false);
   const [diffs, setDiffs] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
@@ -25,7 +27,7 @@ export default function TextDiff() {
   const handleCompare = async () => {
     setLoading(true);
     try {
-      const res = await devToolsApi.compareTextDiff(original, modified);
+      const res = await devToolsApi.compareTextDiff(original, modified, { ignoreWhitespace, ignoreCase });
       setDiffs(res.diffs || []);
       showToast("Text difference comparison complete!");
     } catch (err: any) {
@@ -33,6 +35,13 @@ export default function TextDiff() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSwap = () => {
+    const temp = original;
+    setOriginal(modified);
+    setModified(temp);
+    showToast("Original and Modified texts swapped!");
   };
 
   return (
@@ -76,6 +85,32 @@ export default function TextDiff() {
                 className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl outline-none text-xs font-mono resize-none focus:border-amber-500 text-[var(--text)]"
               />
             </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)]">
+            <div className="flex items-center gap-6">
+              <label className="flex items-center gap-2 text-xs font-semibold cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={ignoreWhitespace}
+                  onChange={(e) => setIgnoreWhitespace(e.target.checked)}
+                  className="rounded accent-amber-500"
+                />
+                Ignore Whitespace
+              </label>
+              <label className="flex items-center gap-2 text-xs font-semibold cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={ignoreCase}
+                  onChange={(e) => setIgnoreCase(e.target.checked)}
+                  className="rounded accent-amber-500"
+                />
+                Ignore Case Sensitivity
+              </label>
+            </div>
+            <Button size="sm" variant="ghost" onClick={handleSwap} className="gap-1.5 text-xs text-amber-500">
+              <LuArrowLeftRight size={12} /> Swap Texts
+            </Button>
           </div>
 
           <Button onClick={handleCompare} disabled={loading} className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3.5 rounded-xl">

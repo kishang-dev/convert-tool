@@ -14,6 +14,7 @@ export default function ImagePalette() {
   const [file, setFile] = useState<FileData | null>(null);
   const [uploading, setUploading] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const [count, setCount] = useState(6);
   const [palette, setPalette] = useState<string[]>([]);
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
@@ -41,7 +42,7 @@ export default function ImagePalette() {
     if (!file) return;
     setProcessing(true);
     try {
-      const result = await conversionApi.extractPalette(file._id);
+      const result = await conversionApi.extractPalette(file._id, count);
       setPalette(result.palette || []);
       showToast("Color palette extracted!");
     } catch (err: any) {
@@ -56,6 +57,13 @@ export default function ImagePalette() {
     setCopiedHex(hex);
     showToast(`Copied ${hex} to clipboard!`);
     setTimeout(() => setCopiedHex(null), 2000);
+  };
+
+  const copyCssVars = () => {
+    if (palette.length === 0) return;
+    const cssText = palette.map((hex, i) => `--color-${i + 1}: ${hex};`).join("\n");
+    navigator.clipboard.writeText(cssText);
+    showToast("CSS Variables copied to clipboard!");
   };
 
   return (
@@ -106,6 +114,25 @@ export default function ImagePalette() {
                   <Button variant="ghost" size="sm" onClick={() => { setFile(null); setPalette([]); }}>Change</Button>
                 </div>
 
+                <div>
+                  <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block mb-1">Number of Swatches</label>
+                  <div className="grid grid-cols-4 gap-2 mb-4">
+                    {[4, 6, 8, 12].map((cnt) => (
+                      <button
+                        key={cnt}
+                        type="button"
+                        onClick={() => setCount(cnt)}
+                        className={`py-2 rounded-xl border text-xs font-bold transition ${count === cnt
+                          ? "border-emerald-500 bg-emerald-500/10 text-emerald-500"
+                          : "border-[var(--border)] bg-[var(--bg)] hover:border-[var(--accent)]"
+                          }`}
+                      >
+                        {cnt} Colors
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <Button onClick={handleExtract} disabled={processing} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl">
                   {processing ? "Extracting Colors..." : "Extract Color Palette"}
                 </Button>
@@ -115,7 +142,14 @@ export default function ImagePalette() {
 
           <div className="md:col-span-5">
             <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm min-h-[300px]">
-              <h3 className="font-bold text-lg mb-2">Extracted Palette</h3>
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="font-bold text-lg">Extracted Palette</h3>
+                {palette.length > 0 && (
+                  <Button size="sm" variant="ghost" onClick={copyCssVars} className="text-xs text-emerald-500 font-bold border border-emerald-500/20">
+                    Copy CSS Vars
+                  </Button>
+                )}
+              </div>
               <p className="text-xs text-[var(--text-muted)] mb-6">Click any swatch to copy its Hex color code.</p>
 
               {palette.length > 0 ? (

@@ -142,6 +142,30 @@ export default function SvgToImage() {
                   </div>
 
                   <div>
+                    <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block mb-1">Scale Multiplier</label>
+                    <div className="grid grid-cols-4 gap-2">
+                      {[
+                        { label: "1x (Std)", val: 1 },
+                        { label: "2x (HD)", val: 2 },
+                        { label: "4x (4K)", val: 4 },
+                        { label: "8x (8K)", val: 8 },
+                      ].map((sc) => (
+                        <button
+                          key={sc.val}
+                          onClick={() => setDensity(300 * sc.val)}
+                          className={`p-2 rounded-xl border text-xs font-bold transition-all ${
+                            density === 300 * sc.val
+                              ? "border-emerald-500 bg-emerald-500/10 text-emerald-500"
+                              : "border-[var(--border)] bg-[var(--bg)] hover:border-[var(--accent)]"
+                          }`}
+                        >
+                          {sc.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
                     <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block mb-1">Rendering Density ({density} DPI)</label>
                     <select
                       value={density}
@@ -152,6 +176,7 @@ export default function SvgToImage() {
                       <option value={150}>150 DPI (Medium Quality)</option>
                       <option value={300}>300 DPI (High Resolution Print)</option>
                       <option value={600}>600 DPI (Ultra Sharp HD)</option>
+                      <option value={1200}>1200 DPI (8K Vector Master)</option>
                     </select>
                   </div>
 
