@@ -323,3 +323,24 @@ a,
   background: var(--accent-soft);
   color: var(--text);
 }
+
+/* ============================================================
+   GOOGLE ADSENSE TRANSPARENT & AUTO-COLLAPSE STYLING
+   ============================================================ */
+ins.adsbygoogle {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+ins.adsbygoogle[data-ad-status="unfilled"],
+ins.adsbygoogle[data-adsbygoogle-status="done"][data-ad-status="unfilled"] {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.adsense-wrapper:has(ins[data-ad-status="unfilled"]) {
+  display: none !important;
+}

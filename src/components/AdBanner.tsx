@@ -22,9 +22,10 @@ interface AdBannerProps {
 }
 
 const DEFAULT_CLIENT_ID = "ca-pub-4813321349853858";
+const DEFAULT_SLOT_ID = "2285841467";
 
 export default function AdBanner({
-  adSlot = "1234567890", // Replace with specific AdSense Slot ID if created in AdSense console
+  adSlot = DEFAULT_SLOT_ID,
   adFormat = "responsive",
   adLayout,
   adLayoutKey,
@@ -38,6 +39,7 @@ export default function AdBanner({
   const adRef = useRef<HTMLModElement | null>(null);
   const pushedRef = useRef<boolean>(false);
   const [blocked, setBlocked] = useState<boolean>(false);
+  const [unfilled, setUnfilled] = useState<boolean>(false);
 
   // Track route changes so SPA navigation generates a clean, fresh ad element
   const currentPath = router?.asPath || "";
@@ -46,6 +48,7 @@ export default function AdBanner({
     if (forcePreview) return;
 
     pushedRef.current = false;
+    setUnfilled(false);
     let timerId: NodeJS.Timeout | null = null;
     let rafId: number | null = null;
 
@@ -54,7 +57,22 @@ export default function AdBanner({
       if (typeof window !== "undefined" && !(window as any).adsbygoogle?.loaded) {
         setBlocked(true);
       }
-    }, 3000);
+    }, 3500);
+
+    // Observe AdSense status attributes for unfilled ads
+    let observer: MutationObserver | null = null;
+    if (adRef.current && typeof MutationObserver !== "undefined") {
+      observer = new MutationObserver(() => {
+        const adStatus = adRef.current?.getAttribute("data-ad-status");
+        if (adStatus === "unfilled") {
+          setUnfilled(true);
+        }
+      });
+      observer.observe(adRef.current, {
+        attributes: true,
+        attributeFilter: ["data-ad-status", "data-adsbygoogle-status"],
+      });
+    }
 
     const tryPushAd = () => {
       if (typeof window === "undefined" || !adRef.current || pushedRef.current) {
@@ -86,12 +104,13 @@ export default function AdBanner({
     // Defer push slightly to ensure Next.js route transition and layout settlement are finished
     timerId = setTimeout(() => {
       rafId = requestAnimationFrame(tryPushAd);
-    }, 150);
+    }, 200);
 
     return () => {
       if (timerId) clearTimeout(timerId);
       if (rafId) cancelAnimationFrame(rafId);
       clearTimeout(blockCheckTimer);
+      if (observer) observer.disconnect();
     };
   }, [forcePreview, adSlot, currentPath]);
 
@@ -146,6 +165,11 @@ export default function AdBanner({
     );
   }
 
+  // If Google AdSense returns no ad for this slot, collapse container completely (no blank space)
+  if (unfilled) {
+    return null;
+  }
+
   // Sticky bottom wrapper container
   if (adFormat === "sticky-bottom") {
     return (
@@ -154,8 +178,8 @@ export default function AdBanner({
           <ins
             key={`sticky-${adSlot}-${currentPath}`}
             ref={adRef}
-            className="adsbygoogle block w-full"
-            style={style || { display: "block", width: "100%", height: "90px", minHeight: "90px" }}
+            className="adsbygoogle block w-full bg-transparent"
+            style={style || { display: "block", width: "100%", height: "90px", minHeight: "90px", backgroundColor: "transparent" }}
             data-ad-client={client}
             data-ad-slot={adSlot}
             data-ad-format="horizontal"
@@ -180,14 +204,14 @@ export default function AdBanner({
         <ins
           key={`${adSlot}-${currentPath}`}
           ref={adRef}
-          className="adsbygoogle block w-full"
+          className="adsbygoogle block w-full bg-transparent"
           style={
             style ||
             (adFormat === "rectangle"
-              ? { display: "inline-block", width: "300px", height: "250px", minHeight: "250px" }
+              ? { display: "inline-block", width: "300px", height: "250px", minHeight: "250px", backgroundColor: "transparent" }
               : adFormat === "vertical"
-                ? { display: "inline-block", width: "300px", height: "600px", minHeight: "600px" }
-                : { display: "block", width: "100%", minHeight: "90px" })
+                ? { display: "inline-block", width: "300px", height: "600px", minHeight: "600px", backgroundColor: "transparent" }
+                : { display: "block", width: "100%", minHeight: "90px", backgroundColor: "transparent" })
           }
           data-ad-client={client}
           data-ad-slot={adSlot}

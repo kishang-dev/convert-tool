@@ -232,15 +232,17 @@ export default function TextToImagePage() {
                 {/* SVG Live Simulation */}
                 <div className="w-full overflow-hidden rounded-xl border border-slate-800 bg-slate-950 p-4 flex items-center justify-center min-h-[300px]">
                   <div
-                    className="w-full max-w-full aspect-video rounded-lg flex items-center justify-center p-6 text-center shadow-inner overflow-hidden transition-all duration-300"
+                    className="w-full max-w-full rounded-lg flex items-center justify-center p-6 text-center shadow-inner overflow-hidden transition-all duration-300"
                     style={{
+                      aspectRatio: `${Math.max(1, width)} / ${Math.max(1, height)}`,
+                      maxHeight: "420px",
                       backgroundColor: bgColor,
                       color: textColor,
-                      fontSize: `${Math.max(14, fontSize * 0.45)}px`,
+                      fontSize: `${Math.max(12, Math.min(28, fontSize * 0.4))}px`,
                       fontWeight: "bold",
                     }}
                   >
-                    <span className="whitespace-pre-line leading-snug break-words">
+                    <span className="whitespace-pre-line leading-snug break-words max-w-full">
                       {text || "Sample Text Preview"}
                     </span>
                   </div>
