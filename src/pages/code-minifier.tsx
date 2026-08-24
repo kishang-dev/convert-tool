@@ -304,14 +304,16 @@ export default function CodeMinifier() {
         "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" }
     };
 
+    const breadcrumbs = [{ name: "Code Minifier", item: "/code-minifier" }];
+
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title="Code Minifier — HTML, CSS, JS, JSON & TypeScript Compression Tool"
-                description="Compress and minify HTML, CSS, JavaScript, JSON, and TypeScript code instantly. See byte savings, compression ratio, and download minified output."
+                title="Free Code Minifier — Compress HTML, CSS, JS & JSON Online"
+                description="Compress and minify HTML, CSS, JavaScript, JSON, and TypeScript code online for free. Boost site loading speeds by stripping whitespace & comments."
                 canonical="/code-minifier"
-                keywords="code minifier, HTML minifier, CSS minifier, JS minifier, JSON minifier, TypeScript minifier, compress code online"
-                structuredData={structuredData}
+                keywords="code minifier, html minifier, css minifier, js minifier, javascript minifier, json minifier, compress code online, toolbasketai"
+                breadcrumbs={breadcrumbs}
             />
             <Navbar />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}

@@ -13,29 +13,43 @@ export interface Feature {
     icon?: string;
 }
 
+export interface FAQ {
+    question: string;
+    answer: string;
+}
+
 interface ToolSEOContentProps {
     toolName: string;
     toolDescription?: string;
     steps?: Step[];
     features?: Feature[];
+    faqs?: FAQ[];
 }
 
-export default function ToolSEOContent({ toolName, toolDescription, steps, features }: ToolSEOContentProps) {
+export default function ToolSEOContent({ toolName, toolDescription, steps, features, faqs }: ToolSEOContentProps) {
     const defaultSteps: Step[] = [
-        { name: "Upload File", text: `Upload or drag and drop your file(s) into the ${toolName} tool.` },
-        { name: "Process", text: `Click the primary action button to execute the ${toolName} process.` },
-        { name: "Download", text: "Download or copy your final processed files instantly." }
+        { name: "Upload or Input File", text: `Select or drag and drop your document/file into the free ${toolName} online tool.` },
+        { name: "Process Instantly", text: `Click the process button to run ${toolName} securely with high accuracy.` },
+        { name: "Download Output", text: `Save your converted or processed result file directly to your device for free.` }
     ];
 
     const finalSteps = steps && steps.length > 0 ? steps : defaultSteps;
 
     const defaultFeatures: Feature[] = [
-        { title: "Works on Any Device", description: "Use our tools on Mac, Windows, iOS, or Android without installing any software.", icon: "device" },
-        { title: "Fast & Reliable", description: "Experience lightning-fast processing speeds with our optimized cloud infrastructure.", icon: "zap" },
-        { title: "Privacy Guaranteed", description: "Your files are encrypted during transfer and automatically deleted after processing.", icon: "shield" }
+        { title: "Works on Any Device & OS", description: "Access on Windows, Mac, Linux, iOS, or Android straight from your browser without installing software.", icon: "device" },
+        { title: "Fast & High Performance", description: "Blazing fast cloud & client processing speeds optimized for instant document workflows.", icon: "zap" },
+        { title: "100% Secure & Private", description: "End-to-end encrypted transfer with automatic file deletion after processing to protect your privacy.", icon: "shield" }
     ];
 
     const finalFeatures = features && features.length > 0 ? features : defaultFeatures;
+
+    const defaultFaqs: FAQ[] = [
+        { question: `Is ${toolName} completely free to use?`, answer: `Yes, ${toolName} on ToolBasketAI is 100% free with no registration or hidden fees.` },
+        { question: `Is my file safe when using ${toolName}?`, answer: `Absolute privacy is guaranteed. All uploaded files are encrypted and permanently deleted shortly after processing.` },
+        { question: `Do I need to install any software to use ${toolName}?`, answer: `No software installation or browser extension is required. Everything runs smoothly inside your modern browser.` }
+    ];
+
+    const finalFaqs = faqs && faqs.length > 0 ? faqs : defaultFaqs;
 
     const renderIcon = (type?: string) => {
         switch (type) {
@@ -51,13 +65,26 @@ export default function ToolSEOContent({ toolName, toolDescription, steps, featu
     const howToSchema = {
         "@context": "https://schema.org",
         "@type": "HowTo",
-        "name": `How to use ${toolName}`,
-        "description": toolDescription || `Step by step guide on how to use ${toolName}.`,
+        "name": `How to use ${toolName} Online`,
+        "description": toolDescription || `Step-by-step guide on how to use ${toolName} for free online.`,
         "step": finalSteps.map((step, index) => ({
             "@type": "HowToStep",
             "position": index + 1,
             "name": step.name,
             "text": step.text
+        }))
+    };
+
+    const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": finalFaqs.map((faq) => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
         }))
     };
 
@@ -68,12 +95,16 @@ export default function ToolSEOContent({ toolName, toolDescription, steps, featu
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
                 />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+                />
             </Head>
             
             {/* Features Section */}
             <article className="mb-20">
                 <div className="text-center mb-12">
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Why use our {toolName}?</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Why Use Our Free {toolName}?</h2>
                     {toolDescription && <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)] max-w-2xl mx-auto">{toolDescription}</p>}
                 </div>
                 
@@ -91,14 +122,13 @@ export default function ToolSEOContent({ toolName, toolDescription, steps, featu
             </article>
 
             {/* How To Section */}
-            <article>
+            <article className="mb-20">
                 <div className="text-center mb-12">
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">How to use {toolName}</h2>
-                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)]">Follow these simple steps to get your work done quickly.</p>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">How to Use {toolName} in 3 Simple Steps</h2>
+                    <p className="text-[var(--text-muted)] dark:text-[var(--text-muted)]">Follow this simple guide to finish your tasks instantly.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-                    {/* Connecting Line for Desktop */}
                     <div className="hidden md:block absolute top-8 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-indigo-500/0 via-[var(--accent-soft)] to-indigo-500/0"></div>
                     
                     {finalSteps.map((step, idx) => (
@@ -108,6 +138,22 @@ export default function ToolSEOContent({ toolName, toolDescription, steps, featu
                             </div>
                             <h3 className="text-lg font-bold mb-2">{step.name}</h3>
                             <p className="text-sm text-[var(--text-muted)] dark:text-[var(--text-muted)]">{step.text}</p>
+                        </div>
+                    ))}
+                </div>
+            </article>
+
+            {/* FAQ Section */}
+            <article>
+                <div className="text-center mb-10">
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">Frequently Asked Questions</h2>
+                    <p className="text-[var(--text-muted)]">Common questions about {toolName}.</p>
+                </div>
+                <div className="max-w-3xl mx-auto space-y-4">
+                    {finalFaqs.map((faq, idx) => (
+                        <div key={idx} className="p-5 bg-[var(--surface)] border border-[var(--border)] rounded-lg">
+                            <h3 className="text-base font-semibold mb-2">{faq.question}</h3>
+                            <p className="text-sm text-[var(--text-muted)] leading-relaxed">{faq.answer}</p>
                         </div>
                     ))}
                 </div>

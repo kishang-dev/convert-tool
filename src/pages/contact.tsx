@@ -42,10 +42,11 @@ export default function ContactPage() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] dark:text-[var(--text)] flex flex-col font-sans">
             <SEO
-                title="Contact Us — ToolBasketAI Support"
-                description="Get in touch with the ToolBasketAI team. We respond within 24 hours to all questions, feedback, and business inquiries."
+                title="Contact Us — ToolBasketAI Customer Support & Inquiries"
+                description="Get in touch with the ToolBasketAI team. We respond within 24 hours to all questions, feedback, and inquiries."
                 canonical="/contact"
-                keywords="contact ToolBasketAI, support, help, feedback"
+                keywords="contact ToolBasketAI, support, help, feedback, toolbasketai customer service"
+                breadcrumbs={[{ name: "Contact Us", item: "/contact" }]}
             />
             <Navbar />
 

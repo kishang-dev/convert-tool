@@ -97,24 +97,22 @@ export default function CompressPdf() {
 
     const savings = getTotalSavings();
 
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        name: "Compress PDF",
-        description: "Batch compress multiple PDFs, reduce file size instantly, and compare before/after sizes.",
-        applicationCategory: "BrowserApplication",
-        url: "https://toolbasketai.com/compress-pdf",
-    };
+    const breadcrumbs = [{ name: "Compress PDF", item: "/compress-pdf" }];
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-            <SEO title="Compress PDF" description="Reduce PDF file sizes instantly. Batch compress multiple PDFs while maintaining high quality." canonical="/compress-pdf" structuredData={structuredData} />
+            <SEO
+                title="Free Compress PDF Online — Reduce PDF File Size Without Quality Loss"
+                description="Shrink and compress PDF file size online for free. Reduce PDF size for email & web uploads while preserving crisp image & document clarity."
+                canonical="/compress-pdf"
+                keywords="compress pdf, shrink pdf file size, reduce pdf size online, batch compress pdf, pdf size reducer, toolbasketai"
+                breadcrumbs={breadcrumbs}
+            />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 
             <main className="max-w-6xl mx-auto px-4 py-8 md:py-12">
                 <Breadcrumbs items={[{ label: 'Compress PDF', href: '/compress-pdf' }]} />
-
                 <div className="mb-8 animate-fadeIn">
                     <h1 className="text-3xl font-bold text-[var(--text)] mb-2">Compress PDF</h1>
                     <p className="text-[var(--text-muted)] text-sm max-w-2xl">

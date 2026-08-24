@@ -17,17 +17,11 @@ export default function AboutPage() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] dark:text-[var(--text)] flex flex-col font-sans">
             <SEO
-                title="About Us"
-                description="Learn about ToolBasketAI — the team building the world's most powerful free online toolkit for PDFs, images, and documents. Our mission is fast, private, and beautiful tools for everyone."
+                title="About Us — Free Online PDF & Developer Toolkit"
+                description="Learn about ToolBasketAI — building the world's most powerful free online toolkit for PDFs, images, code, and documents with privacy-first standards."
                 canonical="/about"
-                keywords="about ToolBasketAI, online PDF tools team, free document converter, ToolBasketAI mission"
-                structuredData={{
-                    '@context': 'https://schema.org',
-                    '@type': 'AboutPage',
-                    name: 'About ToolBasketAI',
-                    url: 'https://toolbasketai.com/about',
-                    description: 'The team behind ToolBasketAI and our mission to revolutionize modern workflows.',
-                }}
+                keywords="about ToolBasketAI, free PDF tools, online document converter, ToolBasketAI team"
+                breadcrumbs={[{ name: "About Us", item: "/about" }]}
             />
             <Navbar />
 

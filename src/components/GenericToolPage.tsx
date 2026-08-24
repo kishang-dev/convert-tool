@@ -316,28 +316,20 @@ export default function GenericToolPage({ id, canonicalPath }: { id: string; can
         }
     };
 
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": tool.title,
-        "description": tool.description,
-        "applicationCategory": "BrowserApplication",
-        "operatingSystem": "All",
-        "url": `https://toolbasketai.com${pagePath}`,
-        "offers": {
-            "@type": "Offer",
-            "price": "0.00",
-            "priceCurrency": "USD"
-        }
-    };
+    const seoTitle = `${tool.title} — Free Online Tool | ToolBasketAI`;
+    const seoKeywords = `${tool.title.toLowerCase()}, free ${tool.title.toLowerCase()} online, convert ${tool.title.toLowerCase()}, pdf tool, toolbasketai`;
+    const breadcrumbs = [
+        { name: tool.title, item: pagePath }
+    ];
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title={tool.title}
-                description={tool.description}
+                title={seoTitle}
+                description={`${tool.description} Fast, secure, and 100% free with no registration required on ToolBasketAI.`}
                 canonical={pagePath}
-                structuredData={structuredData}
+                keywords={seoKeywords}
+                breadcrumbs={breadcrumbs}
             />
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}

@@ -483,18 +483,11 @@ export default function ResumeBuilder() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title="Free Resume Builder — 50+ Professional Templates"
-                description="Build a professional resume in minutes with ToolBasketAI's free AI-powered resume builder. Choose from 50+ templates, export to PDF instantly. No sign-up needed."
+                title="Free AI Resume Builder — Build & Download Professional Resume PDF"
+                description="Build a high-scoring ATS resume in minutes with ToolBasketAI's free AI-powered resume builder. Choose from modern templates, customize sections, and export PDF instantly."
                 canonical="/resume-builder"
-                keywords="free resume builder, resume maker online, AI resume builder, resume templates, CV builder, PDF resume download, professional resume"
-                structuredData={{
-                    '@context': 'https://schema.org',
-                    '@type': 'SoftwareApplication',
-                    name: 'Resume Builder — ToolBasketAI',
-                    applicationCategory: 'BusinessApplication',
-                    operatingSystem: 'Web',
-                    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-                }}
+                keywords="free resume builder, AI resume builder, resume maker online, ATS resume builder, free CV builder, download resume PDF, resume templates, toolbasketai"
+                breadcrumbs={[{ name: "Resume Builder", item: "/resume-builder" }]}
             />
 
             <Navbar />

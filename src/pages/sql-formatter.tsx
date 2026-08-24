@@ -208,9 +208,15 @@ export default function SqlFormatter() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title="SQL Query Formatter — Format, Minify, Table Extractor, Statistics"
-                description="Beautify, format, and minify SQL queries. Detect table names, view query statistics, explore SQL keywords — fully client-side."
-                canonical="/sql-formatter"
+                title="SQL Query Formatter Online - Beautify, Minify & Extract SQL Tables"
+                description="Format, beautify, and minify SQL database queries online for free. Supports MySQL, PostgreSQL, SQLite, T-SQL, and Oracle. Extract table names and analyze query statistics."
+                canonicalUrl="https://toolbasketai.com/sql-formatter"
+                keywords={["sql formatter", "sql beautifier", "minify sql query", "sql query cleaner", "extract sql tables"]}
+                breadcrumbs={[
+                    { name: 'Home', item: '/' },
+                    { name: 'Developer Tools', item: '/#developer-tools' },
+                    { name: 'SQL Query Formatter', item: '/sql-formatter' }
+                ]}
                 structuredData={structuredData}
             />
             <Navbar />

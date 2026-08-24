@@ -214,9 +214,15 @@ export default function MergePdf() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title="Merge PDF"
-                description="Upload multiple PDFs, preview all pages, reorder pages with drag and drop, and merge them into one PDF."
-                canonical="/merge-pdf"
+                title="Merge PDF Online Free - Combine PDF Files & Rearrange Pages"
+                description="Combine multiple PDF files into one document for free. Drag and drop reorder, preview individual pages, and merge unlimited PDFs with 100% privacy."
+                canonicalUrl="https://toolbasketai.com/merge-pdf"
+                keywords={["merge pdf", "combine pdf files", "pdf joiner online", "free pdf merger", "reorder pdf pages"]}
+                breadcrumbs={[
+                    { name: 'Home', item: '/' },
+                    { name: 'PDF Tools', item: '/#pdf-tools' },
+                    { name: 'Merge PDF', item: '/merge-pdf' }
+                ]}
                 structuredData={structuredData}
             />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}

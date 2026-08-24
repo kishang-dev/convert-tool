@@ -43,9 +43,17 @@ export default function CaseConverter() {
     setTimeout(() => setCopiedKey(null), 2000);
   };
 
+  const breadcrumbs = [{ name: "String Case Converter", item: "/case-converter" }];
+
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]">
-      <SEO title="String Case Converter - camelCase, snake_case, kebab-case" description="Convert text between camelCase, PascalCase, snake_case, kebab-case, and UPPERCASE." />
+      <SEO
+        title="Free String Case Converter — camelCase, snake_case, PascalCase & Kebab"
+        description="Convert string case between camelCase, PascalCase, snake_case, kebab-case, UPPERCASE, and lowercase. Free online developer text case converter."
+        canonical="/case-converter"
+        keywords="case converter, camelcase converter, snake_case converter, kebab-case converter, pascalcase converter, text case converter online"
+        breadcrumbs={breadcrumbs}
+      />
       <Navbar />
 
       <main className="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">

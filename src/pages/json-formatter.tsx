@@ -194,7 +194,6 @@ export default function JsonFormatter() {
     const handleUnescape = () => {
         if (!input.trim()) return;
         try {
-            // Remove backslashes and escape codes
             const unescaped = input.replace(/\\"/g, '"').replace(/\\\\/g, '\\').replace(/^"/, '').replace(/"$/, '');
             setInput(unescaped);
             showToast('JSON string unescaped!', 'success');
@@ -209,50 +208,29 @@ export default function JsonFormatter() {
             version: "1.2.0",
             active: true,
             features: ["pdf-unlock", "base64", "jwt-decoder", "json-formatter"],
-            meta: {
-                author: "Antigravity AI",
-                engine: "Gemini",
-                timestamp: Date.now()
-            }
+            meta: { author: "ToolBasketAI", timestamp: Date.now() }
         };
-        setInput(JSON.stringify(sample));
+        setInput(JSON.stringify(sample, null, 2));
         setOutput('');
     };
 
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "JSON Formatter & Minifier",
-        "description": "Format, beautify, validate, and minify JSON instantly online. Free JSON formatter with syntax highlighting, indent control, and clipboard copy. No sign-up.",
-        "applicationCategory": "BrowserApplication",
-        "operatingSystem": "All",
-        "url": `https://toolbasketai.com/json-formatter`,
-        "offers": {
-            "@type": "Offer",
-            "price": "0.00",
-            "priceCurrency": "USD"
-        }
-    };
+    const breadcrumbs = [{ name: "JSON Formatter", item: "/json-formatter" }];
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title="JSON Formatter & Minifier Online — Free Tool"
-                description="Format, beautify, validate, and minify JSON instantly online. Free JSON formatter with syntax highlighting, indent control, and clipboard copy. No sign-up."
+                title="Free JSON Formatter & Minifier — Format, Validate & Pretty Print JSON"
+                description="Format, beautify, validate, and minify JSON online for free. Features real-time error highlights, tab indentation, tree view, and 100% client-side security."
                 canonical="/json-formatter"
-                keywords="JSON formatter, JSON beautifier, JSON minifier, format JSON online, JSON validator, pretty print JSON, JSON tool"
-                structuredData={structuredData}
+                keywords="json formatter, json minifier, format json online, json beautifier, pretty print json, json validator, online json editor, toolbasketai"
+                breadcrumbs={breadcrumbs}
             />
             <Navbar />
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
             <main className="max-w-7xl mx-auto px-4 py-8 md:py-12">
-                <Breadcrumbs
-                    items={[
-                        { label: 'JSON Formatter', href: '/json-formatter' }
-                    ]}
-                />
+                <Breadcrumbs items={[{ label: 'JSON Formatter', href: '/json-formatter' }]} />
 
                 <div className="text-center mb-10 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
@@ -263,9 +241,6 @@ export default function JsonFormatter() {
                     </p>
                 </div>
                 <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
-
-
-                {/* Toolbar */}
                 <div className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded">
                     <div className="flex flex-wrap items-center gap-4">
                         {/* Indent size selection */}

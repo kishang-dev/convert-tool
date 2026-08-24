@@ -348,9 +348,15 @@ export default function XmlTool() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title="XML Formatter & Validator — Format, Minify, Tree View, XML to JSON"
-                description="Format, beautify, validate, minify, explore the element tree, convert to JSON, and search elements in XML documents. Fully client-side and instant."
-                canonical="/xml-tool"
+                title="XML Formatter & Validator Online - Beautify, Minify & Convert XML to JSON"
+                description="Format, validate, beautify, and minify XML code online for free. Explore XML node trees, convert XML to JSON, and fix syntax errors client-side with 100% privacy."
+                canonicalUrl="https://toolbasketai.com/xml-tool"
+                keywords={["xml formatter", "xml validator", "xml beautifier", "xml to json converter", "minify xml"]}
+                breadcrumbs={[
+                    { name: 'Home', item: '/' },
+                    { name: 'Developer Tools', item: '/#developer-tools' },
+                    { name: 'XML Formatter & Validator', item: '/xml-tool' }
+                ]}
                 structuredData={structuredData}
             />
 

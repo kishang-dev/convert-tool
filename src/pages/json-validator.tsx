@@ -239,40 +239,23 @@ export default function JsonValidator() {
         showToast('Report downloaded!', 'success');
     };
 
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "JSON Validator & Syntax Debugger Tools",
-        "description": "Validate your JSON codes instantly, analyze object depth, and discover exact syntax error lines.",
-        "applicationCategory": "BrowserApplication",
-        "operatingSystem": "All",
-        "url": `https://toolbasketai.com/json-validator`,
-        "offers": {
-            "@type": "Offer",
-            "price": "0.00",
-            "priceCurrency": "USD"
-        }
-    };
+    const breadcrumbs = [{ name: "JSON Validator", item: "/json-validator" }];
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO 
-                title="JSON Validator & Syntax Debugger Tools" 
-                description="Validate your JSON codes instantly, analyze object depth, and discover exact syntax error lines." 
+                title="Free JSON Validator & Syntax Debugger Online" 
+                description="Validate JSON code for syntax errors, check duplicate keys, test schema constraints, and locate exact error line numbers online for free." 
                 canonical="/json-validator"
-                structuredData={structuredData}
+                keywords="json validator, validate json online, json lint, check json syntax, json syntax checker, json schema validator, toolbasketai"
+                breadcrumbs={breadcrumbs}
             />
-
             <Navbar />
 
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
             <main className="max-w-7xl mx-auto px-4 py-8 md:py-12">
-                <Breadcrumbs
-                    items={[
-                        { label: 'JSON Validator', href: '/json-validator' }
-                    ]}
-                />
+                <Breadcrumbs items={[{ label: 'JSON Validator', href: '/json-validator' }]} />
 
                 <div className="text-center mb-10 animate-fadeIn">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3">
@@ -283,9 +266,6 @@ export default function JsonValidator() {
                     </p>
                 </div>
                 <AdBanner adFormat="responsive" label="Advertisement" className="my-6" adSlot="2285841467" />
-
-
-                {/* Validation Toolbar Rules */}
                 <Card variant="elevated" className="flex flex-wrap items-center justify-between gap-4 mb-6 bg-[var(--surface)] border border-[var(--border)] p-4 rounded">
                     <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-[var(--text-muted)]">
                         <label className="flex items-center gap-2 cursor-pointer">

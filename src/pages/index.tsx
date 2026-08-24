@@ -3,41 +3,22 @@ import Navbar from '@/components/Navbar';
 import LandingPage from '@/components/LandingPage';
 import SEO from '@/components/SEO';
 
-const homeStructuredData = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'WebSite',
-      '@id': 'https://toolbasketai.com/#website',
-      url: 'https://toolbasketai.com/',
-      name: 'ToolBasketAI',
-      description: 'All-in-One Document & PDF Tools — Free Online Toolkit',
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: { '@type': 'EntryPoint', urlTemplate: 'https://toolbasketai.com/?q={search_term_string}' },
-        'query-input': 'required name=search_term_string',
-      },
-    },
-    {
-      '@type': 'Organization',
-      '@id': 'https://toolbasketai.com/#organization',
-      name: 'ToolBasketAI',
-      url: 'https://toolbasketai.com/',
-      logo: { '@type': 'ImageObject', url: 'https://toolbasketai.com/favicon.ico' },
-      sameAs: [],
-    },
-  ],
-};
-
 export default function Home() {
+  const homeFaqs = [
+    { question: 'What is ToolBasketAI?', answer: 'ToolBasketAI is an all-in-one free online suite of 75+ document, PDF, image, developer, and AI tools.' },
+    { question: 'Are all tools 100% free to use?', answer: 'Yes, all tools are completely free with no usage limits or hidden subscription fees.' },
+    { question: 'Is my uploaded data safe and private?', answer: 'All file processing is encrypted. Files uploaded to servers are automatically deleted within 24 hours, and text/developer tools run 100% client-side in your browser.' }
+  ];
+
   return (
     <>
       <SEO
-        title="ToolBasketAI — Free Online Document & PDF Tools"
-        description="Convert, merge, split, compress, and edit PDFs, images, and documents entirely free right in your browser. 75+ free tools, no sign-up required."
+        title="ToolBasketAI — Free Online PDF, Image, Developer & AI Tools"
+        description="Convert, merge, split, compress, and edit PDFs, images, code, and documents for free. 75+ free online browser tools with zero registration."
         canonical="/"
-        keywords="free PDF tools, PDF converter online, image resizer, JSON formatter, resume builder, OCR online, merge PDF, compress PDF, ToolBasketAI"
-        structuredData={homeStructuredData}
+        keywords="free PDF converter, merge PDF online, compress PDF, image resizer, JSON formatter, online OCR, AI resume builder, ToolBasketAI"
+        isHomePage={true}
+        faqItems={homeFaqs}
       />
       <Navbar />
       <div className="pt-[57px]">

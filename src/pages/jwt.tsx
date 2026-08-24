@@ -292,9 +292,15 @@ export default function JwtDecoder() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO 
-                title="JWT Decoder & Parser Tools" 
-                description="Decode JSON Web Tokens (JWT) client-side in real-time. View header, payload, and expiration details." 
-                canonical="/jwt"
+                title="JWT Decoder & Debugger Online - Decode JSON Web Tokens Client-Side" 
+                description="Decode, verify, and generate JSON Web Tokens (JWT) client-side in real-time. Inspect header, payload claims, expiration timestamps, and verify HMAC SHA-256 signatures safely." 
+                canonicalUrl="https://toolbasketai.com/jwt"
+                keywords={["jwt decoder", "jwt debugger", "decode json web token", "jwt signature verifier", "jwt inspector"]}
+                breadcrumbs={[
+                    { name: 'Home', item: '/' },
+                    { name: 'Developer Tools', item: '/#developer-tools' },
+                    { name: 'JWT Decoder', item: '/jwt' }
+                ]}
                 structuredData={structuredData}
             />
 

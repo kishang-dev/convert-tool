@@ -195,9 +195,15 @@ export default function RegexTester() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO 
-                title="Regex Tester & Match Debugger Tools" 
-                description="Test regular expressions in real-time. Match parsing, capturing groups, visual highlights, and regex flags." 
-                canonical="/regex-tester"
+                title="Regex Tester & Debugger Online - Real-Time Regular Expression Evaluator" 
+                description="Test and debug regular expressions online with real-time match highlighting, capturing groups, cheat sheets, and replacement tools." 
+                canonicalUrl="https://toolbasketai.com/regex-tester"
+                keywords={["regex tester", "regex debugger", "regular expression evaluator", "regex cheat sheet", "regex replace tool"]}
+                breadcrumbs={[
+                    { name: 'Home', item: '/' },
+                    { name: 'Developer Tools', item: '/#developer-tools' },
+                    { name: 'Regex Tester', item: '/regex-tester' }
+                ]}
                 structuredData={structuredData}
             />
 
