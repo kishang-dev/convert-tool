@@ -1,0 +1,91 @@
+slug,next_route,og_image_path,title,category
+index,/,/og-image/index.png,ToolBasketAI,CORE
+about,/about,/og-image/about.png,About Us,CORE
+contact,/contact,/og-image/contact.png,Contact Us,CORE
+blog,/blog,/og-image/blog.png,Blog,CORE
+privacy,/privacy,/og-image/privacy.png,Privacy Policy,CORE
+terms,/terms,/og-image/terms.png,Terms of Service,CORE
+tools,/tools,/og-image/tools.png,All Tools,HUB
+pdf-tools,/pdf-tools,/og-image/pdf-tools.png,PDF Tools,HUB
+documents,/documents,/og-image/documents.png,Document Tools,HUB
+image-tools,/image-tools,/og-image/image-tools.png,Image Tools,HUB
+ai-suite,/ai-suite,/og-image/ai-suite.png,AI Suite,HUB
+developer,/developer,/og-image/developer.png,Developer Tools,HUB
+ocr,/ocr,/og-image/ocr.png,OCR Tools,HUB
+merge-pdf,/merge-pdf,/og-image/merge-pdf.png,Merge PDF,PDF
+split-pdf,/split-pdf,/og-image/split-pdf.png,Split PDF,PDF
+compress-pdf,/compress-pdf,/og-image/compress-pdf.png,Compress PDF,PDF
+pdf-editor,/pdf-editor,/og-image/pdf-editor.png,Advanced PDF Editor,PDF
+protect-pdf,/protect-pdf,/og-image/protect-pdf.png,Protect PDF,PDF
+unlock-pdf,/unlock-pdf,/og-image/unlock-pdf.png,Unlock PDF,PDF
+rotate-pdf,/rotate-pdf,/og-image/rotate-pdf.png,Rotate PDF,PDF
+pdf-to-image,/pdf-to-image,/og-image/pdf-to-image.png,PDF to Image,PDF
+pdf-watermark,/pdf-watermark,/og-image/pdf-watermark.png,PDF Watermark,PDF
+pdf-page-numberer,/pdf-page-numberer,/og-image/pdf-page-numberer.png,PDF Page Numberer,PDF
+pdf-page-extractor,/pdf-page-extractor,/og-image/pdf-page-extractor.png,PDF Page Extractor,PDF
+pdf-page-delete,/pdf-page-delete,/og-image/pdf-page-delete.png,PDF Page Delete,PDF
+pdf-grayscale,/pdf-grayscale,/og-image/pdf-grayscale.png,PDF Grayscale Converter,PDF
+pdf-metadata-editor,/pdf-metadata-editor,/og-image/pdf-metadata-editor.png,PDF Metadata Editor,PDF
+pdf-page-reorder,/pdf-page-reorder,/og-image/pdf-page-reorder.png,PDF Page Reorder,PDF
+pdf-to-word,/pdf-to-word,/og-image/pdf-to-word.png,PDF to Word,DOC
+word-to-pdf,/word-to-pdf,/og-image/word-to-pdf.png,Word to PDF,DOC
+pdf-to-excel,/pdf-to-excel,/og-image/pdf-to-excel.png,PDF to Excel,DOC
+ppt-to-pdf,/ppt-to-pdf,/og-image/ppt-to-pdf.png,PowerPoint to PDF,DOC
+html-to-pdf,/html-to-pdf,/og-image/html-to-pdf.png,HTML to PDF,DOC
+pdf-to-html,/pdf-to-html,/og-image/pdf-to-html.png,PDF to HTML,DOC
+pdf-to-text,/pdf-to-text,/og-image/pdf-to-text.png,PDF to Text,DOC
+text-to-pdf,/text-to-pdf,/og-image/text-to-pdf.png,Text to PDF,DOC
+csv-to-pdf,/csv-to-pdf,/og-image/csv-to-pdf.png,CSV to PDF,DOC
+pdf-to-csv,/pdf-to-csv,/og-image/pdf-to-csv.png,PDF to CSV,DOC
+pdf-to-speech,/pdf-to-speech,/og-image/pdf-to-speech.png,PDF to Speech,DOC
+speech-to-pdf,/speech-to-pdf,/og-image/speech-to-pdf.png,Speech to PDF,DOC
+video-to-pdf-notes,/video-to-pdf-notes,/og-image/video-to-pdf-notes.png,Video to PDF Notes,DOC
+audio-to-transcript,/audio-to-transcript,/og-image/audio-to-transcript.png,Audio to Transcript,DOC
+word-to-text,/word-to-text,/og-image/word-to-text.png,Word to Text Converter,DOC
+excel-to-csv,/excel-to-csv,/og-image/excel-to-csv.png,Excel to CSV Converter,DOC
+csv-to-excel,/csv-to-excel,/og-image/csv-to-excel.png,CSV to Excel Converter,DOC
+text-to-word,/text-to-word,/og-image/text-to-word.png,Text to Word Converter,DOC
+html-to-word,/html-to-word,/og-image/html-to-word.png,HTML to Word Converter,DOC
+image-resizer,/image-resizer,/og-image/image-resizer.png,Image Resizer,IMG
+image-cropper,/image-cropper,/og-image/image-cropper.png,Image Cropper,IMG
+image-converter,/image-converter,/og-image/image-converter.png,Image Converter,IMG
+image-to-svg,/image-to-svg,/og-image/image-to-svg.png,Image to SVG,IMG
+convert-to-jpg,/convert-to-jpg,/og-image/convert-to-jpg.png,Convert to JPG,IMG
+convert-to-png,/convert-to-png,/og-image/convert-to-png.png,Convert to PNG,IMG
+svg-to-image,/svg-to-image,/og-image/svg-to-image.png,SVG to Image,IMG
+image-watermark,/image-watermark,/og-image/image-watermark.png,Image Watermark,IMG
+image-compressor,/image-compressor,/og-image/image-compressor.png,Image Compressor,IMG
+png-to-webp,/png-to-webp,/og-image/png-to-webp.png,PNG to WEBP Converter,IMG
+jpg-to-webp,/jpg-to-webp,/og-image/jpg-to-webp.png,JPG to WEBP Converter,IMG
+image-color-palette,/image-color-palette,/og-image/image-color-palette.png,Image Color Palette Extractor,IMG
+svg-optimizer,/svg-optimizer,/og-image/svg-optimizer.png,SVG Optimizer,IMG
+text-to-image,/text-to-image,/og-image/text-to-image.png,Text to Image Generator,IMG
+resume-builder,/resume-builder,/og-image/resume-builder.png,AI Resume Builder,AI
+drowChart,/drowChart,/og-image/drowChart.png,Pro AI Chart & Diagram Maker,AI
+base64-encoder-decoder,/base64-encoder-decoder,/og-image/base64-encoder-decoder.png,Base64 Encoder/Decoder,DEV
+jwt-decoder,/jwt-decoder,/og-image/jwt-decoder.png,JWT Decoder,DEV
+json-formatter,/json-formatter,/og-image/json-formatter.png,JSON Formatter,DEV
+json-validator,/json-validator,/og-image/json-validator.png,JSON Validator,DEV
+json-diff-checker,/json-diff-checker,/og-image/json-diff-checker.png,JSON Diff Checker,DEV
+yaml-json-converter,/yaml-json-converter,/og-image/yaml-json-converter.png,YAML ↔ JSON Converter,DEV
+csv-json-converter,/csv-json-converter,/og-image/csv-json-converter.png,CSV ↔ JSON Converter,DEV
+regex-tester,/regex-tester,/og-image/regex-tester.png,Regex Tester,DEV
+xml-formatter,/xml-formatter,/og-image/xml-formatter.png,XML Formatter & Validator,DEV
+sql-formatter,/sql-formatter,/og-image/sql-formatter.png,SQL Formatter,DEV
+sql-query-builder,/sql-query-builder,/og-image/sql-query-builder.png,Visual SQL Query Builder,DEV
+markdown-editor,/markdown-editor,/og-image/markdown-editor.png,Markdown Editor & HTML Converter,DEV
+code-minifier,/code-minifier,/og-image/code-minifier.png,Unified Code Minifier,DEV
+uuid-hash-generator,/uuid-hash-generator,/og-image/uuid-hash-generator.png,UUID & Hash Generator,DEV
+url-encoder-parser,/url-encoder-parser,/og-image/url-encoder-parser.png,URL Encoder & Parser,DEV
+json-to-xml,/json-to-xml,/og-image/json-to-xml.png,JSON to XML Converter,DEV
+html-formatter,/html-formatter,/og-image/html-formatter.png,HTML Formatter & Sanitizer,DEV
+css-formatter,/css-formatter,/og-image/css-formatter.png,CSS Formatter & Beautifier,DEV
+js-ts-formatter,/js-ts-formatter,/og-image/js-ts-formatter.png,JS/TS Formatter,DEV
+string-case-converter,/string-case-converter,/og-image/string-case-converter.png,String Case Converter,DEV
+text-diff-checker,/text-diff-checker,/og-image/text-diff-checker.png,Text Difference Checker,DEV
+precision-ocr,/precision-ocr,/og-image/precision-ocr.png,Precision OCR,OCR
+image-to-text-ocr,/image-to-text-ocr,/og-image/image-to-text-ocr.png,Image to Text OCR,OCR
+handwriting-ocr,/handwriting-ocr,/og-image/handwriting-ocr.png,Handwriting OCR Scanner,OCR
+receipt-invoice-ocr,/receipt-invoice-ocr,/og-image/receipt-invoice-ocr.png,Receipt & Invoice OCR,OCR
+pdf-text-ocr,/pdf-text-ocr,/og-image/pdf-text-ocr.png,PDF Text OCR Scanner,OCR
+multi-language-ocr,/multi-language-ocr,/og-image/multi-language-ocr.png,Multi-Language OCR Engine,OCR

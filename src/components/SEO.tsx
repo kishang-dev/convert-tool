@@ -30,18 +30,104 @@ interface SEOProps {
 
 const SITE_NAME = 'ToolBasketAI';
 const BASE_URL = 'https://toolbasketai.com';
-const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.png`;
+const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image/index.png`;
 const DEFAULT_DESCRIPTION =
   'ToolBasketAI is your all-in-one free online toolkit. Convert PDFs, resize & crop images, format JSON/XML/SQL, generate hashes, build AI resumes, and 75+ free tools — 100% private & secure.';
 const DEFAULT_KEYWORDS =
   'free online tools, PDF converter, PDF to Word, Word to PDF, merge PDF, compress PDF, image resizer, image converter, JSON formatter, SQL formatter, AI resume builder, OCR tool, ToolBasketAI';
+
+const ROUTE_OG_MAP: Record<string, string> = {
+  '/': '/og-image/index.png',
+  '/about': '/og-image/about.png',
+  '/contact': '/og-image/contact.png',
+  '/blog': '/og-image/blog.png',
+  '/privacy': '/og-image/privacy.png',
+  '/terms': '/og-image/terms.png',
+  '/tools': '/og-image/tools.png',
+  '/merge-pdf': '/og-image/merge-pdf.png',
+  '/split-pdf': '/og-image/split-pdf.png',
+  '/compress-pdf': '/og-image/compress-pdf.png',
+  '/editor': '/og-image/pdf-editor.png',
+  '/protect-pdf': '/og-image/protect-pdf.png',
+  '/pdf-unlock': '/og-image/unlock-pdf.png',
+  '/rotate-pdf': '/og-image/rotate-pdf.png',
+  '/pdf-to-image': '/og-image/pdf-to-image.png',
+  '/pdf-watermark': '/og-image/pdf-watermark.png',
+  '/pdf-number': '/og-image/pdf-page-numberer.png',
+  '/pdf-extract-pages': '/og-image/pdf-page-extractor.png',
+  '/pdf-delete-pages': '/og-image/pdf-page-delete.png',
+  '/pdf-grayscale': '/og-image/pdf-grayscale.png',
+  '/pdf-metadata': '/og-image/pdf-metadata-editor.png',
+  '/pdf-reorder': '/og-image/pdf-page-reorder.png',
+  '/pdf-to-word': '/og-image/pdf-to-word.png',
+  '/word-to-pdf': '/og-image/word-to-pdf.png',
+  '/pdf-to-excel': '/og-image/pdf-to-excel.png',
+  '/ppt-to-pdf': '/og-image/ppt-to-pdf.png',
+  '/html-to-pdf': '/og-image/html-to-pdf.png',
+  '/pdf-to-html': '/og-image/pdf-to-html.png',
+  '/pdf-to-text': '/og-image/pdf-to-text.png',
+  '/text-to-pdf': '/og-image/text-to-pdf.png',
+  '/csv-to-pdf': '/og-image/csv-to-pdf.png',
+  '/pdf-to-csv': '/og-image/pdf-to-csv.png',
+  '/pdf-to-speech': '/og-image/pdf-to-speech.png',
+  '/speech-to-pdf': '/og-image/speech-to-pdf.png',
+  '/video-to-pdf': '/og-image/video-to-pdf-notes.png',
+  '/audio-to-transcript': '/og-image/audio-to-transcript.png',
+  '/word-to-text': '/og-image/word-to-text.png',
+  '/excel-to-csv': '/og-image/excel-to-csv.png',
+  '/csv-to-excel': '/og-image/csv-to-excel.png',
+  '/text-to-word': '/og-image/text-to-word.png',
+  '/html-to-word': '/og-image/html-to-word.png',
+  '/image-resizer': '/og-image/image-resizer.png',
+  '/image-cropper': '/og-image/image-cropper.png',
+  '/image-converter': '/og-image/image-converter.png',
+  '/convert-to-jpg': '/og-image/convert-to-jpg.png',
+  '/convert-to-png': '/og-image/convert-to-png.png',
+  '/svg-to-image': '/og-image/svg-to-image.png',
+  '/image-watermark': '/og-image/image-watermark.png',
+  '/image-compressor': '/og-image/image-compressor.png',
+  '/png-to-webp': '/og-image/png-to-webp.png',
+  '/jpg-to-webp': '/og-image/jpg-to-webp.png',
+  '/image-palette': '/og-image/image-color-palette.png',
+  '/svg-optimizer': '/og-image/svg-optimizer.png',
+  '/text-to-image': '/og-image/text-to-image.png',
+  '/resume-builder': '/og-image/resume-builder.png',
+  '/drowChart': '/og-image/drowChart.png',
+  '/base64': '/og-image/base64-encoder-decoder.png',
+  '/jwt': '/og-image/jwt-decoder.png',
+  '/json-formatter': '/og-image/json-formatter.png',
+  '/json-validator': '/og-image/json-validator.png',
+  '/json-diff': '/og-image/json-diff-checker.png',
+  '/yaml-json': '/og-image/yaml-json-converter.png',
+  '/csv-json': '/og-image/csv-json-converter.png',
+  '/regex-tester': '/og-image/regex-tester.png',
+  '/xml-tool': '/og-image/xml-formatter.png',
+  '/sql-formatter': '/og-image/sql-formatter.png',
+  '/sql-query-builder': '/og-image/sql-query-builder.png',
+  '/markdown-editor': '/og-image/markdown-editor.png',
+  '/code-minifier': '/og-image/code-minifier.png',
+  '/hash-generator': '/og-image/uuid-hash-generator.png',
+  '/url-encoder': '/og-image/url-encoder-parser.png',
+  '/json-to-xml': '/og-image/json-to-xml.png',
+  '/html-formatter': '/og-image/html-formatter.png',
+  '/css-formatter': '/og-image/css-formatter.png',
+  '/js-formatter': '/og-image/js-ts-formatter.png',
+  '/case-converter': '/og-image/string-case-converter.png',
+  '/text-diff': '/og-image/text-diff-checker.png',
+  '/ocr': '/og-image/ocr.png',
+  '/image-to-text': '/og-image/image-to-text-ocr.png',
+  '/handwriting-ocr': '/og-image/handwriting-ocr.png',
+  '/receipt-ocr': '/og-image/receipt-invoice-ocr.png',
+  '/pdf-ocr-text': '/og-image/pdf-text-ocr.png',
+  '/multilingual-ocr': '/og-image/multi-language-ocr.png',
+};
 
 export default function SEO({
   title,
   description = DEFAULT_DESCRIPTION,
   canonical,
   canonicalUrl,
-  ogImage = DEFAULT_OG_IMAGE,
+  ogImage,
   ogType = 'website',
   noIndex = false,
   keywords = DEFAULT_KEYWORDS,
@@ -70,6 +156,30 @@ export default function SEO({
       : `${BASE_URL}${activeCanonical.startsWith('/') ? '' : '/'}${activeCanonical}`
     : BASE_URL;
 
+  // Resolve OG Image URL
+  let rawOgImage = ogImage;
+  if (!ogImage || ogImage === DEFAULT_OG_IMAGE) {
+    let routePath = '';
+    if (activeCanonical) {
+      try {
+        routePath = activeCanonical.startsWith('http')
+          ? new URL(activeCanonical).pathname
+          : activeCanonical;
+      } catch (e) {
+        routePath = activeCanonical;
+      }
+    }
+    if (routePath && ROUTE_OG_MAP[routePath]) {
+      rawOgImage = ROUTE_OG_MAP[routePath];
+    } else {
+      rawOgImage = '/og-image/index.png';
+    }
+  }
+
+  const finalOgImage = rawOgImage!.startsWith('http')
+    ? rawOgImage!
+    : `${BASE_URL}${rawOgImage!.startsWith('/') ? '' : '/'}${rawOgImage!}`;
+
   // WebSite Schema for Homepage with SearchAction
   const websiteSchema = isHomePage
     ? {
@@ -97,6 +207,7 @@ export default function SEO({
           'applicationCategory': softwareCategory,
           'operatingSystem': 'All (Windows, Mac, Linux, iOS, Android)',
           'url': cleanCanonical,
+          'image': finalOgImage,
           'offers': {
             '@type': 'Offer',
             'price': '0.00',
@@ -192,7 +303,7 @@ export default function SEO({
       <meta property="og:url" content={cleanCanonical} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={ogImage} />
+      <meta property="og:image" content={finalOgImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:site_name" content={SITE_NAME} />
@@ -203,7 +314,7 @@ export default function SEO({
       <meta name="twitter:url" content={cleanCanonical} />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image" content={finalOgImage} />
       <meta name="twitter:site" content="@toolbasketai" />
       <meta name="twitter:creator" content="@toolbasketai" />
 
