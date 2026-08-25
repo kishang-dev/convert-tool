@@ -5,14 +5,6 @@ import { LuScale as Scale, LuFileCheck as FileCheck, LuInfo as Info, LuTriangleA
 import SEO from "@/components/SEO";
 
 export default function TermsPage() {
-    const [mounted, setMounted] = React.useState(false);
-
-    React.useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if (!mounted) return null;
-
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] dark:text-[var(--text)] flex flex-col font-sans">
             <SEO

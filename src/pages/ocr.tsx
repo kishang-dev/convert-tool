@@ -87,14 +87,7 @@ export default function OcrPage() {
                 description="Extract text from images instantly using ToolBasketAI's free AI-powered OCR tool. Supports English, Hindi, Gujarati and more. No sign-up required."
                 canonical="/ocr"
                 keywords="OCR online, image to text, extract text from image, free OCR tool, AI OCR, Tesseract OCR, Hindi OCR, Gujarati OCR"
-                structuredData={{
-                    '@context': 'https://schema.org',
-                    '@type': 'SoftwareApplication',
-                    name: 'OCR Tool — ToolBasketAI',
-                    applicationCategory: 'UtilitiesApplication',
-                    operatingSystem: 'Web',
-                    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-                }}
+                softwareCategory="UtilitiesApplication"
             />
             <Navbar />
 

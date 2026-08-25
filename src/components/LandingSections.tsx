@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Image from 'next/image';
 import { FiCheck, FiArrowRight, FiShield, FiZap, FiGlobe, FiClock, FiUsers, FiChevronRight } from 'react-icons/fi';
 import {
@@ -106,7 +107,7 @@ export function LandingTools({ query, list, tabKeys, tab, setTab, setQuery, tabL
                         const catKey = t[1] as keyof typeof C;
                         const cat = C[catKey];
                         return (
-                            <div key={t[0]} onClick={() => router.push(t[3])} className="cursor-pointer bg-[var(--surface)] border border-[var(--border)] rounded-[16px] p-[18px] flex gap-[14px] items-start shadow-[0_10px_30px_rgba(20,20,43,0.06)] transition-[transform,box-shadow,border-color] duration-[220ms] hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(20,20,43,0.10)] hover:border-[color-mix(in_srgb,var(--accent)_40%,var(--border))]">
+                            <Link key={t[0]} href={t[3]} className="bg-[var(--surface)] border border-[var(--border)] rounded-[16px] p-[18px] flex gap-[14px] items-start shadow-[0_10px_30px_rgba(20,20,43,0.06)] transition-[transform,box-shadow,border-color] duration-[220ms] hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(20,20,43,0.10)] hover:border-[color-mix(in_srgb,var(--accent)_40%,var(--border))]">
                                 <div className="shrink-0 w-11 h-11 rounded-xl grid place-items-center" style={{ background: cat.tint }}>
                                     {React.createElement(toolIcons[t[0]] || catIcons[catKey], { size: 20, color: cat.color })}
                                 </div>
@@ -116,7 +117,7 @@ export function LandingTools({ query, list, tabKeys, tab, setTab, setQuery, tabL
                                     <p className="text-[13px] text-[var(--text-muted)] m-0 leading-[1.5] font-['Poppins',sans-serif]">{t[2]}</p>
                                 </div>
                                 <LuArrowRight size={17} color="var(--text-muted)" className="shrink-0 mt-1" />
-                            </div>
+                            </Link>
                         );
                     })}
                 </div>
@@ -168,7 +169,7 @@ export function LandingPremium() {
                     ].map(f => {
                         const cat = C[f.cat as keyof typeof C];
                         return (
-                            <div key={f.name} onClick={() => router.push(f.link)} className="cursor-pointer bg-[var(--surface)] border border-[var(--border)] rounded-[20px] overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:border-[var(--accent)] transition-all duration-300">
+                            <Link key={f.name} href={f.link} className="bg-[var(--surface)] border border-[var(--border)] rounded-[20px] overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:border-[var(--accent)] transition-all duration-300">
                                 <div className="h-[150px] grid place-items-center relative" style={{ background: cat.grad }}>
                                     <div className="w-[66px] h-[66px] rounded-[18px] bg-[rgba(255,255,255,.22)] backdrop-blur-[6px] grid place-items-center">
                                         <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -183,7 +184,7 @@ export function LandingPremium() {
                                     <p className="text-[14px] text-[var(--text-muted)] m-0 mb-3.5 leading-[1.55] font-['Poppins',sans-serif]">{f.desc}</p>
                                     <span className="text-[14px] font-semibold text-[var(--accent)] inline-flex items-center gap-1.5 font-['Poppins',sans-serif]">Try it free <FiChevronRight size={15} /></span>
                                 </div>
-                            </div>
+                            </Link>
                         );
                     })}
                 </div>
@@ -374,7 +375,7 @@ export function LandingBlogs() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {blogs.map((blog: any, idx: number) => (
-                        <div onClick={() => router.push(`/blog/${blog.slug}`)} key={blog.slug} className="cursor-pointer group flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-[20px] overflow-hidden hover:shadow-[0_20px_50px_rgba(20,20,43,0.12)] hover:border-[var(--accent)] transition-all duration-300 transform hover:-translate-y-1">
+                        <Link href={`/blog/${blog.slug}`} key={blog.slug} className="group flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-[20px] overflow-hidden hover:shadow-[0_20px_50px_rgba(20,20,43,0.12)] hover:border-[var(--accent)] transition-all duration-300 transform hover:-translate-y-1">
                             <div className="relative h-52 overflow-hidden">
                                 <Image src={blog.image} alt={blog.title} width={400} height={300} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                                 <div className="absolute top-4 left-4 bg-[rgba(0,0,0,0.6)] backdrop-blur-md border border-[rgba(255,255,255,0.1)] text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
@@ -398,7 +399,7 @@ export function LandingBlogs() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

@@ -116,15 +116,7 @@ export default function ChartDashboard() {
                 description="Create flowcharts, process diagrams, DFDs, BPMN diagrams, swimlanes, and logic maps with ToolBasketAI's free AI chart maker."
                 canonical="/drowChart"
                 keywords="AI chart maker, diagram maker, flowchart generator, DFD maker, BPMN diagram, ToolBasketAI"
-                structuredData={{
-                    '@context': 'https://schema.org',
-                    '@type': 'WebApplication',
-                    name: 'AI Chart and Diagram Maker',
-                    url: 'https://toolbasketai.com/drowChart',
-                    applicationCategory: 'DesignApplication',
-                    operatingSystem: 'All',
-                    offers: { '@type': 'Offer', price: '0.00', priceCurrency: 'USD' },
-                }}
+                softwareCategory="DesignApplication"
             />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />

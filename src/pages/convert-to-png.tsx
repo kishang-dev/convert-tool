@@ -141,7 +141,7 @@ export default function ConvertToPng() {
                         <div className="space-y-2">
                             {files.map((cf, i) => (
                                 <div key={i} className={`flex items-center gap-3 p-3 rounded-xl border ${cf.status === 'done' ? 'border-green-500/40 bg-green-500/5' : cf.status === 'error' ? 'border-red-500/40' : 'border-[var(--border-strong)] bg-[var(--surface)]'}`}>
-                                    <Image src={cf.previewUrl} alt="" width={56} height={56} className="w-14 h-14 object-cover rounded flex-shrink-0 bg-[var(--bg)]" style={{ backgroundImage: 'repeating-conic-gradient(#555 0% 25%, transparent 0% 50%) 0 / 16px 16px' }} />
+                                    <Image src={cf.previewUrl} alt={cf.file.name || "PNG Image Preview"} width={56} height={56} className="w-14 h-14 object-cover rounded flex-shrink-0 bg-[var(--bg)]" style={{ backgroundImage: 'repeating-conic-gradient(#555 0% 25%, transparent 0% 50%) 0 / 16px 16px' }} />
                                     <div className="flex-1 min-w-0">
                                         <p className="text-sm font-medium truncate text-slate-200">{cf.file.name}</p>
                                         <p className="text-xs text-slate-500">{cf.origSize} {cf.outputSize && `→ ${cf.outputSize}`}</p>

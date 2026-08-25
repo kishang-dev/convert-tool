@@ -37,8 +37,6 @@ export default function ContactPage() {
         }
     };
 
-    if (!mounted) return null;
-
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] dark:text-[var(--text)] flex flex-col font-sans">
             <SEO

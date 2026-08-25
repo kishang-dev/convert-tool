@@ -196,21 +196,6 @@ export default function MergePdf() {
         }
     };
 
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        name: "Merge PDF",
-        description: "Upload multiple PDFs, preview every page, reorder pages with drag and drop, then merge them into one PDF.",
-        applicationCategory: "BrowserApplication",
-        operatingSystem: "All",
-        url: "https://toolbasketai.com/merge-pdf",
-        offers: {
-            "@type": "Offer",
-            price: "0.00",
-            priceCurrency: "USD",
-        },
-    };
-
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
@@ -218,12 +203,12 @@ export default function MergePdf() {
                 description="Combine multiple PDF files into one document for free. Drag and drop reorder, preview individual pages, and merge unlimited PDFs with 100% privacy."
                 canonicalUrl="https://toolbasketai.com/merge-pdf"
                 keywords={["merge pdf", "combine pdf files", "pdf joiner online", "free pdf merger", "reorder pdf pages"]}
+                softwareCategory="BrowserApplication"
                 breadcrumbs={[
                     { name: 'Home', item: '/' },
                     { name: 'PDF Tools', item: '/#pdf-tools' },
                     { name: 'Merge PDF', item: '/merge-pdf' }
                 ]}
-                structuredData={structuredData}
             />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
