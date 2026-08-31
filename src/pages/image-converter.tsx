@@ -93,7 +93,20 @@ export default function ImageConverter() {
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-            <SEO title="Image Converter – JPG, PNG, WebP, BMP" description="Batch convert images between JPG, PNG, WebP, BMP formats instantly in your browser. No upload, no signup." canonical="/image-converter" />
+            <SEO
+                title="Free Image Converter Online — Convert JPG, PNG, WebP, GIF, BMP"
+                description="Batch convert images online for free between JPG, PNG, WebP, GIF, and BMP formats instantly in your browser. 100% private client-side processing with zero server uploads."
+                canonical="/image-converter"
+                keywords={[
+                    "image converter online",
+                    "convert image to jpg",
+                    "convert image to png",
+                    "convert image to webp",
+                    "batch image converter free",
+                    "heic to jpg converter",
+                    "photo format converter"
+                ]}
+            />
             <Navbar />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 

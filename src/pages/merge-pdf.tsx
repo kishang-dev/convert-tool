@@ -199,10 +199,18 @@ export default function MergePdf() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title="Merge PDF Online Free - Combine PDF Files & Rearrange Pages"
-                description="Combine multiple PDF files into one document for free. Drag and drop reorder, preview individual pages, and merge unlimited PDFs with 100% privacy."
+                title="Merge PDF Online Free — Combine PDF Files & Rearrange Pages"
+                description="Combine multiple PDF files into one document for free. Drag & drop reorder, preview individual pages, and merge unlimited PDFs with 100% privacy and no watermark."
                 canonicalUrl="https://toolbasketai.com/merge-pdf"
-                keywords={["merge pdf", "combine pdf files", "pdf joiner online", "free pdf merger", "reorder pdf pages"]}
+                keywords={[
+                    "merge pdf free",
+                    "combine pdf files online",
+                    "pdf joiner online without watermark",
+                    "free pdf merger online",
+                    "reorder pdf pages",
+                    "merge multiple pdfs",
+                    "combine pdf documents"
+                ]}
                 softwareCategory="BrowserApplication"
                 breadcrumbs={[
                     { name: 'Home', item: '/' },

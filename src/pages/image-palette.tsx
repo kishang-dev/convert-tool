@@ -68,7 +68,19 @@ export default function ImagePalette() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]">
-      <SEO title="Image Color Palette Extractor - Get Hex Color Codes" description="Extract primary color palettes and hex codes from uploaded images." />
+      <SEO
+        title="Free Image Color Palette Extractor — Get Hex Codes from Photo"
+        description="Extract dominant hex color codes and visual design palettes online from photos for free. Generate CSS color variables and hex swatches for UI design."
+        canonical="/image-palette"
+        keywords={[
+          "image color palette extractor",
+          "extract hex codes from image",
+          "photo color picker online",
+          "palette generator from image",
+          "dominant color finder free",
+          "css color variables generator"
+        ]}
+      />
       <Navbar />
 
       <main className="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">

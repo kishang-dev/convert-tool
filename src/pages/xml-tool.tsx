@@ -348,10 +348,18 @@ export default function XmlTool() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title="XML Formatter & Validator Online - Beautify, Minify & Convert XML to JSON"
+                title="Free XML Formatter & Validator Online — Beautify, Minify & Convert XML to JSON"
                 description="Format, validate, beautify, and minify XML code online for free. Explore XML node trees, convert XML to JSON, and fix syntax errors client-side with 100% privacy."
                 canonicalUrl="https://toolbasketai.com/xml-tool"
-                keywords={["xml formatter", "xml validator", "xml beautifier", "xml to json converter", "minify xml"]}
+                keywords={[
+                    "xml formatter online",
+                    "xml validator free",
+                    "xml beautifier online",
+                    "xml to json converter",
+                    "minify xml code",
+                    "xml syntax checker",
+                    "xml tree viewer"
+                ]}
                 breadcrumbs={[
                     { name: 'Home', item: '/' },
                     { name: 'Developer Tools', item: '/#developer-tools' },

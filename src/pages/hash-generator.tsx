@@ -52,9 +52,18 @@ export default function HashGenerator() {
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]">
       <SEO
-        title="UUID & Hash Generator — MD5, SHA-256, SHA-512, UUID v4 Online"
-        description="Generate MD5, SHA-1, SHA-256, SHA-512 hashes, and UUID v4 keys instantly online for developer & security workflows."
+        title="Free UUID & Hash Generator Online — MD5, SHA256, SHA512, UUID v4"
+        description="Generate MD5, SHA-1, SHA-256, SHA-512 cryptographic hashes and UUID v4 random strings online for free. Essential developer tool for database keys and data integrity verification."
         canonical="/hash-generator"
+        keywords={[
+          "hash generator online",
+          "uuid v4 generator",
+          "sha256 hash generator",
+          "md5 hash generator free",
+          "sha512 hash calculator",
+          "random uuid generator",
+          "cryptographic hash tool"
+        ]}
       />
       <Navbar />
 

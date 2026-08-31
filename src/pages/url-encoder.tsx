@@ -47,9 +47,18 @@ export default function UrlEncoder() {
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]">
       <SEO
-        title="URL Encoder & Decoder — Encode, Decode & Parse URIs Online"
-        description="Encode, decode, and parse web URLs and query parameters into clean structured JSON. Free developer URI tool."
+        title="Free URL Encoder & Decoder Online — Percent Encoding & URI Parser"
+        description="Encode, decode, and parse web URLs and query parameters online for free. Convert special characters into percent-encoded URI strings and JSON structures."
         canonical="/url-encoder"
+        keywords={[
+          "url encoder online",
+          "url decoder free",
+          "percent encoding converter",
+          "encode uri component online",
+          "parse query parameters json",
+          "url string encoder",
+          "http url decoder"
+        ]}
       />
       <Navbar />
 

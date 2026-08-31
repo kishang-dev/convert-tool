@@ -244,10 +244,18 @@ export default function JsonValidator() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO 
-                title="Free JSON Validator & Syntax Debugger Online" 
-                description="Validate JSON code for syntax errors, check duplicate keys, test schema constraints, and locate exact error line numbers online for free." 
+                title="Free JSON Validator & Syntax Debugger Online — Check JSON Code" 
+                description="Validate JSON code for syntax errors, check duplicate keys, test schema constraints, and locate exact error line numbers online for free. 100% private client-side JSON linter." 
                 canonical="/json-validator"
-                keywords="json validator, validate json online, json lint, check json syntax, json syntax checker, json schema validator, toolbasketai"
+                keywords={[
+                    "json validator online",
+                    "validate json online free",
+                    "json lint checker",
+                    "check json syntax line number",
+                    "json syntax checker",
+                    "json schema validator",
+                    "client side json linter"
+                ]}
                 breadcrumbs={breadcrumbs}
             />
             <Navbar />

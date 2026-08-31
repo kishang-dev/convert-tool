@@ -57,7 +57,20 @@ export default function ImageCompressor() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]">
-      <SEO title="Image Compressor - Reduce Image Size Online" description="Shrink PNG, JPG, and WebP image file sizes with customizable quality slider." />
+      <SEO
+        title="Free Image Compressor Online — Compress JPG, PNG & WebP Images"
+        description="Shrink and compress PNG, JPG, JPEG, and WebP image file sizes online for free. Adjust compression quality slider to reduce image size in KB/MB with no watermark."
+        canonical="/image-compressor"
+        keywords={[
+          "image compressor online",
+          "compress png jpg webp",
+          "reduce image file size",
+          "compress image under 50kb 100kb",
+          "online photo size reducer",
+          "batch image compressor free",
+          "compress jpeg image online"
+        ]}
+      />
       <Navbar />
 
       <main className="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">

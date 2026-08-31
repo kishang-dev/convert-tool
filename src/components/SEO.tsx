@@ -32,9 +32,26 @@ const SITE_NAME = 'ToolBasketAI';
 const BASE_URL = 'https://toolbasketai.com';
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image/index.png`;
 const DEFAULT_DESCRIPTION =
-  'ToolBasketAI is your all-in-one free online toolkit. Convert PDFs, resize & crop images, format JSON/XML/SQL, generate hashes, build AI resumes, and 75+ free tools — 100% private & secure.';
-const DEFAULT_KEYWORDS =
-  'free online tools, PDF converter, PDF to Word, Word to PDF, merge PDF, compress PDF, image resizer, image converter, JSON formatter, SQL formatter, AI resume builder, OCR tool, ToolBasketAI';
+  'ToolBasketAI is your all-in-one free online toolkit. Convert PDFs, merge & compress PDF without quality loss, resize & crop images, format JSON/XML/SQL client-side, generate secure hashes, build AI resumes, extract OCR text, and 75+ free tools — 100% private, fast & secure.';
+const DEFAULT_KEYWORDS = [
+  'free online tools',
+  'free PDF converter online',
+  'merge PDF free',
+  'compress PDF without quality loss',
+  'PDF to Word converter',
+  'Word to PDF free',
+  'image resizer online by pixel',
+  'compress JPG PNG WebP',
+  'online OCR text extractor',
+  'JSON formatter and minifier client side',
+  'SQL formatter online',
+  'AI resume builder free download',
+  'AI flowchart diagram maker',
+  'Base64 encoder decoder',
+  'JWT decoder online',
+  'no watermark free tools',
+  'ToolBasketAI'
+].join(', ');
 
 const ROUTE_OG_MAP: Record<string, string> = {
   '/': '/og-image/index.png',

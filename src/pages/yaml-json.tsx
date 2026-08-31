@@ -167,9 +167,17 @@ export default function YamlJsonConverter() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO 
-                title="YAML ↔ JSON Converter Tools" 
-                description="Convert YAML documents to JSON format and JSON to YAML format in real-time." 
+                title="Free YAML to JSON & JSON to YAML Converter Online — Instant Convert" 
+                description="Convert YAML files to JSON format and JSON to YAML online for free. Features custom indent spacing, inline flow style toggles, file upload, and instant file download." 
                 canonical="/yaml-json"
+                keywords={[
+                    "yaml to json converter",
+                    "json to yaml online free",
+                    "convert yaml file to json",
+                    "yaml parser online",
+                    "json to yaml online converter",
+                    "yaml format converter"
+                ]}
                 structuredData={structuredData}
             />
 

@@ -182,7 +182,19 @@ export default function ImageCropper() {
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-            <SEO title="Image Cropper – Free Online Tool" description="Crop images with custom ratios (1:1, 16:9, 4:3, free) directly in browser. Rotate, flip, and export as JPEG, PNG or WebP." canonical="/image-cropper" />
+            <SEO
+                title="Free Image Cropper Online — Crop Photos & Graphics to Any Aspect Ratio"
+                description="Crop images online for free with precise aspect ratio presets (1:1, 16:9, 9:16, 4:3). Rotate, flip, and export cropped photos as JPEG, PNG, or WebP with zero watermark."
+                canonical="/image-cropper"
+                keywords={[
+                    "image cropper online",
+                    "crop photo online free",
+                    "crop image 16 9 1 1",
+                    "circle square image cropper",
+                    "online picture cropper",
+                    "crop jpeg png webp"
+                ]}
+            />
             <Navbar />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 

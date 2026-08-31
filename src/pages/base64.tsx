@@ -256,10 +256,18 @@ export default function Base64Tool() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO 
-                title="Base64 Encoder & Decoder Online - Convert Text & Files to Base64" 
-                description="Encode plain text, images, and binary files to Base64 strings or decode Base64 back to original formats online for free. URL-safe options and multi-format support." 
+                title="Base64 Encoder & Decoder Online — Free Convert Text, Images & Files" 
+                description="Encode plain text, images, and binary files to Base64 strings or decode Base64 back to original formats online for free. Features URL-safe Base64 options and HTML/CSS snippets." 
                 canonicalUrl="https://toolbasketai.com/base64"
-                keywords={["base64 encoder", "base64 decoder", "base64 convert text", "base64 image decoder", "base64 url safe"]}
+                keywords={[
+                    "base64 encoder online",
+                    "base64 decoder free",
+                    "encode text to base64",
+                    "base64 image decoder",
+                    "url safe base64 converter",
+                    "convert file to base64 string",
+                    "base64 to binary converter"
+                ]}
                 breadcrumbs={[
                     { name: 'Home', item: '/' },
                     { name: 'Developer Tools', item: '/#developer-tools' },

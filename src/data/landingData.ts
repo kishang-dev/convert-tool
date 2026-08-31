@@ -8,12 +8,12 @@ import {
 } from 'react-icons/lu';
 
 export const C = {
-    pdf: { label: 'PDF Tools', color: '#FF5C7A', tint: 'rgba(255,92,122,.14)', grad: 'linear-gradient(135deg,#FF5C7A,#FF8A5C)', count: '15+ tools', desc: 'Merge, split, compress, convert, watermark and edit PDF files online for free.', featured: 'Merge PDF' },
-    image: { label: 'Image Tools', color: '#22C55E', tint: 'rgba(34,197,94,.14)', grad: 'linear-gradient(135deg,#22C55E,#12B8A0)', count: '14+ tools', desc: 'Resize, crop, compress, watermark and convert images fast without quality loss.', featured: 'Resize Image' },
-    docs: { label: 'Documents', color: '#3B82F6', tint: 'rgba(59,130,246,.14)', grad: 'linear-gradient(135deg,#3B82F6,#6366F1)', count: '19+ tools', desc: 'Convert Word, Excel, CSV, HTML and PowerPoint to/from PDF with high fidelity.', featured: 'Word to PDF' },
-    ai: { label: 'AI Suite', color: '#8B5CF6', tint: 'rgba(139,92,246,.14)', grad: 'linear-gradient(135deg,#8B5CF6,#C026D3)', count: '2+ tools', desc: 'Build professional resumes, flowcharts, and diagrams with AI assistance.', featured: 'AI Resume' },
-    dev: { label: 'Developer', color: '#F59E0B', tint: 'rgba(245,158,11,.16)', grad: 'linear-gradient(135deg,#F59E0B,#EF4444)', count: '21+ tools', desc: 'Format JSON, XML, HTML, CSS, SQL, test regex and generate secure hashes.', featured: 'JSON Formatter' },
-    ocr: { label: 'OCR', color: '#EC4899', tint: 'rgba(236,72,153,.14)', grad: 'linear-gradient(135deg,#EC4899,#8B5CF6)', count: '6+ tools', desc: 'Extract editable text from scanned documents, handwriting, receipts, and PDFs.', featured: 'Precision OCR' },
+    pdf: { label: 'PDF Tools', color: '#FF5C7A', tint: 'rgba(255,92,122,.14)', grad: 'linear-gradient(135deg,#FF5C7A,#FF8A5C)', count: '15+ tools', desc: 'Merge PDF, split pages, compress PDF under 100KB, convert, watermark and edit PDFs online for free with no watermark.', featured: 'Merge PDF' },
+    image: { label: 'Image Tools', color: '#22C55E', tint: 'rgba(34,197,94,.14)', grad: 'linear-gradient(135deg,#22C55E,#12B8A0)', count: '14+ tools', desc: 'Resize image online by pixel, crop photos, compress PNG/JPG/WebP, and convert image formats fast without quality loss.', featured: 'Resize Image' },
+    docs: { label: 'Documents', color: '#3B82F6', tint: 'rgba(59,130,246,.14)', grad: 'linear-gradient(135deg,#3B82F6,#6366F1)', count: '19+ tools', desc: 'Convert PDF to Word DOCX, Word to PDF, Excel, CSV, HTML and PowerPoint with 100% layout preservation.', featured: 'Word to PDF' },
+    ai: { label: 'AI Suite', color: '#8B5CF6', tint: 'rgba(139,92,246,.14)', grad: 'linear-gradient(135deg,#8B5CF6,#C026D3)', count: '2+ tools', desc: 'Build job-winning resumes with free AI resume builder, flowcharts, logic diagrams, and Mermaid charts.', featured: 'AI Resume' },
+    dev: { label: 'Developer', color: '#F59E0B', tint: 'rgba(245,158,11,.16)', grad: 'linear-gradient(135deg,#F59E0B,#EF4444)', count: '21+ tools', desc: 'Format JSON online, minifier, XML beautifier, SQL formatter, JWT decoder, Regex tester & MD5 SHA256 hash generator 100% client-side.', featured: 'JSON Formatter' },
+    ocr: { label: 'OCR', color: '#EC4899', tint: 'rgba(236,72,153,.14)', grad: 'linear-gradient(135deg,#EC4899,#8B5CF6)', count: '6+ tools', desc: 'Extract text from image online, precision OCR for scanned documents, handwriting recognition, receipts & PDFs in 100+ languages.', featured: 'Precision OCR' },
 };
 
 export const allTools: [string, string, string, string][] = [

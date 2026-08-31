@@ -92,7 +92,20 @@ export default function UnlockPdf() {
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-            <SEO title="Unlock PDF" description="Decrypt password protected PDFs and strip passwords in bulk easily." canonical="/pdf-unlock" structuredData={structuredData} />
+            <SEO
+                title="Unlock PDF Online Free — Remove Password Security from PDF Files"
+                description="Remove passwords and strip security encryption from protected PDF files online for free. Unlock PDF documents instantly for printing and editing. No watermark."
+                canonical="/pdf-unlock"
+                keywords={[
+                    "unlock pdf free",
+                    "remove password from pdf",
+                    "pdf password remover online",
+                    "unlock encrypted pdf",
+                    "strip pdf security online",
+                    "free pdf unlocker tool"
+                ]}
+                structuredData={structuredData}
+            />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 

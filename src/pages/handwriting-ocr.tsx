@@ -52,7 +52,19 @@ export default function HandwritingOcr() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]">
-      <SEO title="Handwriting OCR Scanner - Convert Handwritten Notes to Text" description="Recognize and convert handwritten notes into digital text." />
+      <SEO
+        title="Free Handwriting OCR Scanner Online — Convert Notes to Text"
+        description="Extract and convert handwritten notes, journal pages, and whiteboard scribbles into digital text online for free with advanced AI optical character recognition."
+        canonical="/handwriting-ocr"
+        keywords={[
+          "handwriting ocr online",
+          "convert handwritten notes to text",
+          "handwriting recognition scanner",
+          "cursive ocr online free",
+          "extract text from handwritten image",
+          "whiteboard photo to text"
+        ]}
+      />
       <Navbar />
 
       <main className="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">

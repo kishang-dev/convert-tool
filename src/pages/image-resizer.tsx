@@ -122,7 +122,20 @@ export default function ImageResizer() {
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-            <SEO title="Image Resizer – Free Online Tool" description="Resize images online for free. Supports JPEG, PNG, WebP. Set custom dimensions, lock aspect ratio, choose quality and format. Works on all devices." canonical="/image-resizer" />
+            <SEO
+                title="Free Image Resizer Online — Resize JPG, PNG & WebP by Pixel & Percentage"
+                description="Resize image dimensions online for free by pixel width, height, or social media preset dimensions (Twitter, Instagram, YouTube). Works 100% client-side in browser."
+                canonical="/image-resizer"
+                keywords={[
+                    "image resizer online",
+                    "resize image by pixel",
+                    "photo resizer free",
+                    "resize jpg png webp",
+                    "image pixel reducer",
+                    "change image dimensions",
+                    "social media image resizer"
+                ]}
+            />
             <Navbar />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 

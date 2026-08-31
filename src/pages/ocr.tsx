@@ -83,10 +83,19 @@ export default function OcrPage() {
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <SEO
-                title="Free OCR Tool — Extract Text from Images"
-                description="Extract text from images instantly using ToolBasketAI's free AI-powered OCR tool. Supports English, Hindi, Gujarati and more. No sign-up required."
+                title="Free Online OCR Scanner — Extract Text from Images & Scanned PDFs"
+                description="Extract editable text from images, scans, handwriting, and photos instantly using AI-powered online OCR. Supports 100+ languages with high accuracy. 100% free."
                 canonical="/ocr"
-                keywords="OCR online, image to text, extract text from image, free OCR tool, AI OCR, Tesseract OCR, Hindi OCR, Gujarati OCR"
+                keywords={[
+                    "free ocr online",
+                    "extract text from image",
+                    "image to text converter",
+                    "online text extractor",
+                    "scanned pdf to text ocr",
+                    "multilingual ocr scanner",
+                    "handwriting ocr online",
+                    "photo to text converter"
+                ]}
                 softwareCategory="UtilitiesApplication"
             />
             <Navbar />

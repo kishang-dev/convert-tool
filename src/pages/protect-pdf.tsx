@@ -110,7 +110,20 @@ export default function ProtectPdf() {
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-            <SEO title="Protect PDF" description="Add strong password protection to your PDF files. Secure sensitive documents instantly." canonical="/protect-pdf" structuredData={structuredData} />
+            <SEO
+                title="Protect PDF Online Free — Encrypt & Password Protect PDF Files"
+                description="Add strong 256-bit password protection to your PDF files online for free. Prevent unauthorized access, printing, or editing on any PDF document. No watermark."
+                canonical="/protect-pdf"
+                keywords={[
+                    "protect pdf free",
+                    "password protect pdf",
+                    "encrypt pdf online",
+                    "lock pdf file with password",
+                    "secure pdf document",
+                    "batch protect pdf online"
+                ]}
+                structuredData={structuredData}
+            />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 

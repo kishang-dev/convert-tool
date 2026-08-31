@@ -268,9 +268,18 @@ export default function MarkdownEditor() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title="Markdown Editor & HTML Converter — Live Preview, Word Count, Export"
-                description="Write and edit Markdown with live preview. Convert to HTML, download .md or .html files, see word count and reading time — fully client-side."
+                title="Free Markdown Editor & HTML Converter — Live Preview & Export"
+                description="Write and edit Markdown code with real-time HTML visual preview online for free. Features live word counter, table compiler, snippet toolbar, and .md / .html file export."
                 canonical="/markdown-editor"
+                keywords={[
+                    "markdown editor online",
+                    "markdown to html converter",
+                    "live markdown preview",
+                    "online markdown writer free",
+                    "convert md to html",
+                    "markdown table generator",
+                    "free markdown editor"
+                ]}
                 structuredData={structuredData}
             />
             <Navbar />

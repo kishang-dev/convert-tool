@@ -484,9 +484,18 @@ export default function ResumeBuilder() {
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
                 title="Free AI Resume Builder — Build & Download Professional Resume PDF"
-                description="Build a high-scoring ATS resume in minutes with ToolBasketAI's free AI-powered resume builder. Choose from modern templates, customize sections, and export PDF instantly."
+                description="Build a job-winning, ATS-friendly resume in minutes with ToolBasketAI's free AI-powered resume builder. Choose from 50+ modern templates, customize sections, and export PDF instantly with zero watermark."
                 canonical="/resume-builder"
-                keywords="free resume builder, AI resume builder, resume maker online, ATS resume builder, free CV builder, download resume PDF, resume templates, toolbasketai"
+                keywords={[
+                    "free ai resume builder",
+                    "resume builder online",
+                    "ats resume maker",
+                    "free cv builder pdf",
+                    "job winning resume builder",
+                    "resume generator online free",
+                    "no watermark resume maker",
+                    "ai resume creator"
+                ]}
                 breadcrumbs={[{ name: "Resume Builder", item: "/resume-builder" }]}
             />
 

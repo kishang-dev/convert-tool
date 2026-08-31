@@ -219,10 +219,19 @@ export default function JsonFormatter() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title="Free JSON Formatter & Minifier — Format, Validate & Pretty Print JSON"
-                description="Format, beautify, validate, and minify JSON online for free. Features real-time error highlights, tab indentation, tree view, and 100% client-side security."
+                title="Free JSON Formatter & Minifier — Pretty Print & Validate JSON Client-Side"
+                description="Format, beautify, validate, sort keys, and minify JSON online for free. Features real-time error highlights, tab indentation, single/double quote toggle, and 100% client-side browser execution."
                 canonical="/json-formatter"
-                keywords="json formatter, json minifier, format json online, json beautifier, pretty print json, json validator, online json editor, toolbasketai"
+                keywords={[
+                    "json formatter online",
+                    "pretty print json",
+                    "json minifier",
+                    "json beautifier free",
+                    "json validator client side",
+                    "format json online",
+                    "sort json keys online",
+                    "online json editor"
+                ]}
                 breadcrumbs={breadcrumbs}
             />
             <Navbar />

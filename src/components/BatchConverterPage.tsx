@@ -20,6 +20,7 @@ export interface BatchConverterPageProps {
     acceptedFiles: string;
     outputLabel: string;
     iconType: "pdf" | "word" | "excel" | "image" | "ppt";
+    keywords?: string | string[];
     runConversion: (fileId: string) => Promise<{ success: boolean; file?: FileData; files?: FileData[]; message?: string }>;
 }
 
@@ -29,7 +30,7 @@ const formatSize = (bytes: number) => {
     return (bytes / (1024 * 1024)).toFixed(2) + " MB";
 };
 
-export default function BatchConverterPage({ toolId, title, description, acceptedFiles, outputLabel, iconType, runConversion }: BatchConverterPageProps) {
+export default function BatchConverterPage({ toolId, title, description, acceptedFiles, outputLabel, iconType, keywords, runConversion }: BatchConverterPageProps) {
     const router = useRouter();
     const [files, setFiles] = useState<FileData[]>([]);
     const [results, setResults] = useState<{ original: FileData, converted: FileData[] }[]>([]);
@@ -112,7 +113,7 @@ export default function BatchConverterPage({ toolId, title, description, accepte
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-            <SEO title={title} description={description} canonical={`/${toolId}`} structuredData={structuredData} />
+            <SEO title={title} description={description} canonical={`/${toolId}`} keywords={keywords} structuredData={structuredData} />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 

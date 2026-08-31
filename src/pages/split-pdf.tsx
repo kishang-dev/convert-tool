@@ -183,10 +183,18 @@ export default function SplitPdf() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title="Split PDF Online Free - Separate PDF Pages & Extract PDF Ranges"
-                description="Split PDF pages online for free. Extract custom page ranges, delete unwanted pages, or separate every page into individual PDF files fast and securely."
+                title="Split PDF Online Free — Separate PDF Pages & Extract PDF Ranges"
+                description="Split PDF pages online for free. Extract custom page ranges, delete unwanted pages, or separate every page into individual PDF files fast and securely. No watermark."
                 canonicalUrl="https://toolbasketai.com/split-pdf"
-                keywords={["split pdf", "separate pdf pages", "pdf range extractor", "free pdf splitter", "delete pdf pages"]}
+                keywords={[
+                    "split pdf free",
+                    "separate pdf pages online",
+                    "pdf range extractor",
+                    "free pdf splitter",
+                    "delete pdf pages online",
+                    "extract pages from pdf",
+                    "split pdf into multiple files"
+                ]}
                 breadcrumbs={[
                     { name: 'Home', item: '/' },
                     { name: 'PDF Tools', item: '/#pdf-tools' },

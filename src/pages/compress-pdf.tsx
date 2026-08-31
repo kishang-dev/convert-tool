@@ -102,10 +102,18 @@ export default function CompressPdf() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title="Free Compress PDF Online — Reduce PDF File Size Without Quality Loss"
-                description="Shrink and compress PDF file size online for free. Reduce PDF size for email & web uploads while preserving crisp image & document clarity."
+                title="Free Compress PDF Online — Reduce PDF File Size (Under 100KB/200KB)"
+                description="Shrink and compress PDF file size online for free. Reduce PDF size for email, web forms & job applications while preserving crisp image & document clarity. No watermark."
                 canonical="/compress-pdf"
-                keywords="compress pdf, shrink pdf file size, reduce pdf size online, batch compress pdf, pdf size reducer, toolbasketai"
+                keywords={[
+                    "compress pdf",
+                    "reduce pdf file size",
+                    "compress pdf under 100kb",
+                    "shrink pdf size online",
+                    "batch compress pdf free",
+                    "pdf size reducer no watermark",
+                    "pdf compressor tool"
+                ]}
                 breadcrumbs={breadcrumbs}
             />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}

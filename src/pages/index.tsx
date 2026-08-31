@@ -13,10 +13,23 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="ToolBasketAI — Free Online PDF, Image, Developer & AI Tools"
-        description="Convert, merge, split, compress, and edit PDFs, images, code, and documents for free. 75+ free online browser tools with zero registration."
+        title="ToolBasketAI — 75+ Free Online PDF, Image, Developer & AI Tools"
+        description="Convert, merge, split, compress PDFs, resize images, format JSON/SQL client-side, extract OCR text, and build AI resumes online for free. 100% private, no signup, no watermark."
         canonical="/"
-        keywords="free PDF converter, merge PDF online, compress PDF, image resizer, JSON formatter, online OCR, AI resume builder, ToolBasketAI"
+        keywords={[
+          "free online pdf tools",
+          "merge pdf free",
+          "compress pdf online",
+          "pdf to word converter",
+          "word to pdf online",
+          "image resizer online by pixel",
+          "compress png jpg webp",
+          "json formatter online client side",
+          "ai resume builder free",
+          "extract text from image ocr",
+          "no watermark free tools",
+          "ToolBasketAI"
+        ]}
         isHomePage={true}
         faqItems={homeFaqs}
       />

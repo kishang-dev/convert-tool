@@ -55,7 +55,19 @@ export default function SvgOptimizer() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]">
-      <SEO title="SVG Cleaner & Optimizer - Minify SVG Files" description="Strip metadata, comments, and minify raw SVG vector code." />
+      <SEO
+        title="Free SVG Optimizer & Cleaner Online — Minify & Compress SVG Files"
+        description="Minify, clean, and compress SVG vector markup code online for free. Strip editor metadata tags, comments, and unused attributes to reduce SVG file size for fast web loading."
+        canonical="/svg-optimizer"
+        keywords={[
+          "svg optimizer online",
+          "minify svg code free",
+          "svg cleaner online",
+          "compress svg file size",
+          "strip svg metadata comments",
+          "svg minifier tool"
+        ]}
+      />
       <Navbar />
 
       <main className="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
