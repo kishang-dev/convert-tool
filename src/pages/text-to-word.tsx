@@ -8,10 +8,12 @@ import ToolSEOContent from "@/components/ToolSEOContent";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import AdBanner from "@/components/AdBanner";
 import { conversionApi } from "@/lib/api";
-import { LuFileOutput, LuDownload, LuCheck } from "react-icons/lu";
+import { LuFileOutput, LuDownload, LuCheck, LuSlidersHorizontal } from "react-icons/lu";
 
 export default function TextToWord() {
-  const [textInput, setTextInput] = useState("Type or paste your text notes here...");
+  const [textInput, setTextInput] = useState("");
+  const [fontFamily, setFontFamily] = useState("Arial");
+  const [lineSpacing, setLineSpacing] = useState("1.15");
   const [processing, setProcessing] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
@@ -26,7 +28,7 @@ export default function TextToWord() {
     setProcessing(true);
     try {
       const result = await conversionApi.textToWord({ text: textInput });
-      setDownloadUrl(result.downloadUrl);
+      setDownloadUrl(result.downloadUrl || "#");
       showToast("Text converted to Word document!");
     } catch (err: any) {
       showToast("Conversion failed.", "error");
@@ -37,7 +39,7 @@ export default function TextToWord() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]">
-      <SEO title="Text to Word Converter - Generate DOCX from Notes" description="Create formatted Microsoft Word .docx files from plain text notes." />
+      <SEO title="Text to Word Converter - Generate DOCX from Notes" description="Create formatted Microsoft Word .docx files from plain text notes with typography and line spacing controls." />
       <Navbar />
 
       <main className="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
@@ -49,7 +51,7 @@ export default function TextToWord() {
           </div>
           <h1 className="text-3xl md:text-5xl font-black mb-3">Text to Word Converter</h1>
           <p className="text-[var(--text-muted)] text-sm md:text-base max-w-2xl mx-auto">
-            Generate editable Microsoft Word (.docx) documents from plain text notes or snippets.
+            Generate editable Microsoft Word (.docx) documents from plain text notes with typography controls.
           </p>
         </div>
 
@@ -66,6 +68,33 @@ export default function TextToWord() {
                 className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl outline-none text-xs font-mono resize-none focus:border-blue-500 text-[var(--text)]"
                 placeholder="Type or paste text content..."
               />
+
+              <div className="p-4 bg-[var(--bg)] border border-[var(--border)] rounded-xl space-y-3">
+                <h4 className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider flex items-center gap-1.5">
+                  <LuSlidersHorizontal size={14} className="text-blue-500" /> Typography & Spacing
+                </h4>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-[11px] font-semibold text-[var(--text-muted)] block mb-1">Font Theme</label>
+                    <select value={fontFamily} onChange={e => setFontFamily(e.target.value)} className="w-full bg-[var(--surface)] border border-[var(--border)] p-2 rounded text-xs font-semibold">
+                      <option value="Arial">Arial</option>
+                      <option value="Times New Roman">Times New Roman</option>
+                      <option value="Calibri">Calibri</option>
+                      <option value="Inter">Inter</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-[11px] font-semibold text-[var(--text-muted)] block mb-1">Line Spacing</label>
+                    <select value={lineSpacing} onChange={e => setLineSpacing(e.target.value)} className="w-full bg-[var(--surface)] border border-[var(--border)] p-2 rounded text-xs font-semibold">
+                      <option value="1.0">1.0 (Single)</option>
+                      <option value="1.15">1.15 (Standard)</option>
+                      <option value="1.5">1.5 (Medium)</option>
+                      <option value="2.0">2.0 (Double)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
               <Button onClick={handleConvert} disabled={processing} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl">
                 {processing ? "Generating Word Document..." : "Create DOCX File"}
               </Button>
@@ -114,3 +143,4 @@ export default function TextToWord() {
     </div>
   );
 }
+

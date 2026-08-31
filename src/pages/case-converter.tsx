@@ -7,14 +7,13 @@ import Toast from "@/components/Toast";
 import ToolSEOContent from "@/components/ToolSEOContent";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import AdBanner from "@/components/AdBanner";
-import { devToolsApi } from "@/lib/api";
-import { LuBraces, LuCopy, LuCheck } from "react-icons/lu";
+import { LuType, LuCopy, LuCheck, LuSlidersHorizontal } from "react-icons/lu";
 
-export default function CaseConverter() {
-  const [inputText, setInputText] = useState("hello world text converter");
-  const [results, setResults] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+export default function CaseConverterPage() {
+  const [inputText, setInputText] = useState("hello world_example text-string");
+  const [activeMode, setActiveMode] = useState<string>("camelCase");
+  const [stripAccents, setStripAccents] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
   const showToast = (message: string, type: "success" | "error" = "success") => {
@@ -22,37 +21,63 @@ export default function CaseConverter() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  const handleConvert = async () => {
-    if (!inputText.trim()) return showToast("Enter text input.", "error");
-    setLoading(true);
-    try {
-      const res = await devToolsApi.convertCase(inputText);
-      setResults(res.result);
-      showToast("Case converted!");
-    } catch (err: any) {
-      showToast("Conversion failed.", "error");
-    } finally {
-      setLoading(false);
+  const convertCase = (mode: string) => {
+    setActiveMode(mode);
+    showToast(`Converted to ${mode}!`);
+  };
+
+  const getConvertedText = () => {
+    let str = inputText;
+    if (stripAccents) {
+      str = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    const words = str.split(/[\s_\-\.]+/).filter(Boolean);
+
+    switch (activeMode) {
+      case "camelCase":
+        return words.map((w, i) => i === 0 ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join("");
+      case "PascalCase":
+        return words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join("");
+      case "snake_case":
+        return words.map(w => w.toLowerCase()).join("_");
+      case "kebab-case":
+        return words.map(w => w.toLowerCase()).join("-");
+      case "CONSTANT_CASE":
+        return words.map(w => w.toUpperCase()).join("_");
+      case "Title Case":
+        return words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+      case "UPPERCASE":
+        return str.toUpperCase();
+      case "lowercase":
+        return str.toLowerCase();
+      case "dot.case":
+        return words.map(w => w.toLowerCase()).join(".");
+      case "path/case":
+        return words.map(w => w.toLowerCase()).join("/");
+      default:
+        return str;
     }
   };
 
-  const copyVal = (val: string, key: string) => {
-    navigator.clipboard.writeText(val);
-    setCopiedKey(key);
-    showToast(`Copied ${key}!`);
-    setTimeout(() => setCopiedKey(null), 2000);
+  const convertedText = getConvertedText();
+  const copyText = () => {
+    navigator.clipboard.writeText(convertedText);
+    setCopied(true);
+    showToast("Converted string copied!");
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const breadcrumbs = [{ name: "String Case Converter", item: "/case-converter" }];
+  const wordCount = inputText.trim() ? inputText.trim().split(/\s+/).length : 0;
+  const charCount = inputText.length;
+  const byteCount = new Blob([inputText]).size;
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)]">
-      <SEO
-        title="Free String Case Converter — camelCase, snake_case, PascalCase & Kebab"
-        description="Convert string case between camelCase, PascalCase, snake_case, kebab-case, UPPERCASE, and lowercase. Free online developer text case converter."
+      <SEO 
+        title="String Case Converter - camelCase, PascalCase, snake_case" 
+        description="Convert text between camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, dot.case, and Title Case. Features non-ASCII cleaner and word stats." 
         canonical="/case-converter"
-        keywords="case converter, camelcase converter, snake_case converter, kebab-case converter, pascalcase converter, text case converter online"
-        breadcrumbs={breadcrumbs}
       />
       <Navbar />
 
@@ -60,87 +85,91 @@ export default function CaseConverter() {
         <Breadcrumbs items={[{ label: "String Case Converter", href: "/case-converter" }]} />
 
         <div className="text-center my-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-500 font-semibold text-xs mb-4">
-            <LuBraces size={14} /> String Case Engine
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-500 font-semibold text-xs mb-4">
+            <LuType size={14} /> 10+ String Case Converter & Variable Formatter
           </div>
           <h1 className="text-3xl md:text-5xl font-black mb-3">String Case Converter</h1>
           <p className="text-[var(--text-muted)] text-sm md:text-base max-w-2xl mx-auto">
-            Convert text strings between camelCase, PascalCase, snake_case, kebab-case, and UPPERCASE.
+            Convert text between camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, dot.case, and Title Case.
           </p>
         </div>
 
         <AdBanner adSlot="2285841467" className="my-6" />
 
-        <div className="space-y-6 my-8">
-          <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm space-y-4">
-            <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block mb-1">Text String Input</label>
-            <input
-              type="text"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl outline-none text-sm focus:border-amber-500 font-mono"
-              placeholder="e.g. user profile avatar photo"
-            />
-            <Button onClick={handleConvert} disabled={loading} className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3.5 rounded-xl">
-              {loading ? "Converting Cases..." : "Convert String Cases"}
-            </Button>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 my-8">
+          <div className="md:col-span-6 space-y-4">
+            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm space-y-4">
+              <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block">Input String / Text</label>
+              <textarea
+                rows={6}
+                value={inputText}
+                onChange={e => setInputText(e.target.value)}
+                placeholder="Type or paste text string..."
+                className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl outline-none text-xs font-mono text-[var(--text)]"
+              />
 
-          {results && (
-            <div className="space-y-6">
-              {results.stats && (
-                <div className="grid grid-cols-3 gap-4 text-center p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)]">
-                  <div>
-                    <span className="text-[11px] font-semibold text-[var(--text-muted)] uppercase block">Characters</span>
-                    <span className="text-sm font-extrabold text-amber-500 font-mono">{results.stats.charCount}</span>
-                  </div>
-                  <div>
-                    <span className="text-[11px] font-semibold text-[var(--text-muted)] uppercase block">Words</span>
-                    <span className="text-sm font-extrabold text-amber-500 font-mono">{results.stats.wordCount}</span>
-                  </div>
-                  <div>
-                    <span className="text-[11px] font-semibold text-[var(--text-muted)] uppercase block">Lines</span>
-                    <span className="text-sm font-extrabold text-amber-500 font-mono">{results.stats.lineCount}</span>
-                  </div>
+              <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] bg-[var(--bg)] border border-[var(--border)] p-2.5 rounded-xl">
+                <span>Words: {wordCount}</span>
+                <span>Chars: {charCount}</span>
+                <span>Bytes: {byteCount}</span>
+              </div>
+
+              <div className="p-4 bg-[var(--bg)] border border-[var(--border)] rounded-xl space-y-3">
+                <h4 className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider flex items-center gap-1.5">
+                  <LuSlidersHorizontal size={14} className="text-blue-500" /> Case Conversion Modes
+                </h4>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    "camelCase", "PascalCase", "snake_case",
+                    "kebab-case", "CONSTANT_CASE", "Title Case",
+                    "UPPERCASE", "lowercase", "dot.case"
+                  ].map(m => (
+                    <button
+                      key={m}
+                      type="button"
+                      onClick={() => convertCase(m)}
+                      className={`py-2 rounded-lg text-[11px] font-bold border transition ${activeMode === m ? "border-blue-500 bg-blue-500/10 text-blue-500 font-mono" : "border-[var(--border)]"}`}
+                    >
+                      {m}
+                    </button>
+                  ))}
                 </div>
-              )}
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[
-                  { label: "camelCase", key: "camelCase", val: results.camelCase },
-                  { label: "PascalCase", key: "PascalCase", val: results.pascalCase },
-                  { label: "snake_case", key: "snake_case", val: results.snakeCase },
-                  { label: "kebab-case", key: "kebab-case", val: results.kebabCase },
-                  { label: "CONSTANT_CASE", key: "constantCase", val: results.constantCase },
-                  { label: "Title Case", key: "titleCase", val: results.titleCase },
-                  { label: "Sentence case", key: "sentenceCase", val: results.sentenceCase },
-                  { label: "UPPERCASE", key: "upperCase", val: results.upperCase },
-                  { label: "lowercase", key: "lowerCase", val: results.lowerCase },
-                  { label: "tOGGLE cASE", key: "toggleCase", val: results.toggleCase },
-                  { label: "dot.case", key: "dotCase", val: results.dotCase },
-                ].filter(item => item.val).map((item) => (
-                  <div key={item.key} className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-between gap-2">
-                    <div>
-                      <span className="text-xs font-bold text-amber-500 uppercase tracking-wider block mb-0.5">{item.label}</span>
-                      <code className="text-xs font-mono text-[var(--text)] break-all">{item.val}</code>
-                    </div>
-                    <Button size="sm" variant="ghost" onClick={() => copyVal(item.val, item.label)} className="gap-1 text-xs shrink-0">
-                      {copiedKey === item.label ? <LuCheck className="text-emerald-500" /> : <LuCopy />} {copiedKey === item.label ? "Copied" : "Copy"}
-                    </Button>
-                  </div>
-                ))}
+                <label className="flex items-center gap-2 text-xs font-semibold cursor-pointer pt-1">
+                  <input type="checkbox" checked={stripAccents} onChange={e => setStripAccents(e.target.checked)} className="rounded accent-blue-500" />
+                  Strip Diacritics & Accents (e.g. café → cafe)
+                </label>
               </div>
             </div>
-          )}
+          </div>
+
+          <div className="md:col-span-6">
+            <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm min-h-[350px] flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-bold text-lg">Converted Result ({activeMode})</h3>
+                  <Button size="sm" variant="ghost" onClick={copyText} className="gap-1 text-xs text-blue-500">
+                    {copied ? <LuCheck className="text-emerald-500" /> : <LuCopy />} {copied ? "Copied" : "Copy String"}
+                  </Button>
+                </div>
+
+                <textarea
+                  rows={10}
+                  value={convertedText}
+                  readOnly
+                  className="w-full bg-[var(--bg)] border border-[var(--border)] p-3 rounded-xl outline-none text-xs font-mono resize-none text-[var(--text)] leading-relaxed"
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
         <ToolSEOContent
           toolName="String Case Converter"
-          toolDescription="Convert text variables into developer naming conventions."
+          toolDescription="Convert text string cases automatically."
           steps={[
-            { name: "Input String", text: "Enter your text phrase." },
-            { name: "Convert", text: "Click 'Convert String Cases'." },
-            { name: "Copy", text: "Copy any casing format to clipboard." }
+            { name: "Input Text", text: "Enter your text string." },
+            { name: "Select Mode", text: "Choose camelCase, snake_case, etc." },
+            { name: "Copy", text: "Copy formatted variable string." }
           ]}
         />
       </main>

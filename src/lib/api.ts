@@ -599,6 +599,12 @@ export const devToolsApi = {
 };
 
 export const conversionApi = {
+  uploadDoc: async (file: File) => {
+    const formData = new FormData();
+    formData.append("files", file);
+    const res = await api.post("/files/upload", formData, { headers: { "Content-Type": "multipart/form-data" } });
+    return { fileId: res.data.files[0]._id, file: res.data.files[0] };
+  },
   svgToImage: async (fileId: string, targetFormat: string, density?: number, options?: { scale?: number; bgColor?: string }) => (await api.post("/conversion/svg-to-image", { fileId, targetFormat, density, ...options })).data,
   watermarkImage: async (fileId: string, options: { text: string; color?: string; strokeColor?: string; opacity?: number; fontSize?: number; rotation?: number; position?: string }) => (await api.post("/conversion/image-watermark", { fileId, ...options })).data,
   compressImage: async (fileId: string, quality?: number, options?: { targetFormat?: string; maxWidth?: number; maxHeight?: number }) => (await api.post("/conversion/image-compress", { fileId, quality, ...options })).data,
@@ -616,30 +622,38 @@ export const conversionApi = {
 
 
 export const ocrApi = {
-  imageToText: async (file: File) => {
+  imageToText: async (files: File | File[], options?: { lang?: string }) => {
     const formData = new FormData();
-    formData.append("image", file);
+    const fileList = Array.isArray(files) ? files : [files];
+    fileList.forEach(f => formData.append("images", f));
+    if (options?.lang) formData.append("lang", options.lang);
     return (await api.post("/image-to-text", formData, { headers: { "Content-Type": "multipart/form-data" } })).data;
   },
-  handwriting: async (file: File) => {
+  handwriting: async (file: File, options?: { psm?: string; lang?: string }) => {
     const formData = new FormData();
     formData.append("image", file);
+    if (options?.psm) formData.append("psm", options.psm);
+    if (options?.lang) formData.append("lang", options.lang);
     return (await api.post("/handwriting", formData, { headers: { "Content-Type": "multipart/form-data" } })).data;
   },
-  receipt: async (file: File) => {
+  receipt: async (files: File | File[]) => {
     const formData = new FormData();
-    formData.append("image", file);
+    const fileList = Array.isArray(files) ? files : [files];
+    fileList.forEach(f => formData.append("images", f));
     return (await api.post("/receipt", formData, { headers: { "Content-Type": "multipart/form-data" } })).data;
   },
-  pdfText: async (file: File) => {
+  pdfText: async (file: File, options?: { pageRange?: string; lang?: string }) => {
     const formData = new FormData();
     formData.append("file", file);
+    if (options?.pageRange) formData.append("pageRange", options.pageRange);
+    if (options?.lang) formData.append("lang", options.lang);
     return (await api.post("/pdf-text", formData, { headers: { "Content-Type": "multipart/form-data" } })).data;
   },
-  multilingual: async (file: File, lang: string) => {
+  multilingual: async (file: File, lang: string, secondaryLang?: string) => {
     const formData = new FormData();
     formData.append("image", file);
     formData.append("lang", lang);
+    if (secondaryLang) formData.append("secondaryLang", secondaryLang);
     return (await api.post("/multilingual", formData, { headers: { "Content-Type": "multipart/form-data" } })).data;
   },
 };

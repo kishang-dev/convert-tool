@@ -118,7 +118,7 @@ export default function MyResumesPage() {
                         <Button
                             onClick={() => router.push('/resume-builder')}
                             size="lg"
-                            className="shrink-0 font-bold shadow-lg shadow-blue-500/20 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white rounded-xl py-3 px-5 flex items-center gap-2"
+                            className="shrink-0 font-bold shadow-lg shadow-blue-500/20 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 px-5 flex items-center gap-2"
                         >
                             <Plus size={18} />
                             <span>Create New Resume</span>
@@ -157,11 +157,11 @@ export default function MyResumesPage() {
                             Start fresh or upload an existing PDF/Word file to automatically create a stunning ATS-friendly resume.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
-                            <Button onClick={() => router.push('/resume-builder')} size="lg" className="w-full py-3 text-sm font-bold bg-[var(--accent)] text-white rounded-xl shadow-md">
+                            <Button onClick={() => router.push('/resume-builder')} size="lg" className="w-full py-3 text-sm font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md">
                                 <Plus size={18} />
                                 Build from Scratch
                             </Button>
-                            <Button variant="secondary" size="lg" onClick={() => router.push('/resume-builder')} className="w-full py-3 text-sm font-bold bg-[var(--surface-hover)] border-[var(--border)] text-[var(--text)] rounded-xl">
+                            <Button variant="secondary" size="lg" onClick={() => router.push('/resume-builder')} className="w-full py-3 text-sm font-bold bg-[var(--surface-hover)] border border-[var(--border)] text-[var(--text)] rounded-xl">
                                 <FileText size={18} />
                                 Upload PDF / Word
                             </Button>
@@ -291,7 +291,7 @@ function ResumeCard({
                 <div className="flex gap-2">
                     <Button
                         size="sm"
-                        className="w-full text-xs font-bold py-2.5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white rounded-xl flex items-center justify-center gap-1.5 shadow-sm"
+                        className="w-full text-xs font-bold py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl flex items-center justify-center gap-1.5 shadow-sm"
                         onClick={e => { e.stopPropagation(); onEdit(); }}
                     >
                         <Edit3 size={14} />
