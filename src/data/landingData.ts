@@ -82,6 +82,7 @@ export const allTools: [string, string, string, string][] = [
     ['Image Color Palette Extractor', 'image', 'Extract dominant color palettes and hex color codes from any image.', '/image-palette'],
     ['SVG Optimizer', 'image', 'Optimize SVG files by removing unused tags, attributes, and whitespace.', '/svg-optimizer'],
     ['Text to Image Generator', 'image', 'Create visual graphics and text images with custom fonts and colors.', '/text-to-image'],
+    // ['Reel Rig Studio', 'image', 'Create animated Shorts, Reels & TikTok videos with multi-layer keyframes.', '/reel-rig-studio'],
 
     ['Word to Text Converter', 'docs', 'Extract raw unformatted plain text from Word (.docx) files.', '/word-to-text'],
     ['Excel to CSV Converter', 'docs', 'Convert Excel workbooks (.xlsx) to standard CSV spreadsheets.', '/excel-to-csv'],
@@ -167,6 +168,7 @@ export const toolIcons: Record<string, any> = {
     'Image Color Palette Extractor': LuPenTool,
     'SVG Optimizer': LuCode,
     'Text to Image Generator': LuImage,
+    'Reel Rig Studio': LuVideo,
 
     'Word to Text Converter': LuFileText,
     'Excel to CSV Converter': LuTable,
