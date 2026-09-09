@@ -113,7 +113,7 @@ export default function BatchConverterPage({ toolId, title, description, accepte
 
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
-            <SEO title={title} description={description} canonical={`/${toolId}`} keywords={keywords} structuredData={structuredData} />
+            <SEO toolId={toolId} title={title} description={description} canonical={`/${toolId}`} keywords={keywords} structuredData={structuredData} />
             {toast && <Toast {...toast} onClose={() => setToast(null)} />}
             <Navbar />
 
@@ -238,7 +238,7 @@ export default function BatchConverterPage({ toolId, title, description, accepte
                         )}
                     </div>
                 </section>
-                <ToolSEOContent toolName={title} toolDescription={description} />
+                <ToolSEOContent toolId={toolId} toolName={title} toolDescription={description} />
             </main>
             <Footer />
             

@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import { LuShield as Shield, LuGlobe as Globe, LuZap as Zap, LuCircleCheck as CheckCircle2, LuLock as Lock, LuSmartphone as Smartphone } from "react-icons/lu";
+import { MASTER_SEO_DATA } from '@/data/seoKeywordsData';
 
 export interface Step {
     name: string;
@@ -24,16 +25,23 @@ interface ToolSEOContentProps {
     steps?: Step[];
     features?: Feature[];
     faqs?: FAQ[];
+    toolId?: string;
 }
 
-export default function ToolSEOContent({ toolName, toolDescription, steps, features, faqs }: ToolSEOContentProps) {
+export default function ToolSEOContent({ toolName, toolDescription, steps, features, faqs, toolId }: ToolSEOContentProps) {
+    const metaDataKey = toolId || toolName.toLowerCase().replace(/\s+/g, '-');
+    const masterData = MASTER_SEO_DATA[metaDataKey];
+
+    const effectiveSteps = steps && steps.length > 0 ? steps : masterData?.steps;
+    const effectiveFaqs = faqs && faqs.length > 0 ? faqs : masterData?.faqs;
+
     const defaultSteps: Step[] = [
         { name: "Upload or Input File", text: `Select or drag and drop your document/file into the free ${toolName} online tool.` },
         { name: "Process Instantly", text: `Click the process button to run ${toolName} securely with high accuracy.` },
         { name: "Download Output", text: `Save your converted or processed result file directly to your device for free.` }
     ];
 
-    const finalSteps = steps && steps.length > 0 ? steps : defaultSteps;
+    const finalSteps = effectiveSteps && effectiveSteps.length > 0 ? effectiveSteps : defaultSteps;
 
     const defaultFeatures: Feature[] = [
         { title: "Works on Any Device & OS", description: "Access on Windows, Mac, Linux, iOS, or Android straight from your browser without installing software.", icon: "device" },
@@ -49,7 +57,7 @@ export default function ToolSEOContent({ toolName, toolDescription, steps, featu
         { question: `Do I need to install any software to use ${toolName}?`, answer: `No software installation or browser extension is required. Everything runs smoothly inside your modern browser.` }
     ];
 
-    const finalFaqs = faqs && faqs.length > 0 ? faqs : defaultFaqs;
+    const finalFaqs = effectiveFaqs && effectiveFaqs.length > 0 ? effectiveFaqs : defaultFaqs;
 
     const renderIcon = (type?: string) => {
         switch (type) {

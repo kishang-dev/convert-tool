@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { MASTER_SEO_DATA } from '@/data/seoKeywordsData';
 
 export interface FAQItem {
   question: string;
@@ -26,6 +27,7 @@ interface SEOProps {
   ratingValue?: string;
   ratingCount?: string;
   isHomePage?: boolean;
+  toolId?: string;
 }
 
 const SITE_NAME = 'ToolBasketAI';
@@ -140,24 +142,41 @@ const ROUTE_OG_MAP: Record<string, string> = {
 };
 
 export default function SEO({
-  title,
-  description = DEFAULT_DESCRIPTION,
+  title: passedTitle,
+  description: passedDescription,
   canonical,
   canonicalUrl,
   ogImage,
   ogType = 'website',
   noIndex = false,
-  keywords = DEFAULT_KEYWORDS,
+  keywords: passedKeywords,
   structuredData,
-  faqItems,
+  faqItems: passedFaqItems,
   breadcrumbs,
   softwareCategory = 'BrowserApplication',
   ratingValue = '4.9',
   ratingCount = '1250',
   isHomePage = false,
+  toolId,
 }: SEOProps) {
-  const keywordString = Array.isArray(keywords) ? keywords.join(', ') : (keywords || DEFAULT_KEYWORDS);
   const activeCanonical = canonicalUrl || canonical;
+  let routeKey = toolId || '';
+
+  if (!routeKey && activeCanonical) {
+    const cleanPath = activeCanonical.startsWith('http')
+      ? new URL(activeCanonical).pathname
+      : activeCanonical;
+    routeKey = cleanPath.replace(/^\//, '');
+  }
+
+  const registeredMeta = routeKey ? MASTER_SEO_DATA[routeKey] : null;
+
+  const title = passedTitle || registeredMeta?.title;
+  const description = passedDescription || registeredMeta?.description || DEFAULT_DESCRIPTION;
+  const keywords = passedKeywords || registeredMeta?.keywords || DEFAULT_KEYWORDS;
+  const faqItems = passedFaqItems || registeredMeta?.faqs;
+
+  const keywordString = Array.isArray(keywords) ? keywords.join(', ') : (keywords || DEFAULT_KEYWORDS);
 
   // Format Title: Avoid repeating site name if already present in custom title
   const fullTitle = title

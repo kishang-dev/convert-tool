@@ -256,6 +256,7 @@ export default function Base64Tool() {
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO 
+                toolId="base64"
                 title="Base64 Encoder & Decoder Online — Free Convert Text, Images & Files" 
                 description="Encode plain text, images, and binary files to Base64 strings or decode Base64 back to original formats online for free. Features URL-safe Base64 options and HTML/CSS snippets." 
                 canonicalUrl="https://toolbasketai.com/base64"
@@ -519,7 +520,7 @@ export default function Base64Tool() {
                 )}
             </main>
         
-            <ToolSEOContent toolName="Base64 Encoder & Decoder Tools" toolDescription="Encode strings/files to Base64 or decode Base64 strings back to text instantly." />
+            <ToolSEOContent toolId="base64" toolName="Base64 Encoder & Decoder Tools" toolDescription="Encode strings/files to Base64 or decode Base64 strings back to text instantly." />
             <Footer />
         </div>
     );

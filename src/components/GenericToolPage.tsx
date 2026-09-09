@@ -325,10 +325,8 @@ export default function GenericToolPage({ id, canonicalPath }: { id: string; can
     return (
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <SEO
-                title={seoTitle}
-                description={`${tool.description} Fast, secure, and 100% free with no registration required on ToolBasketAI.`}
+                toolId={id}
                 canonical={pagePath}
-                keywords={seoKeywords}
                 breadcrumbs={breadcrumbs}
             />
 
@@ -430,7 +428,7 @@ export default function GenericToolPage({ id, canonicalPath }: { id: string; can
                     </div>
                 </section>
 
-                <ToolSEOContent toolName={tool.title} toolDescription={tool.description} />
+                <ToolSEOContent toolId={id} toolName={tool.title} toolDescription={tool.description} />
             </main>
             <Footer />
         </div>
