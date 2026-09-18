@@ -289,6 +289,8 @@ export const blogApi = {
     });
     return response.data;
   },
+  autoGenerateBlog: async () => (await api.post("/blogs/auto-generate")).data,
 };
+
 
 export default api;

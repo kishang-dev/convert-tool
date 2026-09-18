@@ -18,6 +18,7 @@ export default function AdminBlogs() {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [uploading, setUploading] = useState(false);
     const [saving, setSaving] = useState(false);
+    const [autoGenerating, setAutoGenerating] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -35,6 +36,23 @@ export default function AdminBlogs() {
             setLoading(false);
         }
     };
+
+    const handleAutoGenerate = async () => {
+        try {
+            setAutoGenerating(true);
+            const res = await blogApi.autoGenerateBlog();
+            if (res.success) {
+                alert(`🎉 Successfully generated daily tool blog: "${res.data.title}"!`);
+                fetchBlogs();
+            }
+        } catch (error: any) {
+            console.error('Auto generate blog error:', error);
+            alert(error?.response?.data?.error || error.message || 'Failed to auto-generate blog with Gemini AI');
+        } finally {
+            setAutoGenerating(false);
+        }
+    };
+
 
     const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -117,10 +135,22 @@ export default function AdminBlogs() {
         <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
             <Navbar />
             <main className="max-w-6xl mx-auto px-6 py-12">
-                <div className="mb-10">
-                    <h1 className="font-['Sora',sans-serif] text-3xl font-extrabold text-[var(--text)]">Blog Manager</h1>
-                    <p className="text-[var(--text-muted)] text-sm mt-1 font-['Poppins',sans-serif]">Create, edit and delete blog posts.</p>
+                <div className="mb-10 flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h1 className="font-['Sora',sans-serif] text-3xl font-extrabold text-[var(--text)]">Blog Manager</h1>
+                        <p className="text-[var(--text-muted)] text-sm mt-1 font-['Poppins',sans-serif]">Create, edit and delete blog posts or generate AI tool blogs automatically.</p>
+                    </div>
+                    <Button 
+                        type="button" 
+                        onClick={handleAutoGenerate} 
+                        variant="accent" 
+                        disabled={autoGenerating}
+                        className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-lg shadow-purple-500/25 px-5 py-3 rounded-xl font-bold"
+                    >
+                        {autoGenerating ? '🤖 Gemini AI Writing & Creating Image...' : '🤖 Auto-Generate Next Tool Blog (Gemini AI)'}
+                    </Button>
                 </div>
+
 
                 <div className="grid md:grid-cols-[380px_1fr] gap-8 items-start">
 
